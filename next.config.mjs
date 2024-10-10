@@ -1,8 +1,15 @@
+// import { isVercel } from "@/constants/envexport"; // TODO: is working fine 
+const isVercel = process.env.VERCEL === '1';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-   output: 'export',
+   // output: 'export',
+   // images: {
+   //    unoptimized: true,
+   // },
+   output: isVercel ? undefined : 'export',
    images: {
-      unoptimized: true,
+      unoptimized: isVercel ? true : false,
    },
 };
 
