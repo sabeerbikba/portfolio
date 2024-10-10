@@ -1,9 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-   output: 'export', // Ensures Next.js will export the app as static HTML
+   output: 'export',
    images: {
-      unoptimized: true, // GitHub Pages doesn’t support optimized images
+      unoptimized: true,
    },
+   // basePath: '/basepath',
+   // assetPrefix: '/assets/',
 };
 
 export default nextConfig;
