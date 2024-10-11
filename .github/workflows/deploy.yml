@@ -23,12 +23,12 @@ jobs:
 
     # Install dependencies
     - name: Install dependencies
-      run: npm install
+      run: pnpm i
 
     # Build the project (e.g., Next.js)
     - name: Build project
-      run: npm run build
+      run: pnpm build
 
     # Optionally, deploy to GitHub Pages or any other service
-    #- name: Deploy
-    #  run: npm run deploy  # Adjust based on your deploy command
+    - name: Deploy
+     run: pnpm deploy:github  # Adjust based on your deploy command
