@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && node src/scripts/rename-next-folder.js",
     "start": "next start",
     "lint": "next lint",
     "deploy:github": "next build && node src/scripts/rename-next-folder.js && gh-pages -b main -d out"
