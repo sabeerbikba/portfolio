@@ -1,0 +1,34 @@
+name: Deploy on Commit
+
+# Trigger on push events to specific branches, e.g., main or dev
+on:
+  push:
+    branches:
+      - main   # Adjust this to the branch you want it to run on
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Check out the repository code
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    # Set up Node.js (adjust the version if needed)
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '18'
+
+    # Install dependencies
+    - name: Install dependencies
+      run: npm install
+
+    # Build the project (e.g., Next.js)
+    - name: Build project
+      run: npm run build
+
+    # Optionally, deploy to GitHub Pages or any other service
+    #- name: Deploy
+    #  run: npm run deploy  # Adjust based on your deploy command
