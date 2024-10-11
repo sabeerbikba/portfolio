@@ -1,34 +1,37 @@
-name: Deploy on Commit
+name: Deploy to GitHub Pages
 
-# Trigger on push events to specific branches, e.g., main or dev
 on:
   push:
     branches:
-      - main   # Adjust this to the branch you want it to run on
+      - main  # The branch to trigger the deployment from (e.g., main)
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-    # Check out the repository code
-    - name: Checkout repository
-      uses: actions/checkout@v2
+    # Step 1: Check out the code from the repository
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-    # Set up Node.js (adjust the version if needed)
+    # Step 2: Set up Node.js (if you are using a Node.js-based project)
     - name: Set up Node.js
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v3
       with:
-        node-version: '18'
+        node-version: '18'  # You can change this to the version you require
 
-    # Install dependencies
+    # Step 3: Install dependencies (if you have a package.json file)
     - name: Install dependencies
       run: pnpm i
 
-    # Build the project (e.g., Next.js)
-    - name: Build project
-      run: pnpm build
+    # Step 4: Run a build script or any custom script (replace with your own command)
+    - name: Run deploy:github script
+      run: pnpm deploy:github  # Customize this script based on your build process
 
-    # Optionally, deploy to GitHub Pages or any other service
-    - name: Deploy
-     run: pnpm deploy:github  # Adjust based on your deploy command
+    # Step 5: Deploy to GitHub Pages
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./out  # Directory containing your built static files (adjust as needed)
+        branch: main     # Target branch to deploy to
