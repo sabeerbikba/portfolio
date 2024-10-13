@@ -4,7 +4,6 @@ import { FlipWords } from "@/components/ui/flip-words";
 import SponsorPack from "@/components/ui/sponsor-pack";
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import Image from "next/image";
-import * as motion from "framer-motion/client";
 import {
   IconBrandGithub,
   IconBrandX,
