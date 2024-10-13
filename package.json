@@ -1,5 +1,5 @@
 {
-  "name": "my-app",
+  "name": "portfolio",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,9 +9,16 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tabler/icons-react": "^3.19.0",
+    "@visx/hierarchy": "^3.3.0",
+    "@visx/responsive": "^3.10.2",
+    "clsx": "^2.1.1",
+    "framer-motion": "^11.11.8",
+    "mini-svg-data-uri": "^1.4.4",
     "next": "14.2.15",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "tailwind-merge": "^2.5.3"
   },
   "devDependencies": {
     "@types/node": "^20",
