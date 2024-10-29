@@ -5,6 +5,7 @@ import defaultTheme from "tailwindcss/defaultTheme";
 import svgToDataUri from "mini-svg-data-uri";
 
 import colors from "tailwindcss/colors";
+// @ts-ignore
 import flattenColorPalette from "tailwindcss/lib/util/flattenColorPalette";
 
 const config: Config = {
@@ -23,8 +24,18 @@ const config: Config = {
     },
   },
   plugins: [
-    addVariablesForColors,
-    function ({ matchUtilities, theme }: any) {
+    // addVariablesForColors,
+    function addVariablesForColors({ addBase, theme }: any) {
+      let allColors = flattenColorPalette(theme("colors"));
+      let newVars = Object.fromEntries(
+        Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
+      );
+
+      addBase({
+        ":root": newVars,
+      });
+    },
+    ({ matchUtilities, theme }: any) => {
       matchUtilities(
         {
           "bg-grid": (value: any) => ({
@@ -46,17 +57,26 @@ const config: Config = {
         { values: flattenColorPalette(theme("backgroundColor")), type: "color" }
       );
     },
+    ({ addUtilities }: any) => {
+      addUtilities({
+        '.center': {
+          'display': 'flex',
+          'align-items': 'center',
+          'justify-content': 'center',
+        },
+      });
+    },
   ],
 };
 
-function addVariablesForColors({ addBase, theme }: any) {
-  let allColors = flattenColorPalette(theme("colors"));
-  let newVars = Object.fromEntries(
-    Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
-  );
+// function addVariablesForColors({ addBase, theme }: any) {
+//   let allColors = flattenColorPalette(theme("colors"));
+//   let newVars = Object.fromEntries(
+//     Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
+//   );
 
-  addBase({
-    ":root": newVars,
-  });
-}
+//   addBase({
+//     ":root": newVars,
+//   });
+// }
 export default config;

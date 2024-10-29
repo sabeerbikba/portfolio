@@ -16,7 +16,7 @@ import {
    useTransform,
 } from "framer-motion";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 
 // TODO:s
 // when hover out need to show bottom dot 
@@ -70,8 +70,8 @@ export const FloatingDock = ({
    const [previewProject, setPreviewProject] = useState<number>(1);
    const [previewApp, setPreviewApp] = useState<number>(4);
 
-   console.log("project ", previewProject);
-   console.log("app ", previewApp);
+   // console.log("project ", previewProject);
+   // console.log("app ", previewApp);
 
 
 
@@ -112,32 +112,86 @@ export const FloatingDock = ({
             className={mobileClassName}
             previewProjectNum={previewProject}
             previewAppNum={previewApp}
+            screen={setScreen}
          />
       </>
    );
 };
+
 
 const FloatingDockMobile = ({
    // items,
    className,
    previewProjectNum,
    previewAppNum,
+   screen,
 }: {
    // items: { title: string; icon: React.ReactNode; href: string, separator?: boolean }[];
    className?: string;
    previewProjectNum: number;
    previewAppNum: number;
+   screen: (value: number, view: "project" | "app") => void;
 }) => {
    const [open, setOpen] = useState(false);
-
-   console.log('floagingDockMobile component rendered');
+   const [showContent, setShowContent] = useState(true); console.log(showContent);
+   // console.log('floagingDockMobile component rendered');
 
    return (
       <div className={cn("relative block md:hidden", className)}
-         style={{ position: "relative", top: "-100px", left: "-50px" }}
+         style={{ position: "relative", bottom: "300px", right: "15px" }}
       >
          <AnimatePresence>
+            {/* {open && <div style={{ width: '200px', height: '200px', position: 'absolute', top: '-75px', right: '-12px', borderRadius: "60px 160px 160px 60px", background: "linear-gradient(90deg, rg33,33,33,1) 0%, rgba(33,33,33,.1) 100%)" }}></div>} */}
             {open && (
+               <div
+                  className="
+                  flex pl-1
+      w-[190px] h-[200px] absolute 
+      top-[-75px] right-[-12px] 
+      rounded-[50px_160px_160px_50px] 
+            bg-[linear-gradient(90deg,_rgba(255,255,255,0.3)_0%,_rgba(255,255,255,0.01)_100%)]
+             text-white
+    "
+               >
+                  <div className="w-1/3 h-full py-[9px] border-white">
+                     {links.map((item, id) => {
+                        const view = id + 1;
+
+                        return (
+                           <button
+                              key={item.title}
+                              // {...item}
+                              onClick={() => screen(view, "project")}
+                              className={cn(
+                                 view === previewProjectNum && "outline outline-1 outline-white",
+                                 "max-w-ful p-2"
+                              )}
+                           >{item.icon}</button>
+                        )
+                     })}
+                  </div>
+                  <div className="w-1/3 h-full py-[9px] border-white">
+                     {links2.map((item, id) => {
+                        const view = id + 4;
+
+                        return (
+                           <button
+                              key={item.title}
+                              // {...item}
+                              onClick={() => screen(view, "app")}
+                              className={cn(
+                                 view === previewAppNum && "outline outline-1 outline-white",
+                                 "max-w-full p-2"
+                              )}
+                           >{item.icon}</button>
+                        )
+                     })}
+                  </div>
+                  {/* taken place open close button [assistive touch] */}
+                  <div className="w-1/3 h-full border-white" />
+               </div>
+            )}
+            {/* {open && (
                <motion.div
                   layoutId="nav"
                   className="absolute bottom-full mb-2 inset-x-0 flex flex-col gap-2"
@@ -164,7 +218,7 @@ const FloatingDockMobile = ({
                         <Link
                            href={item.href}
                            key={item.title}
-                           className="h-10 w-10 rounded-full bg-gray-50 dark:bg-neutral-900 flex items-center justify-center"
+                           className="h-10 w-10 rounded-full bg-gray-50 dark:bg-neutral-900 center"
                         >
                            <div
                               className="h-4 w-4"
@@ -194,7 +248,7 @@ const FloatingDockMobile = ({
                         <Link
                            href={item.href}
                            key={item.title}
-                           className="h-10 w-10 rounded-full bg-gray-50 dark:bg-neutral-900 flex items-center justify-center"
+                           className="h-10 w-10 rounded-full bg-gray-50 dark:bg-neutral-900 center"
                         >
                            <div
                               className="h-4 w-4"
@@ -203,17 +257,159 @@ const FloatingDockMobile = ({
                      </motion.div>
                   ))}
                </motion.div>
-            )}
+            )}*/}
          </AnimatePresence>
-         <button
-            onClick={() => setOpen(!open)}
-            className="h-10 w-10 rounded-full bg-gray-50 dark:bg-neutral-800 flex items-center justify-center"
+         <motion.button
+            onClick={() => {
+               console.log('clicked!!');
+               setOpen(!open);
+               setShowContent(false);
+               setTimeout(() => {
+                  setShowContent(true);
+               }, 350);
+            }}
+            className={cn(
+               "h-10 w-10 center",
+               // !open ? "rounded-lg opacity-55 " : "rounded-full bg-gray-400 p-2.5",
+               !open && 'mix-blend-exclusion',
+            )}
+            initial={false}
+            animate={{
+               borderRadius: open ? "50%" : "0.5rem",
+               opacity: open ? 1 : 0.55,
+               backgroundColor: open ? "#9CA3AF" : "#323232",
+               padding: open ? "0.625rem" : "0rem",
+            }}
+            transition={{ duration: 0.3, ease: "backIn" }}
          >
-            <IconLayoutNavbarCollapse className="h-5 w-5 text-neutral-500 dark:text-neutral-400" />
-         </button>
+            {/* <IconLayoutNavbarCollapse className="h-5 w-5 text-neutral-500 dark:text-neutral-400" /> */}
+            {showContent &&
+               <>
+                  {!open ? (
+                     <RingSpan wh={30} bgColor="#525F65">
+                        <RingSpan wh={20} bgColor="#91969C">
+                           <RingSpan wh={12} bgColor="#FCFFFF" />
+                        </RingSpan>
+                     </RingSpan>
+                  ) : (
+                     <div className="relative w-7 h-7 left-[7px]">
+                        <div className="absolute inset-0 rotate-45 w-1 rounded-sm bg-gray-700" />
+                        <div className="absolute inset-0 -rotate-45 w-1 rounded-sm bg-gray-700" />
+                     </div>
+                  )}
+               </>
+            }
+         </motion.button>
+
       </div>
    );
-};
+}
+
+
+
+
+
+// const FloatingDockMobile = ({
+//    // items,
+//    className,
+//    previewProjectNum,
+//    previewAppNum,
+// }: {
+//    // items: { title: string; icon: React.ReactNode; href: string, separator?: boolean }[];
+//    className?: string;
+//    previewProjectNum: number;
+//    previewAppNum: number;
+// }) => {
+//    const [open, setOpen] = useState(false);
+
+//    console.log('floagingDockMobile component rendered');
+
+//    return (
+//       <div className={cn("relative block md:hidden", className)}
+//          style={{ position: "relative", top: "-100px", left: "-50px" }}
+//       >
+//          <AnimatePresence>
+//             {open && (
+//                <motion.div
+//                   layoutId="nav"
+//                   className="absolute bottom-full mb-2 inset-x-0 flex flex-col gap-2"
+//                >
+
+
+//                   {links.map((item, idx) => (
+//                      <motion.div
+//                         key={item.title}
+//                         initial={{ opacity: 0, y: 10 }}
+//                         animate={{
+//                            opacity: 1,
+//                            y: 0,
+//                         }}
+//                         exit={{
+//                            opacity: 0,
+//                            y: 10,
+//                            transition: {
+//                               delay: idx * 0.05,
+//                            },
+//                         }}
+//                         transition={{ delay: (links.length - 1 - idx) * 0.05 }}
+//                      >
+//                         <Link
+//                            href={item.href}
+//                            key={item.title}
+//                            className="h-10 w-10 rounded-full bg-gray-50 dark:bg-neutral-900 center"
+//                         >
+//                            <div
+//                               className="h-4 w-4"
+//                            >{item.icon}</div>
+//                         </Link>
+//                      </motion.div>
+//                   ))}
+
+
+//                   {links2.map((item, idx) => (
+//                      <motion.div
+//                         key={item.title}
+//                         initial={{ opacity: 0, y: 10 }}
+//                         animate={{
+//                            opacity: 1,
+//                            y: 0,
+//                         }}
+//                         exit={{
+//                            opacity: 0,
+//                            y: 10,
+//                            transition: {
+//                               delay: idx * 0.05,
+//                            },
+//                         }}
+//                         transition={{ delay: (links.length - 1 - idx) * 0.05 }}
+//                      >
+//                         <Link
+//                            href={item.href}
+//                            key={item.title}
+//                            className="h-10 w-10 rounded-full bg-gray-50 dark:bg-neutral-900 center"
+//                         >
+//                            <div
+//                               className="h-4 w-4"
+//                            >{item.icon}</div>
+//                         </Link>
+//                      </motion.div>
+//                   ))}
+//                </motion.div>
+//             )}
+//          </AnimatePresence>
+//          <button
+//             onClick={() => {
+//                console.log('clicked!!');
+//                setOpen(!open);
+//             }}
+//             className="h-10 w-10 rounded-full bg-gray-50 dark:bg-neutral-800 center"
+//          >
+//             <IconLayoutNavbarCollapse className="h-5 w-5 text-neutral-500 dark:text-neutral-400" />
+
+//          </button>
+//       </div>
+//    );
+// };
 
 
 const FloatingDockDesktop = ({
@@ -337,7 +533,7 @@ const IconContainer = ({
 }: {
    mouseX: MotionValue;
    title: string;
-   icon: React.ReactNode;
+   icon: ReactNode;
    // href: string;
    dotVisible: boolean;
    // view: number;
@@ -418,7 +614,7 @@ const IconContainer = ({
          </motion.div>
 
          {isHoverdOnDock && (
-            <div className="flex items-center justify-center mt-0.5">
+            <div className="center mt-0.5">
                <motion.span animate={{ backgroundColor: "rgb(255,255,255)", }} className="h-1 w-1 rounded-2xl" />
             </div>
          )}
@@ -427,3 +623,8 @@ const IconContainer = ({
       // </Link>
    );
 }
+
+const RingSpan = ({ wh, bgColor = "transparent", children, }: { wh: number, bgColor: string, children?: ReactNode }) =>
+   <span style={{ width: `${wh}px`, height: `${wh}px`, backgroundColor: bgColor }} className={`rounded-full center`}>
+      {children}
+   </span>;
