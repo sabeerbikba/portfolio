@@ -1,12 +1,166 @@
-import React from 'react'
+import { useMemo } from 'react'
 import { Pack, hierarchy } from '@visx/hierarchy'
 import { ParentSize } from '@visx/responsive'
 import { twMerge } from 'tailwind-merge'
 // import { set } from 'date-fns' // not using for now 
-import { Sponsor } from '@/app/page'
+// import { Sponsor } from '@/app/page';
 
-export default function SponsorPack({ sponsors }: { sponsors: any }) {
-   const pack = React.useMemo(
+// TODO: give better name for varibales : component 
+
+// Source URL: https://github.com/TanStack/tanstack.com/blob/ee943e214df6f132a70120014096ed72775dee4b/app/server/sponsors.ts   
+
+export type Sponsor = {
+   name: string
+   imageUrl: string
+   linkUrl: string
+   proficiency: number
+}
+
+const sponsorsArray: Sponsor[] = [
+   // https://img.logo.dev/reactnative.dev
+   // https://img.logo.dev/nextjs.org
+
+
+
+   {
+      name: 'Google',
+      linkUrl: 'https://google.com',
+      proficiency: 11100,
+      imageUrl: 'https://logo.clearbit.com/google.com',
+   },
+   {
+      name: 'Microsoft',
+      linkUrl: 'https://microsoft.com',
+      proficiency: 1200,
+      imageUrl: 'https://logo.clearbit.com/microsoft.com',
+   },
+   {
+      name: 'Apple',
+      linkUrl: 'https://apple.com',
+      proficiency: 100,
+      imageUrl: 'https://logo.clearbit.com/apple.com',
+   },
+   {
+      name: 'Amazon',
+      linkUrl: 'https://amazon.com',
+      proficiency: 1200,
+      imageUrl: 'https://logo.clearbit.com/amazon.com',
+   },
+   {
+      name: 'Netflix',
+      linkUrl: 'https://netflix.com',
+      proficiency: 900,
+      imageUrl: 'https://logo.clearbit.com/netflix.com',
+   },
+   {
+      name: 'Facebook',
+      linkUrl: 'https://facebook.com',
+      proficiency: 300,
+      imageUrl: 'https://logo.clearbit.com/facebook.com',
+   },
+   {
+      name: 'Spotify',
+      linkUrl: 'https://spotify.com',
+      proficiency: 450,
+      imageUrl: 'https://logo.clearbit.com/spotify.com',
+   },
+   {
+      name: 'Slack',
+      linkUrl: 'https://slack.com',
+      proficiency: 600,
+      imageUrl: 'https://logo.clearbit.com/slack.com',
+   },
+   {
+      name: 'GitHub',
+      linkUrl: 'https://github.com',
+      proficiency: 4400,
+      imageUrl: 'https://logo.clearbit.com/github.com',
+   },
+   {
+      name: 'Google',
+      linkUrl: 'https://google.com',
+      proficiency: 100,
+      imageUrl: 'https://logo.clearbit.com/google.com',
+   },
+   {
+      name: 'Google',
+      linkUrl: 'https://google.com',
+      proficiency: 100,
+      imageUrl: 'https://logo.clearbit.com/google.com',
+   },
+   {
+      name: 'Google',
+      linkUrl: 'https://google.com',
+      proficiency: 100,
+      imageUrl: 'https://logo.clearbit.com/google.com',
+   },
+   {
+      name: 'Google',
+      linkUrl: 'https://google.com',
+      proficiency: 100,
+      imageUrl: 'https://logo.clearbit.com/google.com',
+   },
+   {
+      name: 'Google',
+      linkUrl: 'https://google.com',
+      proficiency: 100,
+      imageUrl: 'https://logo.clearbit.com/google.com',
+   },
+   {
+      name: 'Microsoft',
+      linkUrl: 'https://microsoft.com',
+      proficiency: 1200,
+      imageUrl: 'https://logo.clearbit.com/microsoft.com',
+   },
+   {
+      name: 'Apple',
+      linkUrl: 'https://apple.com',
+      proficiency: 1800,
+      imageUrl: 'https://logo.clearbit.com/apple.com',
+   },
+   {
+      name: 'Amazon',
+      linkUrl: 'https://amazon.com',
+      proficiency: 1600,
+      imageUrl: 'https://logo.clearbit.com/amazon.com',
+   },
+   {
+      name: 'Netflix',
+      linkUrl: 'https://netflix.com',
+      proficiency: 900,
+      imageUrl: 'https://logo.clearbit.com/netflix.com',
+   },
+   {
+      name: 'Facebook',
+      linkUrl: 'https://facebook.com',
+      proficiency: 1100,
+      imageUrl: 'https://logo.clearbit.com/facebook.com',
+   },
+   {
+      name: 'Spotify',
+      linkUrl: 'https://spotify.com',
+      proficiency: 850,
+      imageUrl: 'https://logo.clearbit.com/spotify.com',
+   },
+   {
+      name: 'Slack',
+      linkUrl: 'https://slack.com',
+      proficiency: 1300,
+      imageUrl: 'https://logo.clearbit.com/slack.com',
+   },
+   {
+      name: 'GitHub',
+      linkUrl: 'https://github.com',
+      proficiency: 1400,
+      imageUrl: 'https://logo.clearbit.com/github.com',
+   },
+];
+
+
+
+
+const SponsorPack = ({ sponsors = sponsorsArray }: { sponsors?: Sponsor[] }) => {
+   const pack = useMemo(
       () => ({
          children: sponsors,
          name: 'root',
@@ -16,7 +170,7 @@ export default function SponsorPack({ sponsors }: { sponsors: any }) {
       [sponsors]
    )
 
-   const root = React.useMemo(
+   const root = useMemo(
       () =>
          hierarchy(pack)
             .sum((d) => 1 + d?.proficiency)
@@ -140,3 +294,5 @@ export default function SponsorPack({ sponsors }: { sponsors: any }) {
       </ParentSize>
    )
 }
+
+export default SponsorPack;

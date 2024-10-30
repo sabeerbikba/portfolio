@@ -1,21 +1,42 @@
 "use client";
-import React, { useRef } from "react";
+import { useState, useEffect, useRef, createContext, useContext } from "react";
 import { useScroll, useTransform, motion, MotionValue } from "framer-motion";
 
-export const ContainerScroll = ({
+import Image from "next/image";
+import { FloatingDock } from "@/components/ui/floating-dock";
+
+// Source URL: https://ui.aceternity.com/components/container-scroll-animation
+
+type ScreenContextType = {
+   previewProject: number;
+   previewApp: number;
+   setScreen: (value: number, view: "project" | "app") => void;
+};
+
+const ScreenContext = createContext<ScreenContextType | null>(null);
+
+export const useScreen = () => {
+   const context = useContext(ScreenContext);
+   if (context === null) {
+      throw new Error('useScreen must be used within a ScreenProvider');
+   }
+   return context;
+};
+
+const ContainerScroll = ({
    titleComponent,
-   children,
+   // children,
 }: {
    titleComponent: string | React.ReactNode;
-   children: React.ReactNode;
+   // children: React.ReactNode;
 }) => {
    const containerRef = useRef<any>(null);
    const { scrollYProgress } = useScroll({
       target: containerRef,
    });
-   const [isMobile, setIsMobile] = React.useState(false);
+   const [isMobile, setIsMobile] = useState(false);
 
-   React.useEffect(() => {
+   useEffect(() => {
       const checkMobile = () => {
          setIsMobile(window.innerWidth <= 768);
       };
@@ -36,62 +57,97 @@ export const ContainerScroll = ({
 
    return (
       <div
-         // className="h-[60rem] md:h-[80rem] center relative p-2 md:p-20"
          className="h-[60rem] md:h-[80rem] center relative px-2 md:px-20"
          ref={containerRef}
       >
          <div
-            // className="py-10 md:py-40 w-full relative"
             className="w-full relative"
             style={{
                perspective: "1000px",
             }}
          >
             <Header translate={translate} titleComponent={titleComponent} />
-            <Card rotate={rotate} translate={translate} scale={scale}>
-               {children}
-            </Card>
+            <Card rotate={rotate} translate={translate} scale={scale} />
+            {/* {children} */}
+            {/* </Card> */}
          </div>
       </div>
    );
 };
 
-export const Header = ({ translate, titleComponent }: any) => {
-   return (
-      <motion.div
-         style={{
-            translateY: translate,
-         }}
-         className="div max-w-5xl mx-auto text-center"
-      >
-         {titleComponent}
-      </motion.div>
-   );
-};
+const Header = ({ translate, titleComponent }: any) => (
+   <motion.div
+      style={{
+         translateY: translate,
+      }}
+      className="div max-w-5xl mx-auto text-center"
+   >
+      {titleComponent}
+   </motion.div>
+);
 
-export const Card = ({
+const Card = ({
    rotate,
    scale,
-   children,
+   // children,
 }: {
    rotate: MotionValue<number>;
    scale: MotionValue<number>;
    translate: MotionValue<number>;
-   children: React.ReactNode;
-}) => {
+   // children: React.ReactNode;
+}) => (
+   <motion.div
+      style={{
+         rotateX: rotate,
+         scale,
+         boxShadow:
+            "0 0 #0000004d, 0 9px 20px #0000004a, 0 37px 37px #00000042, 0 84px 50px #00000026, 0 149px 60px #0000000a, 0 233px 65px #00000003",
+      }}
+      className="max-w-5xl -mt-12 mx-auto h-[30rem] md:h-[40rem] w-full border-4 border-[#6C6C6C] p-2 md:p-6 bg-[#222222] rounded-[30px] shadow-2xl"
+   >
+      <div className=" h-full w-full  overflow-hidden rounded-2xl bg-gray-100 dark:bg-zinc-900 md:rounded-2xl">
+         {/* {children} */}
+         <Screen />
+      </div>
+   </motion.div>
+);
+
+
+const Screen = () => {
+
+   const [previewProject, setPreviewProject] = useState<number>(1);
+   const [previewApp, setPreviewApp] = useState<number>(4);
+
+   console.log("previewProject previewApp", previewProject, previewApp);
+
+   const setScreen = (value: number, view: "project" | "app") => {
+      const handlers = {
+         project: setPreviewProject,
+         app: setPreviewApp,
+      };
+
+      handlers[view](value);
+   };
+
+
    return (
-      <motion.div
-         style={{
-            rotateX: rotate,
-            scale,
-            boxShadow:
-               "0 0 #0000004d, 0 9px 20px #0000004a, 0 37px 37px #00000042, 0 84px 50px #00000026, 0 149px 60px #0000000a, 0 233px 65px #00000003",
-         }}
-         className="max-w-5xl -mt-12 mx-auto h-[30rem] md:h-[40rem] w-full border-4 border-[#6C6C6C] p-2 md:p-6 bg-[#222222] rounded-[30px] shadow-2xl"
-      >
-         <div className=" h-full w-full  overflow-hidden rounded-2xl bg-gray-100 dark:bg-zinc-900 md:rounded-2xl">
-            {children}
-         </div>
-      </motion.div>
-   );
+      <ScreenContext.Provider value={{ previewProject, previewApp, setScreen }}>
+         <Image
+            src={`/images/dev.tools.png`}
+            alt="hero"
+            height={720}
+            width={1400}
+            className="mx-auto rounded-2xl object-cover h-full object-left-top"
+            draggable={false}
+         />
+         {/* TODO:s */}
+         {/* logso opacity need to bee 100% */}
+         {/* instead of using opacigty need to use backgroundColor opacity */}
+
+         <FloatingDock />
+      </ScreenContext.Provider>
+   )
 };
+
+export { ContainerScroll as default, ScreenContext };
+export type { ScreenContextType };
