@@ -1,9 +1,10 @@
 "use client";
-import { useState, useEffect, useRef, createContext, useContext } from "react";
+import { useState, useEffect, useRef, createContext, useContext, use } from "react";
 import { useScroll, useTransform, motion, MotionValue } from "framer-motion";
-
 import Image from "next/image";
+
 import { FloatingDock } from "@/components/ui/floating-dock";
+import { project, app } from "@/data/screen";
 
 // Source URL: https://ui.aceternity.com/components/container-scroll-animation
 
@@ -117,6 +118,7 @@ const Screen = () => {
 
    const [previewProject, setPreviewProject] = useState<number>(1);
    const [previewApp, setPreviewApp] = useState<number>(4);
+   // const [screen, setScreenVal] = useState(1);
 
    console.log("previewProject previewApp", previewProject, previewApp);
 
@@ -126,6 +128,7 @@ const Screen = () => {
          app: setPreviewApp,
       };
 
+      // setScreenVal(value);
       handlers[view](value);
    };
 

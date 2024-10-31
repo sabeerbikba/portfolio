@@ -3,35 +3,44 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbopack",
     "clean:dev": "rimraf .next && node -e 'require(\"clear\")();' && next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "@primer/octicons-react": "^19.12.0",
     "@tabler/icons-react": "^3.19.0",
     "@visx/hierarchy": "^3.3.0",
     "@visx/responsive": "^3.10.2",
     "clsx": "^2.1.1",
     "framer-motion": "^11.11.8",
     "mini-svg-data-uri": "^1.4.4",
-    "next": "14.2.15",
-    "react": "^18",
-    "react-dom": "^18",
+    "next": "15.0.2",
+    "react": "19.0.0-rc-02c0e824-20241028",
+    "react-dom": "19.0.0-rc-02c0e824-20241028",
+    "sass": "^1.80.5",
     "tailwind-merge": "^2.5.3"
   },
   "devDependencies": {
     "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
+    "@types/primer__octicons": "^19.11.0",
+    "@types/react": "npm:types-react@19.0.0-rc.1",
+    "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
     "clear": "^0.1.0",
     "eslint": "^8",
-    "eslint-config-next": "14.2.15",
+    "eslint-config-next": "15.0.2",
     "gh-pages": "^6.2.0",
     "postcss": "^8",
     "rimraf": "^6.0.1",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
+  },
+  "pnpm": {
+    "overrides": {
+      "@types/react": "npm:types-react@19.0.0-rc.1",
+      "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1"
+    }
   }
 }

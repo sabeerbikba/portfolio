@@ -62,7 +62,7 @@ import { useState } from "react";
 
 const Tabs = () => {
    const [tab, setTab] = useState(0);
-   const [loaded, setLoaded] = useState([true, false, false]);
+   const [loaded, setLoaded] = useState([true, false, false, false]);
 
    console.log(loaded);
 
@@ -70,6 +70,8 @@ const Tabs = () => {
    const tabsLinks = [
       "https://devtools-sabeerbikba.vercel.app/",
       "http://honnavarrickshawservice.vercel.app/",
+      "http://github.com/sabeerbikba/dev.tools",
+      // "https://ghbtns.com/github-btn.html?user=sabeerbikba&repo=dev.tools&type=star&count=true&size=large",
       "http://localhost:3000"
    ];
 
