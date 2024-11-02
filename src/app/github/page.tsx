@@ -1,3 +1,4 @@
+"use client";
 import {
    BookIcon,
    EyeIcon,
@@ -13,11 +14,13 @@ import {
 } from "@primer/octicons-react";
 import numeral from 'numeral';
 import { useEffect, useRef, useState } from "react";
-import { marked } from "marked";
+import { marked, use } from "marked";
+import type { Endpoints } from "@octokit/types";
+
 import useLocalStorageState from "@/hooks/useLocalStorageState";
 import { cn } from "@/lib/utils";
 
-import githubMarkdownCss from "github-markdown-css/github-markdown-dark.css";
+import githubMarkdownCss from "github-markdown-css/github-markdown-dark.css"
 
 // API response: https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28
 
@@ -27,6 +30,13 @@ const font: Record<string, string> = {
    primaryColor: "#f0f6fc",
    secondaryColor: "#9198a1",
 };
+
+// type GitHubContributor = components["schemas"]["simple-user"];
+type GitHubRepositoryType = Endpoints[`GET /repos/{owner}/{repo}`]["response"]["data"];
+type GitHubFileContentType = Endpoints["GET /repos/{owner}/{repo}/contents/{path}"]["response"]["data"];
+type GitHubContributorType = Endpoints["GET /repos/{owner}/{repo}/contributors"]["response"]["data"];
+type GitHubLanguagesType = Endpoints["GET /repos/{owner}/{repo}/languages"]["response"]["data"];
+
 
 const fetchAndDecodeContent = async (link: string): Promise<string> => {
    const response = await fetch(link);
@@ -44,9 +54,18 @@ const fetchAndDecodeContent = async (link: string): Promise<string> => {
 const formatNumber = (num: number) => numeral(num).format('0.[0]a');
 
 const Github = () => (
-   <div className="bg-[#0d1117] flex gap-4 flex-wrap" style={{ width: "100vw" }}>
+   <div
+      // className="bg-[#0d1117] flex gap-4 flex-wrap"
+      className="bg-[#0d1117]"
+      style={{ width: "100vw" }}
+   >
       <InfoCard />
-      <RepositoryOverview />
+      <div className="px-4 w-full">
+
+         <RepositoryOverview />
+         <Contributors />
+         <LanguagesUsed />
+      </div>
    </div>
 );
 
@@ -201,9 +220,9 @@ const RepositoryOverview = ({
 
 
    return (
-      <div className="border border-[#3d444d] rounded-md w-full m-3 mt-0">
+      <div className="border border-[#3d444d] rounded-md w-full mt-4">
 
-         <div className="border-b border-[#3d444d] bg-[#0d1117] bg-[] sticky top-0">
+         <div className="border-b border-[#3d444d] bg-[#0d1117] sticky top-0">
             <h2 className="hidden">Repository files navigation</h2>
             <div className="h-11 px-2 py-1.5 text-[#9198a1]" aria-label="Repository files">
                {[
@@ -302,5 +321,142 @@ const LicenseDisplay = ({
       </div>
    );
 };
+
+const Contributors = ({
+   link = "https://api.github.com/repos/sabeerbikba/dev.tools/contributors",
+}: {
+   link?: string,
+}) => {
+   const [contributors, setContributors] = useState<GitHubContributorType>([]);
+
+   console.log(contributors);
+
+   useEffect(() => {
+      (async () => {
+         const response = await fetch(link);
+         const data = await response.json();
+         setContributors(data);
+      })();
+   }, []);
+
+
+
+   const repo: string = "/sabeerbikba/dev.tools";
+   return (
+      <div className="w-full text-[#f0f6fc] border-b border-[#3d444d]">
+         <div className="py-4 w-full">
+
+            <h2 className="h-7 mb-3 text-lg font-semibold">
+               <a href={repo + "/graphs/contributors"}
+                  // className="Link--primary no-underline Link d-flex flex-items-center"
+                  className="block hover:text-[#4493f8]"
+               >
+                  Contributors
+                  <span title="3" className="ml-1 rounded-full bg-[#1e242a] inline-block w-5 h-5 !text-[#f0f6fc] text-sm font-thin text-center">
+                     {contributors.length}
+                  </span>
+               </a>
+            </h2>
+
+            <ul className="list-none">
+               {contributors.map(contributor => {
+                  const { html_url, login, avatar_url, type } = contributor;
+                  return (
+                     <li className="mb-2 flex">
+                        <a href={html_url} className="mr-2">
+                           <img src={avatar_url} alt={"@" + login} height="32" width="32" className={cn(type === "Bot" ? "rounded-md" : "rounded-full")} />
+                        </a>
+                        <span
+                           // className="flex-self-center min-width-0 css-truncate css-truncate-overflow width-fit flex-auto"
+                           className="text-ellipsis"
+                        >
+                           <a href={html_url}
+                              className="hover:text-[#4493f8]"
+                           //  className="Link--primary no-underline flex-self-center"
+                           >
+                              <strong
+                                 className="font-semibold text-[15.2px]"
+                              >{login}</strong>
+                           </a>
+                        </span>
+                     </li>
+                  );
+               })}
+            </ul>
+         </div>
+      </div>
+   );
+};
+
+
+const LanguagesUsed = ({
+   // link = "https://api.github.com/repos/sabeerbikba/dev.tools/languages"
+   link = "https://api.github.com/repos/subsurface/subsurface/languages"
+}: {
+   link?: string,
+}) => {
+
+   const [languages, setLanguages] = useState<GitHubLanguagesType>({});
+
+   console.log(languages);
+
+
+   const languagesBytesOnePercentage: number = Object.values(languages).reduce((acc, curr) => acc + curr, 0) / 100;
+
+
+   useEffect(() => {
+      (async () => {
+         const response = await fetch(link);
+         const data = await response.json();
+         setLanguages(data);
+      })();
+   }, []);
+
+   return (
+      <div className="BorderGrid-row">
+         <div className="BorderGrid-cell text-[#f0f6fc] py-4">
+            <h2 className="h4 mb-3 text-lg font-semibold">Languages</h2>
+            <div className="mb-2 rounded-full overflow-hidden">
+               <span className="flex rounded-full">
+                  {Object.entries(languages).map(([language, bytes]) => {
+                     const languageUsed: number = parseFloat((bytes / (languagesBytesOnePercentage)).toFixed(1))
+                     return (
+                        <span
+                           key={language}
+                           data-language={language}
+                           style={{ width: languageUsed + "%" }}
+                           aria-label={language + " " + languageUsed}
+                           className="h-2 mx-[.3px]"
+                        />
+                     );
+                  })}
+               </span>
+            </div>
+            <ul className="list-style-none text-sm">
+
+
+               {Object.entries(languages).map(([language, bytes]) => {
+                  const languageUsed: number = parseFloat((bytes / (languagesBytesOnePercentage)).toFixed(1))
+                  return (
+                     <li className="inline">
+                        <a
+                           className="inline-flex items-center flex-nowrap no-underline text-small mr-4"
+                           href={"/sabeerbikba/dev.tools/search?l=" + language.toLowerCase()}
+                        >
+                           <span className="w-2 h-2 mr-2 block rounded-full" data-language={language} />
+                           <span className="color-fg-default text-bold mr-1 font-semibold">{language}</span>
+                           <span className="text-[#747b83]">{languageUsed + "%"}</span>
+                        </a>
+                     </li>
+                  )
+               })}
+            </ul>
+
+         </div>
+      </div>
+   )
+}
+
+
 
 export default Github;
