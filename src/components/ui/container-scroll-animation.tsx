@@ -1,6 +1,6 @@
 "use client";
-import { useState, useEffect, useRef, createContext, useContext, use } from "react";
-import { useScroll, useTransform, motion, MotionValue } from "framer-motion";
+import { useState, useEffect, useRef, createContext, useContext, use, FC, ComponentPropsWithoutRef } from "react";
+import { useScroll, useTransform, motion, MotionValue, MotionProps } from "framer-motion";
 import Image from "next/image";
 
 import { FloatingDock } from "@/components/ui/floating-dock";
@@ -13,6 +13,12 @@ type ScreenContextType = {
    previewApp: number;
    setScreen: (value: number, view: "project" | "app") => void;
 };
+
+interface CardProps extends MotionProps {
+   rotate: MotionValue<number>;
+   scale: MotionValue<number>;
+   translate: MotionValue<number>;
+}
 
 const ScreenContext = createContext<ScreenContextType | null>(null);
 
@@ -87,15 +93,10 @@ const Header = ({ translate, titleComponent }: any) => (
    </motion.div>
 );
 
-const Card = ({
+const Card: FC<CardProps & ComponentPropsWithoutRef<typeof motion.div>> = ({
    rotate,
    scale,
    // children,
-}: {
-   rotate: MotionValue<number>;
-   scale: MotionValue<number>;
-   translate: MotionValue<number>;
-   // children: React.ReactNode;
 }) => (
    <motion.div
       style={{

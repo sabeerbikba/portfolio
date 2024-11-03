@@ -20,7 +20,9 @@ import type { Endpoints } from "@octokit/types";
 import useLocalStorageState from "@/hooks/useLocalStorageState";
 import { cn } from "@/lib/utils";
 
-import githubMarkdownCss from "github-markdown-css/github-markdown-dark.css"
+import githubMarkdownCss from "@/css/github-markdown-dark";
+
+// console.log(githubMarkdownCss);
 
 // API response: https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28
 
@@ -31,7 +33,6 @@ const font: Record<string, string> = {
    secondaryColor: "#9198a1",
 };
 
-// type GitHubContributor = components["schemas"]["simple-user"];
 type GitHubRepositoryType = Endpoints[`GET /repos/{owner}/{repo}`]["response"]["data"];
 type GitHubFileContentType = Endpoints["GET /repos/{owner}/{repo}/contents/{path}"]["response"]["data"];
 type GitHubContributorType = Endpoints["GET /repos/{owner}/{repo}/contributors"]["response"]["data"];
@@ -217,8 +218,6 @@ const RepositoryOverview = ({
    const [previewTab, setPreviewTab] = // need to move
       useLocalStorageState<LocalStorageType>(`home:projects:RepositoryOverview:${repo}`, 'README');
 
-
-
    return (
       <div className="border border-[#3d444d] rounded-md w-full mt-4">
 
@@ -278,9 +277,10 @@ const ReadmeShadowContainer = ({
                const htmlContent = marked.parse(markdown);
 
                shadowRoot.innerHTML = `
-          <style>${githubMarkdownCss}</style>
-            <article class="markdown-body">${htmlContent}</article>
-          `;
+                <style>${githubMarkdownCss}</style>
+                  <article class="markdown-body">${htmlContent}</article>
+                `;
+
             } catch (error) {
                console.error('Error fetching README:', error);
             }
@@ -383,10 +383,12 @@ const Contributors = ({
                   );
                })}
             </ul>
+
          </div>
       </div>
    );
 };
+
 
 
 const LanguagesUsed = ({
@@ -395,12 +397,7 @@ const LanguagesUsed = ({
 }: {
    link?: string,
 }) => {
-
-   const [languages, setLanguages] = useState<GitHubLanguagesType>({});
-
-   console.log(languages);
-
-
+   const [languages, setLanguages] = useState<GitHubLanguagesType>({}); console.log(languages);
    const languagesBytesOnePercentage: number = Object.values(languages).reduce((acc, curr) => acc + curr, 0) / 100;
 
 
@@ -416,10 +413,11 @@ const LanguagesUsed = ({
       <div className="BorderGrid-row">
          <div className="BorderGrid-cell text-[#f0f6fc] py-4">
             <h2 className="h4 mb-3 text-lg font-semibold">Languages</h2>
+
             <div className="mb-2 rounded-full overflow-hidden">
                <span className="flex rounded-full">
                   {Object.entries(languages).map(([language, bytes]) => {
-                     const languageUsed: number = parseFloat((bytes / (languagesBytesOnePercentage)).toFixed(1))
+                     const languageUsed = (bytes / languagesBytesOnePercentage).toFixed(1);
                      return (
                         <span
                            key={language}
@@ -432,11 +430,10 @@ const LanguagesUsed = ({
                   })}
                </span>
             </div>
+
             <ul className="list-style-none text-sm">
-
-
                {Object.entries(languages).map(([language, bytes]) => {
-                  const languageUsed: number = parseFloat((bytes / (languagesBytesOnePercentage)).toFixed(1))
+                  const languageUsed: number = parseFloat((bytes / (languagesBytesOnePercentage)).toFixed(1));
                   return (
                      <li className="inline">
                         <a
@@ -454,9 +451,9 @@ const LanguagesUsed = ({
 
          </div>
       </div>
-   )
-}
 
+   );
+};
 
 
 export default Github;

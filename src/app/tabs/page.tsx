@@ -94,14 +94,14 @@ const Tabs = () => {
                loaded[index] && (
                   <iframe
                      key={index}
-                     className={`w-[800px] h-[800px] absolute transition-opacity duration-300 ${tab === index ? "opacity-100" : "opacity-0 pointer-events-none"
-                        }`}
+                     className="w-[800px] h-[800px]"
+                     hidden={tab !== index}
                      src={link}
                   />
                )
             ))}
          </div>
-         <div className="w-screen h-[10%] center pt-[900px]">
+         <div className="w-screen h-[10%] center">
             {tabsLinks.map((_, id) => (
                <button onClick={() => handleTabClick(id)} key={id}>Set {id}</button>
             ))}
