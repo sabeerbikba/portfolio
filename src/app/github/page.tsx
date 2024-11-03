@@ -362,7 +362,7 @@ const Contributors = ({
                {contributors.map(contributor => {
                   const { html_url, login, avatar_url, type } = contributor;
                   return (
-                     <li className="mb-2 flex">
+                     <li className="mb-2 flex" key={login}>
                         <a href={html_url} className="mr-2">
                            <img src={avatar_url} alt={"@" + login} height="32" width="32" className={cn(type === "Bot" ? "rounded-md" : "rounded-full")} />
                         </a>
@@ -435,7 +435,7 @@ const LanguagesUsed = ({
                {Object.entries(languages).map(([language, bytes]) => {
                   const languageUsed: number = parseFloat((bytes / (languagesBytesOnePercentage)).toFixed(1));
                   return (
-                     <li className="inline">
+                     <li className="inline" key={language}>
                         <a
                            className="inline-flex items-center flex-nowrap no-underline text-small mr-4"
                            href={"/sabeerbikba/dev.tools/search?l=" + language.toLowerCase()}

@@ -6,11 +6,9 @@ import { cn } from "@/lib/utils";
 export const FlipWords = ({
    words,
    duration = 3000,
-   className,
 }: {
    words: string[];
    duration?: number;
-   className?: string;
 }) => {
    const [currentWord, setCurrentWord] = useState(words[0]);
    const [isAnimating, setIsAnimating] = useState<boolean>(false);
@@ -57,10 +55,7 @@ export const FlipWords = ({
                scale: 2,
                position: "absolute",
             }}
-            className={cn(
-               "z-10 inline-block relative text-left text-neutral-900 dark:text-neutral-100 px-2",
-               className
-            )}
+            className="z-10 inline-block relative text-left text-neutral-900 dark:text-neutral-100 px-2"
             key={currentWord}
          >
             {/* edit suggested by Sajal: https://x.com/DewanganSajal */}
@@ -93,6 +88,6 @@ export const FlipWords = ({
                </motion.span>
             ))}
          </motion.div>
-      </AnimatePresence>
+      </AnimatePresence >
    );
 };

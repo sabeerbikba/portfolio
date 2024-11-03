@@ -14,11 +14,11 @@ type ScreenContextType = {
    setScreen: (value: number, view: "project" | "app") => void;
 };
 
-interface CardProps extends MotionProps {
-   rotate: MotionValue<number>;
-   scale: MotionValue<number>;
-   translate: MotionValue<number>;
-}
+// interface CardProps extends MotionProps {
+//    rotate: MotionValue<number>;
+//    scale: MotionValue<number>;
+//    translate?: MotionValue<number>;
+// }
 
 const ScreenContext = createContext<ScreenContextType | null>(null);
 
@@ -84,23 +84,26 @@ const ContainerScroll = ({
 
 const Header = ({ translate, titleComponent }: any) => (
    <motion.div
-      style={{
-         translateY: translate,
-      }}
       className="div max-w-5xl mx-auto text-center"
    >
       {titleComponent}
    </motion.div>
 );
 
-const Card: FC<CardProps & ComponentPropsWithoutRef<typeof motion.div>> = ({
+const Card = ({
    rotate,
    scale,
    // children,
+}: {
+   rotate: MotionValue<number>;
+   scale: MotionValue<number>;
+   translate: MotionValue<number>;
+   // children: React.ReactNode;
 }) => (
    <motion.div
       style={{
          rotateX: rotate,
+         // translateY: translate,
          scale,
          boxShadow:
             "0 0 #0000004d, 0 9px 20px #0000004a, 0 37px 37px #00000042, 0 84px 50px #00000026, 0 149px 60px #0000000a, 0 233px 65px #00000003",
