@@ -10,7 +10,7 @@ import {
 } from "framer-motion";
 import Link from "next/link";
 import { ReactNode, useContext, useEffect, useRef, useState } from "react";
-import { ScreenContext, ScreenContextType, useScreen } from "./container-scroll-animation";
+import { ScreenContext, ScreenContextType, useScreen } from "../projects/screen";
 import { project, app } from "@/data/screen";
 
 // TODO:s

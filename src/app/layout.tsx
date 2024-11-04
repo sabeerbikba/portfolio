@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 // import { IconHome, IconMessage, IconUser } from "@tabler/icons-react";
 import { FloatingNav } from "@/components/ui/floating-navbar";
+import Link from "next/link";
 
 
 // export const metadata: Metadata = {
@@ -72,7 +73,7 @@ const RootLayout = ({
           <div className="max-w-7xl mx-auto text-sm text-neutral-500 flex sm:flex-row flex-col justify-between items-start ">
             <div>
               <div className="mr-4  md:flex mb-4">
-                <a className="center space-x-2 text-2xl font-bold text-center text-neutral-600 dark:text-gray-100 selection:bg-emerald-500 mr-10 py-0" href="/">
+                <Link className="center space-x-2 text-2xl font-bold text-center text-neutral-600 dark:text-gray-100 selection:bg-emerald-500 mr-10 py-0" href="/tabs">
                   <div className="relative h-8 w-8 md:h-6 md:w-6 bg-black border border-slate-800  text-white   center rounded-md text-sm antialiased">
                     <div className="absolute h-10 w-full bg-white/[0.2] -top-10 inset-x-0 rounded-full blur-xl"></div>
                     <div className="text-sm  text-emerald-500 relative z-20"><img alt="Logo" loading="lazy" width="50" height="50" decoding="async" data-nimg="1" className="block dark:hidden" srcSet="/_next/image?url=%2Flogo.png&amp;w=64&amp;q=75 1x, /_next/image?url=%2Flogo.png&amp;w=128&amp;q=75 2x" src="/_next/image?url=%2Flogo.png&amp;w=128&amp;q=75" style={{ color: "transparent" }} />
@@ -81,7 +82,7 @@ const RootLayout = ({
                   <div className="flex flex-col">
                     <h1 className="text-black dark:text-white font-sans"> Aceternity UI</h1>
                   </div>
-                </a>
+                </Link>
               </div>
               <div>A product by <a target="__blank" className="dark:text-sky-500 text-neutral-600 font-medium" href="https://aceternity.com">Aceternity</a></div>
               <div className="mt-2">Building in public at <a className="dark:text-sky-500 font-medium text-neutral-600" target="__blank" href="https://twitter.com/mannupaaji">@mannupaaji</a></div>

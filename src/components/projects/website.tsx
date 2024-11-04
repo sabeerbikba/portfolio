@@ -63,19 +63,17 @@ import Link from "next/link";
 
 const Website = () => {
    const [tab, setTab] = useState(0);
+   // TODO: this need to take from tabsLinks.length
    const [loaded, setLoaded] = useState([true, false, false, false]);
 
    const tabsLinks = [
       "https://devtools-sabeerbikba.vercel.app/",
       "http://honnavarrickshawservice.vercel.app/",
-      "http://github.com/sabeerbikba/dev.tools",
-      "http://localhost:3000"
    ];
 
    const handleTabClick = (id: number) => {
       setTab(id);
       if (!loaded[id]) {
-         // Mark the iframe as loaded when the tab is clicked
          setLoaded((prevLoaded) => {
             const newLoaded = [...prevLoaded];
             newLoaded[id] = true;

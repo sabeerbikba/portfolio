@@ -1,34 +1,15 @@
 "use client";
 import { useState, useEffect, useRef, createContext, useContext, use, FC, ComponentPropsWithoutRef } from "react";
 import { useScroll, useTransform, motion, MotionValue, MotionProps } from "framer-motion";
-import Image from "next/image";
-
-import { FloatingDock } from "@/components/ui/floating-dock";
-import { project, app } from "@/data/screen";
+import Screen from "../projects/screen";
 
 // Source URL: https://ui.aceternity.com/components/container-scroll-animation
-
-type ScreenContextType = {
-   previewProject: number;
-   previewApp: number;
-   setScreen: (value: number, view: "project" | "app") => void;
-};
 
 // interface CardProps extends MotionProps {
 //    rotate: MotionValue<number>;
 //    scale: MotionValue<number>;
 //    translate?: MotionValue<number>;
 // }
-
-const ScreenContext = createContext<ScreenContextType | null>(null);
-
-export const useScreen = () => {
-   const context = useContext(ScreenContext);
-   if (context === null) {
-      throw new Error('useScreen must be used within a ScreenProvider');
-   }
-   return context;
-};
 
 const ContainerScroll = ({
    titleComponent,
@@ -117,44 +98,4 @@ const Card = ({
    </motion.div>
 );
 
-
-const Screen = () => {
-
-   const [previewProject, setPreviewProject] = useState<number>(1);
-   const [previewApp, setPreviewApp] = useState<number>(4);
-   // const [screen, setScreenVal] = useState(1);
-
-   console.log("previewProject previewApp", previewProject, previewApp);
-
-   const setScreen = (value: number, view: "project" | "app") => {
-      const handlers = {
-         project: setPreviewProject,
-         app: setPreviewApp,
-      };
-
-      // setScreenVal(value);
-      handlers[view](value);
-   };
-
-
-   return (
-      <ScreenContext.Provider value={{ previewProject, previewApp, setScreen }}>
-         <Image
-            src={`/images/dev.tools.png`}
-            alt="hero"
-            height={720}
-            width={1400}
-            className="mx-auto rounded-2xl object-cover h-full object-left-top"
-            draggable={false}
-         />
-         {/* TODO:s */}
-         {/* logso opacity need to bee 100% */}
-         {/* instead of using opacigty need to use backgroundColor opacity */}
-
-         <FloatingDock />
-      </ScreenContext.Provider>
-   )
-};
-
-export { ContainerScroll as default, ScreenContext };
-export type { ScreenContextType };
+export default ContainerScroll;
