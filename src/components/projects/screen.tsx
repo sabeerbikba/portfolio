@@ -1,114 +1,134 @@
 import { useContext, useState, useEffect, createContext } from "react";
 import Image from "next/image";
 import { FloatingDock } from "../ui/floating-dock";
-import type { Endpoints } from "@octokit/types";
 import About from "./about";
+import Github from "./github";
+import type {
+    RepoDataType,
+    GithubBranchesType,
+    GitHubContributorType,
+    GitHubFileContentType,
+    GitHubLanguagesType,
+    GitHubRepositoryType,
+    GithubTagsType
+} from "@/types/project";
+
+// import data from "@/data/dev/fetch-all-github.json";
 
 // Define types for fetched data
-type GitHubRepositoryType = Endpoints['GET /repos/{owner}/{repo}']['response']['data'];
-type GitHubFileContentType = Endpoints['GET /repos/{owner}/{repo}/contents/{path}']['response']['data'];
-type GitHubContributorType = Endpoints['GET /repos/{owner}/{repo}/contributors']['response']['data'];
-type GitHubLanguagesType = Endpoints['GET /repos/{owner}/{repo}/languages']['response']['data'];
 
-// Define the structure of data for each repository
-interface RepoData {
-   repoDetails: GitHubRepositoryType;
-   languages: GitHubLanguagesType;
-   contributors: GitHubContributorType;
-   license: GitHubFileContentType | null;
-   readme: GitHubFileContentType | null;
-}
 
 type ScreenContextType = {
-   previewProject: number;
-   previewApp: number;
-   setScreen: (value: number, view: "project" | "app") => void;
+    previewProject: number;
+    previewApp: number;
+    setScreen: (value: number, view: "project" | "app") => void;
 };
 
 const ScreenContext = createContext<ScreenContextType | null>(null);
 
 const useScreen = () => {
-   const context = useContext(ScreenContext);
-   if (context === null) {
-      throw new Error('useScreen must be used within a ScreenProvider');
-   }
-   return context;
+    const context = useContext(ScreenContext);
+    if (context === null) {
+        throw new Error('useScreen must be used within a ScreenProvider');
+    }
+    return context;
 };
 
+// TODO: project need to be shown based on 
+
 const Screen = () => {
-   const [previewProject, setPreviewProject] = useState<number>(1);
-   const [previewApp, setPreviewApp] = useState<number>(4);
-   const [data, setData] = useState<RepoData[]>([]);
-   const repos = ["dev.tools", "rickshaw"]; // Specify your repositories here
+    const [previewProject, setPreviewProject] = useState<number>(1);
+    const [previewApp, setPreviewApp] = useState<number>(4);
+    const [data, setData] = useState<RepoDataType[]>([]);
+    const repos = ["dev.tools", "rickshaw"]; // Specify your repositories here
+    const githubProfileName: string = "sabeerbikba";
+
+    const isValidProjectIndex: boolean = previewProject > 0 && previewProject <= data.length;
+    const isDataAvilable: boolean = data.length !== 0;
 
 
-   useEffect(() => {
-      (async () => {
-         const fetchPromises = repos.map(repo => {
-            const baseUrl = `https://api.github.com/repos/sabeerbikba/${repo}`;
-            return Promise.all([
-               fetch(baseUrl).then(res => res.json() as Promise<GitHubRepositoryType>),                 // Main repo details
-               fetch(`${baseUrl}/languages`).then(res => res.json() as Promise<GitHubLanguagesType>),   // Languages
-               fetch(`${baseUrl}/contributors`).then(res => res.json() as Promise<GitHubContributorType>), // Contributors
-               fetch(`${baseUrl}/contents/LICENSE`).then(res => res.json() as Promise<GitHubFileContentType | null>), // License
-               fetch(`${baseUrl}/contents/README.md`).then(res => res.json() as Promise<GitHubFileContentType | null>) // README
-            ]);
-         });
-
-         try {
-            const results = await Promise.all(fetchPromises);
-
-            // Transform results into a more usable format
-            const formattedData = results.map(([
-               repoDetails,
-               languages,
-               contributors,
-               license,
-               readme
-            ]) => ({
-               repoDetails,
-               languages,
-               contributors,
-               license: license ? license : null,
-               readme: readme ? readme : null,
-            }));
-
-            setData(formattedData);
-         } catch (error) {
-            console.error('Error fetching data from GitHub API:', error);
-         }
-      })();
-   }, []);
-
-   // const [screen, setScreenVal] = useState(1);
-
-   console.log("previewProject previewApp", previewProject, previewApp);
-
-   const setScreen = (value: number, view: "project" | "app") => {
-      const handlers = {
-         project: setPreviewProject,
-         app: setPreviewApp,
-      };
-
-      // setScreenVal(value);
-      handlers[view](value);
-   };
+    console.log(data);
 
 
-   return (
-      <ScreenContext.Provider value={{ previewProject, previewApp, setScreen }}>
-         {/* <Image
-            src={`/images/dev.tools.png`}
-            alt="hero"
-            height={300}
-            width={1400}
-            className="mx-auto rounded-2xl object-cover h-full object-left-top"
-            draggable={false}
-         /> */}
-         <FloatingDock />
-         <About number={[previewProject, previewApp]} />
-      </ScreenContext.Provider>
-   )
+    useEffect(() => {
+        (async () => {
+            const fetchPromises = repos.map(repo => {
+                const baseUrl = `https://api.github.com/repos/${githubProfileName}/${repo}`;
+                return Promise.all([
+                    fetch(baseUrl).then(res => res.json() as Promise<GitHubRepositoryType>), // Main repo details
+                    fetch(`${baseUrl}/languages`).then(res => res.json() as Promise<GitHubLanguagesType>), // Languages
+                    fetch(`${baseUrl}/contributors`).then(res => res.json() as Promise<GitHubContributorType>), // Contributors
+                    fetch(`${baseUrl}/branches`).then(res => res.json() as Promise<GithubBranchesType>), // Branches
+                    fetch(`${baseUrl}/tags`).then(res => res.json() as Promise<GithubTagsType>), // Tags
+                    fetch(`${baseUrl}/contents/LICENSE`)
+                        .then(async res => {
+                            const data = await res.json();
+                            return data.message === "Not Found" ? null : (data as GitHubFileContentType);
+                        }), // License
+                    fetch(`${baseUrl}/contents/README.md`)
+                        .then(async res => {
+                            const data = await res.json();
+                            return data.message === "Not Found" ? null : (data as GitHubFileContentType);
+                        }) // README
+                ]);
+            });
+
+            try {
+                const results = await Promise.all(fetchPromises);
+
+                // Transform results into a more usable format
+                const formattedData = results.map(([
+                    repoDetails,
+                    languages,
+                    contributors,
+                    branches,
+                    tags,
+                    license,
+                    readme
+                ]) => ({
+                    repoDetails,
+                    languages,
+                    contributors,
+                    branches,
+                    tags,
+                    license,
+                    readme,
+                }));
+
+                setData(formattedData);
+            } catch (error) {
+                console.error('Error fetching data from GitHub API:', error);
+            }
+        })();
+    }, []);
+
+
+    // const [screen, setScreenVal] = useState(1);
+
+    console.log("previewProject previewApp", previewProject, previewApp);
+
+    const setScreen = (value: number, view: "project" | "app") => {
+        const handlers = {
+            project: setPreviewProject,
+            app: setPreviewApp,
+        };
+
+        // setScreenVal(value);
+        handlers[view](value);
+    };
+
+
+    return (
+        <ScreenContext.Provider value={{ previewProject, previewApp, setScreen }}>
+            <FloatingDock />
+            <div className=" overflow-scroll h-full w-full">
+                <About number={[previewProject, previewApp]} />
+                {isValidProjectIndex && isDataAvilable && (
+                    <Github data={data[previewProject - 1]} hidden={previewApp !== 6} />
+                )}
+            </div>
+        </ScreenContext.Provider>
+    )
 };
 
 export { Screen as default, ScreenContext, useScreen };

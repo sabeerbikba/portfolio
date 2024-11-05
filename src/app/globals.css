@@ -82,7 +82,7 @@ body {
 }
 
 .notes-body blockquote {
-   @apply border-l-4 border-[#d4d4d4] pl-4 italic py-2 my-4;
+   @apply border-l-4 border-[#d4d4d4] pl-4 italic py-2 my-4 text-[#a8a8a8];
 }
 
 .notes-body img {
@@ -106,7 +106,7 @@ body {
 }
 
 .notes-body pre {
-   @apply bg-[#202020] p-4 rounded-lg text-sm overflow-x-auto mb-6;
+   @apply bg-[#202020] p-4 rounded-lg text-sm overflow-x-auto mb-6 text-[#a8a8a8];
 }
 
 /* source: https://gist.github.com/robertpeteuil/bb2dc86f3b3e25d203664d61410bfa30 */

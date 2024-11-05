@@ -42,7 +42,8 @@ export const FloatingDock = () => {
 
 
    return (
-      <div className="flex items-center">
+      // <div className="flex items-center relative">
+      <div className="relative">
          <FloatingDockDesktop
          // items={project}
          // previewProjectNum={previewProject}
@@ -88,8 +89,8 @@ const FloatingDockMobile = ({
 
    return (
       // <div className="relative block md:hidden bottom-[300px] right-[15px]"
-      <div className="relative block md:hidden"
-         style={{ position: "relative", bottom: "300px", right: "15px" }}
+      <div className="absolute block md:hidden top-36 right-3"
+      // style={{ position: "relative", bottom: "300px", right: "15px" }}
       >
          <AnimatePresence>
             {open && (
@@ -357,62 +358,64 @@ const FloatingDockDesktop = ({
 
    // in dark mode it looks like satureated color 
    return (
-      <motion.div
-         ref={inViewRef}
-         onMouseEnter={() => setIsHovered(true)}
-         onMouseLeave={() => {
-            setIsHovered(false);
-            mouseX.set(Infinity);
-         }}
-         onMouseMove={(e) => mouseX.set(e.pageX)}
-         animate={{
-            height: isVisible ? "55px" : '5px',
-            width: isVisible ? "auto" : "120px",
-            y: isVisible ? -58 : 0,
-         }}
-         // className={cn(
-         //    "mx-auto hidden md:flex gap-2 items-end rounded-2xl bg-gray-50 dark:bg-neutral-900 px-4",
-         //    // isVisible ? "pb-2" : "pb-1",
-         //    // className
-         // )}
-         // desktopClassName="bg-[rgba(255,255,255,0.4)] w-auto m-auto rounded-lg px-2.5 relative bottom-[12px] flex items-center"
-         className="mx-auto md:flex gap-2 bg-[rgba(255,255,255,0.4)] w-auto m-auto rounded-lg px-2.5 relative bottom-[12px] flex items-center"
+      <div className="w-full flex items-center absolute top-[35.87rem]">
+         <motion.div
+            ref={inViewRef}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => {
+               setIsHovered(false);
+               mouseX.set(Infinity);
+            }}
+            onMouseMove={(e) => mouseX.set(e.pageX)}
+            animate={{
+               height: isVisible ? "55px" : '5px',
+               width: isVisible ? "auto" : "120px",
+               y: isVisible ? -58 : 0,
+            }}
+            // className={cn(
+            //    "mx-auto hidden md:flex gap-2 items-end rounded-2xl bg-gray-50 dark:bg-neutral-900 px-4",
+            //    // isVisible ? "pb-2" : "pb-1",
+            //    // className
+            // )}
+            // desktopClassName="bg-[rgba(255,255,255,0.4)] w-auto m-auto rounded-lg px-2.5 relative bottom-[12px] flex items-center"
+            className="mx-auto gap-2 bg-[rgba(255,255,255,0.4)] w-auto m-auto rounded-lg px-2.5 inline-flex items-center "
 
-      >
-         {isVisible && (
-            <>
-               {project.map((item, id) => {
-                  const view = id + 1;
+         >
+            {isVisible && (
+               <>
+                  {project.map((item, id) => {
+                     const view = id + 1;
 
-                  return (
-                     <IconContainer
-                        mouseX={mouseX}
-                        key={item.title}
-                        {...item}
-                        dotVisible={view === previewProjectNum}
-                        onClick={() => screen(view, "project")}
-                        isHoverd={isHovered}
-                     />
-                  )
-               })}
-               <div className="border-x-[1.9px] border-gray-700 rounded-2xl h-8" />
-               {app.map((item, id) => {
-                  const view = id + 4;
+                     return (
+                        <IconContainer
+                           mouseX={mouseX}
+                           key={item.title}
+                           {...item}
+                           dotVisible={view === previewProjectNum}
+                           onClick={() => screen(view, "project")}
+                           isHoverd={isHovered}
+                        />
+                     )
+                  })}
+                  <div className="border-x-[1.9px] border-gray-700 rounded-2xl h-8" />
+                  {app.map((item, id) => {
+                     const view = id + 4;
 
-                  return (
-                     <IconContainer
-                        mouseX={mouseX}
-                        key={item.title}
-                        {...item}
-                        dotVisible={view === previewAppNum}
-                        onClick={() => screen(view, "app")}
-                        isHoverd={isHovered}
-                     />
-                  )
-               })}
-            </>
-         )}
-      </motion.div>
+                     return (
+                        <IconContainer
+                           mouseX={mouseX}
+                           key={item.title}
+                           {...item}
+                           dotVisible={view === previewAppNum}
+                           onClick={() => screen(view, "app")}
+                           isHoverd={isHovered}
+                        />
+                     )
+                  })}
+               </>
+            )}
+         </motion.div>
+      </div>
    );
 };
 
