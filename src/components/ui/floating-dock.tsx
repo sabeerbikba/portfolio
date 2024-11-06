@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { ReactNode, useEffect, useRef, useState } from "react";
 import {
    AnimatePresence,
    MotionValue,
@@ -8,79 +8,58 @@ import {
    useSpring,
    useTransform,
 } from "framer-motion";
-import Link from "next/link";
-import { ReactNode, useContext, useEffect, useRef, useState } from "react";
-import { ScreenContext, ScreenContextType, useScreen } from "../projects/screen";
-import { project, app } from "@/data/screen";
 
-// TODO:s
-// when hover out need to show bottom dot 
-// give better variable names
-// if smaller screen comes desktop dock instantly close also applied fro mobile dock 
+import { cn } from "@/lib/utils";
+import { project, app } from "@/data/projects";
+import { useScreen } from "../projects/screen"; // Context
 
-// Inspiration URL: https://tanstack.com/query/latest
+// Inspiration URL: https://tanstack.com/query/latest // TODO: i think placed wrong area
 // Source Code URL: https://ui.aceternity.com/components/floating-dock
 
-// links and components need to add 
-// actul website, github repo link, github component 
-
-
 export const FloatingDock = () => {
-   // const [previewProject, setPreviewProject] = useState<number>(1);
-   // const [previewApp, setPreviewApp] = useState<number>(4);
+   const [isMediumScreen, setIsMediumScreen] = useState(false);
 
-   // console.log("previewProject previewApp", previewProject, previewApp);
+   useEffect(() => {
+      const mediaQuery = window.matchMedia('(min-width: 768px)');
+      const handleChange = () => setIsMediumScreen(mediaQuery.matches);
+      mediaQuery.addEventListener('change', handleChange);
+      handleChange();
 
-   // const setScreen = (value: number, view: "project" | "app") => {
-   //    const handlers = {
-   //       project: setPreviewProject,
-   //       app: setPreviewApp,
-   //    };
-
-   //    handlers[view](value);
-   // };
-
+      return () => mediaQuery.removeEventListener('change', handleChange);
+   }, []);
 
    return (
-      // <div className="flex items-center relative">
       <div className="relative">
-         <FloatingDockDesktop
-         // items={project}
-         // previewProjectNum={previewProject}
-         // previewAppNum={previewApp}
-         // screen={setScreen}
-         />
-         <FloatingDockMobile
-         // items={project}
-         // previewProjectNum={previewProject}
-         // previewAppNum={previewApp}
-         // screen={setScreen}
-         />
+         <FloatingDockDesktop hidden={!isMediumScreen} />
+         <FloatingDockMobile hidden={isMediumScreen} />
       </div>
    );
 };
 
 
-const FloatingDockMobile = ({
-   // previewProjectNum,
-   // previewAppNum,
-   // screen,
-}: {
-      // previewProjectNum: number;
-      // previewAppNum: number;
-      // screen: (value: number, view: "project" | "app") => void;
-   }) => {
-
-   const [open, setOpen] = useState(false);
-   const [showContent, setShowContent] = useState(true);
-   // const { previewProject, previewApp, setScreen } = useScreen();
+const FloatingDockMobile = ({ hidden }: { hidden: boolean }) => {
+   const mobileDockRef = useRef<HTMLDivElement>(null);
+   const [open, setOpen] = useState<boolean>(false);
+   const [showContent, setShowContent] = useState<boolean>(true);
    const {
       previewProject: previewProjectNum,
       previewApp: previewAppNum,
       setScreen: screen,
    } = useScreen();
 
-   // console.log('floagingDockMobile component rendered');
+   const handleClickOutside = (event: MouseEvent | TouchEvent | null) => {
+      if (!event) return;
+      if (mobileDockRef.current && !mobileDockRef.current.contains(event.target as Node)) setOpen(false);
+   };
+
+   useEffect(() => {
+      document.addEventListener('mousedown', handleClickOutside);
+
+      // TODO: is any diffrence between  retrn and return () => {}
+      return () => {
+         document.removeEventListener('mousedown', handleClickOutside);
+      };
+   }, []);
 
    /** ## Can be added in feature 
     * https://github.com/abhishekkhandait/react-assistivetouch-menu/blob/master/src/assistivetouch.tsx
@@ -88,9 +67,10 @@ const FloatingDockMobile = ({
     */
 
    return (
-      // <div className="relative block md:hidden bottom-[300px] right-[15px]"
-      <div className="absolute block md:hidden top-36 right-3"
-      // style={{ position: "relative", bottom: "300px", right: "15px" }}
+      <div
+         ref={mobileDockRef}
+         className="absolute block md:hidden top-36 right-3 z-10"
+         hidden={hidden}
       >
          <AnimatePresence>
             {open && (
@@ -153,7 +133,6 @@ const FloatingDockMobile = ({
          </AnimatePresence>
          <motion.button
             onClick={() => {
-               console.log('clicked!!');
                setOpen(!open);
                setShowContent(false);
                setTimeout(() => {
@@ -195,134 +174,18 @@ const FloatingDockMobile = ({
    );
 }
 
-
-
-
-
-// const FloatingDockMobile = ({
-//    // items,
-//    className,
-//    previewProjectNum,
-//    previewAppNum,
-// }: {
-//    // items: { title: string; icon: React.ReactNode; href: string, separator?: boolean }[];
-//    className?: string;
-//    previewProjectNum: number;
-//    previewAppNum: number;
-// }) => {
-//    const [open, setOpen] = useState(false);
-
-//    console.log('floagingDockMobile component rendered');
-
-//    return (
-//       <div className={cn("relative block md:hidden", className)}
-//          style={{ position: "relative", top: "-100px", left: "-50px" }}
-//       >
-//          <AnimatePresence>
-//             {open && (
-//                <motion.div
-//                   layoutId="nav"
-//                   className="absolute bottom-full mb-2 inset-x-0 flex flex-col gap-2"
-//                >
-
-
-//                   {project.map((item, idx) => (
-//                      <motion.div
-//                         key={item.title}
-//                         initial={{ opacity: 0, y: 10 }}
-//                         animate={{
-//                            opacity: 1,
-//                            y: 0,
-//                         }}
-//                         exit={{
-//                            opacity: 0,
-//                            y: 10,
-//                            transition: {
-//                               delay: idx * 0.05,
-//                            },
-//                         }}
-//                         transition={{ delay: (project.length - 1 - idx) * 0.05 }}
-//                      >
-//                         <Link
-//                            href={item.href}
-//                            key={item.title}
-//                            className="h-10 w-10 rounded-full bg-gray-50 dark:bg-neutral-900 center"
-//                         >
-//                            <div
-//                               className="h-4 w-4"
-//                            >{item.icon}</div>
-//                         </Link>
-//                      </motion.div>
-//                   ))}
-
-
-//                   {app.map((item, idx) => (
-//                      <motion.div
-//                         key={item.title}
-//                         initial={{ opacity: 0, y: 10 }}
-//                         animate={{
-//                            opacity: 1,
-//                            y: 0,
-//                         }}
-//                         exit={{
-//                            opacity: 0,
-//                            y: 10,
-//                            transition: {
-//                               delay: idx * 0.05,
-//                            },
-//                         }}
-//                         transition={{ delay: (project.length - 1 - idx) * 0.05 }}
-//                      >
-//                         <Link
-//                            href={item.href}
-//                            key={item.title}
-//                            className="h-10 w-10 rounded-full bg-gray-50 dark:bg-neutral-900 center"
-//                         >
-//                            <div
-//                               className="h-4 w-4"
-//                            >{item.icon}</div>
-//                         </Link>
-//                      </motion.div>
-//                   ))}
-//                </motion.div>
-//             )}
-//          </AnimatePresence>
-//          <button
-//             onClick={() => {
-//                console.log('clicked!!');
-//                setOpen(!open);
-//             }}
-//             className="h-10 w-10 rounded-full bg-gray-50 dark:bg-neutral-800 center"
-//          >
-//             <IconLayoutNavbarCollapse className="h-5 w-5 text-neutral-500 dark:text-neutral-400" />
-
-//          </button>
-//       </div>
-//    );
-// };
-
-
-const FloatingDockDesktop = ({
-   // previewProjectNum,
-   // previewAppNum,
-   // screen
-}: {
-      // items: { title: string; icon: React.ReactNode; href: string, separator?: boolean }[];
-      // previewProjectNum: number;
-      // previewAppNum: number;
-      // screen: (value: number, view: "project" | "app") => void;
-   }) => {
+const FloatingDockDesktop = ({ hidden }: { hidden: boolean }) => {
    let mouseX = useMotionValue(Infinity);
    const inViewRef = useRef(null);
    const inView = useInView(inViewRef, { once: false });
-   const [isHovered, setIsHovered] = useState<boolean>(false); // false
-   const [isVisible, setIsVisible] = useState<boolean>(false); // false 
+   const [isHovered, setIsHovered] = useState<boolean>(false);
+   const [isVisible, setIsVisible] = useState<boolean>(false);
    const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
    const {
       previewProject: previewProjectNum,
       previewApp: previewAppNum,
       setScreen: screen,
-   } = useScreen();
+   } = useScreen(); // Context
 
    useEffect(() => {
       if (isHovered) {
@@ -356,9 +219,14 @@ const FloatingDockDesktop = ({
       setTimer(newTimer);
    }
 
+   // TODO: need to test in dark mode
    // in dark mode it looks like satureated color 
    return (
-      <div className="w-full flex items-center absolute top-[35.87rem]">
+      <div
+         className="w-full flex items-center absolute top-[35.87rem] z-10"
+         style={{ display: hidden ? "none" : "flex" }}
+         hidden={hidden}
+      >
          <motion.div
             ref={inViewRef}
             onMouseEnter={() => setIsHovered(true)}
@@ -372,14 +240,9 @@ const FloatingDockDesktop = ({
                width: isVisible ? "auto" : "120px",
                y: isVisible ? -58 : 0,
             }}
-            // className={cn(
-            //    "mx-auto hidden md:flex gap-2 items-end rounded-2xl bg-gray-50 dark:bg-neutral-900 px-4",
-            //    // isVisible ? "pb-2" : "pb-1",
-            //    // className
-            // )}
-            // desktopClassName="bg-[rgba(255,255,255,0.4)] w-auto m-auto rounded-lg px-2.5 relative bottom-[12px] flex items-center"
             className="mx-auto gap-2 bg-[rgba(255,255,255,0.4)] w-auto m-auto rounded-lg px-2.5 inline-flex items-center "
-
+            style={{ display: hidden ? "none" : "inline-flex" }}
+            hidden={hidden}
          >
             {isVisible && (
                <>
@@ -391,7 +254,7 @@ const FloatingDockDesktop = ({
                            mouseX={mouseX}
                            key={item.title}
                            {...item}
-                           dotVisible={view === previewProjectNum}
+                           isSelected={view === previewProjectNum}
                            onClick={() => screen(view, "project")}
                            isHoverd={isHovered}
                         />
@@ -406,7 +269,7 @@ const FloatingDockDesktop = ({
                            mouseX={mouseX}
                            key={item.title}
                            {...item}
-                           dotVisible={view === previewAppNum}
+                           isSelected={view === previewAppNum}
                            onClick={() => screen(view, "app")}
                            isHoverd={isHovered}
                         />
@@ -423,62 +286,37 @@ const IconContainer = ({
    mouseX,
    title,
    icon,
-   // href,
-   dotVisible,
-   // view,
+   isSelected,
    onClick,
    isHoverd,
 }: {
    mouseX: MotionValue;
    title: string;
    icon: string;
-   // href: string;
-   dotVisible: boolean;
-   // view: number;
+   isSelected: boolean;
    onClick: () => void;
    isHoverd: boolean
 }) => {
    let ref = useRef<HTMLDivElement>(null);
+   const [hovered, setHovered] = useState(false);
+   const isHoverdOnDock = !isHoverd && isSelected;
 
    let distance = useTransform(mouseX, (val) => {
       let bounds = ref.current?.getBoundingClientRect() ?? { x: 0, width: 0 };
-
       return val - bounds.x - bounds.width / 2;
    });
 
    let widthTransform = useTransform(distance, [-150, 0, 150], [35, 70, 35]);
    let heightTransform = useTransform(distance, [-150, 0, 150], [35, 70, 35]);
-
    let widthTransformIcon = useTransform(distance, [-150, 0, 150], [12, 24, 12]);
    let heightTransformIcon = useTransform(distance, [-150, 0, 150], [12, 24, 12]);
 
-   let width = useSpring(widthTransform, {
-      mass: 0.1,
-      stiffness: 150,
-      damping: 12,
-   });
-   let height = useSpring(heightTransform, {
-      mass: 0.1,
-      stiffness: 150,
-      damping: 12,
-   });
-
-   let widthIcon = useSpring(widthTransformIcon, {
-      mass: 0.1,
-      stiffness: 150,
-      damping: 12,
-   });
-   let heightIcon = useSpring(heightTransformIcon, {
-      mass: 0.1,
-      stiffness: 150,
-      damping: 12,
-   });
-
-   const [hovered, setHovered] = useState(false);
-   const isHoverdOnDock = !isHoverd && dotVisible;
+   let width = useSpring(widthTransform, { mass: 0.1, stiffness: 150, damping: 12 });
+   let height = useSpring(heightTransform, { mass: 0.1, stiffness: 150, damping: 12 });
+   let widthIcon = useSpring(widthTransformIcon, { mass: 0.1, stiffness: 150, damping: 12 });
+   let heightIcon = useSpring(heightTransformIcon, { mass: 0.1, stiffness: 150, damping: 12 });
 
    return (
-      // <Link href={href}>
       <motion.div
          ref={ref}
          style={{ width, height }}
@@ -508,22 +346,27 @@ const IconContainer = ({
                isHoverdOnDock && 'shadow-[0_5px_12px_9px_rgba(0,0,0,0.3)] bg-[rgba(0,0,0,0.3)]',
             )}
          >
-            {/* {icon} */}
             <img src={icon} width={"100%"} height={"100%"} />
          </motion.div>
-
          {isHoverdOnDock && (
             <div className="center mt-0.5">
-               <motion.span animate={{ backgroundColor: "rgb(255,255,255)", }} className="h-1 w-1 rounded-2xl" />
+               <motion.span
+                  animate={{ backgroundColor: "rgb(255,255,255)", }}
+                  className="h-1 w-1 rounded-2xl"
+               />
             </div>
          )}
-
       </motion.div>
-      // </Link>
    );
 }
 
-const RingSpan = ({ wh, bgColor = "transparent", children, }: { wh: number, bgColor: string, children?: ReactNode }) =>
-   <span style={{ width: `${wh}px`, height: `${wh}px`, backgroundColor: bgColor }} className={`rounded-full center`}>
+const RingSpan = (
+   { wh, bgColor = "transparent", children }: { wh: number, bgColor: string, children?: ReactNode }
+) => (
+   <span
+      style={{ width: `${wh}px`, height: `${wh}px`, backgroundColor: bgColor }}
+      className={`rounded-full center`}
+   >
       {children}
-   </span>;
+   </span>
+);

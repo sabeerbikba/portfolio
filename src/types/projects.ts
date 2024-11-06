@@ -8,7 +8,7 @@ type GithubBranchesType = Endpoints['GET /repos/{owner}/{repo}/branches']['respo
 type GithubTagsType = Endpoints['GET /repos/{owner}/{repo}/tags']['response']['data'];
 type GitHubFileContentType = Endpoints['GET /repos/{owner}/{repo}/contents/{path}']['response']['data'];
 
-interface RepoDataType {
+type RepoDataType = {
    repoDetails: GitHubRepositoryType;
    languages: GitHubLanguagesType;
    contributors: GitHubContributorType;
@@ -20,6 +20,12 @@ interface RepoDataType {
 
 type PreviewTabOption = "README" | "MIT license";
 
+type ScreenContextType = {
+   previewProject: number;
+   previewApp: number;
+   setScreen: (value: number, view: "project" | "app") => void;
+};
+
 export type {
    GitHubRepositoryType,
    GitHubContributorType,
@@ -29,4 +35,5 @@ export type {
    GitHubFileContentType,
    RepoDataType,
    PreviewTabOption,
+   ScreenContextType,
 };

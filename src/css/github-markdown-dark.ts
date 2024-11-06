@@ -3,6 +3,8 @@
  * It is used within the ReadmeShadowContainer component to style the 
  * Markdown content rendered in a Shadow DOM. 
  *
+ * ## Why using .ts file insted of .css file
+ * 
  * **Issues Encountered:**
  * 
  * 1. **CSS Import Problems**: Attempts to import the CSS directly using 

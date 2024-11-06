@@ -4,14 +4,15 @@ const About = ({ number }: { number: [number, number] }) => {
    const [project, app] = number;
 
    return (
-      <div className="text-black" hidden={app !== 5}>
+      <div className="text-black bg-[#191919]" hidden={app !== 5 || project === 3}>
          {project === 1 ? <DevTools /> : <Rickshaw />}
       </div>
    )
 }
 
+// Mention this webiste designed to bigger screen that's why look ui not correct
 const DevTools = () => (
-   <div className="notes-body max-w-prose mx-auto p-6 bg-[#191919]">
+   <div className="notes-body max-w-prose mx-auto p-6">
       <h1>Dev.tools</h1>
 
       <h3>List of Features</h3>
@@ -80,7 +81,7 @@ const DevTools = () => (
 );
 
 const Rickshaw = () => (
-   <div className="notes-body max-w-prose mx-auto p-6 bg-[#191919]">
+   <div className="notes-body max-w-prose mx-auto p-6">
       <h1>Rickshaw</h1>
       <p>
          This is a paragraph demonstrating the <strong>typography styles</strong> applied
