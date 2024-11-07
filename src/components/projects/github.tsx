@@ -184,10 +184,8 @@ const InfoCard = ({
 };
 
 const Website = ({ link }: { link: string | null }) => {
-   const [ishoverd, setIsHoverd] = useState<boolean>(false);
-
    if (!link) return null;
-   // TODO: where is best for this before state or after of it 
+   const [ishoverd, setIsHoverd] = useState<boolean>(false);
 
    return (
       <a
@@ -269,12 +267,8 @@ const RepositoryOverview = ({
 
 
 const ReadmeShadowContainer = ({ readmeData }: { readmeData: GitHubFileContentType | null }) => {
-   const hostRef = useRef<HTMLDivElement | null>(null);
-
-
    if (readmeData === null || typeof readmeData !== "object" || !("content" in readmeData)) return null;
-   // TODO: which need to  come first return null or licese varable  
-
+   const hostRef = useRef<HTMLDivElement | null>(null);
    const markdown = atob(readmeData.content!);
    const htmlContent = marked.parse(markdown);
 

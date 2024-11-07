@@ -7,6 +7,7 @@ import { twMerge } from 'tailwind-merge'
 
 // TODO: give better name for varibales : component 
 
+// Inspiration URL: https://tanstack.com/query/latest
 // Source URL: https://github.com/TanStack/tanstack.com/blob/ee943e214df6f132a70120014096ed72775dee4b/app/server/sponsors.ts   
 
 export type Sponsor = {

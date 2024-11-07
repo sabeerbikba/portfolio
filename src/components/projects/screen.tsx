@@ -1,4 +1,5 @@
-import { useContext, useState, useEffect, createContext } from "react";
+import { useContext, useState, useEffect, createContext, ReactNode, useRef } from "react";
+import Link from "next/link";
 
 import { FloatingDock } from "../ui/floating-dock";
 import About from "./about";
@@ -15,6 +16,8 @@ import type {
     GithubTagsType,
     ScreenContextType
 } from "@/types/projects";
+import { useRouter } from "next/navigation";
+import { useModal } from "@/app/layout";
 
 const ScreenContext = createContext<ScreenContextType | null>(null);
 
@@ -36,13 +39,26 @@ const tabsLinks = [
 ];
 const repos = ["dev.tools", "rickshaw"];
 
+// const Screen = ({ modal }: { modal: ReactNode }) => {
 const Screen = () => {
+    const router = useRouter();
+    const contactRef = useRef<HTMLAnchorElement>(null);
+    const [contactClicked, setContactClicked] = useState(false);
+    // const [resolvedModal, setResolvedModal] = useState(null);
+    const [resolvedModal, setResolvedModal] = useState<ReactNode | null>(null);
+
     const [previewProject, setPreviewProject] = useState<number>(1); // 1 - 3
     const [previewApp, setPreviewApp] = useState<number>(4); // 4 - 6
     const [data, setData] = useState<RepoDataType[]>([]);
     const isValidProjectIndex: boolean = previewProject > 0 && previewProject <= data.length;
     const isDataAvilable: boolean = data.length !== 0;
     const safePreviewProject = Math.min(Math.max(previewProject, 0), tabsLinks.length) - 1;
+    const isContactFormVisible = previewProject === 3;
+    const { modal } = useModal();
+    console.log("modal in screen", modal);
+
+
+    // console.log("contactClicked, isContactFormVisible, modal", contactClicked, isContactFormVisible, modal);
 
     useEffect(() => {
         (async () => {
@@ -94,6 +110,43 @@ const Screen = () => {
         })();
     }, []);
 
+    useEffect(() => {
+        // if (!contactClicked) {
+        if (isContactFormVisible && contactRef.current) {
+            contactRef.current.click();
+        }
+        if (contactClicked && !isContactFormVisible) {
+            router.back();
+        }
+        // }
+    }, [isContactFormVisible, router]);
+
+    // useEffect(() => {
+    //     if (modal instanceof Promise) {
+    //         modal.then(setResolvedModal).catch((error) => {
+    //             console.error("Failed to load modal:", error);
+    //             setResolvedModal(null);  // Set to null if there's an error
+    //         });
+    //     } else {
+    //         setResolvedModal(modal);
+    //     }
+    // }, [modal]);
+
+    useEffect(() => {
+        // Check if `modal` is a Promise; if so, resolve it
+        if (modal instanceof Promise) {
+            modal
+                .then((result) => setResolvedModal(result))
+                .catch((error) => {
+                    console.error("Failed to load modal:", error);
+                    setResolvedModal(null); // Set to null in case of error
+                });
+        } else {
+            // If `modal` is not a Promise, set it directly
+            setResolvedModal(modal);
+        }
+    }, [modal]);
+
     const setScreen = (value: number, view: "project" | "app") => {
         const handlers = {
             project: setPreviewProject,
@@ -106,6 +159,13 @@ const Screen = () => {
     return (
         <ScreenContext.Provider value={{ previewProject, previewApp, setScreen }}>
             <FloatingDock />
+            <Link href="/contact" ref={contactRef} onClick={() => setContactClicked(true)} />
+            {/* {modal && <div className="modal-container">{modal}</div>} */}
+            {/* {modal ? <div className="modal-container">{modal}</div> : null} */}
+            {/* {modal && typeof modal === 'object' && <div className="modal-container">{modal}</div>} */}
+            {resolvedModal && <div className="modal-container">{resolvedModal}</div>}
+            {/* {resolvedModal && <div className="modal-container">{resolvedModal}</div>} */}
+
             <div className=" overflow-scroll h-full w-full">
                 <Website
                     tab={safePreviewProject}

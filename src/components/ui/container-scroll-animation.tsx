@@ -1,11 +1,11 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, ReactNode } from "react";
 import { useScroll, useTransform, motion, MotionValue } from "framer-motion";
 import Screen from "../projects/screen";
 
 // Source URL: https://ui.aceternity.com/components/container-scroll-animation
 
-const ContainerScroll = ({ titleComponent }: { titleComponent: string | React.ReactNode }) => {
+const ContainerScroll = ({ titleComponent, modal }: { titleComponent: string | ReactNode, modal: ReactNode }) => {
    const containerRef = useRef<any>(null);
    const { scrollYProgress } = useScroll({
       target: containerRef,
@@ -43,7 +43,7 @@ const ContainerScroll = ({ titleComponent }: { titleComponent: string | React.Re
             }}
          >
             <Header translate={translate} titleComponent={titleComponent} />
-            <Card rotate={rotate} translate={translate} scale={scale} />
+            <Card rotate={rotate} translate={translate} scale={scale} modal={modal} />
          </div>
       </div>
    );
@@ -63,10 +63,12 @@ const Header = ({ translate, titleComponent }: any) => (
 const Card = ({
    rotate,
    scale,
+   modal,
 }: {
    rotate: MotionValue<number>;
    scale: MotionValue<number>;
    translate: MotionValue<number>;
+   modal: ReactNode
 }) => (
    <motion.div
       style={{
@@ -77,7 +79,7 @@ const Card = ({
       }}
       className="max-w-5xl -mt-12 mx-auto h-[30rem] md:h-[40rem] w-full border-4 border-[#6C6C6C] p-2 md:p-6 bg-[#222222] rounded-[30px] shadow-2xl"
    >
-      <div className=" h-full w-full rounded-2xl bg-gray-100 dark:bg-zinc-900 md:rounded-2xl">
+      <div className=" h-full w-full rounded-2xl bg-gray-100 md:rounded-2xl">
          <Screen />
       </div>
    </motion.div>

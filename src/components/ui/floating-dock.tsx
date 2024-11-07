@@ -13,7 +13,6 @@ import { cn } from "@/lib/utils";
 import { project, app } from "@/data/projects";
 import { useScreen } from "../projects/screen"; // Context
 
-// Inspiration URL: https://tanstack.com/query/latest // TODO: i think placed wrong area
 // Source Code URL: https://ui.aceternity.com/components/floating-dock
 
 export const FloatingDock = () => {
@@ -54,8 +53,6 @@ const FloatingDockMobile = ({ hidden }: { hidden: boolean }) => {
 
    useEffect(() => {
       document.addEventListener('mousedown', handleClickOutside);
-
-      // TODO: is any diffrence between  retrn and return () => {}
       return () => {
          document.removeEventListener('mousedown', handleClickOutside);
       };
@@ -322,7 +319,7 @@ const IconContainer = ({
          style={{ width, height }}
          onMouseEnter={() => setHovered(true)}
          onMouseLeave={() => setHovered(false)}
-         className="aspect-square rounded-xl bg-transparent dark:bg-neutral-800"
+         className="aspect-square rounded-xl bg-transparent"
          onClick={onClick}
          role="button"
       >
@@ -332,7 +329,7 @@ const IconContainer = ({
                   initial={{ opacity: 0, y: 10, x: "-50%" }}
                   animate={{ opacity: 1, y: -12, x: "-50%" }}
                   exit={{ opacity: 0, y: 2, x: "-50%" }}
-                  className="px-2 py-0.5 whitespace-pre rounded-md bg-gray-100 border dark:bg-neutral-800 dark:border-neutral-900 dark:text-white border-gray-200 text-neutral-700 absolute left-1/2 -translate-x-1/2 -top-8 w-fit text-xs"
+                  className="px-2 py-0.5 whitespace-pre rounded-md bg-gray-100 border border-gray-200 text-neutral-700 absolute left-1/2 -translate-x-1/2 -top-8 w-fit text-xs"
                >
                   {title}
                </motion.div>
