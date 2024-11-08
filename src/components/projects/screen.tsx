@@ -1,5 +1,5 @@
-import { useContext, useState, useEffect, createContext, ReactNode, useRef } from "react";
-import Link from "next/link";
+import { useContext, useState, useEffect, createContext, ReactNode, useRef, isValidElement, createElement, Suspense } from "react";
+// import Link from "next/link";
 
 import { FloatingDock } from "../ui/floating-dock";
 import About from "./about";
@@ -17,7 +17,14 @@ import type {
     ScreenContextType
 } from "@/types/projects";
 import { useRouter } from "next/navigation";
-import { useModal } from "@/app/layout";
+// import {
+// useModal,
+// ModalContext
+// } from "@/app/layout";
+import ContactForm from "../contact-form";
+
+// const LazyLoadedComponent = dynamic(() => import("@/app/layout"))
+
 
 const ScreenContext = createContext<ScreenContextType | null>(null);
 
@@ -42,10 +49,10 @@ const repos = ["dev.tools", "rickshaw"];
 // const Screen = ({ modal }: { modal: ReactNode }) => {
 const Screen = () => {
     const router = useRouter();
-    const contactRef = useRef<HTMLAnchorElement>(null);
+    // const contactRef = useRef<HTMLAnchorElement>(null);
     const [contactClicked, setContactClicked] = useState(false);
     // const [resolvedModal, setResolvedModal] = useState(null);
-    const [resolvedModal, setResolvedModal] = useState<ReactNode | null>(null);
+    // const [resolvedModal, setResolvedModal] = useState<ReactNode | null>(null);
 
     const [previewProject, setPreviewProject] = useState<number>(1); // 1 - 3
     const [previewApp, setPreviewApp] = useState<number>(4); // 4 - 6
@@ -54,98 +61,81 @@ const Screen = () => {
     const isDataAvilable: boolean = data.length !== 0;
     const safePreviewProject = Math.min(Math.max(previewProject, 0), tabsLinks.length) - 1;
     const isContactFormVisible = previewProject === 3;
-    const { modal } = useModal();
-    console.log("modal in screen", modal);
+    // const modal = useModal();
+    // const Modal = useContext(ModalContext);
 
 
     // console.log("contactClicked, isContactFormVisible, modal", contactClicked, isContactFormVisible, modal);
 
-    useEffect(() => {
-        (async () => {
-            const fetchPromises = repos.map(repo => {
-                const baseUrl = `https://api.github.com/repos/${githubProfileName}/${repo}`;
-                return Promise.all([
-                    fetch(baseUrl).then(res => res.json() as Promise<GitHubRepositoryType>),
-                    fetch(`${baseUrl}/languages`).then(res => res.json() as Promise<GitHubLanguagesType>),
-                    fetch(`${baseUrl}/contributors`).then(res => res.json() as Promise<GitHubContributorType>),
-                    fetch(`${baseUrl}/branches`).then(res => res.json() as Promise<GithubBranchesType>),
-                    fetch(`${baseUrl}/tags`).then(res => res.json() as Promise<GithubTagsType>),
-                    fetch(`${baseUrl}/contents/LICENSE`)
-                        .then(async res => {
-                            const data = await res.json();
-                            return data.message === "Not Found" ? null : (data as GitHubFileContentType);
-                        }), // License
-                    fetch(`${baseUrl}/contents/README.md`)
-                        .then(async res => {
-                            const data = await res.json();
-                            return data.message === "Not Found" ? null : (data as GitHubFileContentType);
-                        }) // README
-                ]);
-            });
+    // useEffect(() => {
+    //     (async () => {
+    //         const fetchPromises = repos.map(repo => {
+    //             const baseUrl = `https://api.github.com/repos/${githubProfileName}/${repo}`;
+    //             return Promise.all([
+    //                 fetch(baseUrl).then(res => res.json() as Promise<GitHubRepositoryType>),
+    //                 fetch(`${baseUrl}/languages`).then(res => res.json() as Promise<GitHubLanguagesType>),
+    //                 fetch(`${baseUrl}/contributors`).then(res => res.json() as Promise<GitHubContributorType>),
+    //                 fetch(`${baseUrl}/branches`).then(res => res.json() as Promise<GithubBranchesType>),
+    //                 fetch(`${baseUrl}/tags`).then(res => res.json() as Promise<GithubTagsType>),
+    //                 fetch(`${baseUrl}/contents/LICENSE`)
+    //                     .then(async res => {
+    //                         const data = await res.json();
+    //                         return data.message === "Not Found" ? null : (data as GitHubFileContentType);
+    //                     }), // License
+    //                 fetch(`${baseUrl}/contents/README.md`)
+    //                     .then(async res => {
+    //                         const data = await res.json();
+    //                         return data.message === "Not Found" ? null : (data as GitHubFileContentType);
+    //                     }) // README
+    //             ]);
+    //         });
 
-            try {
-                const results = await Promise.all(fetchPromises);
-                const formattedData = results.map(([
-                    repoDetails,
-                    languages,
-                    contributors,
-                    branches,
-                    tags,
-                    license,
-                    readme
-                ]) => ({
-                    repoDetails,
-                    languages,
-                    contributors,
-                    branches,
-                    tags,
-                    license,
-                    readme,
-                }));
-                setData(formattedData);
+    //         try {
+    //             const results = await Promise.all(fetchPromises);
+    //             const formattedData = results.map(([
+    //                 repoDetails,
+    //                 languages,
+    //                 contributors,
+    //                 branches,
+    //                 tags,
+    //                 license,
+    //                 readme
+    //             ]) => ({
+    //                 repoDetails,
+    //                 languages,
+    //                 contributors,
+    //                 branches,
+    //                 tags,
+    //                 license,
+    //                 readme,
+    //             }));
+    //             setData(formattedData);
 
-            } catch (error) {
-                console.error('Error fetching data from GitHub API:', error);
-            }
-        })();
-    }, []);
+    //         } catch (error) {
+    //             console.error('Error fetching data from GitHub API:', error);
+    //         }
+    //     })();
+    // }, []);
 
     useEffect(() => {
         // if (!contactClicked) {
-        if (isContactFormVisible && contactRef.current) {
-            contactRef.current.click();
+        if (isContactFormVisible) {
+            // contactRef.current.click();
+            // router.push('/contact', { shallow: true });
+            // router.replace('/contact', { shallow: true });
+            window.history.pushState(null, '', '/contact');
+            console.log('router.push()')
+            setContactClicked(true);
         }
         if (contactClicked && !isContactFormVisible) {
-            router.back();
+            console.log('router.back()')
+            // router.back();
+            window.history.pushState(null, '', '/');
+            setContactClicked(false);
         }
         // }
     }, [isContactFormVisible, router]);
 
-    // useEffect(() => {
-    //     if (modal instanceof Promise) {
-    //         modal.then(setResolvedModal).catch((error) => {
-    //             console.error("Failed to load modal:", error);
-    //             setResolvedModal(null);  // Set to null if there's an error
-    //         });
-    //     } else {
-    //         setResolvedModal(modal);
-    //     }
-    // }, [modal]);
-
-    useEffect(() => {
-        // Check if `modal` is a Promise; if so, resolve it
-        if (modal instanceof Promise) {
-            modal
-                .then((result) => setResolvedModal(result))
-                .catch((error) => {
-                    console.error("Failed to load modal:", error);
-                    setResolvedModal(null); // Set to null in case of error
-                });
-        } else {
-            // If `modal` is not a Promise, set it directly
-            setResolvedModal(modal);
-        }
-    }, [modal]);
 
     const setScreen = (value: number, view: "project" | "app") => {
         const handlers = {
@@ -159,13 +149,15 @@ const Screen = () => {
     return (
         <ScreenContext.Provider value={{ previewProject, previewApp, setScreen }}>
             <FloatingDock />
-            <Link href="/contact" ref={contactRef} onClick={() => setContactClicked(true)} />
-            {/* {modal && <div className="modal-container">{modal}</div>} */}
-            {/* {modal ? <div className="modal-container">{modal}</div> : null} */}
-            {/* {modal && typeof modal === 'object' && <div className="modal-container">{modal}</div>} */}
-            {resolvedModal && <div className="modal-container">{resolvedModal}</div>}
-            {/* {resolvedModal && <div className="modal-container">{resolvedModal}</div>} */}
-
+            {/* <Link href="/contact" ref={contactRef} onClick={() => setContactClicked(true)} /> */}
+            {/* {modal ? modal : null} */}
+            {/* <Suspense fallback={<div>loading...</div>}> */}
+            {/* {modal} */}
+            {/* {Modal} */}
+            {/* <Modal data={Modal} /> */}
+            {/* </Suspense> */}
+            {/* {modal} */}
+            {isContactFormVisible && <ContactForm />}
             <div className=" overflow-scroll h-full w-full">
                 <Website
                     tab={safePreviewProject}

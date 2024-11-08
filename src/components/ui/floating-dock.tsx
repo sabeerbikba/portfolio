@@ -175,8 +175,8 @@ const FloatingDockDesktop = ({ hidden }: { hidden: boolean }) => {
    let mouseX = useMotionValue(Infinity);
    const inViewRef = useRef(null);
    const inView = useInView(inViewRef, { once: false });
-   const [isHovered, setIsHovered] = useState<boolean>(false);
-   const [isVisible, setIsVisible] = useState<boolean>(false);
+   const [isHovered, setIsHovered] = useState<boolean>(true);
+   const [isVisible, setIsVisible] = useState<boolean>(true);
    const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
    const {
       previewProject: previewProjectNum,
@@ -184,37 +184,37 @@ const FloatingDockDesktop = ({ hidden }: { hidden: boolean }) => {
       setScreen: screen,
    } = useScreen(); // Context
 
-   useEffect(() => {
-      if (isHovered) {
-         setIsVisible(true);
-         if (timer) {
-            clearTimeout(timer);
-            setTimer(null);
-         }
-      } else {
-         delay()
-      }
-      return () => {
-         if (timer) {
-            clearTimeout(timer);
-         }
-      };
-   }, [isHovered]);
+   // useEffect(() => {
+   //    if (isHovered) {
+   //       setIsVisible(true);
+   //       if (timer) {
+   //          clearTimeout(timer);
+   //          setTimer(null);
+   //       }
+   //    } else {
+   //       delay()
+   //    }
+   //    return () => {
+   //       if (timer) {
+   //          clearTimeout(timer);
+   //       }
+   //    };
+   // }, [isHovered]);
 
-   useEffect(() => {
-      console.log("inView: ", inView)
-      if (inView) {
-         setIsVisible(true);
-         delay();
-      }
-   }, [inView]);
+   // useEffect(() => {
+   //    console.log("inView: ", inView)
+   //    if (inView) {
+   //       setIsVisible(true);
+   //       delay();
+   //    }
+   // }, [inView]);
 
-   function delay() {
-      const newTimer = setTimeout(() => {
-         setIsVisible(false);
-      }, 5000);
-      setTimer(newTimer);
-   }
+   // function delay() {
+   //    const newTimer = setTimeout(() => {
+   //       setIsVisible(false);
+   //    }, 5000);
+   //    setTimer(newTimer);
+   // }
 
    // TODO: need to test in dark mode
    // in dark mode it looks like satureated color 
@@ -347,9 +347,10 @@ const IconContainer = ({
          </motion.div>
          {isHoverdOnDock && (
             <div className="center mt-0.5">
-               <motion.span
-                  animate={{ backgroundColor: "rgb(255,255,255)", }}
-                  className="h-1 w-1 rounded-2xl"
+               <span
+                  // animate={{ backgroundColor: "rgb(255,255,255)", }}
+
+                  className="h-1 w-1 rounded-2xl bg-slate-500 mix-blend-color "
                />
             </div>
          )}
