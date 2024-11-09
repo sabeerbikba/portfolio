@@ -18,7 +18,7 @@ const Home = ({ modal }: { modal?: ReactNode }) => {
     <>
       <div className="flex flex-col items-center justify-end h-[25rem] bg-gradient-to-b from-white-400 via-gray-100 to-white-400">
         {/* <p className="text-neutral-600 dark:text-neutral-200 text-xs sm:text-base  "> */}
-        <p className="text-xs sm:text-base md:text-xl lg:text:3xl xl:text-5xl font-bold dark:text-white text-black">
+        <p className="text-xs sm:text-base md:text-xl lg:text:3xl xl:text-5xl font-bold text-black">
           The road to freedom starts from here
         </p>
         {/* </p> */}
@@ -44,7 +44,7 @@ const Home = ({ modal }: { modal?: ReactNode }) => {
         /> */}
 
         <div className="py-8">
-          <div className="text-4xl mx-auto font-normal text-neutral-600 dark:text-neutral-400">
+          <div className="text-4xl mx-auto font-normal text-neutral-600">
             Let's build
             {/* Need to use &ampos something to ignore build error  */}
             <FlipWords words={["better", "cute", "beautiful", "modern"]} /> <br />
@@ -53,7 +53,7 @@ const Home = ({ modal }: { modal?: ReactNode }) => {
         </div>
 
         <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 space-x-0 md:space-x-4">
-          <button className="w-40 h-10 rounded-xl bg-black border dark:border-white border-transparent text-white text-sm">
+          <button className="w-40 h-10 rounded-xl bg-black border border-transparent text-white text-sm">
             Join now
           </button>
           {/* <button className="w-40 h-10 rounded-xl bg-white text-black border border-black  text-sm">
@@ -69,7 +69,7 @@ const Home = ({ modal }: { modal?: ReactNode }) => {
           modal={modal}
           titleComponent={
             <>
-              <h1 className="text-4xl font-semibold text-black dark:text-white">
+              <h1 className="text-4xl font-semibold text-black">
                 Unleash the power of <br />
                 <span className="text-4xl md:text-[6rem] font-bold mt-1 leading-none">
                   Scroll Animations
@@ -114,28 +114,47 @@ const Home = ({ modal }: { modal?: ReactNode }) => {
       </div>
       <footer>
         {/* nspiration URL: https://ui.aceternity.com/ */}
-        <div className="border-t border-neutral-100 dark:border-white/[0.1] px-8 py-20 bg-white dark:bg-brand">
+        <div className="border-t border-neutral-100 px-8 py-20 bg-white">
           <div className="max-w-7xl mx-auto text-sm text-neutral-500 flex sm:flex-row flex-col justify-between items-start ">
             <div>
               <div className="mr-4  md:flex mb-4">
-                <Link className="center space-x-2 text-2xl font-bold text-center text-neutral-600 dark:text-gray-100 selection:bg-emerald-500 mr-10 py-0" href="/contact">
+                <a className="center space-x-2 text-2xl font-bold text-center text-neutral-600 selection:bg-emerald-500 mr-10 py-0" href="/contact">
                   <div className="relative h-8 w-8 md:h-6 md:w-6 bg-black border border-slate-800  text-white   center rounded-md text-sm antialiased">
                     <div className="absolute h-10 w-full bg-white/[0.2] -top-10 inset-x-0 rounded-full blur-xl"></div>
-                    <div className="text-sm  text-emerald-500 relative z-20"><img alt="Logo" loading="lazy" width="50" height="50" decoding="async" data-nimg="1" className="block dark:hidden" srcSet="/_next/image?url=%2Flogo.png&amp;w=64&amp;q=75 1x, /_next/image?url=%2Flogo.png&amp;w=128&amp;q=75 2x" src="/_next/image?url=%2Flogo.png&amp;w=128&amp;q=75" style={{ color: "transparent" }} />
-                      <img alt="Logo" loading="lazy" width="50" height="50" decoding="async" data-nimg="1" className="hidden dark:block" srcSet="/_next/image?url=%2Flogo-dark.png&amp;w=64&amp;q=75 1x, /_next/image?url=%2Flogo-dark.png&amp;w=128&amp;q=75 2x" src="/_next/image?url=%2Flogo-dark.png&amp;w=128&amp;q=75" style={{ color: "transparent" }} /></div>
+                    <div className="text-sm  text-emerald-500 relative z-20">
+                      <img alt="Logo" loading="lazy" width="50" height="50" decoding="async" data-nimg="1" className="hidden" srcSet="/_next/image?url=%2Flogo-dark.png&amp;w=64&amp;q=75 1x, /_next/image?url=%2Flogo-dark.png&amp;w=128&amp;q=75 2x" src="/_next/image?url=%2Flogo-dark.png&amp;w=128&amp;q=75" style={{ color: "transparent" }} />
+                    </div>
                   </div>
                   <div className="flex flex-col">
-                    <h1 className="text-black dark:text-white font-sans"> Aceternity UI</h1>
+                    <h1 className="text-black font-sans"> Aceternity UI</h1>
                   </div>
-                </Link>
+                </a>
               </div>
-              <div>A product by <a target="__blank" className="dark:text-sky-500 text-neutral-600 font-medium" href="https://aceternity.com">Aceternity</a></div>
-              <div className="mt-2">Building in public at <a className="dark:text-sky-500 font-medium text-neutral-600" target="__blank" href="https://twitter.com/mannupaaji">@mannupaaji</a></div>
+              <div>
+                A product by
+                <a target="__blank" className="text-neutral-600 font-medium" href="https://aceternity.com">Aceternity</a>
+                I</div>
+              <div className="mt-2">
+                Building in public at{" "}
+                <a className="font-medium text-neutral-600" target="__blank" href="https://twitter.com/mannupaaji">@mannupaaji</a></div>
             </div>
             <div className="grid grid-cols-3 gap-10 items-start mt-10 md:mt-0">
-              <div className="flex justify-center space-y-4 flex-col mt-4"><a className="transition-colors hover:text-foreground/80 text-foreground/60" href="/pricing">Pricing</a><a className="transition-colors hover:text-foreground/80 text-foreground/60" href="/components">Components</a><a className="transition-colors hover:text-foreground/80 text-foreground/60" href="/templates">Templates</a><a className="transition-colors hover:text-foreground/80 text-foreground/60" href="/categories">Categories</a><a className="transition-colors hover:text-foreground/80 text-foreground/60" href="/blog">Blog</a><a className="transition-colors hover:text-foreground/80 text-foreground/60" href="/tools/box-shadows">Box Shadows</a></div>
-              <div className="flex justify-center space-y-4 flex-col mt-4"><a target="__blank" className="transition-colors hover:text-foreground/80 text-foreground/60" href="https://twitter.com/aceternitylabs">Twitter</a><a target="__blank" className="transition-colors hover:text-foreground/80 text-foreground/60" href="https://discord.gg/ftZbQvCdN7">Discord</a></div>
-              <div className="flex justify-center space-y-4 flex-col mt-4"><a target="__blank" className="transition-colors hover:text-foreground/80 text-foreground/60" href="https://pro.aceternity.com">Aceternity UI Pro</a><a target="__blank" className="transition-colors hover:text-foreground/80 text-foreground/60" href="https://aceternity.com">Aceternity</a></div>
+              <div className="flex justify-center space-y-4 flex-col mt-4">
+                <a className="transition-colors hover:text-foreground/80 text-foreground/60" href="/pricing">Pricing</a>
+                <a className="transition-colors hover:text-foreground/80 text-foreground/60" href="/components">Components</a>
+                <a className="transition-colors hover:text-foreground/80 text-foreground/60" href="/templates">Templates</a>
+                <a className="transition-colors hover:text-foreground/80 text-foreground/60" href="/categories">Categories</a>
+                <a className="transition-colors hover:text-foreground/80 text-foreground/60" href="/blog">Blog</a>
+                <a className="transition-colors hover:text-foreground/80 text-foreground/60" href="/tools/box-shadows">Box Shadows</a>
+              </div>
+              <div className="flex justify-center space-y-4 flex-col mt-4">
+                <a target="__blank" className="transition-colors hover:text-foreground/80 text-foreground/60" href="https://twitter.com/aceternitylabs">Twitter</a>
+                <a target="__blank" className="transition-colors hover:text-foreground/80 text-foreground/60" href="https://discord.gg/ftZbQvCdN7">Discord</a>
+              </div>
+              <div className="flex justify-center space-y-4 flex-col mt-4">
+                <a target="__blank" className="transition-colors hover:text-foreground/80 text-foreground/60" href="https://pro.aceternity.com">Aceternity UIPro</a>
+                <a target="__blank" className="transition-colors hover:text-foreground/80 text-foreground/60" href="https://aceternity.com">Aceternity</a>
+              </div>
             </div>
           </div>
         </div>

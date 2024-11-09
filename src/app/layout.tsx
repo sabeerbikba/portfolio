@@ -58,9 +58,9 @@ const RootLayout = ({
           </nav>
 
           {/* Radial gradient for the container to give a faded look */}
-          <div className="w-full h-full dark:bg-black bg-white dark:bg-dot-white/[0.2] bg-dot-black/[0.2] relative ">
-            <div className="absolute pointer-events-none inset-0 dark:bg-black bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
-            <div className="relative z-20 bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 pb-8">
+          <div className="w-full h-full bg-white bg-dot-black/[0.2] relative ">
+            <div className="absolute pointer-events-none inset-0 bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]" />
+            <div className="relative z-20 bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500">
 
               {/* <ModalContext.Provider value={modal}> */}
               {children}
