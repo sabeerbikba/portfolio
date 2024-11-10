@@ -40,7 +40,7 @@ const ContactForm = ({ className }: { className?: string }) => {
          <form className="my-8" onSubmit={handleSubmit}>
             <div className={cn(className && "max-w-xl mx-auto")}>
                <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
-                  <LabelInputContainer className="">
+                  <LabelInputContainer>
                      <Label htmlFor="name">Name</Label>
                      <Input id="name" placeholder="Your name" type="text" autoComplete="on" required />
                   </LabelInputContainer>
@@ -55,7 +55,7 @@ const ContactForm = ({ className }: { className?: string }) => {
                </LabelInputContainer>
 
                <button
-                  className="bg-gradient-to-br relative group/btn from-black to-neutral-600 block w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset]"
+                  className="bg-gradient-to-br relative group/btn from-black to-neutral-600 block w-full text-white rounded-md h-11 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset]"
                   type="submit"
                >
                   Sign up &rarr;

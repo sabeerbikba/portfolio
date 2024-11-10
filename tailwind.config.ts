@@ -54,15 +54,6 @@ const config: Config = {
         { values: flattenColorPalette(theme("backgroundColor")), type: "color" }
       );
     },
-    ({ addUtilities }: any) => {
-      addUtilities({
-        '.center': {
-          'display': 'flex',
-          'align-items': 'center',
-          'justify-content': 'center',
-        },
-      });
-    },
     ({ addBase, theme }: any) => {
       let allColors = flattenColorPalette(theme("colors"));
       let newVars = Object.fromEntries(
