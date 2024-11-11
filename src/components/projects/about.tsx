@@ -4,7 +4,7 @@ const About = ({ number }: { number: [number, number] }) => {
    const [project, app] = number;
 
    return (
-      <div className="text-black bg-[#191919]" hidden={app !== 5 || project === 3}>
+      <div className="text-black bg-[#191919]" hidden={app !== 4}>
          {project === 1 ? <DevTools /> : <Rickshaw />}
       </div>
    )

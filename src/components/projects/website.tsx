@@ -9,6 +9,10 @@ const Website = ({
       Array.from({ length: tabsLinks.length }, (_, index) => index === 0)
    );
 
+   console.log('tab', 'hideen');
+   console.log(tab);
+   console.log(hidden);
+
    useEffect(() => {
       if (!loaded[tab]) {
          setLoaded((prevLoaded) => {

@@ -1,41 +1,41 @@
-const project = [
+const githubProfileName: string = "sabeerbikba";
+
+const projects = [
    {
+      // 1
       title: "Dev.tools",
+      repo: `${githubProfileName}/dev.tools`,
       icon: "/images/Vector.png",
-      website: "http://devtools-sabeerbikba.vercel.app/",
+      website: "https://devtools-sabeerbikba.vercel.app/",
    },
    {
       // 2
       title: "Rickshaw",
+      repo: `${githubProfileName}/rickshaw`,
       icon: "/images/location.png",
-      website: "http://honnavarrickshawservice.vercel.app/",
-   },
-   {
-      // 3
-      title: "Contact",
-      icon: "/images/add.png",
+      website: "https://honnavarrickshawservice.vercel.app/",
    },
 ];
 
-const app = [
+const apps = [
    {
-      // 4
+      // 3
       title: "Website",
       icon: "/images/chromium.png",
       href: "#",
    },
    {
-      // 5
+      // 4
       title: "About",
       icon: "/images/about.png",
       href: "#",
    },
    {
-      // 6
+      // 6 
       title: "GitHub",
       icon: "/images/github.png",
       href: "#",
    },
 ];
 
-export { project, app };
+export { projects, apps };

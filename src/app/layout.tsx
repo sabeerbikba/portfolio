@@ -6,10 +6,6 @@ import "./globals.css";
 import { FloatingNav } from "@/components/ui/floating-navbar";
 import Link from "next/link";
 
-// type ModalContextType = {
-//   modal: ReactNode;
-// };
-
 // export const metadata: Metadata = {
 //   title: "sabeer bikba portfolio",
 //   description: "//TODO: add descreption ",
@@ -35,18 +31,15 @@ import Link from "next/link";
 //   },
 // ];
 
-// const ModalContext = createContext<ReactNode | null>(null);
 
 
 const RootLayout = ({
   children,
-  // modal,
+  modal,
 }: Readonly<{
   children: ReactNode;
-  // modal: ReactNode | null;
+  modal: ReactNode;
 }>): JSX.Element => {
-  // console.log("modal(root)", modal);
-  // const name = "sabeer bikba";
   return (
     <html lang="en">
       <body>
@@ -62,9 +55,7 @@ const RootLayout = ({
             <div className="absolute pointer-events-none inset-0 bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]" />
             <div className="relative z-20 bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500">
 
-              {/* <ModalContext.Provider value={modal}> */}
               {children}
-              {/* </ModalContext.Provider> */}
 
             </div>
           </div>
@@ -83,7 +74,7 @@ const RootLayout = ({
           </div>
           </div> */}
         </main>
-
+        {modal}
       </body>
     </html >
   );

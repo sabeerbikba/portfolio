@@ -10,7 +10,7 @@ import {
 } from "framer-motion";
 
 import { cn } from "@/lib/utils";
-import { project, app } from "@/data/projects";
+import { projects, apps } from "@/data/projects";
 import { useScreen } from "../projects/screen"; // Context
 
 // Source Code URL: https://ui.aceternity.com/components/floating-dock
@@ -80,7 +80,7 @@ const FloatingDockMobile = ({ hidden }: { hidden: boolean }) => {
                >
                   {/* Column 1 */}
                   <div className="w-1/3 h-full py-[9px] border-white">
-                     {project.map((item, id) => {
+                     {projects.map((item, id) => {
                         const view = id + 1;
                         return (
                            <button
@@ -104,8 +104,8 @@ const FloatingDockMobile = ({ hidden }: { hidden: boolean }) => {
 
                   {/* Column 2 */}
                   <div className="w-1/3 h-full py-[9px] border-white">
-                     {app.map((item, id) => {
-                        const view = id + 4;
+                     {apps.map((item, id) => {
+                        const view = id + 1 + projects.length;
                         return (
                            <button
                               key={item.title}
@@ -123,7 +123,7 @@ const FloatingDockMobile = ({ hidden }: { hidden: boolean }) => {
                      })}
                   </div>
 
-                  {/* Placeholder Column 3 */}
+                  {/* Column 3: This part for open close dock button */}
                   <div className="w-1/3 h-full border-white" />
                </motion.div>
             )}
@@ -172,11 +172,11 @@ const FloatingDockMobile = ({ hidden }: { hidden: boolean }) => {
 }
 
 const FloatingDockDesktop = ({ hidden }: { hidden: boolean }) => {
-   let mouseX = useMotionValue(Infinity);
    const inViewRef = useRef(null);
+   let mouseX = useMotionValue(Infinity);
    const inView = useInView(inViewRef, { once: false });
-   const [isHovered, setIsHovered] = useState<boolean>(true);
-   const [isVisible, setIsVisible] = useState<boolean>(true);
+   const [isHovered, setIsHovered] = useState<boolean>(false);
+   const [isVisible, setIsVisible] = useState<boolean>(false);
    const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
    const {
       previewProject: previewProjectNum,
@@ -184,37 +184,37 @@ const FloatingDockDesktop = ({ hidden }: { hidden: boolean }) => {
       setScreen: screen,
    } = useScreen(); // Context
 
-   // useEffect(() => {
-   //    if (isHovered) {
-   //       setIsVisible(true);
-   //       if (timer) {
-   //          clearTimeout(timer);
-   //          setTimer(null);
-   //       }
-   //    } else {
-   //       delay()
-   //    }
-   //    return () => {
-   //       if (timer) {
-   //          clearTimeout(timer);
-   //       }
-   //    };
-   // }, [isHovered]);
+   useEffect(() => {
+      if (isHovered) {
+         setIsVisible(true);
+         if (timer) {
+            clearTimeout(timer);
+            setTimer(null);
+         }
+      } else {
+         delay()
+      }
+      return () => {
+         if (timer) {
+            clearTimeout(timer);
+         }
+      };
+   }, [isHovered]);
 
-   // useEffect(() => {
-   //    console.log("inView: ", inView)
-   //    if (inView) {
-   //       setIsVisible(true);
-   //       delay();
-   //    }
-   // }, [inView]);
+   useEffect(() => {
+      console.log("inView: ", inView)
+      if (inView) {
+         setIsVisible(true);
+         delay();
+      }
+   }, [inView]);
 
-   // function delay() {
-   //    const newTimer = setTimeout(() => {
-   //       setIsVisible(false);
-   //    }, 5000);
-   //    setTimer(newTimer);
-   // }
+   function delay() {
+      const newTimer = setTimeout(() => {
+         setIsVisible(false);
+      }, 5000);
+      setTimer(newTimer);
+   }
 
    // TODO: need to test in dark mode
    // in dark mode it looks like satureated color 
@@ -243,7 +243,7 @@ const FloatingDockDesktop = ({ hidden }: { hidden: boolean }) => {
          >
             {isVisible && (
                <>
-                  {project.map((item, id) => {
+                  {projects.map((item, id) => {
                      const view = id + 1;
 
                      return (
@@ -258,9 +258,8 @@ const FloatingDockDesktop = ({ hidden }: { hidden: boolean }) => {
                      )
                   })}
                   <div className="border-x-[1.9px] border-gray-700 rounded-2xl h-8" />
-                  {app.map((item, id) => {
-                     const view = id + 4;
-
+                  {apps.map((item, id) => {
+                     const view = id + 1 + projects.length;
                      return (
                         <IconContainer
                            mouseX={mouseX}

@@ -118,7 +118,7 @@ const Home = ({ modal }: { modal?: ReactNode }) => {
           <div className="max-w-7xl mx-auto text-sm text-neutral-500 flex sm:flex-row flex-col justify-between items-start ">
             <div>
               <div className="mr-4  md:flex mb-4">
-                <a className="center space-x-2 text-2xl font-bold text-center text-neutral-600 selection:bg-emerald-500 mr-10 py-0" href="/contact">
+                <Link className="center space-x-2 text-2xl font-bold text-center text-neutral-600 selection:bg-emerald-500 mr-10 py-0" href="/contact">
                   <div className="relative h-8 w-8 md:h-6 md:w-6 bg-black border border-slate-800  text-white   center rounded-md text-sm antialiased">
                     <div className="absolute h-10 w-full bg-white/[0.2] -top-10 inset-x-0 rounded-full blur-xl"></div>
                     <div className="text-sm  text-emerald-500 relative z-20">
@@ -128,7 +128,7 @@ const Home = ({ modal }: { modal?: ReactNode }) => {
                   <div className="flex flex-col">
                     <h1 className="text-black font-sans"> Aceternity UI</h1>
                   </div>
-                </a>
+                </Link>
               </div>
               <div>
                 A product by

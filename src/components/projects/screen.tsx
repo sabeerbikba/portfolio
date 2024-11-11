@@ -1,10 +1,15 @@
-import { useContext, useState, useEffect, createContext, ReactNode, useRef, isValidElement, createElement, Suspense } from "react";
-// import Link from "next/link";
+import {
+    useContext,
+    useState,
+    useEffect,
+    createContext,
+} from "react";
 
-import { FloatingDock } from "../ui/floating-dock";
+import { projects } from "@/data/projects";
 import About from "./about";
 import Github from "./github";
 import Website from "./website";
+import { FloatingDock } from "../ui/floating-dock";
 
 import type {
     RepoDataType,
@@ -16,15 +21,6 @@ import type {
     GithubTagsType,
     ScreenContextType
 } from "@/types/projects";
-import { useRouter } from "next/navigation";
-// import {
-// useModal,
-// ModalContext
-// } from "@/app/layout";
-import ContactForm from "../contact-form";
-
-// const LazyLoadedComponent = dynamic(() => import("@/app/layout"))
-
 
 const ScreenContext = createContext<ScreenContextType | null>(null);
 
@@ -36,41 +32,26 @@ const useScreen = () => {
     return context;
 };
 
-
-// TODO: project need to be shown based on 
-
-const githubProfileName: string = "sabeerbikba";
-const tabsLinks = [
-    "https://devtools-sabeerbikba.vercel.app/",
-    "http://honnavarrickshawservice.vercel.app/",
-];
-const repos = ["dev.tools", "rickshaw"];
-
-// const Screen = ({ modal }: { modal: ReactNode }) => {
 const Screen = () => {
-    const router = useRouter();
-    // const contactRef = useRef<HTMLAnchorElement>(null);
-    const [contactClicked, setContactClicked] = useState(false);
-    // const [resolvedModal, setResolvedModal] = useState(null);
-    // const [resolvedModal, setResolvedModal] = useState<ReactNode | null>(null);
-
-    const [previewProject, setPreviewProject] = useState<number>(1); // 1 - 3
-    const [previewApp, setPreviewApp] = useState<number>(4); // 4 - 6
+    const [previewProject, setPreviewProject] = useState<number>(1); // 1 - 2
+    const [previewApp, setPreviewApp] = useState<number>(3); // 3 - 5
     const [data, setData] = useState<RepoDataType[]>([]);
-    const isValidProjectIndex: boolean = previewProject > 0 && previewProject <= data.length;
     const isDataAvilable: boolean = data.length !== 0;
-    const safePreviewProject = Math.min(Math.max(previewProject, 0), tabsLinks.length) - 1;
-    const isContactFormVisible = previewProject === 3;
-    // const modal = useModal();
-    // const Modal = useContext(ModalContext);
+    const previewProjectIndex = previewProject - 1;
 
+    const setScreen = (value: number, view: "project" | "app") => {
+        const handlers = {
+            project: setPreviewProject,
+            app: setPreviewApp,
+        };
 
-    // console.log("contactClicked, isContactFormVisible, modal", contactClicked, isContactFormVisible, modal);
+        handlers[view](value);
+    };
 
     // useEffect(() => {
     //     (async () => {
-    //         const fetchPromises = repos.map(repo => {
-    //             const baseUrl = `https://api.github.com/repos/${githubProfileName}/${repo}`;
+    //         const fetchPromises = projects.map(project => {
+    //             const baseUrl = `https://api.github.com/repos/${project.repo}`;
     //             return Promise.all([
     //                 fetch(baseUrl).then(res => res.json() as Promise<GitHubRepositoryType>),
     //                 fetch(`${baseUrl}/languages`).then(res => res.json() as Promise<GitHubLanguagesType>),
@@ -117,58 +98,20 @@ const Screen = () => {
     //     })();
     // }, []);
 
-    useEffect(() => {
-        // if (!contactClicked) {
-        if (isContactFormVisible) {
-            // contactRef.current.click();
-            // router.push('/contact', { shallow: true });
-            // router.replace('/contact', { shallow: true });
-            window.history.pushState(null, '', '/contact');
-            console.log('router.push()')
-            setContactClicked(true);
-        }
-        if (contactClicked && !isContactFormVisible) {
-            console.log('router.back()')
-            // router.back();
-            window.history.pushState(null, '', '/');
-            setContactClicked(false);
-        }
-        // }
-    }, [isContactFormVisible, router]);
-
-
-    const setScreen = (value: number, view: "project" | "app") => {
-        const handlers = {
-            project: setPreviewProject,
-            app: setPreviewApp,
-        };
-
-        handlers[view](value);
-    };
-
     return (
         <ScreenContext.Provider value={{ previewProject, previewApp, setScreen }}>
             <FloatingDock />
-            {/* <Link href="/contact" ref={contactRef} onClick={() => setContactClicked(true)} /> */}
-            {/* {modal ? modal : null} */}
-            {/* <Suspense fallback={<div>loading...</div>}> */}
-            {/* {modal} */}
-            {/* {Modal} */}
-            {/* <Modal data={Modal} /> */}
-            {/* </Suspense> */}
-            {/* {modal} */}
-            {isContactFormVisible && <ContactForm />}
-            <div className=" overflow-scroll h-full w-full">
+            <div className="overflow-scroll h-full w-full">
                 <Website
-                    tab={safePreviewProject}
-                    tabsLinks={tabsLinks}
-                    hidden={previewApp !== 4 || previewProject === 3}
+                    tab={previewProjectIndex}
+                    tabsLinks={projects.map(item => item.website)}
+                    hidden={previewApp !== 3}
                 />
                 <About number={[previewProject, previewApp]} />
-                {isValidProjectIndex && isDataAvilable && (
+                {isDataAvilable && (
                     <Github
-                        data={data[previewProject - 1]}
-                        hidden={previewApp !== 6 || previewProject === 3}
+                        data={data[previewProjectIndex]}
+                        hidden={previewApp !== 5}
                     />
                 )}
             </div>

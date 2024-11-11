@@ -12,6 +12,7 @@ import {
    FaInstagram,
    FaPhoneAlt,
    FaStackOverflow,
+   FaWhatsapp,
 } from 'react-icons/fa';
 import { IoMdMail, IoIosArrowBack } from 'react-icons/io';
 import { FaLocationDot } from "react-icons/fa6";
@@ -77,12 +78,13 @@ const Contact = () => (
                            {[
                               { icon: FaInstagram, href: 'https://www.instagram.com/uniquebeast__/', label: 'Instagram' },
                               { icon: FaLinkedin, href: 'https://www.linkedin.com/in/sabeer-bikba-70a574252/', label: 'LinkedIn' },
+                              { icon: FaWhatsapp, href: "https://wa.me/918618718358/", label: "WhatsApp" },
                               { icon: FaGithub, href: 'https://github.com/sabeerbikba/', label: 'GitHub' },
                               { icon: FaStackOverflow, href: 'https://stackoverflow.com/users/20352034/sabeer-bikba', label: 'Stack Overflow' },
                               { icon: FaTwitter, href: 'https://x.com/Sb28187', label: 'X (Twitter)' },
-                           ].map((link, index) => (
+                           ].map(link => (
                               <a
-                                 key={index}
+                                 key={link.label}
                                  href={link.href}
                                  target="_blank"
                                  rel="noopener noreferrer"
