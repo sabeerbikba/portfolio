@@ -35,10 +35,10 @@ import Link from "next/link";
 
 const RootLayout = ({
   children,
-  modal,
+  // modal,
 }: Readonly<{
   children: ReactNode;
-  modal: ReactNode;
+  // modal: ReactNode;
 }>): JSX.Element => {
   return (
     <html lang="en">
@@ -74,7 +74,7 @@ const RootLayout = ({
           </div>
           </div> */}
         </main>
-        {modal}
+        {/* {modal} */}
       </body>
     </html >
   );

@@ -5,7 +5,7 @@ import Screen from "../projects/screen";
 
 // Source URL: https://ui.aceternity.com/components/container-scroll-animation
 
-const ContainerScroll = ({ titleComponent, modal }: { titleComponent: string | ReactNode, modal: ReactNode }) => {
+const ContainerScroll = ({ titleComponent }: { titleComponent: string | ReactNode }) => {
    const containerRef = useRef<any>(null);
    const { scrollYProgress } = useScroll({
       target: containerRef,
@@ -43,7 +43,7 @@ const ContainerScroll = ({ titleComponent, modal }: { titleComponent: string | R
             }}
          >
             <Header translate={translate} titleComponent={titleComponent} />
-            <Card rotate={rotate} translate={translate} scale={scale} modal={modal} />
+            <Card rotate={rotate} translate={translate} scale={scale} />
          </div>
       </div>
    );
@@ -63,12 +63,10 @@ const Header = ({ translate, titleComponent }: any) => (
 const Card = ({
    rotate,
    scale,
-   modal,
 }: {
    rotate: MotionValue<number>;
    scale: MotionValue<number>;
-   translate: MotionValue<number>;
-   modal: ReactNode
+   translate: MotionValue<number>; // TODO: Not used is needed
 }) => (
    <motion.div
       style={{

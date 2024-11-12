@@ -1,4 +1,6 @@
-const githubProfileName: string = "sabeerbikba";
+import environment from "./environment";
+
+const githubProfileName: string = environment.repoOwner;
 
 const projects = [
    {
@@ -22,19 +24,16 @@ const apps = [
       // 3
       title: "Website",
       icon: "/images/chromium.png",
-      href: "#",
    },
    {
       // 4
       title: "About",
       icon: "/images/about.png",
-      href: "#",
    },
    {
       // 6 
       title: "GitHub",
       icon: "/images/github.png",
-      href: "#",
    },
 ];
 

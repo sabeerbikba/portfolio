@@ -21,8 +21,8 @@ importers:
         specifier: ^3.21.0
         version: 3.21.0(react@18.3.1)
       '@visx/hierarchy':
-        specifier: ^3.3.0
-        version: 3.3.0(react@18.3.1)
+        specifier: ^3.12.0
+        version: 3.12.0(react@18.3.1)
       '@visx/responsive':
         specifier: ^3.10.2
         version: 3.10.2(react@18.3.1)
@@ -396,13 +396,13 @@ packages:
   '@ungap/structured-clone@1.2.0':
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
 
-  '@visx/group@3.3.0':
-    resolution: {integrity: sha512-yKepDKwJqlzvnvPS0yDuW13XNrYJE4xzT6xM7J++441nu6IybWWwextyap8ey+kU651cYDb+q1Oi6aHvQwyEyw==}
+  '@visx/group@3.12.0':
+    resolution: {integrity: sha512-Dye8iS1alVXPv7nj/7M37gJe6sSKqJLH7x6sEWAsRQ9clI0kFvjbKcKgF+U3aAVQr0NCohheFV+DtR8trfK/Ag==}
     peerDependencies:
       react: ^16.0.0-0 || ^17.0.0-0 || ^18.0.0-0
 
-  '@visx/hierarchy@3.3.0':
-    resolution: {integrity: sha512-nPOZDsSst95+eZOQjZQbq1cuVywriiNAOQp2yXDkZov/32b7Qj0aakXvwU1Yd2DhriuSxlNzMecwVX7L6azrIg==}
+  '@visx/hierarchy@3.12.0':
+    resolution: {integrity: sha512-+X1HOeLEOODxjAD7ixrWJ4KCVei4wFe8ra3dYU0uZ14RdPPgUeiuyBfdeXWZuAHM6Ix9qrryneatQjkC3h4mvA==}
     peerDependencies:
       react: ^16.3.0-0 || ^17.0.0-0 || ^18.0.0-0
 
@@ -2016,18 +2016,18 @@ snapshots:
 
   '@ungap/structured-clone@1.2.0': {}
 
-  '@visx/group@3.3.0(react@18.3.1)':
+  '@visx/group@3.12.0(react@18.3.1)':
     dependencies:
       '@types/react': 18.3.12
       classnames: 2.5.1
       prop-types: 15.8.1
       react: 18.3.1
 
-  '@visx/hierarchy@3.3.0(react@18.3.1)':
+  '@visx/hierarchy@3.12.0(react@18.3.1)':
     dependencies:
       '@types/d3-hierarchy': 1.1.11
       '@types/react': 18.3.12
-      '@visx/group': 3.3.0(react@18.3.1)
+      '@visx/group': 3.12.0(react@18.3.1)
       classnames: 2.5.1
       d3-hierarchy: 1.1.9
       prop-types: 15.8.1

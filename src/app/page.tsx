@@ -7,12 +7,11 @@ import Image from "next/image";
 import { FloatingDock } from "@/components/ui/floating-dock";
 import Link from "next/link";
 import { ReactNode } from "react";
+import tools from "@/data/tools";
 
 // TODO: need to remove "use client"; from top using trick like using childredn
 
-const Home = ({ modal }: { modal?: ReactNode }) => {
-  console.log("modal(home)", modal);
-
+const Home = () => {
 
   return (
     <>
@@ -64,9 +63,8 @@ const Home = ({ modal }: { modal?: ReactNode }) => {
 
       <Link href="/contact" >contact</Link>
 
-      <div className="flex flex-col overflow-hidden">
+      {/* <div className="flex flex-col overflow-hidden">
         <ContainerScroll
-          modal={modal}
           titleComponent={
             <>
               <h1 className="text-4xl font-semibold text-black">
@@ -77,22 +75,11 @@ const Home = ({ modal }: { modal?: ReactNode }) => {
               </h1>
             </>
           }
-        />
-        {/* <Image
-          src={`/images/dev.tools.png`}
-          alt="hero"
-          height={720}
-          width={1400}
-          className="mx-auto rounded-2xl object-cover h-full object-left-top"
-          draggable={false}
         /> */}
-        {/* TODO:s */}
-        {/* logso opacity need to bee 100% */}
-        {/* instead of using opacigty need to use backgroundColor opacity */}
-
-        {/* <FloatingDock /> */}
-        {/* </ContainerScroll> */}
-      </div>
+      {/* TODO:s */}
+      {/* logso opacity need to bee 100% */}
+      {/* instead of using opacigty need to use backgroundColor opacity */}
+      {/* </div> */}
 
       {/* <div className="h-[40rem] flex justify-center items-center px-4">
         <div className="text-4xl mx-auto font-normal text-neutral-600 dark:text-neutral-400">
@@ -106,7 +93,7 @@ const Home = ({ modal }: { modal?: ReactNode }) => {
 
       {/* Rename it */}
       <div className="max-w-[1000px] mx-auto">
-        <SponsorPack />
+        <SponsorPack tools={tools} />
       </div>
 
       <div>
