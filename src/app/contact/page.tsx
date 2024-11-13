@@ -111,6 +111,7 @@ const Contact = () => (
          role="button"
          // TODO:
          aria-describedby="Back to home page"
+         title="back"
       >
          <Link href="/">
             {/* &#8592; */}

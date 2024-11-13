@@ -1,12 +1,22 @@
 "use client";
 // import { TypewriterEffectSmooth } from "@/components/ui/typewriter-effect";
 import { FlipWords } from "@/components/ui/flip-words";
-import SponsorPack from "@/components/ui/sponsor-pack";
+// import SponsorPack from "@/components/ui/sponsor-pack";
+// const SponsorPack = lazy(() => import('@/components/ui/sponsor-pack'));
+import dynamic from 'next/dynamic';
+const SponsorPack = dynamic(() => import('@/components/ui/sponsor-pack'), {
+  ssr: false,
+  loading: () => (
+    <div className="center w-full h-full">
+      <div className="relative center loader" />
+    </div>
+  ),
+});
+
 import ContainerScroll from "@/components/ui/container-scroll-animation";
 import Image from "next/image";
 import { FloatingDock } from "@/components/ui/floating-dock";
 import Link from "next/link";
-import { ReactNode } from "react";
 import tools from "@/data/tools";
 
 // TODO: need to remove "use client"; from top using trick like using childredn
@@ -92,7 +102,7 @@ const Home = () => {
 
 
       {/* Rename it */}
-      <div className="max-w-[1000px] mx-auto">
+      <div className="max-w-[1000px] mx-auto aspect-square">
         <SponsorPack tools={tools} />
       </div>
 

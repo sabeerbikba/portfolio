@@ -1,4 +1,4 @@
-import { ReactNode, useMemo } from 'react';
+import { useMemo } from 'react';
 import { Pack, hierarchy } from '@visx/hierarchy';
 import { ParentSize } from '@visx/responsive';
 
@@ -7,13 +7,8 @@ import type { ToolsType } from "@/types/tools";
 
 import { cn } from '@/lib/utils';
 
-
-// // Inspiration URL: https://tanstack.com/query/latest
-// // Source URL: https://github.com/TanStack/tanstack.com/blob/ee943e214df6f132a70120014096ed72775dee4b/app/components/SponsorPack.tsx   
-
-
-// // https://img.logo.dev/reactnative.dev
-// // https://img.logo.dev/nextjs.org
+// Inspiration URL: https://tanstack.com/query/latest
+// Source URL: https://github.com/TanStack/tanstack.com/blob/ee943e214df6f132a70120014096ed72775dee4b/app/components/SponsorPack.tsx   
 
 const SponsorPack = ({ tools }: { tools: ToolsType[] }) => {
    const pack = useMemo<ToolsType>(
@@ -26,11 +21,10 @@ const SponsorPack = ({ tools }: { tools: ToolsType[] }) => {
       [tools]
    );
 
-   const root = useMemo(
-      () =>
-         hierarchy<ToolsType>(pack)
-            .sum((d) => d.proficiency || 1) // Use default value if `proficiency` is undefined
-            .sort((a, b) => (b.data.proficiency ?? 0) - (a.data.proficiency ?? 0)),
+   const root = useMemo(() =>
+      hierarchy<ToolsType>(pack)
+         .sum((d) => d.proficiency || 1)
+         .sort((a, b) => (b.data.proficiency ?? 0) - (a.data.proficiency ?? 0)),
       [pack]
    );
 
@@ -50,7 +44,9 @@ const SponsorPack = ({ tools }: { tools: ToolsType[] }) => {
                               return (
                                  <div
                                     key={`circle-${i}`}
-                                    className="spon-link absolute shadow-lg bg-white rounded-full z-0 border-2 border-red-500"
+                                    // href={circle.data.linkUrl}
+                                    // target='__blank'
+                                    className="spon-link absolute shadow-lg bg-white rounded-full z-0 border-[0.5px]"
                                     style={{ left: circle.x, top: circle.y, width: circle.r * 2, height: circle.r * 2 }}
                                  >
                                     {typeof circle.data.imageUrl === "string" ? (
@@ -60,14 +56,9 @@ const SponsorPack = ({ tools }: { tools: ToolsType[] }) => {
                                           style={{ backgroundImage: `url(${circle.data.imageUrl})` }}
                                        />
                                     ) : circle.data.imageUrl}
-                                    {/* <div
-                                       key={`circle-${i}`}
-                                       className="absolute bg-no-repeat bg-center bg-contain rounded-full w-[95%] h-[95%] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-                                       style={{ backgroundImage: `url(${circle.data.imageUrl})` }}
-                                    /> */}
                                     <div
                                        className={cn(
-                                          "spon-tooltip absolute text-sm bg-gray-800 text-white p-2 pointer-events-none transform opacity-0 shadow-xl rounded-lg flex flex-col items-center",
+                                          "spon-tooltip absolute z-50 text-sm bg-gray-800 text-white p-2 pointer-events-none transform opacity-0 shadow-xl rounded-lg flex flex-col items-center",
                                           tooltipX == 'left' ? 'left-1/4 -translate-x-full' : 'right-1/4 translate-x-full',
                                           tooltipY == 'top' ? 'top-1/4 -translate-y-full' : 'bottom-1/4 translate-y-full',
                                        )}
