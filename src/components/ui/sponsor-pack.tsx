@@ -10,6 +10,8 @@ import { cn } from '@/lib/utils';
 // Inspiration URL: https://tanstack.com/query/latest
 // Source URL: https://github.com/TanStack/tanstack.com/blob/ee943e214df6f132a70120014096ed72775dee4b/app/components/SponsorPack.tsx   
 
+// TODO: Rename this component with  meaningfull name 
+
 const SponsorPack = ({ tools }: { tools: ToolsType[] }) => {
    const pack = useMemo<ToolsType>(
       () => ({

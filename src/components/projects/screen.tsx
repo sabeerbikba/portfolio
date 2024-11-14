@@ -48,55 +48,55 @@ const Screen = () => {
         handlers[view](value);
     };
 
-    // useEffect(() => {
-    //     (async () => {
-    //         const fetchPromises = projects.map(project => {
-    //             const baseUrl = `https://api.github.com/repos/${project.repo}`;
-    //             return Promise.all([
-    //                 fetch(baseUrl).then(res => res.json() as Promise<GitHubRepositoryType>),
-    //                 fetch(`${baseUrl}/languages`).then(res => res.json() as Promise<GitHubLanguagesType>),
-    //                 fetch(`${baseUrl}/contributors`).then(res => res.json() as Promise<GitHubContributorType>),
-    //                 fetch(`${baseUrl}/branches`).then(res => res.json() as Promise<GithubBranchesType>),
-    //                 fetch(`${baseUrl}/tags`).then(res => res.json() as Promise<GithubTagsType>),
-    //                 fetch(`${baseUrl}/contents/LICENSE`)
-    //                     .then(async res => {
-    //                         const data = await res.json();
-    //                         return data.message === "Not Found" ? null : (data as GitHubFileContentType);
-    //                     }), // License
-    //                 fetch(`${baseUrl}/contents/README.md`)
-    //                     .then(async res => {
-    //                         const data = await res.json();
-    //                         return data.message === "Not Found" ? null : (data as GitHubFileContentType);
-    //                     }) // README
-    //             ]);
-    //         });
+    useEffect(() => {
+        (async () => {
+            const fetchPromises = projects.map(project => {
+                const baseUrl = `https://api.github.com/repos/${project.repo}`;
+                return Promise.all([
+                    fetch(baseUrl).then(res => res.json() as Promise<GitHubRepositoryType>),
+                    fetch(`${baseUrl}/languages`).then(res => res.json() as Promise<GitHubLanguagesType>),
+                    fetch(`${baseUrl}/contributors`).then(res => res.json() as Promise<GitHubContributorType>),
+                    fetch(`${baseUrl}/branches`).then(res => res.json() as Promise<GithubBranchesType>),
+                    fetch(`${baseUrl}/tags`).then(res => res.json() as Promise<GithubTagsType>),
+                    fetch(`${baseUrl}/contents/LICENSE`)
+                        .then(async res => {
+                            const data = await res.json();
+                            return data.message === "Not Found" ? null : (data as GitHubFileContentType);
+                        }), // License
+                    fetch(`${baseUrl}/contents/README.md`)
+                        .then(async res => {
+                            const data = await res.json();
+                            return data.message === "Not Found" ? null : (data as GitHubFileContentType);
+                        }) // README
+                ]);
+            });
 
-    //         try {
-    //             const results = await Promise.all(fetchPromises);
-    //             const formattedData = results.map(([
-    //                 repoDetails,
-    //                 languages,
-    //                 contributors,
-    //                 branches,
-    //                 tags,
-    //                 license,
-    //                 readme
-    //             ]) => ({
-    //                 repoDetails,
-    //                 languages,
-    //                 contributors,
-    //                 branches,
-    //                 tags,
-    //                 license,
-    //                 readme,
-    //             }));
-    //             setData(formattedData);
+            try {
+                const results = await Promise.all(fetchPromises);
+                const formattedData = results.map(([
+                    repoDetails,
+                    languages,
+                    contributors,
+                    branches,
+                    tags,
+                    license,
+                    readme
+                ]) => ({
+                    repoDetails,
+                    languages,
+                    contributors,
+                    branches,
+                    tags,
+                    license,
+                    readme,
+                }));
+                setData(formattedData);
 
-    //         } catch (error) {
-    //             console.error('Error fetching data from GitHub API:', error);
-    //         }
-    //     })();
-    // }, []);
+            } catch (error) {
+                console.error('Error fetching data from GitHub API:', error);
+            }
+        })();
+    }, []);
 
     return (
         <ScreenContext.Provider value={{ previewProject, previewApp, setScreen }}>
