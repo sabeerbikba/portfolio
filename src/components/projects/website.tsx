@@ -29,6 +29,7 @@ const Website = ({
             loaded[index] && (
                <iframe
                   key={index}
+
                   className="w-full h-full max-md:rounded-2xl"
                   hidden={tab !== index}
                   src={link}

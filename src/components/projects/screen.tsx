@@ -99,8 +99,10 @@ const Screen = () => {
     }, []);
 
     return (
-        <ScreenContext.Provider value={{ previewProject, previewApp, setScreen }}>
-            <FloatingDock />
+        <>
+            <ScreenContext.Provider value={{ previewProject, previewApp, setScreen }}>
+                <FloatingDock />
+            </ScreenContext.Provider>
             <div className="overflow-scroll h-full w-full">
                 <Website
                     tab={previewProjectIndex}
@@ -115,7 +117,7 @@ const Screen = () => {
                     />
                 )}
             </div>
-        </ScreenContext.Provider>
+        </>
     )
 };
 

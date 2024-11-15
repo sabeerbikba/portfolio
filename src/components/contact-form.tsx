@@ -46,7 +46,7 @@ const ContactForm = ({ className }: { className?: string }) => {
    };
 
    useEffect(() => {
-      if (status === 'sending') {
+      if (status === 'Sending') {
          const interval = setInterval(() => {
             setSendingFrame((sendingFrame + 1) % sendingFrames.length);
          }, 500);
@@ -57,7 +57,7 @@ const ContactForm = ({ className }: { className?: string }) => {
 
 
    //   const handleClick = async () => {
-   //     setStatus('sending...');
+   //     setStatus('Sending...');
    //     try {
    //       const response = await fetch('your-endpoint', { method: 'POST' });
    //       if (!response.ok) throw new Error('Request failed');
@@ -66,7 +66,7 @@ const ContactForm = ({ className }: { className?: string }) => {
    //       setStatus('Retry');
    //     }
    //   };
-   // disabled={status === 'sending...'}
+   // disabled={status === 'Sending...'}
 
 
 
@@ -77,7 +77,7 @@ const ContactForm = ({ className }: { className?: string }) => {
       const sucess = true;
       e.preventDefault();
 
-      setStatus('sending');
+      setStatus('Sending');
       await delay(4000);
 
       if (sucess) {
@@ -105,7 +105,10 @@ const ContactForm = ({ className }: { className?: string }) => {
                "max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white",
             "max-lg:w-[80%] max-lg:mx-auto max-sm:w-full"
          )}
+         role="form"
+         aria-labelledby="contactFormTitle"
       >
+         <h2 id="contactFormTitle" className="sr-only">Contact Us Form</h2>
          <form className="my-8" onSubmit={handleSubmit}>
             <div className={cn(className && "max-w-xl mx-auto")}>
                <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
@@ -120,6 +123,7 @@ const ContactForm = ({ className }: { className?: string }) => {
                         minLength={3}
                         maxLength={70}
                         required
+                        aria-required="true"
                      />
                   </LabelInputContainer>
                </div>
@@ -129,9 +133,13 @@ const ContactForm = ({ className }: { className?: string }) => {
                      id="email"
                      placeholder="you@example.com"
                      type="email"
-                     ref={emailInputRef} autoComplete="on"
+                     ref={emailInputRef}
+                     autoComplete="on"
                      required
+                     aria-required="true"
+                     aria-describedby="emailDescription"
                   />
+                  <small id="emailDescription" className="sr-only">Please enter a valid email address.</small>
                </LabelInputContainer>
                <LabelInputContainer className="mb-4">
                   <Label htmlFor="message">Message</Label>
@@ -144,16 +152,23 @@ const ContactForm = ({ className }: { className?: string }) => {
                      minLength={20}
                      maxLength={600}
                      required
+                     aria-required="true"
+                     aria-describedby="messageDescription"
                   />
+                  <small id="messageDescription" className="sr-only">Please enter your message. Minimum 20 characters.</small>
                </LabelInputContainer>
 
                <button
-                  className="center text-xl gap-1 bg-gradient-to-br relative group/btn from-black to-neutral-600 block w-full text-white rounded-md h-11 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset]"
+                  className="center text-xl gap-1 bg-gradient-to-br relative group/btn from-black to-neutral-600 block w-full text-white rounded-md h-11 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
                   type="submit"
                   disabled={!['Send', 'Retry'].includes(status)}
+                  aria-busy={status === 'Sending'}
+                  aria-live="polite"
+                  aria-pressed={status === 'Sending' ? 'true' : 'false'}
+                  aria-label={status === 'Send' ? "Send message" : status}
                >
                   <AnimatePresence mode="wait">
-                     {status === 'sending' ? (
+                     {status === 'Sending' ? (
                         <motion.span
                            initial={{ y: 10, opacity: 0 }}
                            animate={{ y: 0, opacity: 1 }}
@@ -161,7 +176,6 @@ const ContactForm = ({ className }: { className?: string }) => {
                            transition={{ duration: 0.3 }}
                         >
                            {sendingFrames[sendingFrame]}
-                           {/* {sendingFrames[frameRef.current]} */}
                         </motion.span>
                      ) : (
                         <motion.span
@@ -172,8 +186,10 @@ const ContactForm = ({ className }: { className?: string }) => {
                            transition={{ duration: 0.3 }}
                         >
                            <div className="center gap-1">
-                              {status === 'Send' ? <IoIosSend /> : status === 'Sent' ? <FaCheckCircle /> : <MdOutlineError />}
-                              {status === 'sending' ? "" : status}
+                              {status === 'Send' && <IoIosSend aria-hidden="true" />}
+                              {status === 'Sent' && <FaCheckCircle aria-hidden="true" />}
+                              {status === 'Retry' && <MdOutlineError aria-hidden="true" />}
+                              <span>{status === 'Sending' ? "" : status}</span>
                            </div>
                         </motion.span>
                      )}
@@ -184,32 +200,7 @@ const ContactForm = ({ className }: { className?: string }) => {
          </form>
       </motion.div>
    );
-};
-
-
-{/* <button
-                  className="center gap-1 bg-gradient-to-br relative group/btn from-black to-neutral-600 block w-full text-white rounded-md h-11 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset]"
-                  type="submit"
-                  disabled={status !== 'Send'}
-               >
-                  {status === 'sending' ? sendingFrames[sendingFrame] : status}
-                  {status === 'Send' ? <IoIosSend /> : status === 'sending' ? "" : <FaCheckCircle />}
-                  <BottomGradient />
-               </button> */}
-
-{/* Sign up &rarr; */ }
-
-{/* {isSubmitting ? (
-                  <>
-                     <Loader2 className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" />
-                     Sending...
-                  </>
-               ) : (
-                  <>
-                     <Send className="mr-2 h-5 w-5" />
-                     Send Message
-                  </>
-               )} */}
+}
 
 const BottomGradient = () => {
    return (
@@ -228,7 +219,7 @@ const LabelInputContainer = ({
    className?: string;
 }) => {
    return (
-      <div className={cn("flex flex-col space-y-2 w-full", className)}>
+      <div className={cn("flex flex-col space-y-2 w-full", className)} role="group" aria-label="Input field group">
          {children}
       </div>
    );
