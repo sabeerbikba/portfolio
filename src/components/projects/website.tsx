@@ -1,17 +1,14 @@
 import { useEffect, useState } from "react";
+import type { ProjectType } from "@/data/projects";
 
 const Website = ({
-   tab, tabsLinks, hidden,
+   tab, data, hidden,
 }: {
-   tab: number, tabsLinks: string[], hidden: boolean,
+   tab: number, data: ProjectType[], hidden: boolean,
 }) => {
    const [loaded, setLoaded] = useState(
-      Array.from({ length: tabsLinks.length }, (_, index) => index === 0)
+      Array.from({ length: data.length }, (_, index) => index === 0)
    );
-
-   console.log('tab', 'hideen');
-   console.log(tab);
-   console.log(hidden);
 
    useEffect(() => {
       if (!loaded[tab]) {
@@ -24,15 +21,19 @@ const Website = ({
    }, [tab, loaded])
 
    return (
-      <div className="w-full h-full center relative" style={{ display: hidden ? "none" : "block" }}>
-         {tabsLinks.map((link, index) => (
+      <div
+         className="w-full h-full center relative"
+         style={{ display: hidden ? "none" : "block" }}
+      >
+         {data.map((project, index) => (
             loaded[index] && (
                <iframe
                   key={index}
-
                   className="w-full h-full max-md:rounded-2xl"
                   hidden={tab !== index}
-                  src={link}
+                  aria-hidden={tab !== index}
+                  src={project.website}
+                  title={`Project showcase: ${project.title}`}
                />
             )
          ))}

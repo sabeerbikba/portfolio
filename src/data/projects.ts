@@ -2,7 +2,17 @@ import environment from "./environment";
 
 const githubProfileName: string = environment.repoOwner;
 
-const projects = [
+type DataType = {
+   title: string,
+   icon: string,
+};
+
+type ProjectType = DataType & {
+   repo: string,
+   website: string,
+};
+
+const projects: ProjectType[] = [
    {
       // 1
       title: "Dev.tools",
@@ -19,7 +29,7 @@ const projects = [
    },
 ];
 
-const apps = [
+const apps: DataType[] = [
    {
       // 3
       title: "Website",
@@ -38,3 +48,4 @@ const apps = [
 ];
 
 export { projects, apps };
+export type { DataType, ProjectType };

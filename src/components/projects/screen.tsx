@@ -106,7 +106,8 @@ const Screen = () => {
             <div className="overflow-scroll h-full w-full">
                 <Website
                     tab={previewProjectIndex}
-                    tabsLinks={projects.map(item => item.website)}
+                    // data={projects.map(item => item.website)}
+                    data={projects}
                     hidden={previewApp !== 3}
                 />
                 <About number={[previewProject, previewApp]} />
