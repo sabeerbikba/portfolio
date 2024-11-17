@@ -5,6 +5,11 @@ import "./globals.css";
 // import { IconHome, IconMessage, IconUser } from "@tabler/icons-react";
 import { FloatingNav } from "@/components/ui/floating-navbar";
 import Link from "next/link";
+import Head from "next/head";
+import Script from "next/script";
+import { CreativeWork, WithContext, WebPage } from "schema-dts";
+import { projects } from "@/data/projects";
+
 
 // export const metadata: Metadata = {
 //   title: "sabeer bikba portfolio",
@@ -22,7 +27,7 @@ import Link from "next/link";
 //     link: "/about",
 //     icon: <IconUser className="h-4 w-4 text-neutral-500 dark:text-white" />,
 //   },
-//   {
+//   {me
 //     name: "Contact",
 //     link: "/contact",
 //     icon: (
@@ -30,6 +35,25 @@ import Link from "next/link";
 //     ),
 //   },
 // ];
+
+
+const jsonLd: WithContext<CreativeWork> = {
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  name: "Featured Works",
+  description: "Explore my featured projects and creations. See live previews, project details, and GitHub repo visuals.",
+  creator: {
+    "@type": "Person",
+    name: "Sabeer Bikba",
+  },
+  workExample: projects.map((project) => ({
+    "@type": "WebPage",
+    name: project.title,
+    url: project.website,
+    image: project.image,
+    about: project.about,
+  })) as WebPage[], // Ensure proper typing
+};
 
 
 
@@ -42,6 +66,12 @@ const RootLayout = ({
 }>): JSX.Element => {
   return (
     <html lang="en">
+      {/* <Head> */}
+      <Script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      {/* </Head> */}
       <body>
         <main>
 

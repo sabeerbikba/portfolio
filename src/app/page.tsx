@@ -1,8 +1,6 @@
 "use client";
 // import { TypewriterEffectSmooth } from "@/components/ui/typewriter-effect";
 import { FlipWords } from "@/components/ui/flip-words";
-// import SponsorPack from "@/components/ui/sponsor-pack";
-// const SponsorPack = lazy(() => import('@/components/ui/sponsor-pack'));
 import dynamic from 'next/dynamic';
 const SponsorPack = dynamic(() => import('@/components/ui/sponsor-pack'), {
   ssr: false,
@@ -14,18 +12,16 @@ const SponsorPack = dynamic(() => import('@/components/ui/sponsor-pack'), {
 });
 
 import ContainerScroll from "@/components/ui/container-scroll-animation";
-import Image from "next/image";
-import { FloatingDock } from "@/components/ui/floating-dock";
 import Link from "next/link";
 import tools from "@/data/tools";
-import H1 from "@/components/ui/h1";
+import Heading from "@/components/ui/heading";
 import { cn } from "@/lib/utils";
+import CTASection from "@/components/cta-section";
 
-// TODO: need to remove "use client"; from top using trick like using childredn
+// TODO: need to remove "use client"; from top using trick like using children
 
 const Home = () => {
 
-  {/* </p> */ }
   {/* <TypewriterEffectSmooth
           words={[
             {
@@ -50,10 +46,16 @@ const Home = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center justify-end h-[25rem] bg-gradient-to-b from-white-400 via-gray-100 to-white-400">
-        <p className="text-xs sm:text-base md:text-xl lg:text-3xl xl:text-5xl font-bold text-black">
+      <section
+        aria-labelledby="hero-section"
+        className="flex flex-col items-center justify-end h-[25rem] bg-gradient-to-b from-white-400 via-gray-100 to-white-400"
+      >
+        <Heading
+          className="text-xs sm:text-base md:text-xl lg:text-3xl xl:text-5xl font-bold text-black"
+          id="hero-section"
+        >
           Let&apos;s Build Something Amazing
-        </p>
+        </Heading>
         <div className="py-8">
           <div className="text-4xl mx-auto font-normal text-neutral-600">
             Designing
@@ -61,33 +63,39 @@ const Home = () => {
             solutions for your business
           </div>
         </div>
-        <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 space-x-0 md:space-x-4">
-          <button className="w-40 h-10 rounded-xl bg-black border border-transparent text-white text-sm">
+        <div
+          role="group"
+          aria-label="Call to action button"
+          className="flex flex-col md:flex-row space-y-4 md:space-y-0 space-x-0 md:space-x-4"
+        >
+          <Link
+            href="/contact"
+            aria-label="Start a conversation with me by visiting the contact page"
+            className="border border-transparent font-medium rounded-3xl text-white bg-black hover:bg-black/90 px-7 py-1.5 md:py-2.5 md:text-lg md:px-8"
+          >
             Let&apos;s Chat
-          </button>
+          </Link>
         </div>
-      </div>
+      </section>
 
       <ContainerScroll
         titleComponent={
-          <h1 className="text-4xl font-semibold text-black">
-            {/* Scroll Through My Work */}
+          <Heading as="h2" className="text-4xl font-semibold text-black">
             {/* Explore My Creations */}
             Browse My Creations
             <br />
             <span className="text-4xl md:text-[6rem] font-bold mt-1 leading-none">
-              {/* Project Showcase */}
               {/* Featured Projects */}
               Featured Works
             </span>
-          </h1>
+          </Heading>
         }
       />
 
       <div>
         <div className="mb-4 text-center">
-          {/* <h1 className="font-extrabold text-2xl xs:text-3xl sm:text-4xl md:text-5xl max-xs:px-3 mb-[2px] xs:mb-1 sm:mb-2 md:mb-3 text-black">Development Tools & Expertise</h1> */}
-          <H1>Development Tools & Expertise</H1>
+          {/* <Heading className="font-extrabold text-2xl xs:text-3xl sm:text-4xl md:text-5xl max-xs:px-3 mb-[2px] xs:mb-1 sm:mb-2 md:mb-3 text-black">Development Tools & Expertise</Heading> */}
+          <Heading>Development Tools & Expertise</Heading>
 
           {/* <hassName="font-extrabold text-lg xs:text-xl sm:text-2xl md:text-3xl max-xs:px-3 text-black/70">Tools and tech that drive my development</h2> */}
           <h2 className="font-bold text-xg xs:text-2xl sm:text-3xl md:text-4xl max-xs:px-3 text-black/70">Core Skills & Technologies</h2>
@@ -101,33 +109,30 @@ const Home = () => {
       <section
         aria-labelledby="about-heading"
         className="about-section py-12 px-10 mt-9 bg-[rgb(240,240,240)]"
-        style={{
-          background: "linear-gradient(0deg, rgb(255, 255, 255) 0%, rgb(240 240 240) 39%, rgb(255, 255, 255) 100%)",
-        }}
+        style={{ background: "linear-gradient(0deg, rgb(255, 255, 255) 0%, rgb(240 240 240) 39%, rgb(255, 255, 255) 100%)" }}
       >
-        <H1 id="about-heading">About Me</H1>
+        <Heading id="about-heading">About Me</Heading>
         {[
           "Hi, I’m Sabeer Bikba, a <strong class='font-medium'>full-stack developer</strong> with a passion for creating dynamic <strong class='font-medium'>React front-end applications</strong>. I specialize in building intuitive and responsive user interfaces that provide smooth experiences across devices.",
           "While my expertise spans both front-end and back-end development, I’m particularly focused on delivering high-quality, interactive React apps. I’m also exploring <strong class='font-medium'>mobile development with React Native</strong> to create seamless cross-platform mobile experiences.",
           "I’m always eager to take on new challenges and push the boundaries of web and mobile development. Let’s connect and turn your ideas into reality!",
         ].map((paragraph, key) => (
           <p
+            key={key}
             className={cn(
-              "mt-4 text-gray-600 font-medium indent-6 tracking-wider text-base  xs:text-lg sm:text-xl md:text-2xl",
+              "mt-4 text-gray-600 font-medium indent-6 tracking-wider text-base xs:text-lg sm:text-xl md:text-2xl",
               key == 0 && "mt-10 max-sm:mt-6"
             )}
             style={{ wordSpacing: "4px" }}
-            key={key}
             dangerouslySetInnerHTML={{
               __html: paragraph
-            }} />
+            }}
+          />
         ))}
       </section>
 
 
-      <div>
-        {/* another call to action */}
-      </div>
+      <CTASection />
 
       {/* inspiration URL: https://ui.aceternity.com/ */}
       <footer>

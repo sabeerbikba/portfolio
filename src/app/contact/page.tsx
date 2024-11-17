@@ -29,7 +29,7 @@ const Contact = () => (
             className="text-center mb-12 max-lg:mb-0"
             aria-labelledby="get-in-touch-heading"
          >
-            <h1
+            <Heading
                id="get-in-touch-heading"
                className="text-4xl font-extrabold sm:text-5xl md:text-6xl text-black mb-2"
             >
@@ -59,7 +59,7 @@ const Contact = () => (
                   >
                      <div className="table-cell align-middle text-center">
                         <div className="mb-6">
-                           <h1 className="text-4xl font-bold text-black text-start pl-6 center">
+                           <Heading className="text-4xl font-bold text-black text-start pl-6 center">
                               Sabeer Bikba
                            </h1>
                            <h2 className="text-[22px] pt-2 font-base text-gray-600 text-start pl-6 center">

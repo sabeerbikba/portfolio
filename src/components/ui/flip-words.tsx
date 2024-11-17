@@ -5,9 +5,12 @@ import { AnimatePresence, motion } from "framer-motion";
 export const FlipWords = ({
    words,
    duration = 3000,
+   ariaLabel = "Rotating words describing design qualities",
+
 }: {
    words: string[];
    duration?: number;
+   ariaLabel?: string;
 }) => {
    const [currentWord, setCurrentWord] = useState(words[0]);
    const [isAnimating, setIsAnimating] = useState<boolean>(false);
@@ -32,29 +35,16 @@ export const FlipWords = ({
          }}
       >
          <motion.div
-            initial={{
-               opacity: 0,
-               y: 10,
-            }}
-            animate={{
-               opacity: 1,
-               y: 0,
-            }}
-            transition={{
-               type: "spring",
-               stiffness: 100,
-               damping: 10,
-            }}
-            exit={{
-               opacity: 0,
-               y: -40,
-               x: 40,
-               filter: "blur(8px)",
-               scale: 2,
-               position: "absolute",
-            }}
-            className="z-10 inline-block relative text-left text-neutral-900 px-2"
             key={currentWord}
+            role="text"
+            aria-label={ariaLabel}
+            className="z-10 inline-block relative text-left text-neutral-900 px-2"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ type: "spring", stiffness: 100, damping: 10 }}
+            exit={{
+               opacity: 0, y: -40, x: 40, filter: "blur(8px)", scale: 2, position: "absolute"
+            }}
          >
             {currentWord.split(" ").map((word, wordIndex) => (
                <motion.span

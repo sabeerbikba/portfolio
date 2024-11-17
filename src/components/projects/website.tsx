@@ -28,6 +28,8 @@ const Website = ({
          {data.map((project, index) => (
             loaded[index] && (
                <iframe
+                  // TODO: is lazy really needed 
+                  loading="lazy"
                   key={index}
                   className="w-full h-full max-md:rounded-2xl"
                   hidden={tab !== index}
