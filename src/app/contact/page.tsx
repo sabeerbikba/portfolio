@@ -29,7 +29,7 @@ const Contact = () => (
             className="text-center mb-12 max-lg:mb-0"
             aria-labelledby="get-in-touch-heading"
          >
-            <Heading
+            <h1
                id="get-in-touch-heading"
                className="text-4xl font-extrabold sm:text-5xl md:text-6xl text-black mb-2"
             >
@@ -59,7 +59,7 @@ const Contact = () => (
                   >
                      <div className="table-cell align-middle text-center">
                         <div className="mb-6">
-                           <Heading className="text-4xl font-bold text-black text-start pl-6 center">
+                           <h1 className="text-4xl font-bold text-black text-start pl-6 center">
                               Sabeer Bikba
                            </h1>
                            <h2 className="text-[22px] pt-2 font-base text-gray-600 text-start pl-6 center">
@@ -162,7 +162,7 @@ const Contact = () => (
          initial={{ opacity: 0 }}
          animate={{ opacity: 1 }}
          transition={{ duration: 0.8, delay: 0.4 }}
-         className="fixed top-5 left-5 border-2 lg:border-[3px] border-black text-black rounded-full shadow-2xl hover:shadow-none shadow-gray-300"
+         className="bg-[#ffffffcf] fixed top-5 left-5 border-2 lg:border-[3px] border-black text-black rounded-full shadow-2xl hover:shadow-none shadow-gray-300"
       >
          <Link
             href="/"

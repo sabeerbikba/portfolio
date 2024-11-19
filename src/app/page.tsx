@@ -48,20 +48,15 @@ const Home = () => {
     <>
       <section
         aria-labelledby="hero-section"
-        className="flex flex-col items-center justify-end h-[25rem] bg-gradient-to-b from-white-400 via-gray-100 to-white-400"
+        className="flex flex-col items-center justify-end h-[18rem] xs:h-[22rem] sm:h-[27rem] md:h-[32rem] bg-gradient-to-b from-white-400 via-gray-100 to-white-400"
       >
-        <Heading
-          className="text-xs sm:text-base md:text-xl lg:text-3xl xl:text-5xl font-bold text-black"
-          id="hero-section"
-        >
+        <Heading id="hero-section">
           Let&apos;s Build Something Amazing
         </Heading>
-        <div className="py-8">
-          <div className="text-4xl mx-auto font-normal text-neutral-600">
-            Designing
-            <FlipWords words={["functional", "beautiful", "impactful", "responsive"]} /> <br />
-            solutions for your business
-          </div>
+        <div className="font-normal text-neutral-600 mx-auto py-4 xs:py-5 sm:py-6 md:py-7 text-[24px] xs:text-[28px] sm:text-[34px] md:text-[40px]">
+          Designing
+          <FlipWords words={["functional", "beautiful", "impactful", "responsive"]} /> <br />
+          solutions for your business
         </div>
         <div
           role="group"
@@ -80,11 +75,11 @@ const Home = () => {
 
       <ContainerScroll
         titleComponent={
-          <Heading as="h2" className="text-4xl font-semibold text-black">
+          <Heading as="h2" className="md:text-[2.8rem]">
             {/* Explore My Creations */}
             Browse My Creations
             <br />
-            <span className="text-4xl md:text-[6rem] font-bold mt-1 leading-none">
+            <span className="text-5xl xs:text-[3.4rem] sm:text-[4.2rem] md:text-[5rem] font-bold mt-1 leading-none">
               {/* Featured Projects */}
               Featured Works
             </span>
@@ -92,19 +87,18 @@ const Home = () => {
         }
       />
 
-      <div>
+      <section aria-describedby="tools-section">
         <div className="mb-4 text-center">
-          {/* <Heading className="font-extrabold text-2xl xs:text-3xl sm:text-4xl md:text-5xl max-xs:px-3 mb-[2px] xs:mb-1 sm:mb-2 md:mb-3 text-black">Development Tools & Expertise</Heading> */}
-          <Heading>Development Tools & Expertise</Heading>
-
-          {/* <hassName="font-extrabold text-lg xs:text-xl sm:text-2xl md:text-3xl max-xs:px-3 text-black/70">Tools and tech that drive my development</h2> */}
-          <h2 className="font-bold text-xg xs:text-2xl sm:text-3xl md:text-4xl max-xs:px-3 text-black/70">Core Skills & Technologies</h2>
+          <Heading id="tools-section">Development Tools & Expertise</Heading>
+          <h2 className="font-bold text-xg xs:text-2xl sm:text-3xl md:text-4xl max-xs:px-3 text-black/70">
+            Core Skills & Technologies
+          </h2>
         </div>
         <div className="max-w-[1000px] mx-auto aspect-square text-2xl max-xs:-mt-4 max-sm:-mt-3 max-md:-mt-2">
           {/* Rename it */}
           <SponsorPack tools={tools} />
         </div>
-      </div>
+      </section>
 
       <section
         aria-labelledby="about-heading"
