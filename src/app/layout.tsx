@@ -1,6 +1,6 @@
 // import { createContext, ReactNode, useContext } from "react";
-import { ReactNode } from "react";
-import type { Metadata } from "next";
+import type { ReactNode } from "react";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 // import { IconHome, IconMessage, IconUser } from "@tabler/icons-react";
 import { FloatingNav } from "@/components/ui/floating-navbar";
@@ -9,12 +9,30 @@ import Head from "next/head";
 import Script from "next/script";
 import { CreativeWork, WithContext, WebPage } from "schema-dts";
 import { projects } from "@/data/projects";
+import { boxIconString } from "@/data/icons";
 
 
 // export const metadata: Metadata = {
 //   title: "sabeer bikba portfolio",
 //   description: "//TODO: add descreption ",
 // };
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1.0,
+};
+
+export const metadata: Metadata = {
+  icons: {
+    icon: [
+      {
+        url: boxIconString,
+        type: "image/svg+xml",
+        // sizes: 
+      }
+    ]
+  },
+};
 
 // const navItems = [
 //   {

@@ -16,19 +16,20 @@ const CTASection = () => (
             className="mt-8"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            tabIndex={-1}
          >
-            <Link href="/contact">
-               <button className="inline-flex items-center justify-center text-base font-medium rounded-3xl text-white bg-black hover:bg-black/90 px-7 py-2 md:py-3 md:text-lg md:px-8">
-                  Contact Me
-                  <motion.span
-                     className="ml-2"
-                     animate={{ x: [0, 5, 0] }}
-                     transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-                  >
-                     {/* <ArrowRight className="w-5 h-5" /> */}
-                     <TiArrowRight className="w-5 h-5" />
-                  </motion.span>
-               </button>
+            <Link href="/contact" className="inline-flex items-center justify-center text-base font-medium rounded-3xl text-white bg-black hover:bg-black/90 px-7 py-2 md:py-3 md:text-lg md:px-8">
+               {/* <button className="inline-flex items-center justify-center text-base font-medium rounded-3xl text-white bg-black hover:bg-black/90 px-7 py-2 md:py-3 md:text-lg md:px-8"> */}
+               Contact Me
+               <motion.span
+                  className="ml-2"
+                  animate={{ x: [0, 5, 0] }}
+                  transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+               >
+                  {/* <ArrowRight className="w-5 h-5" /> */}
+                  <TiArrowRight className="w-5 h-5" />
+               </motion.span>
+               {/* </button> */}
             </Link>
          </motion.div>
       </div>

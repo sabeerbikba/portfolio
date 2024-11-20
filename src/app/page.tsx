@@ -17,6 +17,9 @@ import tools from "@/data/tools";
 import Heading from "@/components/ui/heading";
 import { cn } from "@/lib/utils";
 import CTASection from "@/components/cta-section";
+import socialMedia from "@/data/social-media";
+import { projects } from "@/data/projects";
+import Icon from "@/data/icons";
 
 // TODO: need to remove "use client"; from top using trick like using children
 
@@ -109,7 +112,7 @@ const Home = () => {
         {[
           "Hi, I’m Sabeer Bikba, a <strong class='font-medium'>full-stack developer</strong> with a passion for creating dynamic <strong class='font-medium'>React front-end applications</strong>. I specialize in building intuitive and responsive user interfaces that provide smooth experiences across devices.",
           "While my expertise spans both front-end and back-end development, I’m particularly focused on delivering high-quality, interactive React apps. I’m also exploring <strong class='font-medium'>mobile development with React Native</strong> to create seamless cross-platform mobile experiences.",
-          "I’m always eager to take on new challenges and push the boundaries of web and mobile development. Let’s connect and turn your ideas into reality!",
+          "I’m always eager to take on new challenges and push the boundaries of web and mobile development.",
         ].map((paragraph, key) => (
           <p
             key={key}
@@ -134,40 +137,94 @@ const Home = () => {
           <div className="max-w-7xl mx-auto text-sm text-neutral-500 flex sm:flex-row flex-col justify-between items-start ">
             <div>
               <div className="mr-4  md:flex mb-4">
-                <a className="center space-x-2 text-2xl font-bold text-center text-neutral-600 selection:bg-emerald-500 mr-10 py-0" href="/contact">
-                  <div className="relative h-8 w-8 md:h-6 md:w-6 bg-black border border-slate-800  text-white   center rounded-md text-sm antialiased">
-                    <div className="absolute h-10 w-full bg-white/[0.2] -top-10 inset-x-0 rounded-full blur-xl"></div>
-                    <div className="text-sm  text-emerald-500 relative z-20">
-                      <img alt="Logo" loading="lazy" width="50" height="50" decoding="async" data-nimg="1" className="hidden" srcSet="/_next/image?url=%2Flogo-dark.png&amp;w=64&amp;q=75 1x, /_next/image?url=%2Flogo-dark.png&amp;w=128&amp;q=75 2x" src="/_next/image?url=%2Flogo-dark.png&amp;w=128&amp;q=75" style={{ color: "transparent" }} />
-                    </div>
-                  </div>
-                  <div className="flex flex-col">
+                <a className="center space-x-2 text-2xl font-bold text-center text-neutral-600 selection:bg-emerald-500 mr-10 py-0" href="/">
+                  {/* <div className="relative h-8 w-8 md:h-6 md:w-6 bg-black border border-slate-800  text-white   center rounded-md text-sm antialiased"> */}
+                  {/* <div className="absolute h-10 w-full bg-white/[0.2] -top-10 inset-x-0 rounded-full blur-xl"></div> */}
+                  {/* <div className="text-sm  text-emerald-500 relative z-20"> */}
+                  {/* <img alt="Logo" loading="lazy" width="50" height="50" decoding="async" data-nimg="1" className="hidden" srcSet="/_next/image?url=%2Flogo-dark.png&amp;w=64&amp;q=75 1x, /_next/image?url=%2Flogo-dark.png&amp;w=128&amp;q=75 2x" src="/_next/image?url=%2Flogo-dark.png&amp;w=128&amp;q=75" style={{ color: "transparent" }} /> */}
+                  <Icon />
+                  {/* </div> */}
+                  {/* </div> */}
+                  {/* <div className="flex flex-col">
                     <h1 className="text-black font-sans"> Aceternity UI</h1>
-                  </div>
+                  </div> */}
                 </a>
               </div>
-              <div>
-                A product by
+              {/* <div> */}
+              Sabeer bikba
+              {/* A product by
                 <a target="__blank" className="text-neutral-600 font-medium" href="https://aceternity.com">Aceternity</a>
-                I
-              </div>
+                I */}
+              {/* </div> */}
               {/* <div className="mt-2">
                 Building in public at{" "}
                 <a className="font-medium text-neutral-600" target="__blank" href="https://twitter.com/mannupaaji">@mannupaaji</a>
               </div> */}
+              <div className="mt-2 font-medium text-neutral-600">
+                Your Vision, My Code, Perfect Synergy
+              </div>
             </div>
-            <div className="grid grid-cols-2 gap-10 items-start mt-10 md:mt-0">
+            <div className="grid grid-cols-3 gap-10 items-start mt-10 md:mt-0">
               <div className="flex justify-center space-y-4 flex-col mt-4">
-                <a className="transition-colors hover:text-foreground/80 text-foreground/60" href="/pricing">Pricing</a>
-                <a className="transition-colors hover:text-foreground/80 text-foreground/60" href="/components">Components</a>
-                <a className="transition-colors hover:text-foreground/80 text-foreground/60" href="/templates">Templates</a>
-                <a className="transition-colors hover:text-foreground/80 text-foreground/60" href="/categories">Categories</a>
-                <a className="transition-colors hover:text-foreground/80 text-foreground/60" href="/blog">Blog</a>
-                <a className="transition-colors hover:text-foreground/80 text-foreground/60" href="/tools/box-shadows">Box Shadows</a>
+                {[{
+                  href: "/",
+                  label: "Home",
+                }, {
+                  href: "/contact",
+                  label: "Contact",
+                }, {
+                  // TODO: Not added 
+                  href: "/my-work",
+                  label: "My Work",
+                }].map(link => {
+                  const { href, label } = link;
+                  return (
+                    <a
+                      key={label}
+                      href={href}
+                      target="_blank"
+                      rel="noopener"
+                      aria-label={`Link to ${label}`}
+                      className="transition-colors hover:text-foreground/80 text-foreground/60"
+                    >
+                      {label}
+                    </a>
+                  )
+                })}
               </div>
               <div className="flex justify-center space-y-4 flex-col mt-4">
-                <a target="__blank" className="transition-colors hover:text-foreground/80 text-foreground/60" href="https://twitter.com/aceternitylabs">Twitter</a>
-                <a target="__blank" className="transition-colors hover:text-foreground/80 text-foreground/60" href="https://discord.gg/ftZbQvCdN7">Discord</a>
+                {socialMedia.map(link => {
+                  const { label, href } = link;
+                  return (
+                    <a
+                      key={label}
+                      href={href}
+                      target="_blank"
+                      rel="noopener"
+                      aria-label={`Link to ${label}`}
+                      className="transition-colors hover:text-foreground/80 text-foreground/60"
+                    >
+                      {label}
+                    </a>
+                  )
+                })}
+              </div>
+              <div className="flex justify-center space-y-4 flex-col mt-4">
+                {projects.map(project => {
+                  const { title, website } = project;
+                  return (
+                    <a
+                      key={title}
+                      className="transition-colors hover:text-foreground/80 text-foreground/60"
+                      href={website}
+                      target="_blank"
+                      rel="noopener"
+                    // aria-label={`Link to ${label}`}
+                    >
+                      {title}
+                    </a>
+                  )
+                })}
               </div>
             </div>
           </div>

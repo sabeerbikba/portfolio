@@ -11,7 +11,7 @@ import { MdOutlineError } from "react-icons/md";
 
 
 
-const ContactForm = ({ className }: { className?: string }) => {
+const ContactForm = () => {
    // const handleSubmit = async (e: FormEvent) => {
    //    e.preventDefault();
    //    const formData = new FormData(e.target as HTMLFormElement);
@@ -88,29 +88,19 @@ const ContactForm = ({ className }: { className?: string }) => {
       }
    };
 
-
-   const animationProps = className
-      ? {
-         initial: { opacity: 0, x: 50 },
-         animate: { opacity: 1, x: 0 },
-         transition: { duration: 0.8, delay: 0.4 },
-      }
-      : {};
-
    return (
       <motion.div
-         {...animationProps}
-         className={cn(
-            className ? className :
-               "max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white",
-            "max-lg:w-[80%] max-lg:mx-auto max-sm:w-full"
-         )}
+         initial={{ opacity: 0, x: -50 }}
+         animate={{ opacity: 1, x: 0 }}
+         transition={{ duration: 0.8, delay: 0.4 }}
+         className="p-5 md:p-6 lg:p-8 rounded-lg shadow-lg grid grid-cols-1 gap-y-6 bg-[#00000008] border border-[#8080804f] max-lg:w-[80%] max-lg:mx-auto max-sm:w-full max-w-2xl ml-auto"
+         // TODO: role from // thinking emoji // isNeeded
          role="form"
          aria-labelledby="contactFormTitle"
       >
          <h2 id="contactFormTitle" className="sr-only">Contact Us Form</h2>
          <form className="my-8" onSubmit={handleSubmit}>
-            <div className={cn(className && "max-w-xl mx-auto")}>
+            <div className="max-w-xl mx-auto">
                <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
                   <LabelInputContainer>
                      <Label htmlFor="name">Name</Label>

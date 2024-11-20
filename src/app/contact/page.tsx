@@ -2,21 +2,13 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 
-import ContactForm from "@/components/contact-form";
-
 // Icons
-import {
-   FaGithub,
-   FaTwitter,
-   FaLinkedin,
-   FaInstagram,
-   FaPhoneAlt,
-   FaStackOverflow,
-   FaWhatsapp,
-} from 'react-icons/fa';
+import { FaPhoneAlt } from 'react-icons/fa';
 import { IoMdMail, IoIosArrowBack } from 'react-icons/io';
 import { FaLocationDot } from "react-icons/fa6";
 
+import ContactForm from "@/components/contact-form";
+import socialMedia from "@/data/social-media";
 
 const Contact = () => (
    <div className="min-h-screen w-full overflow-x-hidden text-white py-12 px-4 sm:px-6 lg:px-8 lg:py-28 lg:table">
@@ -26,7 +18,7 @@ const Contact = () => (
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center mb-12 max-lg:mb-0"
+            className="text-center mb-12 max-lg:mb-2"
             aria-labelledby="get-in-touch-heading"
          >
             <h1
@@ -47,7 +39,7 @@ const Contact = () => (
             <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
 
                <div>
-                  <ContactForm className="p-8 rounded-lg shadow-lg grid grid-cols-1 gap-y-6 bg-[#00000008] border border-[#8080804f] max-lg:w-[80%] max-lg:mx-auto max-sm:w-full max-w-2xl ml-auto" />
+                  <ContactForm />
                </div>
 
                <div>
@@ -55,100 +47,79 @@ const Contact = () => (
                      initial={{ opacity: 0, x: 50 }}
                      animate={{ opacity: 1, x: 0 }}
                      transition={{ duration: 0.8, delay: 0.4 }}
-                     className="p-8 rounded-lg shadow-lg bg-[#00000008] border border-[#8080804f] max-lg:w-[80%] max-lg:mx-auto max-sm:w-full h-full w-full max-w-2xl mr-auto table"
+                     className="p-5 md:p-6 lg:p-8 rounded-lg shadow-lg bg-[#00000008] border border-[#8080804f] max-lg:w-[80%] max-lg:mx-auto max-sm:w-full h-full w-full max-w-2xl mr-auto grid grid-cols-1"
                   >
-                     <div className="table-cell align-middle text-center">
-                        <div className="mb-6">
-                           <h1 className="text-4xl font-bold text-black text-start pl-6 center">
-                              Sabeer Bikba
-                           </h1>
-                           <h2 className="text-[22px] pt-2 font-base text-gray-600 text-start pl-6 center">
-                              Full-Stack Developer & UI/UX Enthusiast
-                           </h2>
-                        </div>
+                     <div className="lg:table">
+                        <div className="lg:table-cell lg:align-middle lg:text-center">
+                           <div className="mb-6 w-full">
+                              <h1 className="text-3xl md:text-4xl font-bold text-black text-start lg:pl-6 center">
+                                 Sabeer Bikba
+                              </h1>
+                              {/* <h2 className="text-[22px] pt-2 font-base text-gray-600 text-start lg:pl-6 center"> */}
+                              <h2 className="text-lg sm:text-xl md:text-2xl text-center pt-2 font-base text-gray-600 lg:pl-6 center">
+                                 Full-Stack Developer & UI/UX Enthusiast
+                              </h2>
+                           </div>
 
-                        <div className="space-y-4 mb-8">
-                           {[{
-                              icon: IoMdMail,
-                              text: 'sabeerbikba02@gmail.com',
-                              href: "mailto:sabeerbikba02@gmail.com",
-                              ariaLabel: 'Email sabeerbikba02@gmail.com'
+                           <div className="space-y-4 mb-8">
+                              {[{
+                                 icon: IoMdMail,
+                                 text: 'sabeerbikba02@gmail.com',
+                                 href: "mailto:sabeerbikba02@gmail.com",
+                                 ariaLabel: 'Email sabeerbikba02@gmail.com'
 
-                           }, {
-                              icon: FaPhoneAlt,
-                              text: '+91 861 871 8358',
-                              href: "tel:+918618718358",
-                              ariaLabel: 'Call +91 861 871 8358'
+                              }, {
+                                 icon: FaPhoneAlt,
+                                 text: '+91 861 871 8358',
+                                 href: "tel:+918618718358",
+                                 ariaLabel: 'Call +91 861 871 8358'
 
-                           }, {
-                              icon: FaLocationDot,
-                              text: 'India, Karnataka',
-                              href: "https://www.google.com/maps/place/Karnataka",
-                              ariaLabel: 'Location India, Karnataka'
-                           }].map((item, index) => (
-                              <div key={index} className="center space-x-3 ml-2">
-                                 <a
-                                    href={item.href}
-                                    target="__blank"
-                                    className="text-xl pr-2 text-gray-600 center"
-                                    aria-label={item.ariaLabel}
-                                 >
-                                    <div
-                                       className="w-10 h-10 rounded-full bg-gray-100 center"
-                                       aria-hidden="true"
-                                       role="presentation"
+                              }, {
+                                 icon: FaLocationDot,
+                                 text: 'India, Karnataka',
+                                 href: "https://www.google.com/maps/place/Karnataka",
+                                 ariaLabel: 'Location India, Karnataka'
+                              }].map((item, index) => (
+                                 <div key={index} className="center space-x-3 ml-2">
+                                    <a
+                                       href={item.href}
+                                       target="__blank"
+                                       className="pr-2 text-gray-600 center text-base sm:text-lg md:text-xl "
+                                       aria-label={item.ariaLabel}
                                     >
-                                       <item.icon className="h-6 w-6 text-gray-600" aria-hidden="true" />
-                                    </div>
-                                    {item.text}
+                                       <div
+                                          className="w-7 sm:w-9 md:w-10 h-7 sm:h-9 md:h-10 mr-2 rounded-full bg-gray-100 center"
+                                          aria-hidden="true"
+                                          role="presentation"
+                                       >
+                                          <item.icon className="h-[18px] sm:h-5 md:h-6 w-[18px] sm:w-5 md:w-6 text-gray-600" aria-hidden="true" />
+                                       </div>
+                                       {item.text}
+                                    </a>
+                                 </div>
+                              ))}
+                           </div>
+
+                           <div
+                              role="separator"
+                              aria-hidden="true"
+                              className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-8 h-0.5 w-full"
+                           />
+
+                           <div className="flex justify-center space-x-4">
+                              {socialMedia.map((link) => (
+                                 <a
+                                    key={link.label}
+                                    href={link.href}
+                                    target="_blank"
+                                    rel="noopener"
+                                    aria-label={`Link to ${link.label}`}
+                                    className="w-10 h-10 rounded-full max-xs:!ml-[6px] bg-gray-200 center hover:bg-gray-300 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400"
+                                 >
+                                    <link.icon className="h-5 w-5 text-gray-600" aria-hidden="true" />
                                  </a>
-                              </div>
-                           ))}
-                        </div>
-
-                        <div
-                           role="separator"
-                           aria-hidden="true"
-                           className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-8 h-0.5 w-full"
-                        />
-
-                        <div className="flex justify-center space-x-4">
-                           {[{
-                              icon: FaInstagram,
-                              href: 'https://www.instagram.com/uniquebeast__/',
-                              label: 'Instagram'
-                           }, {
-                              icon: FaLinkedin,
-                              href: 'https://www.linkedin.com/in/sabeer-bikba-70a574252/',
-                              label: 'LinkedIn'
-                           }, {
-                              icon: FaWhatsapp,
-                              href: "https://wa.me/918618718358/",
-                              label: "WhatsApp"
-                           }, {
-                              icon: FaGithub,
-                              href: 'https://github.com/sabeerbikba/',
-                              label: 'GitHub'
-                           }, {
-                              icon: FaStackOverflow,
-                              href: 'https://stackoverflow.com/users/20352034/sabeer-bikba',
-                              label: 'Stack Overflow'
-                           }, {
-                              icon: FaTwitter,
-                              href: 'https://x.com/Sb28187',
-                              label: 'X (Twitter)'
-                           },].map(link => (
-                              <a
-                                 key={link.label}
-                                 href={link.href}
-                                 target="_blank"
-                                 rel="noopener"
-                                 aria-label={`Link to ${link.label}`}
-                                 className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center hover:bg-gray-300 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400"
-                              >
-                                 <link.icon className="h-5 w-5 text-gray-600" aria-hidden="true" />
-                              </a>
-                           ))}
+                              ))}
+                           </div>
                         </div>
                      </div>
                   </motion.div>
