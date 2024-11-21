@@ -28,7 +28,6 @@ export const metadata: Metadata = {
       {
         url: boxIconString,
         type: "image/svg+xml",
-        // sizes: 
       }
     ]
   },
@@ -73,8 +72,6 @@ const jsonLd: WithContext<CreativeWork> = {
   })) as WebPage[], // Ensure proper typing
 };
 
-
-
 const RootLayout = ({
   children,
   // modal,
@@ -84,12 +81,12 @@ const RootLayout = ({
 }>): JSX.Element => {
   return (
     <html lang="en">
-      {/* <Head> */}
-      <Script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      {/* </Head> */}
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body>
         <main>
 
@@ -124,7 +121,7 @@ const RootLayout = ({
         </main>
         {/* {modal} */}
       </body>
-    </html >
+    </html>
   );
 };
 

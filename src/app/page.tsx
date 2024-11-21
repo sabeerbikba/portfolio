@@ -25,28 +25,6 @@ import Icon from "@/data/icons";
 
 const Home = () => {
 
-  {/* <TypewriterEffectSmooth
-          words={[
-            {
-              text: "Build",
-            },
-            {
-              text: "awesome",
-            },
-            {
-              text: "apps",
-            },
-            {
-              text: "with",
-            },
-            {
-              text: "Aceternity.",
-              className: "text-blue-500 dark:text-blue-500",
-            },
-          ]}
-        /> */}
-
-
   return (
     <>
       <section
@@ -76,20 +54,21 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Explore My Creations */}
+      {/* Featured Projects */}
       <ContainerScroll
         titleComponent={
           <Heading as="h2" className="md:text-[2.8rem]">
-            {/* Explore My Creations */}
             Browse My Creations
             <br />
             <span className="text-5xl xs:text-[3.4rem] sm:text-[4.2rem] md:text-[5rem] font-bold mt-1 leading-none">
-              {/* Featured Projects */}
               Featured Works
             </span>
           </Heading>
         }
       />
 
+      {/* Rename it */}
       <section aria-describedby="tools-section">
         <div className="mb-4 text-center">
           <Heading id="tools-section">Development Tools & Expertise</Heading>
@@ -98,7 +77,6 @@ const Home = () => {
           </h2>
         </div>
         <div className="max-w-[1000px] mx-auto aspect-square text-2xl max-xs:-mt-4 max-sm:-mt-3 max-md:-mt-2">
-          {/* Rename it */}
           <SponsorPack tools={tools} />
         </div>
       </section>
@@ -132,106 +110,81 @@ const Home = () => {
       <CTASection />
 
       {/* inspiration URL: https://ui.aceternity.com/ */}
-      <footer>
-        <div className="border-t border-neutral-300 px-8 py-20 bg-white">
-          <div className="max-w-7xl mx-auto text-sm text-neutral-500 flex sm:flex-row flex-col justify-between items-start ">
-            <div>
-              <div className="mr-4  md:flex mb-4">
-                <a className="center space-x-2 text-2xl font-bold text-center text-neutral-600 selection:bg-emerald-500 mr-10 py-0" href="/">
-                  {/* <div className="relative h-8 w-8 md:h-6 md:w-6 bg-black border border-slate-800  text-white   center rounded-md text-sm antialiased"> */}
-                  {/* <div className="absolute h-10 w-full bg-white/[0.2] -top-10 inset-x-0 rounded-full blur-xl"></div> */}
-                  {/* <div className="text-sm  text-emerald-500 relative z-20"> */}
-                  {/* <img alt="Logo" loading="lazy" width="50" height="50" decoding="async" data-nimg="1" className="hidden" srcSet="/_next/image?url=%2Flogo-dark.png&amp;w=64&amp;q=75 1x, /_next/image?url=%2Flogo-dark.png&amp;w=128&amp;q=75 2x" src="/_next/image?url=%2Flogo-dark.png&amp;w=128&amp;q=75" style={{ color: "transparent" }} /> */}
-                  <Icon />
-                  {/* </div> */}
-                  {/* </div> */}
-                  {/* <div className="flex flex-col">
-                    <h1 className="text-black font-sans"> Aceternity UI</h1>
-                  </div> */}
-                </a>
-              </div>
-              {/* <div> */}
-              Sabeer bikba
-              {/* A product by
-                <a target="__blank" className="text-neutral-600 font-medium" href="https://aceternity.com">Aceternity</a>
-                I */}
-              {/* </div> */}
-              {/* <div className="mt-2">
-                Building in public at{" "}
-                <a className="font-medium text-neutral-600" target="__blank" href="https://twitter.com/mannupaaji">@mannupaaji</a>
-              </div> */}
-              <div className="mt-2 font-medium text-neutral-600">
-                Your Vision, My Code, Perfect Synergy
-              </div>
+      <footer className="border-t border-neutral-300 px-8 py-20 bg-white">
+        <div className="max-w-7xl mx-auto text-sm text-neutral-500 flex sm:flex-row flex-col justify-between items-start ">
+          <div>
+            <div className="mr-4 md:flex mb-1.5">
+              <a
+                href="/"
+                aria-label="Home page"
+                className="center space-x-2 text-2xl font-bold text-center text-neutral-600 selection:bg-emerald-500 mr-10 py-0"
+              >
+                <Icon />
+              </a>
             </div>
-            <div className="grid grid-cols-3 gap-10 items-start mt-10 md:mt-0">
-              <div className="flex justify-center space-y-4 flex-col mt-4">
-                {[{
-                  href: "/",
-                  label: "Home",
-                }, {
-                  href: "/contact",
-                  label: "Contact",
-                }, {
-                  // TODO: Not added 
-                  href: "/my-work",
-                  label: "My Work",
-                }].map(link => {
-                  const { href, label } = link;
-                  return (
-                    <a
-                      key={label}
-                      href={href}
-                      target="_blank"
-                      rel="noopener"
-                      aria-label={`Link to ${label}`}
-                      className="transition-colors hover:text-foreground/80 text-foreground/60"
-                    >
-                      {label}
-                    </a>
-                  )
-                })}
-              </div>
-              <div className="flex justify-center space-y-4 flex-col mt-4">
-                {socialMedia.map(link => {
-                  const { label, href } = link;
-                  return (
-                    <a
-                      key={label}
-                      href={href}
-                      target="_blank"
-                      rel="noopener"
-                      aria-label={`Link to ${label}`}
-                      className="transition-colors hover:text-foreground/80 text-foreground/60"
-                    >
-                      {label}
-                    </a>
-                  )
-                })}
-              </div>
-              <div className="flex justify-center space-y-4 flex-col mt-4">
-                {projects.map(project => {
-                  const { title, website } = project;
-                  return (
-                    <a
-                      key={title}
-                      className="transition-colors hover:text-foreground/80 text-foreground/60"
-                      href={website}
-                      target="_blank"
-                      rel="noopener"
-                    // aria-label={`Link to ${label}`}
-                    >
-                      {title}
-                    </a>
-                  )
-                })}
-              </div>
+            <div className="text-base">
+              Sabeer Bikba
             </div>
+            <div className="font-medium text-base text-neutral-600">
+              Turning Ideas into Reality with Code
+            </div>
+          </div>
+          <div className="grid grid-cols-3 gap-10 items-start mt-10 md:mt-0">
+            {[{
+              id: "quick-links",
+              title: "Quick Links",
+              links: [
+                { href: "/", label: "Home" },
+                { href: "/contact", label: "Contact" },
+                // TODO: Not added 
+                { href: "/my-work", label: "My Work" }
+              ]
+            }, {
+              id: "social-media",
+              title: "Social Media",
+              links: socialMedia.map(link =>
+                ({ href: link.href, label: link.label }))
+            }, {
+              id: "projects",
+              title: "Projects",
+              links: projects.map(project =>
+                ({ href: project.website, label: project.title }))
+            }].map(({ id, title, links }, index) => (
+              <nav aria-labelledby={id}>
+                <h2 id={id} className="sr-only">{title}</h2>
+                <ul className="flex justify-center space-y-4 flex-col mt-4">
+                  {links.map(({ href, label }) => (
+                    <li key={label}>
+                      {index === 0 ? (
+                        <Link
+                          href={href}
+                          aria-label={`Navigate to ${label} page`}
+                          className="transition-colors hover:text-foreground/80 text-foreground/60"
+                        >
+                          {label}
+                        </Link>
+                      ) : (
+                        <a
+                          href={href}
+                          target="_blank"
+                          rel="noopener"
+                          aria-label={`${id === "social-media" ? "Link to" :
+                            "Visit the website for project"} ${label}`}
+                          className="transition-colors hover:text-foreground/80 text-foreground/60"
+                        >
+                          {label}
+                        </a>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            ))}
           </div>
         </div>
       </footer>
     </>
   );
-}
+};
 
 export default Home;
