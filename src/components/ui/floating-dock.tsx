@@ -80,16 +80,16 @@ const FloatingDockMobile = ({ hidden }: { hidden: boolean }) => {
                >
                   {/* Column 1 */}
                   <div className="w-1/3 h-full py-[9px] border-white">
-                     {projects.map((item, id) => {
+                     {projects.map(({ title, icon }, id) => {
                         const view = id + 1;
                         return (
                            <button
-                              key={item.title}
+                              key={title}
                               onClick={() => screen(view, "project")}
                               className="max-w-ful p-2"
                            >
                               <img
-                                 src={item.icon}
+                                 src={icon}
                                  className={cn(
                                     "rounded-xl",
                                     view === previewProjectNum && "border border-zinc-600 shadow-[0_0_20px_4px_rgba(255,255,255,0.7)]",
@@ -104,15 +104,15 @@ const FloatingDockMobile = ({ hidden }: { hidden: boolean }) => {
 
                   {/* Column 2 */}
                   <div className="w-1/3 h-full py-[9px] border-white">
-                     {apps.map((item, id) => {
+                     {apps.map(({ title, icon }, id) => {
                         const view = id + 1 + projects.length;
                         return (
                            <button
-                              key={item.title}
+                              key={title}
                               onClick={() => screen(view, "app")}
                               className="max-w-full p-2"
                            >
-                              <img src={item.icon}
+                              <img src={icon}
                                  className={cn(
                                     "rounded-xl",
                                     view === previewAppNum && "border border-zinc-600 shadow-[0_0_20px_4px_rgba(255,255,255,0.7)]",
@@ -202,7 +202,6 @@ const FloatingDockDesktop = ({ hidden }: { hidden: boolean }) => {
    }, [isHovered]);
 
    useEffect(() => {
-      console.log("inView: ", inView)
       if (inView) {
          setIsVisible(true);
          delay();

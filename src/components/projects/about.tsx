@@ -1,4 +1,6 @@
+import ExternalLink from "../ui/link";
 // TODO: content need to be added
+
 
 const About = ({ number }: { number: [number, number] }) => {
    const [project, app] = number;
@@ -11,6 +13,8 @@ const About = ({ number }: { number: [number, number] }) => {
       </div>
    );
 };
+
+
 
 // Mention this webiste designed to bigger screen that's why look ui not correct
 const DevTools = () => (
@@ -78,8 +82,7 @@ const DevTools = () => (
       <p>
          While working alone, I had the opportunity to guide a contributor on GitHub workflows, which was a rewarding
          experience. However, creating each tool is time-intensive, and a long list of ideas is still pending
-         implementation. My vision for the future is to expand the toolset, improve UI/UX, and potentially make the
-         platform open-source for other developers to contribute and benefit.
+         implementation. My vision for the future is to expand the toolset, improve UI/UX.
       </p>
       <p>
          Dev.Tools is not just a project—it&apos;s a solution for developers like me, by developers like me.
@@ -90,110 +93,110 @@ const DevTools = () => (
 const Rickshaw = () => (
    <>
       <h3>Rickshaw</h3>
-      {/* <h4><strong>Project Overview</strong></h4> */}
       <p>
-         The Rickshaw Project is an open-source initiative designed to provide contact information for tourists riding
-         rickshaws. This unique project is hosted in the GitHub repository{" "}
-         <a href="https://github.com/sabeerbikba/rickshaw" target="_blank" rel="noopener">sabeerbikba/rickshaw</a>.
-         While the
-         project was originally created as a favor to a family member, it incorporates creative design and functionality
-         to elevate its utility and appeal, especially for tourists seeking seamless access to rickshaw contact details.
+         Rickshaw is an open-source project designed to provide contact details for tourists traveling in rickshaws.
+         The project was initially created as a request from a family member, blending utility with creative design.
+         Available in the GitHub repository{' '}
+         <ExternalLink href="http://github.com/sabeerbikba/rickshaw">sabeerbikba/rickshaw</ExternalLink>,
+         this project aims to deliver a simple yet effective solution tailored to a tourist audience.
       </p>
-      <p>The website features four key pages:</p>
+      <p>
+         With features like a gallery for uploading and viewing images and a creatively designed home page
+         resembling the back of a rickshaw, the project showcases both functionality and visual flair.
+         It&apos;s accessible, user-friendly, and built to demonstrate creativity while meeting practical needs.
+      </p>
+      <hr />
+      <h4><strong>Motivation and Goals</strong></h4>
+      <p>
+         The primary motivation behind the project was a request from a family member to create a website for tourists.
+         This prompted me to take a simple idea and add creative touches to make it visually engaging while
+         maintaining its utility. Additionally, this project served as an opportunity to learn and experiment with
+         different technologies, especially backend development and modern web practices.
+      </p>
+      <p>
+         One highlight of the project is the home page design, which mimics the back of a rickshaw.
+         The navigation elements, such as a call-to-action (CTA) button styled as a number plate and a placeholder
+         representing the back mirror, add a fun and immersive touch. Hover interactions further enhance the
+         experience, with effects like red brake lights illuminating or indicators activating in response
+         to user actions.
+      </p>
+      <hr />
+      <h4><strong>Technical Implementation</strong></h4>
+      <p>
+         Rickshaw was implemented across three versions, each using different technologies:</p>
+      <ol>
+         {/* TODO:  lint error check  */}
+         <li><strong>Vanilla Technologies</strong> (No backend) – Initial prototype, straightforward but limited.</li>
+         <li><strong>Node.js Backend</strong> – Introduced APIs for the gallery and other features.</li>
+         <li><strong>Next.js with MongoDB</strong> – Final version, hosted on Vercel, combining frontend and backend seamlessly.</li>
+      </ol>
+      <p>
+         Key technologies used in the final version include{' '}
+         <ExternalLink href="https://nextjs.org/"><strong>Next.js</strong></ExternalLink>,{' '}
+         <ExternalLink href="https://www.mongodb.com/"><strong>MongoDB</strong>,</ExternalLink>{' '}and{' '}
+         <ExternalLink href="https://imgbb.com/"><strong>imgbb</strong></ExternalLink>{' '}
+         for image hosting. The gallery page posed a significant challenge,
+         especially handling image uploads and storage. To address these, I implemented advanced techniques
+         like blurred image placeholders using <strong>SQIP (SVG-based placeholders)</strong>{' '}
+         for a better user experience during image loading. This effort even led to the creation of two tools integrated
+         into my <ExternalLink href="http://github.com/sabeerbikba/dev.tools">Dev.Tools</ExternalLink> project:
+      </p>
       <ul>
          <li>
-            <strong>Home Page</strong>: Styled creatively to resemble the back of a rickshaw, complete with interactive
-            elements like a CTA button that mimics a number plate and navigation buttons resembling indicators.
+            <ExternalLink href="https://devtools-sabeerbikba.vercel.app/image-placeholder-generator">
+               <strong>/image-placeholder-generator</strong>
+            </ExternalLink>
          </li>
          <li>
-            <strong>About Me</strong>: Provides an overview of the creator&aposs journey and purpose for the project.
-         </li>
-         <li>
-            <strong>Gallery</strong>: Showcases images with modern features like image placeholders and infinite scroll.
-         </li>
-         <li>
-            <strong>Contact</strong>: Allows easy submission of queries or feedback.
+            <ExternalLink href="https://devtools-sabeerbikba.vercel.app/sqip-lqip-previewer">
+               <strong>/sqip-lqip-previewer</strong>
+            </ExternalLink>
          </li>
       </ul>
       <hr />
-      <h4><strong>Motivation and Challenges</strong></h4>
-      <p>
-         This project began as a simple request from my uncle, but it turned into a valuable learning opportunity. The
-         primary motivation was to deliver a website that was not just functional but also aesthetically engaging.
-         Additionally, I wanted to challenge myself by building the same project using three different approaches:
-      </p>
-      <ol>
-         <li><strong>Vanilla Technologies (Frontend-only)</strong></li>
-         <li><strong>Node.js Backend</strong></li>
-         <li><strong>Next.js Full-Stack Implementation</strong></li>
-      </ol>
-      <p>
-         Each iteration presented its own challenges, particularly when implementing the <strong>/gallery</strong>
-         section. Handling image uploads, creating placeholders, and managing infinite scrolling were difficult tasks,
-         especially as I was exploring backend development for the first time. I incorporated innovative solutions like
-         <strong>SQIP</strong> (SVG-based image placeholders) and other techniques such as <strong>blurhash</strong> and
-         <strong>LQIP</strong> to improve the user experience while images were loading.
-      </p>
-      <hr />
-      <h4><strong>Features and Technical Highlights</strong></h4>
+      <h4><strong>Features</strong></h4>
+      <p>Rickshaw includes four primary pages:</p>
       <ol>
          <li>
-            <p><strong>Gallery Page</strong>:</p>
+            <ExternalLink href="https://honnavarrickshawservice.vercel.app/">
+               <strong>Home Page</strong>
+            </ExternalLink>
+            : A creative design mimicking the back of a rickshaw with interactive hover effects.</li>
+         <li>
+
+            <ExternalLink href="https://honnavarrickshawservice.vercel.app/about-me">
+               <strong>About Me Page</strong>
+            </ExternalLink>
+            : Provides a brief introduction and context about the project.</li>
+         <li>
+            <ExternalLink href="https://honnavarrickshawservice.vercel.app/gallery">
+               <strong>Gallery Page</strong>
+            </ExternalLink>
+            :
             <ul>
-               <li>
-                  <strong>Image Uploads</strong>: Visitors can upload images without logging in.
-               </li>
-               <li>
-                  <strong>SQIP Placeholders</strong>: Background-blurred placeholders display while images load.
-               </li>
-               <li>
-                  <strong>Infinite Scroll</strong>: Seamless browsing for a better user experience.
-               </li>
+               <li>Image upload functionality without requiring login.</li>
+               <li>SQIP-based blurred image placeholders.</li>
+               <li>Infinite scroll for seamless navigation through images.</li>
             </ul>
          </li>
          <li>
-            <p><strong>Home Page Creativity</strong>:</p>
-            <ul>
-               <li>
-                  The home page replicates the look of a rickshaw&apos;s back, incorporating interactive elements:
-                  <ul>
-                     <li><strong>Number Plate</strong>: Functions as a CTA button.
-                     </li>
-                     <li>
-                        <strong>Brake Lights and Indicators</strong>: React to hover effects, enhancing the page&apos;s
-                        engagement.
-                     </li>
-                  </ul>
-               </li>
-            </ul>
-         </li>
-         <li>
-            <p><strong>Open Source Repository</strong>:</p>
-            <ul>
-               <li>Available for the community under different branches:<ul>
-                  <li><strong>Main</strong>: Frontend-only using vanilla technologies.</li>
-                  <li><strong>Vanilla Backend</strong>: Vanilla technologies with a Node.js backend.</li>
-                  <li><strong>Next.js Backend</strong>: Full-stack implementation using Next.js.</li>
-               </ul>
-               </li>
-            </ul>
-         </li>
+            <ExternalLink href="https://honnavarrickshawservice.vercel.app/contact">
+               <strong>Contact Page</strong>
+            </ExternalLink>
+            : Offers contact details in a clean and accessible format.</li>
       </ol>
+      <p>
+         The gallery page stands out as the most feature-rich section, showcasing advanced frontend and backend integration.</p>
       <hr />
-      <h4><strong>Personal Reflection and Future Plans</strong></h4>
+      <h4><strong>Future Plans</strong></h4>
       <p>
-         This project holds personal significance as it pushed me to explore multiple technologies and solve real-world
-         challenges. The repetitive effort of building it three times was both frustrating and rewarding, as it
-         solidified my understanding of frontend, backend, and full-stack development.
+         The project currently fulfills its purpose, but I am open to adding new features or improvements upon request.
+         For instance, the contact page was added later as a response to feedback. Any future updates will
+         focus on maintaining the simplicity and usability that define Rickshaw.
       </p>
       <p>
-         While there are no immediate plans for new features, I remain open to adding functionality upon request. For
-         example, I recently added a <strong>/contact</strong> page to meet a new requirement. This adaptability ensures
-         the project remains practical and evolves as needed.
-      </p>
-      <p>
-         The Rickshaw Project is not just a website—it&apos;s a testament to creative problem-solving and the ability to
-         translate simple ideas into engaging, functional solutions.
+         Rickshaw is a practical, creative, and open-source project that highlights my ability to
+         combine technical skills with design thinking, making it an ideal solution for its target audience.
       </p>
    </>
 );

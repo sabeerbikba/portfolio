@@ -1,4 +1,4 @@
-To make the `SponsorPack` component **SEO-friendly** while keeping the current interactive behavior, you need to ensure that the **critical content** (such as the list of tools, their names, images, or any relevant metadata) is rendered **server-side** in the HTML that search engines can crawl. Since the data is saved in a `data` folder, Remix allows you to fetch that data server-side using a **loader**, ensuring that the content is rendered as part of the initial HTML.
+To make the `ToolsPack` component **SEO-friendly** while keeping the current interactive behavior, you need to ensure that the **critical content** (such as the list of tools, their names, images, or any relevant metadata) is rendered **server-side** in the HTML that search engines can crawl. Since the data is saved in a `data` folder, Remix allows you to fetch that data server-side using a **loader**, ensuring that the content is rendered as part of the initial HTML.
 
 ### Steps to Make the Component SEO-Friendly:
 
@@ -35,9 +35,9 @@ export let loader: LoaderFunction = async () => {
 
 This loader fetches the tools data from your `data/tools.ts` (or other sources) and makes it available to the component.
 
-#### 2. Use the Loaded Data in the `SponsorPack` Component
+#### 2. Use the Loaded Data in the `ToolsPack` Component
 
-Now that the tools data is loaded on the server side, you can pass it as a prop to your `SponsorPack` component.
+Now that the tools data is loaded on the server side, you can pass it as a prop to your `ToolsPack` component.
 
 ```tsx
 import { useMemo } from 'react';
@@ -48,7 +48,7 @@ import type { HierarchyNode } from '@visx/hierarchy/lib/types';
 import { ToolsType } from '@/types/tools';
 import { cn } from '@/lib/utils';
 
-const SponsorPack = () => {
+const ToolsPack = () => {
    const tools = useLoaderData<ToolsType[]>();  // Get the tools data from the loader
 
    const pack = useMemo(() => ({
@@ -115,7 +115,7 @@ const SponsorPack = () => {
    );
 };
 
-export default SponsorPack;
+export default ToolsPack;
 ```
 
 #### 3. SEO-Optimized Content

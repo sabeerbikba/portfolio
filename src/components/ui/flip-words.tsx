@@ -2,7 +2,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
-export const FlipWords = ({
+const FlipWords = ({
    words,
    duration = 3000,
    ariaLabel = "Rotating words describing design qualities",
@@ -78,3 +78,5 @@ export const FlipWords = ({
       </AnimatePresence >
    );
 };
+
+export default FlipWords;

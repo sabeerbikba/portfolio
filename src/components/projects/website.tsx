@@ -25,17 +25,16 @@ const Website = ({
          className="w-full h-full center relative"
          style={{ display: hidden ? "none" : "block" }}
       >
-         {data.map((project, index) => (
+         {data.map(({ title, website }, index) => (
             loaded[index] && (
                <iframe
-                  // TODO: is lazy really needed 
                   loading="lazy"
                   key={index}
                   className="w-full h-full max-md:rounded-2xl"
                   hidden={tab !== index}
                   aria-hidden={tab !== index}
-                  src={project.website}
-                  title={`Project showcase: ${project.title}`}
+                  src={website}
+                  title={`Project showcase: ${title}`}
                />
             )
          ))}

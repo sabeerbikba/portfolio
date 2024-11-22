@@ -146,6 +146,7 @@
 
 /* source: https://gist.github.com/robertpeteuil/bb2dc86f3b3e25d203664d61410bfa30 */
 
+/* TODO: Looks repeatative, I think we can achive same thing PostCss any plugin */
 [data-language="ABAP"] {
    background-color: #E8274B;
 }

@@ -11,30 +11,32 @@ type DataType = {
 type ProjectType = DataType & {
    repo: string,
    website: string,
-   image: string,
+   // image: string,
    about: string,
 };
 
+//  TODO: Icon better if use svg if possible because when hovering it take time to render a image or try diffrent method 
 const projects: ProjectType[] = [
    {
       // 1
       title: "Dev.tools",
       repo: `${githubProfileName}/dev.tools`,
-      icon: "/images/Vector.png",
+      icon: "/images/Vector.png", // Also used in SEO LD+JSON TODO: rename image name
       website: "https://devtools-sabeerbikba.vercel.app/",
       // TODO: need to update
-      image: "https://example.com/thumbnails/devtools-thumbnail.png",
-      about: "A developer productivity tool for generating boilerplate code and simplifying workflows.",
+      // image: "https://example.com/thumbnails/devtools-thumbnail.png",
+      about: "A collection of useful developer tools built with React.",
+
    },
    {
       // 2
       title: "Rickshaw",
       repo: `${githubProfileName}/rickshaw`,
-      icon: "/images/location.png",
+      icon: "/images/location.png", // Also used in SEO LD+JSON TODO: rename image name
       website: "https://honnavarrickshawservice.vercel.app/",
       // TODO: need to update
-      image: "https://example.com/thumbnails/rickshaw-thumbnail.png",
-      about: "A booking platform for rickshaw services in Honnavar, providing an easy and intuitive user experience.",
+      // image: "https://example.com/thumbnails/rickshaw-thumbnail.png",
+      about: "An open-source project for tourist contact info, featuring a rickshaw-themed design.",
    },
 ];
 

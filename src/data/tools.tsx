@@ -1,7 +1,5 @@
 import type { ToolsType } from "@/types/tools";
 
-// TODO: give linkUrl for every element 
-
 // Icons imported from https://devicon.dev/, https://devicon-ui.vercel.app/
 
 const tools: ToolsType[] = [{

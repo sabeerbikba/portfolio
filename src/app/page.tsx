@@ -1,8 +1,7 @@
 "use client";
-// import { TypewriterEffectSmooth } from "@/components/ui/typewriter-effect";
-import { FlipWords } from "@/components/ui/flip-words";
+import Link from "next/link";
 import dynamic from 'next/dynamic';
-const SponsorPack = dynamic(() => import('@/components/ui/sponsor-pack'), {
+const ToolsPack = dynamic(() => import('@/components/ui/tools-pack'), {
   ssr: false,
   loading: () => (
     <div className="center w-full h-full">
@@ -11,15 +10,16 @@ const SponsorPack = dynamic(() => import('@/components/ui/sponsor-pack'), {
   ),
 });
 
+import FlipWords from "@/components/ui/flip-words";
 import ContainerScroll from "@/components/ui/container-scroll-animation";
-import Link from "next/link";
-import tools from "@/data/tools";
+import ExternalLink from "@/components/ui/link";
 import Heading from "@/components/ui/heading";
-import { cn } from "@/lib/utils";
 import CTASection from "@/components/cta-section";
-import socialMedia from "@/data/social-media";
+import { cn } from "@/lib/utils";
 import { projects } from "@/data/projects";
+import socialMedia from "@/data/social-media";
 import Icon from "@/data/icons";
+import tools from "@/data/tools";
 
 // TODO: need to remove "use client"; from top using trick like using children
 
@@ -68,7 +68,6 @@ const Home = () => {
         }
       />
 
-      {/* Rename it */}
       <section aria-describedby="tools-section">
         <div className="mb-4 text-center">
           <Heading id="tools-section">Development Tools & Expertise</Heading>
@@ -77,14 +76,14 @@ const Home = () => {
           </h2>
         </div>
         <div className="max-w-[1000px] mx-auto aspect-square text-2xl max-xs:-mt-4 max-sm:-mt-3 max-md:-mt-2">
-          <SponsorPack tools={tools} />
+          <ToolsPack tools={tools} />
         </div>
       </section>
 
       <section
         aria-labelledby="about-heading"
         className="about-section py-12 px-10 mt-9 bg-[rgb(240,240,240)]"
-        style={{ background: "linear-gradient(0deg, rgb(255, 255, 255) 0%, rgb(240 240 240) 39%, rgb(255, 255, 255) 100%)" }}
+        style={{ background: "linear-gradient(0deg, rgb(255 255 255 / 15%) 0%, rgb(240, 240, 240) 39%, rgb(255 255 255 / 15%) 100%)" }}
       >
         <Heading id="about-heading">About Me</Heading>
         {[
@@ -114,13 +113,13 @@ const Home = () => {
         <div className="max-w-7xl mx-auto text-sm text-neutral-500 flex sm:flex-row flex-col justify-between items-start ">
           <div>
             <div className="mr-4 md:flex mb-1.5">
-              <a
+              <Link
                 href="/"
                 aria-label="Home page"
                 className="center space-x-2 text-2xl font-bold text-center text-neutral-600 selection:bg-emerald-500 mr-10 py-0"
               >
                 <Icon />
-              </a>
+              </Link>
             </div>
             <div className="text-base">
               Sabeer Bikba
@@ -142,15 +141,13 @@ const Home = () => {
             }, {
               id: "social-media",
               title: "Social Media",
-              links: socialMedia.map(link =>
-                ({ href: link.href, label: link.label }))
+              links: socialMedia.map(({ href, label }) => ({ href, label }))
             }, {
               id: "projects",
               title: "Projects",
-              links: projects.map(project =>
-                ({ href: project.website, label: project.title }))
+              links: projects.map(({ website, title }) => ({ href: website, label: title }))
             }].map(({ id, title, links }, index) => (
-              <nav aria-labelledby={id}>
+              <nav aria-labelledby={id} key={index}>
                 <h2 id={id} className="sr-only">{title}</h2>
                 <ul className="flex justify-center space-y-4 flex-col mt-4">
                   {links.map(({ href, label }) => (
@@ -164,16 +161,14 @@ const Home = () => {
                           {label}
                         </Link>
                       ) : (
-                        <a
+                        <ExternalLink
                           href={href}
-                          target="_blank"
-                          rel="noopener"
                           aria-label={`${id === "social-media" ? "Link to" :
                             "Visit the website for project"} ${label}`}
                           className="transition-colors hover:text-foreground/80 text-foreground/60"
                         >
                           {label}
-                        </a>
+                        </ExternalLink>
                       )}
                     </li>
                   ))}

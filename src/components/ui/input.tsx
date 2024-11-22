@@ -34,9 +34,6 @@ const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, Props>(
          mouseY.set(clientY - top);
       }
 
-      // Determine which component to render based on elementType
-      const InputComponent = elementType === "textarea" ? "textarea" : "input";
-
       return (
          <motion.div
             style={{

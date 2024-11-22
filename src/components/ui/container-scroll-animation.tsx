@@ -36,12 +36,7 @@ const ContainerScroll = ({ titleComponent }: { titleComponent: string | ReactNod
          className="h-[60rem] md:h-[80rem] center relative px-2 md:px-20"
          ref={containerRef}
       >
-         <div
-            className="w-full relative"
-            style={{
-               perspective: "1000px",
-            }}
-         >
+         <div className="w-full relative" style={{ perspective: "1000px" }}>
             <Header translate={translate} titleComponent={titleComponent} />
             <Card rotate={rotate} scale={scale} />
          </div>
@@ -51,9 +46,7 @@ const ContainerScroll = ({ titleComponent }: { titleComponent: string | ReactNod
 
 const Header = ({ translate, titleComponent }: any) => (
    <motion.div
-      style={{
-         translateY: translate,
-      }}
+      style={{ translateY: translate }}
       className="div max-w-5xl mx-auto text-center"
    >
       {titleComponent}

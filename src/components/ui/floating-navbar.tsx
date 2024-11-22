@@ -59,16 +59,16 @@ export const FloatingNav = ({
                className
             )}
          >
-            {navItems.map((navItem: any, idx: number) => (
+            {navItems.map(({ link, icon, name }, idx) => (
                <Link
                   key={`link=${idx}`}
-                  href={navItem.link}
+                  href={link}
                   className={cn(
                      "relative items-center flex space-x-1 text-neutral-600 hover:text-neutral-500"
                   )}
                >
-                  <span className="block sm:hidden">{navItem.icon}</span>
-                  <span className="hidden sm:block text-sm">{navItem.name}</span>
+                  <span className="block sm:hidden">{icon}</span>
+                  <span className="hidden sm:block text-sm">{name}</span>
                </Link>
             ))}
             <button className="border text-sm font-medium relative border-neutral-200 text-black px-4 py-2 rounded-full">

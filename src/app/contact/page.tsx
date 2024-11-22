@@ -8,6 +8,7 @@ import { IoMdMail, IoIosArrowBack } from 'react-icons/io';
 import { FaLocationDot } from "react-icons/fa6";
 
 import ContactForm from "@/components/contact-form";
+import ExternalLink from "@/components/ui/link";
 import socialMedia from "@/data/social-media";
 
 const Contact = () => (
@@ -55,7 +56,6 @@ const Contact = () => (
                               <h1 className="text-3xl md:text-4xl font-bold text-black text-start lg:pl-6 center">
                                  Sabeer Bikba
                               </h1>
-                              {/* <h2 className="text-[22px] pt-2 font-base text-gray-600 text-start lg:pl-6 center"> */}
                               <h2 className="text-lg sm:text-xl md:text-2xl text-center pt-2 font-base text-gray-600 lg:pl-6 center">
                                  Full-Stack Developer & UI/UX Enthusiast
                               </h2>
@@ -81,10 +81,9 @@ const Contact = () => (
                                  ariaLabel: 'Location India, Karnataka'
                               }].map((item, index) => (
                                  <div key={index} className="center space-x-3 ml-2">
-                                    <a
+                                    <ExternalLink
                                        href={item.href}
-                                       target="__blank"
-                                       className="pr-2 text-gray-600 center text-base sm:text-lg md:text-xl "
+                                       className="pr-2 text-gray-600 hover:text-gray-800 center text-base sm:text-lg md:text-xl "
                                        aria-label={item.ariaLabel}
                                     >
                                        <div
@@ -92,10 +91,10 @@ const Contact = () => (
                                           aria-hidden="true"
                                           role="presentation"
                                        >
-                                          <item.icon className="h-[18px] sm:h-5 md:h-6 w-[18px] sm:w-5 md:w-6 text-gray-600" aria-hidden="true" />
+                                          <item.icon className="h-[18px] sm:h-5 md:h-6 w-[18px] sm:w-5 md:w-6 fill-current" aria-hidden="true" />
                                        </div>
                                        {item.text}
-                                    </a>
+                                    </ExternalLink>
                                  </div>
                               ))}
                            </div>
@@ -108,16 +107,14 @@ const Contact = () => (
 
                            <div className="flex justify-center space-x-4">
                               {socialMedia.map((link) => (
-                                 <a
+                                 <ExternalLink
                                     key={link.label}
                                     href={link.href}
-                                    target="_blank"
-                                    rel="noopener"
                                     aria-label={`Link to ${link.label}`}
-                                    className="w-10 h-10 rounded-full max-xs:!ml-[6px] bg-gray-200 center hover:bg-gray-300 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400"
+                                    className="w-10 h-10 rounded-full max-xs:!ml-[6px] text-gray-600 hover:text-gray-800 bg-gray-200 center hover:bg-gray-300 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400"
                                  >
-                                    <link.icon className="h-5 w-5 text-gray-600" aria-hidden="true" />
-                                 </a>
+                                    <link.icon className="h-5 w-5 fill-current" aria-hidden="true" />
+                                 </ExternalLink>
                               ))}
                            </div>
                         </div>

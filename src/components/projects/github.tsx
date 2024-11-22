@@ -16,10 +16,6 @@ import {
    TagIcon
 } from "@primer/octicons-react";
 
-import { cn } from "@/lib/utils";
-import useLocalStorageState from "@/hooks/useLocalStorageState";
-import githubMarkdownCss from "@/css/github-markdown-dark"; // .ts file 
-
 import type {
    GithubBranchesType,
    GitHubContributorType,
@@ -31,15 +27,30 @@ import type {
    RepoDataType
 } from "@/types/projects";
 
+import { cn } from "@/lib/utils";
+import ExternalLink from "@/components/ui/link";
+import useLocalStorageState from "@/hooks/useLocalStorageState";
+import githubMarkdownCss from "@/css/github-markdown-dark"; // .ts file 
+
 // API response: https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28
 
 const githubBaseURL: string = "https://github.com/";
 const formatNumber = (num: number) => numeral(num).format('0.[0]a');
 
 const Github = ({ hidden, data }: { hidden: boolean, data: RepoDataType }) => {
-   const { repoDetails, languages, contributors, branches, tags, readme, license }: RepoDataType = data;
+   const {
+      repoDetails,
+      languages,
+      contributors,
+      branches,
+      tags,
+      readme,
+      license
+   }: RepoDataType = data;
    const isReadmeAvailable = readme !== null;
    const repoName: string = repoDetails.full_name;
+   const blobAbsoluteUrl: string =
+      `${githubBaseURL + repoName}/blob/${repoDetails.default_branch}/`;
 
    return Object.keys(data).length > 0 && (
       <div className="bg-[#0d1117] h-full" hidden={hidden}>
@@ -55,6 +66,7 @@ const Github = ({ hidden, data }: { hidden: boolean, data: RepoDataType }) => {
                   readmeData={readme}
                   licenseData={license}
                   repoName={repoName}
+                  blobAbsoluteUrl={blobAbsoluteUrl}
                />
             )}
             <Contributors
@@ -92,11 +104,14 @@ const InfoCard = ({
    return (
       <div className="p-4 border-b border-[#3d444d] text-[#9198a1]">
          <h2 className="space-y-4 text-2xl font-extrabold ml-1 mb-4 text-[#f0f6fc]">
-            <a href={githubBaseURL + full_name} className=" hover:underline">
+            <ExternalLink
+               href={githubBaseURL + full_name}
+               className=" hover:underline"
+            >
                <MarkGithubIcon size={32} className="mr-2" />
                <span className="text-xl text-[#9198a1]">{userName}/</span>
                {repositoryName}
-            </a>
+            </ExternalLink>
          </h2>
          <div className="space-y-4">
             {description != null && (
@@ -118,61 +133,49 @@ const InfoCard = ({
                </>
             )}
             <ul className="flex flex-wrap items-center gap-5 text-sm">
-               {[
-                  {
-                     href: `/${full_name}/stargazers`,
-                     icon: <StarIcon className="fill-current" />,
-                     count: stargazers_count,
-                     what: "stars"
-                  },
-                  {
-                     href: `/${full_name}/forks`,
-                     icon: <RepoForkedIcon className="fill-current" />,
-                     count: forks_count,
-                     what: "forks"
-                  },
-                  {
-                     href: `/${full_name}/watchers`,
-                     icon: <EyeIcon className="fill-current" />,
-                     count: subscribers_count,
-                     what: "watching",
-                  },
-                  {
-                     href: `/${full_name}/branches`,
-                     icon: <GitBranchIcon className="fill-current" />,
-                     count: branchData.length,
-                     what: "Branch",
-                  },
-                  {
-                     href: `/${full_name}/tags`,
-                     icon: <TagIcon className="fill-current" />,
-                     count: tagData.length,
-                     what: "Tags",
-                  },
-                  {
-                     href: `/${full_name}/activity`,
-                     icon: <PulseIcon className="fill-current" />,
-                     count: null,
-                     what: "Activity",
-                  }
-               ].map(link => {
-                  const { href, icon, count, what } = link;
-                  return (
-                     <a
-                        href={githubBaseURL + href}
-                        key={what}
-                        target="_blank"
-                        role="listitem"
-                        className="inline-flex items-center gap-2 text-current hover:text-blue-400"
-                     >
-                        {icon}
-                        {count != null && (
-                           <span className="font-semibold">{formatNumber(count)}</span>
-                        )}
-                        <span>{what}</span>
-                     </a>
-                  );
-               })}
+               {[{
+                  href: `${full_name}/stargazers`,
+                  icon: <StarIcon className="fill-current" />,
+                  count: stargazers_count,
+                  what: "stars"
+               }, {
+                  href: `${full_name}/forks`,
+                  icon: <RepoForkedIcon className="fill-current" />,
+                  count: forks_count,
+                  what: "forks"
+               }, {
+                  href: `${full_name}/watchers`,
+                  icon: <EyeIcon className="fill-current" />,
+                  count: subscribers_count,
+                  what: "watching",
+               }, {
+                  href: `${full_name}/branches`,
+                  icon: <GitBranchIcon className="fill-current" />,
+                  count: branchData.length,
+                  what: "Branch",
+               }, {
+                  href: `${full_name}/tags`,
+                  icon: <TagIcon className="fill-current" />,
+                  count: tagData.length,
+                  what: "Tags",
+               }, {
+                  href: `${full_name}/activity`,
+                  icon: <PulseIcon className="fill-current" />,
+                  count: null,
+                  what: "Activity",
+               }].map(({ href, icon, count, what }) => (
+                  <ExternalLink
+                     href={githubBaseURL + href}
+                     key={what}
+                     className="inline-flex items-center gap-2 text-current hover:text-blue-400"
+                  >
+                     {icon}
+                     {count != null && (
+                        <span className="font-semibold">{formatNumber(count)}</span>
+                     )}
+                     <span>{what}</span>
+                  </ExternalLink>
+               ))}
             </ul>
             <div className="inline-flex items-center gap-1 text-sm">
                <GlobeIcon fill="#9198a1" />
@@ -188,7 +191,7 @@ const Website = ({ link }: { link: string | null }) => {
    const [ishoverd, setIsHoverd] = useState<boolean>(false);
 
    return (
-      <a
+      <ExternalLink
          href={link}
          className="text-[#58a6ff] hover:underline inline-flex items-center gap-2"
          onMouseEnter={() => setIsHoverd(true)}
@@ -196,7 +199,7 @@ const Website = ({ link }: { link: string | null }) => {
       >
          <LinkIcon className={cn(ishoverd ? "text-[#58a6ff]" : "text-[#9198a1]")} />
          {link.split("://")[1]}
-      </a>
+      </ExternalLink>
    );
 };
 
@@ -204,10 +207,12 @@ const RepositoryOverview = ({
    readmeData,
    licenseData,
    repoName,
+   blobAbsoluteUrl,
 }: {
    readmeData: GitHubFileContentType | null,
-   licenseData: GitHubFileContentType | null
+   licenseData: GitHubFileContentType | null,
    repoName: string,
+   blobAbsoluteUrl: string,
 }) => {
    const [previewTab, setPreviewTab] = useLocalStorageState<PreviewTabOption>(
       `home:projects:RepositoryOverview:${repoName}`,
@@ -255,7 +260,10 @@ const RepositoryOverview = ({
          </div>
          <div className="p-4">
             {previewTab === "README" && readmeData && (
-               <ReadmeShadowContainer readmeData={readmeData} />
+               <ReadmeShadowContainer
+                  readmeData={readmeData}
+                  blobAbsoluteUrl={blobAbsoluteUrl}
+               />
             )}
             {previewTab === "MIT license" && licenseData && (
                <LicenseDisplay licenseData={licenseData} />
@@ -266,19 +274,43 @@ const RepositoryOverview = ({
 };
 
 
-const ReadmeShadowContainer = ({ readmeData }: { readmeData: GitHubFileContentType | null }) => {
+const ReadmeShadowContainer = ({
+   readmeData,
+   blobAbsoluteUrl,
+}: {
+   readmeData: GitHubFileContentType | null
+   blobAbsoluteUrl: string,
+}) => {
    if (readmeData === null || typeof readmeData !== "object" || !("content" in readmeData)) return null;
    const hostRef = useRef<HTMLDivElement | null>(null);
    const markdown = atob(readmeData.content!);
-   const htmlContent = marked.parse(markdown);
 
    useEffect(() => {
-      if (hostRef.current) {
-         const shadowRoot = hostRef.current.shadowRoot || hostRef.current.attachShadow({ mode: 'open' });
-         shadowRoot.innerHTML =
-            `<style>${githubMarkdownCss}</style><article class="markdown-body">${htmlContent}</article>`;
-      }
-   }, [htmlContent]);
+      (async () => {
+         if (hostRef.current) {
+            const htmlContent = await marked.parse(markdown);
+            const shadowRoot = hostRef.current.shadowRoot || hostRef.current.attachShadow({ mode: 'open' });
+
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = htmlContent;
+
+            const links = tempDiv.querySelectorAll('a');
+            links.forEach(link => {
+               const href = link.getAttribute('href');
+               if (href) {
+                  const absoluteUrl = href.startsWith('http') ?
+                     href : blobAbsoluteUrl + href;
+                  link.setAttribute('href', absoluteUrl);
+                  link.setAttribute('target', '_blank');
+                  link.setAttribute('rel', 'noopener noreferrer');
+               }
+            });
+
+            shadowRoot.innerHTML = `<style>${githubMarkdownCss
+               }</style><article class="markdown-body">${tempDiv.innerHTML}</article>`;
+         }
+      })();
+   }, []);
 
    return <div className="p-8" ref={hostRef} />
 };
@@ -306,19 +338,24 @@ const Contributors = ({
    <div className="w-full text-[#f0f6fc] border-b border-[#3d444d]">
       <div className="py-4 w-full">
          <h2 className="h-7 mb-3 text-lg font-semibold">
-            <a href={`${githubBaseURL}/${repoName}/graphs/contributors`} className="block hover:text-[#4493f8]">
+            <ExternalLink
+               href={`${githubBaseURL}/${repoName}/graphs/contributors`}
+               className="block hover:text-[#4493f8]"
+            >
                Contributors
-               <span title="3" className="ml-1 rounded-full bg-[#1e242a] inline-block w-5 h-5 !text-[#f0f6fc] text-sm font-thin text-center">
+               <span
+                  title="3"
+                  className="ml-1 rounded-full bg-[#1e242a] inline-block w-5 h-5 !text-[#f0f6fc] text-sm font-thin text-center"
+               >
                   {contributorData.length}
                </span>
-            </a>
+            </ExternalLink>
          </h2>
          <ul className="list-none">
-            {Array.isArray(contributorData) && contributorData.map(contributor => {
-               const { html_url, login, avatar_url, type } = contributor;
-               return (
+            {Array.isArray(contributorData) &&
+               contributorData.map(({ html_url, login, avatar_url, type }) => (
                   <li className="mb-2 flex" key={login}>
-                     <a href={html_url} className="mr-2">
+                     <ExternalLink href={html_url} className="mr-2">
                         <img
                            src={avatar_url}
                            alt={"@" + login}
@@ -326,22 +363,22 @@ const Contributors = ({
                            width="32"
                            className={cn(type === "Bot" ? "rounded-md" : "rounded-full")}
                         />
-                     </a>
+                     </ExternalLink>
                      <span className="text-ellipsis">
-                        <a href={html_url} className="hover:text-[#4493f8]">
+                        <ExternalLink href={html_url} className="hover:text-[#4493f8]">
                            <strong className="font-semibold text-[15.2px]">{login}</strong>
-                        </a>
+                        </ExternalLink>
                      </span>
                   </li>
-               );
-            })}
+               ))}
          </ul>
       </div>
    </div>
 );
 
 const LanguagesUsed = ({ languageData }: { languageData: GitHubLanguagesType }) => {
-   const languagesBytesOnePercentage: number = Object.values(languageData).reduce((acc, curr) => acc + curr, 0) / 100;
+   const languagesBytesOnePercentage: number =
+      Object.values(languageData).reduce((acc, curr) => acc + curr, 0) / 100;
 
    return (
       <div className="BorderGrid-row">
@@ -365,18 +402,20 @@ const LanguagesUsed = ({ languageData }: { languageData: GitHubLanguagesType }) 
             </div>
             <ul className="list-style-none text-sm">
                {Object.entries(languageData).map(([language, bytes]) => {
-                  const languageUsed: number = parseFloat((bytes / (languagesBytesOnePercentage)).toFixed(1));
+                  const languageUsed: number =
+                     parseFloat((bytes / (languagesBytesOnePercentage)).toFixed(1));
+
                   return (
                      <li className="inline" key={language}>
-                        <a
+                        <ExternalLink
                            className="inline-flex items-center flex-nowrap no-underline text-small mr-4"
-                           // TODO:
+                           // TODO: is working fine 
                            href={"/sabeerbikba/dev.tools/search?l=" + language.toLowerCase()}
                         >
                            <span className="w-2 h-2 mr-2 block rounded-full" data-language={language} />
                            <span className="color-fg-default text-bold mr-1 font-semibold">{language}</span>
                            <span className="text-[#747b83]">{languageUsed + "%"}</span>
-                        </a>
+                        </ExternalLink>
                      </li>
                   )
                })}

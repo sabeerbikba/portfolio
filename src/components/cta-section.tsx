@@ -10,7 +10,7 @@ const CTASection = () => (
             Ready to start your next project?
          </Heading>
          <p className="mt-4 text-gray-600 text-base xs:text-lg sm:text-xl md:text-2xl">
-            Let's connect and bring your ideas to reality. Get in touch today!
+            Let&apos;s connect and bring your ideas to reality. Get in touch today!
          </p>
          <motion.div
             className="mt-8"
