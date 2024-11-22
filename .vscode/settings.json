@@ -1,0 +1,7 @@
+{
+  "editor.tabSize": 2,
+  "editor.detectIndentation": false,
+  "editor.wordWrap": "off",
+  "files.insertFinalNewline": true,
+  "editor.formatOnSave": true,
+}

@@ -9,31 +9,31 @@ type GithubTagsType = Endpoints['GET /repos/{owner}/{repo}/tags']['response']['d
 type GitHubFileContentType = Endpoints['GET /repos/{owner}/{repo}/contents/{path}']['response']['data'];
 
 type RepoDataType = {
-   repoDetails: GitHubRepositoryType;
-   languages: GitHubLanguagesType;
-   contributors: GitHubContributorType;
-   branches: GithubBranchesType;
-   tags: GithubTagsType;
-   readme: GitHubFileContentType | null;
-   license: GitHubFileContentType | null;
+  repoDetails: GitHubRepositoryType;
+  languages: GitHubLanguagesType;
+  contributors: GitHubContributorType;
+  branches: GithubBranchesType;
+  tags: GithubTagsType;
+  readme: GitHubFileContentType | null;
+  license: GitHubFileContentType | null;
 };
 
 type PreviewTabOption = "README" | "MIT license";
 
 type ScreenContextType = {
-   previewProject: number;
-   previewApp: number;
-   setScreen: (value: number, view: "project" | "app") => void;
+  previewProject: number;
+  previewApp: number;
+  setScreen: (value: number, view: "project" | "app") => void;
 };
 
 export type {
-   GitHubRepositoryType,
-   GitHubContributorType,
-   GitHubLanguagesType,
-   GithubBranchesType,
-   GithubTagsType,
-   GitHubFileContentType,
-   RepoDataType,
-   PreviewTabOption,
-   ScreenContextType,
+  GitHubRepositoryType,
+  GitHubContributorType,
+  GitHubLanguagesType,
+  GithubBranchesType,
+  GithubTagsType,
+  GitHubFileContentType,
+  RepoDataType,
+  PreviewTabOption,
+  ScreenContextType,
 };

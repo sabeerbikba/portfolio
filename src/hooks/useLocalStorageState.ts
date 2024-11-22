@@ -7,65 +7,65 @@ import { useState, useEffect } from 'react';
  * @returns {[any, function]} - A tuple containing the current value and a function to update the value.
  */
 const useLocalStorageState = <T>(
-   key: string,
-   initialValue: T
+  key: string,
+  initialValue: T
 ): [T, (newValue: T) => void] => {
-   const storedValue = localStorage.getItem(key);
-   let initial;
+  const storedValue = localStorage.getItem(key);
+  let initial;
 
-   if (storedValue !== null) {
-      try {
-         initial = JSON.parse(storedValue);
-      } catch {
-         initial = initialValue;
-      }
-   } else {
+  if (storedValue !== null) {
+    try {
+      initial = JSON.parse(storedValue);
+    } catch {
       initial = initialValue;
+    }
+  } else {
+    initial = initialValue;
+    localStorage.setItem(key, JSON.stringify(initialValue));
+  }
+
+  const [value, setValue] = useState(initial);
+
+  useEffect(() => {
+    if (storedValue === null) {
       localStorage.setItem(key, JSON.stringify(initialValue));
-   }
+    }
+  }, [key]);
 
-   const [value, setValue] = useState(initial);
-
-   useEffect(() => {
-      if (storedValue === null) {
-         localStorage.setItem(key, JSON.stringify(initialValue));
+  useEffect(() => {
+    const handleStorageChange = (event: StorageEvent) => {
+      if (event.key === key && event.newValue) {
+        setValue(JSON.parse(event.newValue) as T);
       }
-   }, [key]);
+    };
 
-   useEffect(() => {
-      const handleStorageChange = (event: StorageEvent) => {
-         if (event.key === key && event.newValue) {
-            setValue(JSON.parse(event.newValue) as T);
-         }
-      };
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, [key]);
 
-      window.addEventListener("storage", handleStorageChange);
-      return () => window.removeEventListener("storage", handleStorageChange);
-   }, [key]);
+  /**
+   * Function to update the value in localStorage and state.
+   * @param {any} newValue - The new value to set and store in local storage.
+   */
+  const setStoredValue = (newValue: T) => {
+    setValue(newValue);
+    localStorage.setItem(key, JSON.stringify(newValue));
 
-   /**
-    * Function to update the value in localStorage and state.
-    * @param {any} newValue - The new value to set and store in local storage.
-    */
-   const setStoredValue = (newValue: T) => {
-      setValue(newValue);
-      localStorage.setItem(key, JSON.stringify(newValue));
+    window.dispatchEvent(new CustomEvent("local-storage-update", { detail: { key, newValue } }));
+  };
 
-      window.dispatchEvent(new CustomEvent("local-storage-update", { detail: { key, newValue } }));
-   };
+  useEffect(() => {
+    const handleCustomStorageEvent = (event: CustomEvent) => {
+      if (event.detail.key === key) {
+        setValue(event.detail.newValue);
+      }
+    };
 
-   useEffect(() => {
-      const handleCustomStorageEvent = (event: CustomEvent) => {
-         if (event.detail.key === key) {
-            setValue(event.detail.newValue);
-         }
-      };
+    window.addEventListener("local-storage-update", handleCustomStorageEvent as EventListener);
+    return () => window.removeEventListener("local-storage-update", handleCustomStorageEvent as EventListener);
+  }, [key]);
 
-      window.addEventListener("local-storage-update", handleCustomStorageEvent as EventListener);
-      return () => window.removeEventListener("local-storage-update", handleCustomStorageEvent as EventListener);
-   }, [key]);
-
-   return [value, setStoredValue];
+  return [value, setStoredValue];
 };
 
 export default useLocalStorageState;
