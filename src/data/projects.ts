@@ -40,6 +40,8 @@ const projects: ProjectType[] = [
   },
 ];
 
+console.log()
+
 const apps: DataType[] = [
   {
     // 3

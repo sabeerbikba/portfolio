@@ -27,9 +27,6 @@ const ContactForm = () => {
   //    }
   // };
 
-
-
-
   const nameInputRef = useRef<HTMLInputElement | null>(null);
   const emailInputRef = useRef<HTMLInputElement | null>(null);
   const messageInputRef = useRef<HTMLTextAreaElement | null>(null);
@@ -70,6 +67,7 @@ const ContactForm = () => {
 
 
 
+  // TODO: Form summission not created yet
   // 4 testing purpose
   const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
   const handleSubmit = async (e: FormEvent) => {

@@ -1,7 +1,7 @@
-import { CreativeWork, WithContext, WebPage } from "schema-dts";
-
 import type { ReactNode } from "react";
 import type { Metadata, Viewport } from "next";
+
+import type { CreativeWork, WithContext, WebPage } from "schema-dts";
 
 import { projects } from "@/data/projects";
 import { boxIconString } from "@/data/icons";

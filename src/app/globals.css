@@ -3,954 +3,143 @@
 @tailwind utilities;
 
 @layer utilities {
-   .text-balance {
-      text-wrap: balance;
-   }
+  .text-balance {
+    text-wrap: balance;
+  }
 }
 
 @layer utilities {
-   .center {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-   }
+  .center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 .spon-link {
-   transition: all .2s ease;
-   transform: translate(-50%, -50%);
-   will-change: transform;
+  transition: all .2s ease;
+  transform: translate(-50%, -50%);
+  will-change: transform;
 }
 
 .spon-link:hover {
-   z-index: 10;
-   transform: translate(-50%, -50%) scale(1.1);
+  z-index: 10;
+  transform: translate(-50%, -50%) scale(1.1);
 }
 
 .spon-link:hover .spon-tooltip {
-   opacity: 1;
+  opacity: 1;
 }
 
 .loader::before,
 .loader::after {
-   position: absolute;
-   content: "";
-   height: 8em;
-   width: 8em;
-   border: 1em solid gray;
-   border-radius: 50%;
-   animation: loader_79178 2s linear infinite;
+  position: absolute;
+  content: "";
+  height: 8em;
+  width: 8em;
+  border: 1em solid gray;
+  border-radius: 50%;
+  animation: loader_79178 2s linear infinite;
 }
 
 .loader::after {
-   opacity: 0;
-   animation-delay: 1s;
+  opacity: 0;
+  animation-delay: 1s;
 }
 
 @keyframes loader_79178 {
-   0% {
-      border: 1em solid black;
-      transform: scale(0);
-      opacity: 1;
-   }
+  0% {
+    border: 1em solid black;
+    transform: scale(0);
+    opacity: 1;
+  }
 
-   100% {
-      border: 0 solid gray;
-      transform: scale(1);
-      opacity: 0;
-   }
+  100% {
+    border: 0 solid gray;
+    transform: scale(1);
+    opacity: 0;
+  }
 }
 
 .repo-overview-button::after {
-   position: absolute;
-   right: 50%;
-   bottom: calc(50% - calc(var(--control-xlarge-size, 48px) / 2 + 1px));
-   width: 100%;
-   height: 2px;
-   content: "";
-   background-color: transparent;
-   border-radius: 0;
-   transform: translate(50%, -50%);
+  position: absolute;
+  right: 50%;
+  bottom: calc(50% - calc(var(--control-xlarge-size, 48px) / 2 + 1px));
+  width: 100%;
+  height: 2px;
+  content: "";
+  background-color: transparent;
+  border-radius: 0;
+  transform: translate(50%, -50%);
 }
 
 
 .repo-overview-button[aria-current]:not([aria-current="false"])::after,
 .repo-overview-button[aria-selected="true"]::after {
-   background-color: #fd8c73;
+  background-color: #fd8c73;
 }
 
 
 .notes-body h3 {
-   @apply text-3xl font-extrabold mb-6 text-[#d4d4d4];
+  @apply text-3xl font-extrabold mb-6 text-[#d4d4d4];
 }
 
 .notes-body h4 {
-   @apply text-2xl font-bold mb-4 text-[#d4d4d4];
+  @apply text-2xl font-bold mb-4 text-[#d4d4d4];
 }
 
 .notes-body h5 {
-   @apply text-xl font-semibold mb-3 text-[#d4d4d4];
+  @apply text-xl font-semibold mb-3 text-[#d4d4d4];
 }
 
 .notes-body p {
-   @apply text-base leading-relaxed mb-5 text-[#cecece];
+  @apply text-base leading-relaxed mb-5 text-[#cecece];
 }
 
 .notes-body a {
-   @apply text-blue-500 underline hover:text-blue-600;
+  @apply text-blue-500 underline hover:text-blue-600;
 }
 
 .notes-body ul {
-   @apply list-disc ml-6 mb-4 text-[#cecece];
+  @apply list-disc ml-6 mb-4 text-[#cecece];
 }
 
 .notes-body ol {
-   @apply list-decimal ml-6 mb-4 text-[#cecece];
+  @apply list-decimal ml-6 mb-4 text-[#cecece];
 }
 
 .notes-body li {
-   @apply mb-2 leading-6;
+  @apply mb-2 leading-6;
 }
 
 .notes-body code {
-   @apply rounded px-1 py-0.5 font-mono text-sm;
+  @apply rounded px-1 py-0.5 font-mono text-sm;
 }
 
 .notes-body blockquote {
-   @apply border-l-4 border-[#d4d4d4] pl-4 italic py-2 my-4 text-[#a8a8a8];
+  @apply border-l-4 border-[#d4d4d4] pl-4 italic py-2 my-4 text-[#a8a8a8];
 }
 
 .notes-body img {
-   @apply max-w-full rounded-lg border border-gray-300 shadow-sm mt-4 mb-6;
+  @apply max-w-full rounded-lg border border-gray-300 shadow-sm mt-4 mb-6;
 }
 
 .notes-body hr {
-   @apply border-t border-gray-200 my-6;
+  @apply border-t border-gray-200 my-6;
 }
 
 .notes-body table {
-   @apply w-full border-collapse overflow-hidden rounded-lg shadow-sm mb-5 text-[#a8a8a8];
+  @apply w-full border-collapse overflow-hidden rounded-lg shadow-sm mb-5 text-[#a8a8a8];
 }
 
 .notes-body th {
-   @apply font-semibold px-[9px] py-[7px] border-2 border-[#2f2f2f];
+  @apply font-semibold px-[9px] py-[7px] border-2 border-[#2f2f2f];
 }
 
 .notes-body td {
-   @apply px-[9px] py-[7px] border-2 border-[#2f2f2f];
+  @apply px-[9px] py-[7px] border-2 border-[#2f2f2f];
 }
 
 .notes-body pre {
-   @apply bg-[#202020] p-4 rounded-lg text-sm overflow-x-auto mb-6 text-[#a8a8a8];
-}
-
-/* source: https://gist.github.com/robertpeteuil/bb2dc86f3b3e25d203664d61410bfa30 */
-
-/* TODO: Looks repeatative, I think we can achive same thing PostCss any plugin */
-[data-language="ABAP"] {
-   background-color: #E8274B;
-}
-
-[data-language="ActionScript"] {
-   background-color: #882B0F;
-}
-
-[data-language="Ada"] {
-   background-color: #02f88c;
-}
-
-[data-language="Agda"] {
-   background-color: #315665;
-}
-
-[data-language="AGS-Script"] {
-   background-color: #B9D9FF;
-}
-
-[data-language="Alloy"] {
-   background-color: #64C800;
-}
-
-[data-language="AMPL"] {
-   background-color: #E6EFBB;
-}
-
-[data-language="ANTLR"] {
-   background-color: #9DC3FF;
-}
-
-[data-language="API-Blueprint"] {
-   background-color: #2ACCA8;
-}
-
-[data-language="APL"] {
-   background-color: #5A8164;
-}
-
-[data-language="Arc"] {
-   background-color: #aa2afe;
-}
-
-[data-language="Arduino"] {
-   background-color: #bd79d1;
-}
-
-[data-language="ASP"] {
-   background-color: #6a40fd;
-}
-
-[data-language="AspectJ"] {
-   background-color: #a957b0;
-}
-
-[data-language="Assembly"] {
-   background-color: #6E4C13;
-}
-
-[data-language="ATS"] {
-   background-color: #1ac620;
-}
-
-[data-language="AutoHotkey"] {
-   background-color: #6594b9;
-}
-
-[data-language="AutoIt"] {
-   background-color: #1C3552;
-}
-
-[data-language="BlitzMax"] {
-   background-color: #cd6400;
-}
-
-[data-language="Boo"] {
-   background-color: #d4bec1;
-}
-
-[data-language="Brainfuck"] {
-   background-color: #2F2530;
-}
-
-[data-language="C-Sharp"] {
-   background-color: #178600;
-}
-
-[data-language="C"] {
-   background-color: #555555;
-}
-
-[data-language="Chapel"] {
-   background-color: #8dc63f;
-}
-
-[data-language="Cirru"] {
-   background-color: #ccccff;
-}
-
-[data-language="Clarion"] {
-   background-color: #db901e;
-}
-
-[data-language="Clean"] {
-   background-color: #3F85AF;
-}
-
-[data-language="Click"] {
-   background-color: #E4E6F3;
-}
-
-[data-language="Clojure"] {
-   background-color: #db5855;
-}
-
-[data-language="CMake"] {
-   background-color: #DA3434;
-}
-
-[data-language="CoffeeScript"] {
-   background-color: #244776;
-}
-
-[data-language="ColdFusion-CFC"] {
-   background-color: #ed2cd6;
-}
-
-[data-language="ColdFusion"] {
-   background-color: #ed2cd6;
-}
-
-[data-language="Common-Lisp"] {
-   background-color: #3fb68b;
-}
-
-[data-language="Component-Pascal"] {
-   background-color: #b0ce4e;
-}
-
-[data-language="C++"] {
-   background-color: #f34b7d;
-}
-
-[data-language="Crystal"] {
-   background-color: #776791;
-}
-
-[data-language="CSS"] {
-   background-color: #563d7c;
-}
-
-[data-language="D"] {
-   background-color: #ba595e;
-}
-
-[data-language="Dart"] {
-   background-color: #00B4AB;
-}
-
-[data-language="Diff"] {
-   background-color: #88dddd;
-}
-
-[data-language="DM"] {
-   background-color: #447265;
-}
-
-[data-language="Dockerfile"] {
-   background-color: #384d54;
-}
-
-[data-language="Dogescript"] {
-   background-color: #cca760;
-}
-
-[data-language="Dylan"] {
-   background-color: #6c616e;
-}
-
-[data-language="E"] {
-   background-color: #ccce35;
-}
-
-[data-language="Eagle"] {
-   background-color: #814C05;
-}
-
-[data-language="eC"] {
-   background-color: #913960;
-}
-
-[data-language="ECL"] {
-   background-color: #8a1267;
-}
-
-[data-language="edn"] {
-   background-color: #db5855;
-}
-
-[data-language="Eiffel"] {
-   background-color: #946d57;
-}
-
-[data-language="Elixir"] {
-   background-color: #6e4a7e;
-}
-
-[data-language="Elm"] {
-   background-color: #60B5CC;
-}
-
-[data-language="Emacs-Lisp"] {
-   background-color: #c065db;
-}
-
-[data-language="EmberScript"] {
-   background-color: #FFF4F3;
-}
-
-[data-language="Erlang"] {
-   background-color: #B83998;
-}
-
-[data-language="F-Sharp"] {
-   background-color: #b845fc;
-}
-
-[data-language="Factor"] {
-   background-color: #636746;
-}
-
-[data-language="Fancy"] {
-   background-color: #7b9db4;
-}
-
-[data-language="Fantom"] {
-   background-color: #dbded5;
-}
-
-[data-language="FLUX"] {
-   background-color: #88ccff;
-}
-
-[data-language="Forth"] {
-   background-color: #341708;
-}
-
-[data-language="FORTRAN"] {
-   background-color: #4d41b1;
-}
-
-[data-language="FreeMarker"] {
-   background-color: #0050b2;
-}
-
-[data-language="Frege"] {
-   background-color: #00cafe;
-}
-
-[data-language="Game-Maker-Language"] {
-   background-color: #8fb200;
-}
-
-[data-language="Glyph"] {
-   background-color: #e4cc98;
-}
-
-[data-language="Gnuplot"] {
-   background-color: #f0a9f0;
-}
-
-[data-language="Go"] {
-   background-color: #375eab;
-}
-
-[data-language="Golo"] {
-   background-color: #88562A;
-}
-
-[data-language="Gosu"] {
-   background-color: #82937f;
-}
-
-[data-language="Grammatical-Framework"] {
-   background-color: #79aa7a;
-}
-
-[data-language="Groovy"] {
-   background-color: #e69f56;
-}
-
-[data-language="Handlebars"] {
-   background-color: #01a9d6;
-}
-
-[data-language="Harbour"] {
-   background-color: #0e60e3;
-}
-
-[data-language="Haskell"] {
-   background-color: #29b544;
-}
-
-[data-language="Haxe"] {
-   background-color: #df7900;
-}
-
-[data-language="HTML"] {
-   background-color: #e44b23;
-}
-
-[data-language="Hy"] {
-   background-color: #7790B2;
-}
-
-[data-language="IDL"] {
-   background-color: #a3522f;
-}
-
-[data-language="Io"] {
-   background-color: #a9188d;
-}
-
-[data-language="Ioke"] {
-   background-color: #078193;
-}
-
-[data-language="Isabelle"] {
-   background-color: #FEFE00;
-}
-
-[data-language="J"] {
-   background-color: #9EEDFF;
-}
-
-[data-language="Java"] {
-   background-color: #b07219;
-}
-
-[data-language="JavaScript"] {
-   background-color: #f1e05a;
-}
-
-[data-language="JFlex"] {
-   background-color: #DBCA00;
-}
-
-[data-language="JSONiq"] {
-   background-color: #40d47e;
-}
-
-[data-language="Julia"] {
-   background-color: #a270ba;
-}
-
-[data-language="Jupyter-Notebook"] {
-   background-color: #DA5B0B;
-}
-
-[data-language="Kotlin"] {
-   background-color: #F18E33;
-}
-
-[data-language="KRL"] {
-   background-color: #28431f;
-}
-
-[data-language="Lasso"] {
-   background-color: #999999;
-}
-
-[data-language="Latte"] {
-   background-color: #A8FF97;
-}
-
-[data-language="Lex"] {
-   background-color: #DBCA00;
-}
-
-[data-language="LFE"] {
-   background-color: #004200;
-}
-
-[data-language="LiveScript"] {
-   background-color: #499886;
-}
-
-[data-language="LOLCODE"] {
-   background-color: #cc9900;
-}
-
-[data-language="LookML"] {
-   background-color: #652B81;
-}
-
-[data-language="LSL"] {
-   background-color: #3d9970;
-}
-
-[data-language="Lua"] {
-   background-color: #000080;
-}
-
-[data-language="Makefile"] {
-   background-color: #427819;
-}
-
-[data-language="Mask"] {
-   background-color: #f97732;
-}
-
-[data-language="Matlab"] {
-   background-color: #bb92ac;
-}
-
-[data-language="Max"] {
-   background-color: #c4a79c;
-}
-
-[data-language="MAXScript"] {
-   background-color: #00a6a6;
-}
-
-[data-language="Mercury"] {
-   background-color: #ff2b2b;
-}
-
-[data-language="Metal"] {
-   background-color: #8f14e9;
-}
-
-[data-language="Mirah"] {
-   background-color: #c7a938;
-}
-
-[data-language="MTML"] {
-   background-color: #b7e1f4;
-}
-
-[data-language="NCL"] {
-   background-color: #28431f;
-}
-
-[data-language="Nemerle"] {
-   background-color: #3d3c6e;
-}
-
-[data-language="nesC"] {
-   background-color: #94B0C7;
-}
-
-[data-language="NetLinx"] {
-   background-color: #0aa0ff;
-}
-
-[data-language="NetLinx-ERB"] {
-   background-color: #747faa;
-}
-
-[data-language="NetLogo"] {
-   background-color: #ff6375;
-}
-
-[data-language="NewLisp"] {
-   background-color: #87AED7;
-}
-
-[data-language="Nimrod"] {
-   background-color: #37775b;
-}
-
-[data-language="Nit"] {
-   background-color: #009917;
-}
-
-[data-language="Nix"] {
-   background-color: #7e7eff;
-}
-
-[data-language="Nu"] {
-   background-color: #c9df40;
-}
-
-[data-language="Objective-C"] {
-   background-color: #438eff;
-}
-
-[data-language="Objective-C++"] {
-   background-color: #6866fb;
-}
-
-[data-language="Objective-J"] {
-   background-color: #ff0c5a;
-}
-
-[data-language="OCaml"] {
-   background-color: #3be133;
-}
-
-[data-language="Omgrofl"] {
-   background-color: #cabbff;
-}
-
-[data-language="ooc"] {
-   background-color: #b0b77e;
-}
-
-[data-language="Opal"] {
-   background-color: #f7ede0;
-}
-
-[data-language="Oxygene"] {
-   background-color: #cdd0e3;
-}
-
-[data-language="Oz"] {
-   background-color: #fab738;
-}
-
-[data-language="Pan"] {
-   background-color: #cc0000;
-}
-
-[data-language="Papyrus"] {
-   background-color: #6600cc;
-}
-
-[data-language="Parrot"] {
-   background-color: #f3ca0a;
-}
-
-[data-language="Pascal"] {
-   background-color: #b0ce4e;
-}
-
-[data-language="PAWN"] {
-   background-color: #dbb284;
-}
-
-[data-language="Perl"] {
-   background-color: #0298c3;
-}
-
-[data-language="Perl6"] {
-   background-color: #0000fb;
-}
-
-[data-language="PHP"] {
-   background-color: #4F5D95;
-}
-
-[data-language="PigLatin"] {
-   background-color: #fcd7de;
-}
-
-[data-language="Pike"] {
-   background-color: #005390;
-}
-
-[data-language="PLSQL"] {
-   background-color: #dad8d8;
-}
-
-[data-language="PogoScript"] {
-   background-color: #d80074;
-}
-
-[data-language="Processing"] {
-   background-color: #0096D8;
-}
-
-[data-language="Prolog"] {
-   background-color: #74283c;
-}
-
-[data-language="Propeller-Spin"] {
-   background-color: #7fa2a7;
-}
-
-[data-language="Puppet"] {
-   background-color: #302B6D;
-}
-
-[data-language="Pure Data"] {
-   background-color: #91de79;
-}
-
-[data-language="PureBasic"] {
-   background-color: #5a6986;
-}
-
-[data-language="PureScript"] {
-   background-color: #1D222D;
-}
-
-[data-language="Python"] {
-   background-color: #3572A5;
-}
-
-[data-language="QMake"] {
-   background-color: #ccc;
-}
-
-[data-language="QML"] {
-   background-color: #44a51c;
-}
-
-[data-language="R"] {
-   background-color: #198ce7;
-}
-
-[data-language="Racket"] {
-   background-color: #22228f;
-}
-
-[data-language="Ragel-in-Ruby-Host"] {
-   background-color: #9d5200;
-}
-
-[data-language="RAML"] {
-   background-color: #77d9fb;
-}
-
-[data-language="Rebol"] {
-   background-color: #358a5b;
-}
-
-[data-language="Red"] {
-   background-color: #ee0000;
-}
-
-[data-language="Ren-Py"] {
-   background-color: #ff7f7f;
-}
-
-[data-language="Rouge"] {
-   background-color: #cc0088;
-}
-
-[data-language="Ruby"] {
-   background-color: #701516;
-}
-
-[data-language="Rust"] {
-   background-color: #dea584;
-}
-
-[data-language="SaltStack"] {
-   background-color: #646464;
-}
-
-[data-language="SAS"] {
-   background-color: #B34936;
-}
-
-[data-language="Scala"] {
-   background-color: #DC322F;
-}
-
-[data-language="Scheme"] {
-   background-color: #1e4aec;
-}
-
-[data-language="Self"] {
-   background-color: #0579aa;
-}
-
-[data-language="Shell"] {
-   background-color: #89e051;
-}
-
-[data-language="Shen"] {
-   background-color: #120F14;
-}
-
-[data-language="Slash"] {
-   background-color: #007eff;
-}
-
-[data-language="Slim"] {
-   background-color: #ff8f77;
-}
-
-[data-language="Smalltalk"] {
-   background-color: #596706;
-}
-
-[data-language="SourcePawn"] {
-   background-color: #5c7611;
-}
-
-[data-language="SQF"] {
-   background-color: #3F3F3F;
-}
-
-[data-language="Squirrel"] {
-   background-color: #800000;
-}
-
-[data-language="Stan"] {
-   background-color: #b2011d;
-}
-
-[data-language="Standard-ML"] {
-   background-color: #dc566d;
-}
-
-[data-language="SuperCollider"] {
-   background-color: #46390b;
-}
-
-[data-language="Swift"] {
-   background-color: #ffac45;
-}
-
-[data-language="SystemVerilog"] {
-   background-color: #DAE1C2;
-}
-
-[data-language="Tcl"] {
-   background-color: #e4cc98;
-}
-
-[data-language="TeX"] {
-   background-color: #3D6117;
-}
-
-[data-language="Turing"] {
-   background-color: #45f715;
-}
-
-[data-language="TypeScript"] {
-   background-color: #2b7489;
-}
-
-[data-language="Unified-Parallel-C"] {
-   background-color: #4e3617;
-}
-
-[data-language="Unity3D-Asset"] {
-   background-color: #ab69a1;
-}
-
-[data-language="UnrealScript"] {
-   background-color: #a54c4d;
-}
-
-[data-language="Vala"] {
-   background-color: #fbe5cd;
-}
-
-[data-language="Verilog"] {
-   background-color: #b2b7f8;
-}
-
-[data-language="VHDL"] {
-   background-color: #adb2cb;
-}
-
-[data-language="VimL"] {
-   background-color: #199f4b;
-}
-
-[data-language="Visual-Basic"] {
-   background-color: #945db7;
-}
-
-[data-language="Volt"] {
-   background-color: #1F1F1F;
-}
-
-[data-language="Vue"] {
-   background-color: #2c3e50;
-}
-
-[data-language="Web-Ontology-Language"] {
-   background-color: #9cc9dd;
-}
-
-[data-language="wisp"] {
-   background-color: #7582D1;
-}
-
-[data-language="X10"] {
-   background-color: #4B6BEF;
-}
-
-[data-language="xBase"] {
-   background-color: #403a40;
-}
-
-[data-language="XC"] {
-   background-color: #99DA07;
-}
-
-[data-language="XQuery"] {
-   background-color: #5232e7;
-}
-
-[data-language="XSLT"] {
-   background-color: #EB8CEB;
-}
-
-[data-language="Zephir"] {
-   background-color: #118f9e;
+  @apply bg-[#202020] p-4 rounded-lg text-sm overflow-x-auto mb-6 text-[#a8a8a8];
 }

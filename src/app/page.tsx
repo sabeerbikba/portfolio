@@ -1,14 +1,6 @@
 "use client";
 import Link from "next/link";
 import dynamic from 'next/dynamic';
-const ToolsPack = dynamic(() => import('@/components/ui/tools-pack'), {
-  ssr: false,
-  loading: () => (
-    <div className="center w-full h-full">
-      <div className="relative center loader" />
-    </div>
-  ),
-});
 
 import FlipWords from "@/components/ui/flip-words";
 import ContainerScroll from "@/components/ui/container-scroll-animation";
@@ -20,6 +12,16 @@ import { projects } from "@/data/projects";
 import socialMedia from "@/data/social-media";
 import Icon from "@/data/icons";
 import tools from "@/data/tools";
+const ToolsPack = dynamic(() => import('@/components/ui/tools-pack'), {
+  ssr: false,
+  loading: () => (
+    <div className="center w-full h-full">
+      <div className="relative center loader" />
+    </div>
+  ),
+});
+
+
 
 // TODO: need to remove "use client"; from top using trick like using children
 
@@ -86,23 +88,25 @@ const Home = () => {
         style={{ background: "linear-gradient(0deg, rgb(255 255 255 / 15%) 0%, rgb(240, 240, 240) 39%, rgb(255 255 255 / 15%) 100%)" }}
       >
         <Heading id="about-heading">About Me</Heading>
-        {[
-          "Hi, I’m Sabeer Bikba, a <strong class='font-medium'>full-stack developer</strong> with a passion for creating dynamic <strong class='font-medium'>React front-end applications</strong>. I specialize in building intuitive and responsive user interfaces that provide smooth experiences across devices.",
-          "While my expertise spans both front-end and back-end development, I’m particularly focused on delivering high-quality, interactive React apps. I’m also exploring <strong class='font-medium'>mobile development with React Native</strong> to create seamless cross-platform mobile experiences.",
-          "I’m always eager to take on new challenges and push the boundaries of web and mobile development.",
-        ].map((paragraph, key) => (
-          <p
-            key={key}
-            className={cn(
-              "mt-4 text-gray-600 font-medium indent-6 tracking-wider text-base xs:text-lg sm:text-xl md:text-2xl",
-              key == 0 && "mt-10 max-sm:mt-6"
-            )}
-            style={{ wordSpacing: "4px" }}
-            dangerouslySetInnerHTML={{
-              __html: paragraph
-            }}
-          />
-        ))}
+        <div className="max-w-[1200px] mx-auto text-center" >
+          {[
+            "Hi, I’m Sabeer Bikba, a <strong class='font-medium'>full-stack developer</strong> with a passion for creating dynamic <strong class='font-medium'>React front-end applications</strong>. I specialize in building intuitive and responsive user interfaces that provide smooth experiences across devices.",
+            "While my expertise spans both front-end and back-end development, I’m particularly focused on delivering high-quality, interactive React apps. I’m also exploring <strong class='font-medium'>mobile development with React Native</strong> to create seamless cross-platform mobile experiences.",
+            "I’m always eager to take on new challenges and push the boundaries of web and mobile development.",
+          ].map((paragraph, key) => (
+            <p
+              key={key}
+              className={cn(
+                "mt-4 text-gray-600 font-medium indent-6 tracking-wider text-base xs:text-lg sm:text-xl md:text-2xl",
+                key == 0 && "mt-10 max-sm:mt-6"
+              )}
+              style={{ wordSpacing: "4px" }}
+              dangerouslySetInnerHTML={{
+                __html: paragraph
+              }}
+            />
+          ))}
+        </div>
       </section>
 
 

@@ -36,7 +36,7 @@ import githubMarkdownCss from "@/css/github-markdown-dark"; // .ts file
 const githubBaseURL: string = "https://github.com/";
 const formatNumber = (num: number) => numeral(num).format('0.[0]a');
 
-const Github = ({ hidden, data }: { hidden: boolean, data: RepoDataType }) => {
+const Github = ({ data }: { data: RepoDataType }) => {
   const {
     repoDetails,
     languages,
@@ -51,8 +51,8 @@ const Github = ({ hidden, data }: { hidden: boolean, data: RepoDataType }) => {
   const blobAbsoluteUrl: string =
     `${githubBaseURL + repoName}/blob/${repoDetails.default_branch}/`;
 
-  return Object.keys(data).length > 0 && (
-    <div className="bg-[#0d1117] h-full" hidden={hidden}>
+  return (
+    <>
       <InfoCard
         repoData={repoDetails}
         branchData={branches}
@@ -76,7 +76,7 @@ const Github = ({ hidden, data }: { hidden: boolean, data: RepoDataType }) => {
           languageData={languages}
         />
       </div>
-    </div>
+    </>
   );
 };
 
