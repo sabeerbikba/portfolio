@@ -22,6 +22,7 @@ import type {
   GithubTagsType,
   ScreenContextType
 } from "@/types/projects";
+import { MarkGithubIcon } from "@primer/octicons-react";
 
 const ScreenContext = createContext<ScreenContextType | null>(null);
 
@@ -129,9 +130,8 @@ const Screen = () => {
           {isDataAvilable ? (
             <Github data={data[previewProjectIndex]} />
           ) : (
-            <div className="center">
-              <FallbackGithubUI link={projects[previewProjectIndex].repo} />
-            </div>
+            // TODO:
+            <FallbackGithubUI repo={projects[previewProjectIndex].repo} />
           )}
         </div>
       </div>
@@ -139,11 +139,27 @@ const Screen = () => {
   )
 };
 
-const FallbackGithubUI = ({ link }: { link: string }) => (
-  // TODO:
-  <ExternalLink href={link}>
-    open in new Tag
-  </ExternalLink>
-);
+const FallbackGithubUI = ({ repo }: { repo: string }) => {
+  const [userName, repositoryName] = repo ? repo.split("/") : ["", ""];
+
+  return (
+    <div className="center h-full">
+      {/* media queries */}
+      {/* link */}
+      <div className="max-xs:rounded-md rounded-xl bg-white p-2 max-md:p-1 border-slate-100 text-black max-xs:text-lg max-md:text-xl text-2xl">
+        <ExternalLink
+          href={repo}
+          className="border-2 max-xs:p-0.5 max-xs:py-1 max-md:p-1 max-md:py-2 p-2 py-3 border-black max-xs:rounded-md rounded-xl flex"
+        >
+          <span className="text-xl max-xs:text-base max-md:text-lg pt-[2px]">
+            {userName}/
+          </span>
+          {repositoryName}
+          <MarkGithubIcon size={32} className="ml-2" />
+        </ExternalLink>
+      </div>
+    </div>
+  );
+}
 
 export { Screen as default, ScreenContext, useScreen };

@@ -72,7 +72,7 @@ const ContactForm = () => {
   const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
   const handleSubmit = async (e: FormEvent) => {
     console.log('click')
-    const sucess = true;
+    const sucess = false;
     e.preventDefault();
 
     setStatus('Sending');
