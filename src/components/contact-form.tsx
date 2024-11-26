@@ -50,7 +50,7 @@ const ContactForm = () => {
 
       return () => clearInterval(interval);
     }
-  }, [sendingFrame, status]);
+  }, [sendingFrame, sendingFrames.length, status]);
 
 
   //   const handleClick = async () => {

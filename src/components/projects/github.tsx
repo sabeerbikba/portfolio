@@ -186,8 +186,8 @@ const InfoCard = ({
 };
 
 const Website = ({ link }: { link: string | null }) => {
-  if (!link) return null;
   const [ishoverd, setIsHoverd] = useState<boolean>(false);
+  if (!link) return null;
 
   return (
     <ExternalLink
@@ -242,7 +242,6 @@ const RepositoryOverview = ({
               <button
                 onClick={() => setPreviewTab(text as PreviewTabOption)}
                 className="mx-0.5 px-1.5 py-0.5 repo-overview-button relative hover:bg-[#656c7633] rounded-md"
-                aria-selected={isSelected}
                 key={text}
               >
                 {icon}
@@ -272,46 +271,51 @@ const RepositoryOverview = ({
   );
 };
 
-
 const ReadmeShadowContainer = ({
   readmeData,
   blobAbsoluteUrl,
 }: {
-  readmeData: GitHubFileContentType | null
-  blobAbsoluteUrl: string,
+  readmeData: GitHubFileContentType | null;
+  blobAbsoluteUrl: string;
 }) => {
-  if (readmeData === null || typeof readmeData !== "object" || !("content" in readmeData)) return null;
   const hostRef = useRef<HTMLDivElement | null>(null);
-  const markdown = atob(readmeData.content!);
+
+  const markdown =
+    readmeData && typeof readmeData === "object" && "content" in readmeData
+      ? atob(readmeData.content!)
+      : "";
 
   useEffect(() => {
+    if (!markdown || !hostRef.current) return;
+
     (async () => {
-      if (hostRef.current) {
-        const htmlContent = await marked.parse(markdown);
-        const shadowRoot = hostRef.current.shadowRoot || hostRef.current.attachShadow({ mode: 'open' });
+      const htmlContent = await marked.parse(markdown);
+      const shadowRoot = hostRef.current!.shadowRoot || hostRef.current!.attachShadow({ mode: "open" });
 
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = htmlContent;
+      const tempDiv = document.createElement("div");
+      tempDiv.innerHTML = htmlContent;
 
-        const links = tempDiv.querySelectorAll('a');
-        links.forEach(link => {
-          const href = link.getAttribute('href');
-          if (href) {
-            const absoluteUrl = href.startsWith('http') ?
-              href : blobAbsoluteUrl + href;
-            link.setAttribute('href', absoluteUrl);
-            link.setAttribute('target', '_blank');
-            link.setAttribute('rel', 'noopener noreferrer');
-          }
-        });
+      const links = tempDiv.querySelectorAll("a");
+      links.forEach((link) => {
+        const href = link.getAttribute("href");
+        if (href) {
+          const absoluteUrl = href.startsWith("http")
+            ? href
+            : blobAbsoluteUrl + href;
+          link.setAttribute("href", absoluteUrl);
+          link.setAttribute("target", "_blank");
+          link.setAttribute("rel", "noopener noreferrer");
+        }
+      });
 
-        shadowRoot.innerHTML = `<style>${githubMarkdownCss
-          }</style><article class="markdown-body">${tempDiv.innerHTML}</article>`;
-      }
+      shadowRoot.innerHTML = `<style>${githubMarkdownCss}</style><article class="markdown-body">${tempDiv.innerHTML}</article>`;
     })();
-  }, []);
+  }, [markdown, blobAbsoluteUrl]);
 
-  return <div className="p-8" ref={hostRef} />
+
+  return !markdown ? null : (
+    <div className="p-8" ref={hostRef} />
+  );
 };
 
 const LicenseDisplay = ({ licenseData }: { licenseData: GitHubFileContentType | null }) => {

@@ -30,7 +30,7 @@ const useLocalStorageState = <T>(
     if (storedValue === null) {
       localStorage.setItem(key, JSON.stringify(initialValue));
     }
-  }, [key]);
+  }, [key, initialValue, storedValue]);
 
   useEffect(() => {
     const handleStorageChange = (event: StorageEvent) => {
