@@ -1,25 +1,26 @@
 "use client";
 import Link from "next/link";
-import dynamic from 'next/dynamic';
+// import dynamic from 'next/dynamic';
 
 import FlipWords from "@/components/ui/flip-words";
 import ContainerScroll from "@/components/ui/container-scroll-animation";
 import ExternalLink from "@/components/ui/link";
 import Heading from "@/components/ui/heading";
+import ToolsPack from "@/components/ui/tools-pack";
 import CTASection from "@/components/cta-section";
 import { cn } from "@/lib/utils";
 import { projects } from "@/data/projects";
 import socialMedia from "@/data/social-media";
 import Icon from "@/data/icons";
 import tools from "@/data/tools";
-const ToolsPack = dynamic(() => import('@/components/ui/tools-pack'), {
-  ssr: false,
-  loading: () => (
-    <div className="center w-full h-full">
-      <div className="relative center loader" />
-    </div>
-  ),
-});
+// const ToolsPack = dynamic(() => import('@/components/ui/tools-pack'), {
+//   ssr: false,
+//   loading: () => (
+//     <div className="center w-full h-full">
+//       <div className="relative center loader" />
+//     </div>
+//   ),
+// });
 
 
 
@@ -85,7 +86,7 @@ const Home = () => {
       <section
         aria-labelledby="about-heading"
         className="about-section py-12 px-10 mt-9 bg-[rgb(240,240,240)]"
-        style={{ background: "linear-gradient(0deg, rgb(255 255 255 / 15%) 0%, rgb(240, 240, 240) 39%, rgb(255 255 255 / 15%) 100%)" }}
+        style={{ background: "linear-gradient(0deg, rgba(255, 255, 255, 0.15) 0%, rgb(240, 240, 240) 39%, rgba(255, 255, 255, 0.15) 100%)" }}
       >
         <Heading id="about-heading">About Me</Heading>
         <div className="max-w-[1200px] mx-auto text-center" >
@@ -120,7 +121,7 @@ const Home = () => {
               <Link
                 href="/"
                 aria-label="Home page"
-                className="center space-x-2 text-2xl font-bold text-center text-neutral-600 selection:bg-emerald-500 mr-10 py-0"
+                className="center max-md:justify-normal space-x-2 text-2xl font-bold text-center text-neutral-600 selection:bg-emerald-500 mr-10 py-0"
               >
                 <Icon />
               </Link>
