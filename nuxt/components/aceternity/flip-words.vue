@@ -59,7 +59,7 @@ watch(isVisible, (newValue) => {
 
 
 <template>
-  <div class="relative inline-block px-2">
+  <div class="relative inline-block px-2 text-current">
     <Transition @after-enter="$emit('animationStart')" @after-leave="$emit('animationComplete')">
       <div v-show="isVisible" :class="[
         'relative z-10 inline-block text-left text-neutral-600',

@@ -6,7 +6,7 @@ import { projects as projectsObject } from "~/data/projects";
 import { boxIconString } from "~/data/constants";
 
 const route = useRoute();
-const isHomePage = computed(() => route.name === "home" || route.path === "/");
+const isHomePage: boolean = computed(() => route.name === "home" || route.path === "/");
 
 const quickLinks = useNuxtApp()
   .$router.getRoutes()
@@ -74,28 +74,18 @@ useHead({
   <div>
     <main class="w-full h-full bg-white bg-dot-black/[0.4] relative">
       <div
-        class="absolute pointer-events-none inset-0 bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"
-      ></div>
-      <div
-        class="relative z-20 bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500"
-      >
+        class="absolute pointer-events-none inset-0 bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]">
+      </div>
+      <div class="relative z-20 bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500">
         <NuxtPage />
       </div>
     </main>
-    <footer
-      v-if="isHomePage"
-      class="border-t border-neutral-300 px-8 py-20 bg-white"
-    >
-      <div
-        class="max-w-7xl mx-auto text-sm text-neutral-500 flex sm:flex-row flex-col justify-between items-start"
-      >
+    <footer v-if="isHomePage" class="border-t border-neutral-300 px-8 py-20 bg-white">
+      <div class="max-w-7xl mx-auto text-sm text-neutral-500 flex sm:flex-row flex-col justify-between items-start">
         <div>
           <div class="mr-4 md:flex mb-1.5">
-            <NuxtLink
-              to="/"
-              aria-label="Home page"
-              class="center max-md:justify-normal space-x-2 text-2xl font-bold text-center text-neutral-600 selection:bg-emerald-500 mr-10 py-0"
-            >
+            <NuxtLink to="/" aria-label="Home page"
+              class="center max-md:justify-normal space-x-2 text-2xl font-bold text-center text-neutral-600 selection:bg-emerald-500 mr-10 py-0">
               <IconLogo />
             </NuxtLink>
           </div>
@@ -107,50 +97,36 @@ useHead({
 
         <!-- Navigation -->
         <div class="grid grid-cols-3 gap-10 items-start mt-10 md:mt-0">
-          <div
-            v-for="({ id, title, links }, index) in [
-              {
-                id: 'quick-links',
-                title: 'Quick Links',
-                links: quickLinks,
-              },
-              {
-                id: 'social-media',
-                title: 'Social Media',
-                links: socialMedia,
-              },
-              {
-                id: 'projects',
-                title: 'Projects',
-                links: projects,
-              },
-            ]"
-            :key="id"
-          >
+          <div v-for="({ id, title, links }, index) in [
+            {
+              id: 'quick-links',
+              title: 'Quick Links',
+              links: quickLinks,
+            },
+            {
+              id: 'social-media',
+              title: 'Social Media',
+              links: socialMedia,
+            },
+            {
+              id: 'projects',
+              title: 'Projects',
+              links: projects,
+            },
+          ]" :key="id">
             <nav :aria-labelledby="id">
               <h2 :id="id" class="sr-only">{{ title }}</h2>
               <ul class="flex justify-center space-y-4 flex-col mt-4">
                 <li v-for="{ href, label } in links" :key="label">
-                  <NuxtLink
-                    v-if="index === 0"
-                    :to="href"
-                    :aria-label="`Navigate to ${label} page`"
-                    class="transition-colors hover:text-foreground/80 text-foreground/60"
-                  >
+                  <NuxtLink v-if="index === 0" :to="href" :aria-label="`Navigate to ${label} page`"
+                    class="transition-colors hover:text-foreground/80 text-foreground/60">
                     {{ label }}
                   </NuxtLink>
-                  <a
-                    v-else
-                    :href="href"
-                    :aria-label="`${
-                      id === 'social-media'
-                        ? 'Link to'
-                        : 'Visit the website for project'
-                    } ${label}`"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="transition-colors hover:text-foreground/80 text-foreground/60"
-                  >
+                  <a v-else :href="href" :aria-label="`${id === 'social-media'
+                      ? 'Link to'
+                      : 'Visit the website for project'
+                    } ${label}`" target="_blank" rel="noopener noreferrer"
+                    class="transition-colors hover:text-foreground/80 text-foreground/60">
                     {{ label }}
                   </a>
                 </li>
