@@ -188,7 +188,7 @@ const ContactForm = () => {
       </form>
     </motion.div>
   );
-}
+};
 
 const BottomGradient = () => {
   return (

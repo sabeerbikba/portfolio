@@ -32,6 +32,37 @@ const aboutSectionParagraphs = [
       </div>
     </section>
 
+    <ContainerScroll>
+      <template #title>
+        <UiHeading as="h2" className="md:text-[2.8rem]">
+          Browse My Creations
+          <br />
+          <span className="text-5xl xs:text-[3.4rem] sm:text-[4.2rem] md:text-[5rem] font-bold mt-1 leading-none">
+            Featured Works
+          </span>
+        </UiHeading>
+      </template>
+      <template #card>
+        <div class="text-black">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum voluptas voluptatibus harum quidem quas
+          repellat id asperiores aliquid? Eius placeat ipsa reprehenderit distinctio repellendus neque nesciunt velit,
+          corporis dolor esse quis minima voluptates eligendi recusandae vero magnam commodi beatae reiciendis non
+          facilis
+          itaque optio assumenda saepe earum. Ex dignissimos consectetur quidem, non modi earum laboriosam officiis
+          eius.
+          Necessitatibus, dolorum aliquam labore dolore quam consequuntur possimus distinctio dicta exercitationem nam
+          praesentium perferendis maiores eveniet excepturi odio quia fugit non voluptatem accusantium dolores modi enim
+          tempore sint! Fugiat, totam voluptatibus quo quas laboriosam quos, officiis impedit eum aperiam eius veniam
+          voluptas in, quis fuga. Non, beatae similique ipsa iure libero quo dolor quasi voluptatibus voluptas quae
+          impedit? Alias harum maiores eos et minus. Repellendus nam animi iste, esse, nemo suscipit sapiente repellat
+          laborum blanditiis illum ad culpa quo saepe voluptas, necessitatibus enim consequuntur eum! At, illo
+          asperiores?
+          Rerum placeat voluptatem iusto maiores minus ab unde eum ullam veniam aut doloribus velit sit alias, eveniet
+        </div>
+      </template>
+    </ContainerScroll>
+
+
     <section aria-describedby="tools-section">
       <div class="mb-4 text-center">
         <UiHeading id="tools-section">Development Tools & Expertise</UiHeading>

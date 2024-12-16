@@ -1,5 +1,5 @@
 <script setup>
-const props = defineProps({
+defineProps({
   /**
    * The tag to render the heading as.
    * Defaults to "h1".
