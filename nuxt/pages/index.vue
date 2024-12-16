@@ -42,7 +42,7 @@ const aboutSectionParagraphs = [
           </span>
         </UiHeading>
       </template>
-      <template #card>
+      <template #screen>
         <div class="text-black">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum voluptas voluptatibus harum quidem quas
           repellat id asperiores aliquid? Eius placeat ipsa reprehenderit distinctio repellendus neque nesciunt velit,
