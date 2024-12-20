@@ -93,7 +93,7 @@ const handleSubmit = async () => {
                   <UiLabelInputContainer class="mb-4">
                     <UiLabel for="message">Message</UiLabel>
                     <UiInput element-type="textarea" id="message" v-model="message" placeholder="Your message here..."
-                      minlength="20" maxlength="600" required aria-required="true" className="h-40 resize-none"
+                      minlength="20" maxlength="600" required aria-required="true" class="h-40 resize-none"
                       aria-describedby="messageDescription" />
                     <small id="messageDescription" class="sr-only">Please enter your message. Minimum 20
                       characters.</small>
