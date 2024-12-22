@@ -1,6 +1,4 @@
 <script setup lang="ts">
-// import { projects } from "~/data/projects";
-
 import socialMedia from "~/data/social-media";
 import { projects as projectsObject } from "~/data/projects";
 import { boxIconString } from "~/data/constants";

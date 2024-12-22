@@ -1,20 +1,18 @@
-  <script setup>
-  // import { useScreen } from "@/composables/useScreen";
-  import useScreenStore from "~/composables/use-screen-store";
-
-  const mobileDockRef = ref(null);
-  const open = ref(false);
-  const projects = ref([]);
-  const apps = ref([]);
+  <script setup lang="ts">
+  defineProps({ hidden: { type: Boolean, required: true } });
+  import { projects } from "~/data/projects";
+  import { apps } from "~/data/projects";
+  const open = ref<boolean>(false);
+  const mobileDockRef = ref<HTMLDivElement | null>(null);
   const { state, setScreen } = useScreenStore();
 
-  // const { previewProject, previewApp, setScreen } = useScreen();
-
-  const handleClickOutside = (event) => {
-    if (mobileDockRef.value && !mobileDockRef.value.contains(event.target)) {
+  const handleClickOutside = (event: MouseEvent) => {
+    if (mobileDockRef.value && !mobileDockRef.value.contains(event.target as Node)) {
       open.value = false;
     }
   };
+
+
 
   const toggleDock = () => {
     open.value = !open.value;
@@ -30,7 +28,7 @@
 </script>
 
 <template>
-  <div ref="mobileDockRef" class="absolute block md:hidden top-36 right-3 z-10" v-show="!hidden">
+  <div ref="mobileDockRef" class="absolute block md:hidden top-36 right-3 z-10" v-show="hidden">
     <Transition name="fade">
       <div v-if="open"
         class="flex pl-1 w-[190px] h-[200px] absolute top-[-75px] right-[-12px] rounded-[50px_160px_160px_50px] bg-gradient-to-r from-white/30 to-white/5 text-white">

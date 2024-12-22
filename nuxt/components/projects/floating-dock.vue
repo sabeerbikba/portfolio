@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 const isMediumScreen = ref(false);
 
 const handleResize = () => {
@@ -17,7 +17,8 @@ onUnmounted(() => {
 
 <template>
   <div class="relative">
-    <ProjectsFloatingDockDesktop v-if="isMediumScreen" />
-    <ProjectsFloatingDockMobile v-else />
+    <div>sabeer bikba</div>
+    <ProjectsFloatingDockDesktop :hidden="isMediumScreen" />
+    <ProjectsFloatingDockMobile :hidden="!isMediumScreen" />
   </div>
 </template>

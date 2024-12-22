@@ -1,23 +1,4 @@
-<template>
-  <div ref="iconRef" :style="{ width: width + 'px', height: height + 'px' }" @mouseenter="hovered = true"
-    @mouseleave="hovered = false" class="aspect-square rounded-xl bg-transparent icon-container" @click="onClick"
-    role="button">
-    <div v-if="hovered" class="tooltip">{{ title }}</div>
-    <div :style="{
-      width: widthIcon + 'px',
-      height: heightIcon + 'px',
-    }" class="icon-box" :class="{ 'dock-hover': isHoverdOnDock }">
-      <img :src="icon" alt="icon" class="icon-image" />
-    </div>
-    <div v-if="isHoverdOnDock" class="center mt-0.5">
-      <span class="indicator" />
-    </div>
-  </div>
-</template>
-
-<script setup>
-import { ref, watch, computed } from 'vue';
-
+<script setup lang="ts">
 const props = defineProps({
   mouseX: Number,
   title: String,
@@ -27,7 +8,7 @@ const props = defineProps({
   isHoverd: Boolean,
 });
 
-const iconRef = ref(null);
+const iconRef = ref < HTMLDivElement | null > (null);
 const hovered = ref(false);
 const isHoverdOnDock = computed(() => !props.isHoverd && props.isSelected);
 
@@ -46,6 +27,23 @@ const height = computed(() => calculateSize(distance.value, 35, 70));
 const widthIcon = computed(() => calculateSize(distance.value, 12, 24));
 const heightIcon = computed(() => calculateSize(distance.value, 12, 24));
 </script>
+
+<template>
+  <div ref="iconRef" :style="{ width: width + 'px', height: height + 'px' }" @mouseenter="hovered = true"
+    @mouseleave="hovered = false" class="aspect-square rounded-xl bg-transparent icon-container" @click="onClick"
+    role="button">
+    <div v-if="hovered" class="tooltip">{{ title }}</div>
+    <div :style="{
+      width: widthIcon + 'px',
+      height: heightIcon + 'px',
+    }" class="icon-box" :class="{ 'dock-hover': isHoverdOnDock }">
+      <img :src="icon" alt="icon" class="icon-image" />
+    </div>
+    <div v-if="isHoverdOnDock" class="center mt-0.5">
+      <span class="indicator" />
+    </div>
+  </div>
+</template>
 
 <style scoped>
 .icon-container {
