@@ -1,14 +1,20 @@
 <script setup lang="ts">
 const props = defineProps({
-  mouseX: Number,
+  mouseX: {
+    type: Number,
+    required: true,
+  },
   title: String,
   icon: String,
   isSelected: Boolean,
-  onClick: Function,
+  onClick: {
+    type: Function as PropType<(event: MouseEvent) => void>,
+    required: false,
+  },
   isHoverd: Boolean,
 });
 
-const iconRef = ref < HTMLDivElement | null > (null);
+const iconRef = ref<HTMLDivElement | null>(null);
 const hovered = ref(false);
 const isHoverdOnDock = computed(() => !props.isHoverd && props.isSelected);
 
@@ -17,7 +23,7 @@ const distance = computed(() => {
   return props.mouseX - bounds.x - bounds.width / 2;
 });
 
-const calculateSize = (dist, min, max) => {
+const calculateSize = (dist: number, min: number, max: number) => {
   if (dist < -150 || dist > 150) return min;
   return min + ((max - min) * (150 - Math.abs(dist))) / 150;
 };
@@ -26,6 +32,9 @@ const width = computed(() => calculateSize(distance.value, 35, 70));
 const height = computed(() => calculateSize(distance.value, 35, 70));
 const widthIcon = computed(() => calculateSize(distance.value, 12, 24));
 const heightIcon = computed(() => calculateSize(distance.value, 12, 24));
+
+console.log('widthIcon', widthIcon);
+console.log('heightIcon', heightIcon);
 </script>
 
 <template>
