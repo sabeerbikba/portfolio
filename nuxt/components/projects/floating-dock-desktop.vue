@@ -149,75 +149,85 @@ const containerClasses = computed(() =>
 import { projects } from "~/data/projects";
 import { apps } from "~/data/projects";
 import { useMouse, useElementVisibility } from '@vueuse/core';
-import { motion } from 'framer-motion';
+import { Motion } from '@oku-ui/motion';
 
-const props = defineProps({
-  hidden: Boolean
-});
+defineProps({ hidden: Boolean });
 
+let timer: NodeJS.Timeout | null = null;
 const inViewRef = ref(null);
 const mouse = useMouse();
 const mouseX = ref(Infinity);
 const isHovered = ref(false);
-const isVisible = ref(false);
-const timer = ref<NodeJS.Timeout | null>(null);
-const inView = useElementVisibility(inViewRef, { once: false });
-
-// Context replacements
-// const { previewProject: previewProjectNum, previewApp: previewAppNum, setScreen } = useScreen();
+const isVisible = ref(false); // derault: false
+// const isVisible = useState('isVisible'); // derault: false
+const elementVisible = useElementVisibility(inViewRef);
+const inView = computed(() => elementVisible.value);
 
 const { state, setScreen } = useScreenStore();
 
-watch([isHovered, inView], ([hovered, view]) => {
-  if (hovered || view) {
+watch([isHovered], ([hovered]) => {
+  if (hovered) {
     isVisible.value = true;
-    clearTimer();
+    if (timer) {
+      clearTimer();
+      timer = null;
+    }
   } else {
+    startDelay()
+  }
+});
+
+watch([inView], ([view]) => {
+  if (view) {
+    isVisible.value = true;
     startDelay();
   }
 });
 
-const containerClasses = computed(() =>
-  isVisible.value
-    ? "visible-container"
-    : "hidden-container"
-);
+const clearTimer = () => {
+  // console.log('3');
+  if (timer) clearTimeout(timer);
+  timer = null;
+};
 
-function clearTimer() {
-  if (timer.value) clearTimeout(timer.value);
-  timer.value = null;
-}
-
-function startDelay() {
-  timer.value = setTimeout(() => {
+const startDelay = () => {
+  // console.log('4');
+  timer = setTimeout(() => {
     isVisible.value = false;
-  }, 5000);
-}
+  }, 4000);
+};
 
-function setIsHovered(value: boolean) {
+const setIsHovered = (value: boolean) => {
+  // console.log('5');
   isHovered.value = value;
-}
+};
 
-function handleMouseLeave() {
+const handleMouseLeave = () => {
+  // console.log('6');
   setIsHovered(false);
   mouseX.value = Infinity;
-}
+};
 
-function handleMouseMove(event: MouseEvent) {
+const handleMouseMove = (event: MouseEvent) => {
+  // console.log('7');
   mouseX.value = event.pageX;
-}
+};
+
+onUnmounted(() => clearTimer());
+
+// watchEffect(() => console.log('isVisble', isVisible.value));
 </script>
 
 <template>
-  <div class="w-full flex items-center absolute top-[35.87rem] z-10" :style="{ display: hidden ? 'none' : 'flex' }"
+  <div class="w-full flex items-center absolute top-[34.87rem] z-10" :style="{ display: hidden ? 'none' : 'flex' }"
     v-if="!hidden">
-    <div ref="inViewRef" @mouseenter="setIsHovered(true)" @mouseleave="handleMouseLeave" @mousemove="handleMouseMove"
+    <Motion ref="inViewRef" @mouseenter="setIsHovered(true)" @mouseleave="handleMouseLeave" @mousemove="handleMouseMove"
       :animate="{
         height: isVisible ? '55px' : '5px',
         width: isVisible ? 'auto' : '120px',
         y: isVisible ? -58 : 0
-      }" class="mx-auto gap-2 bg-[rgba(255,255,255,0.4)] w-auto m-auto rounded-lg px-2.5 inline-flex items-center"
-      :class="containerClasses">
+      }"
+      class="mx-auto gap-2 bg-[rgba(255,255,255,0.4)] w-auto m-auto rounded-lg px-2.5 inline-flex items-center border border-black">
       <template v-if="isVisible">
         <ProjectsFloatingDockDesktopIconContainer v-for="(item, id) in projects" :key="item.title" :mouseX="mouseX"
           v-bind="item" :isSelected="id + 1 === state.previewProject" :isHoverd="isHovered"
@@ -227,25 +237,6 @@ function handleMouseMove(event: MouseEvent) {
           v-bind="item" :isSelected="id + 1 + projects.length === state.previewApp" :isHoverd="isHovered"
           @click="() => setScreen(id + 1 + projects.length, 'app')" />
       </template>
-    </div>
+    </Motion>
   </div>
 </template>
-
-<style scoped>
-/* Motion styles using CSS classes */
-.visible-container {
-  height: 55px;
-  width: auto;
-  transform: translateY(-58px);
-  opacity: 1;
-  transition: all 0.3s ease-in-out;
-}
-
-.hidden-container {
-  height: 5px;
-  width: 120px;
-  transform: translateY(0);
-  opacity: 0;
-  transition: all 0.3s ease-in-out;
-}
-</style>

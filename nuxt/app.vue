@@ -4,7 +4,7 @@ import { projects as projectsObject } from "~/data/projects";
 import { boxIconString } from "~/data/constants";
 
 const route = useRoute();
-const isHomePage: boolean = computed(() => route.name === "home" || route.path === "/");
+const isHomePage: ComputedRef<boolean> = computed(() => route.name === "home" || route.path === "/");
 
 const quickLinks = useNuxtApp()
   .$router.getRoutes()
@@ -121,8 +121,8 @@ useHead({
                     {{ label }}
                   </NuxtLink>
                   <a v-else :href="href" :aria-label="`${id === 'social-media'
-                      ? 'Link to'
-                      : 'Visit the website for project'
+                    ? 'Link to'
+                    : 'Visit the website for project'
                     } ${label}`" target="_blank" rel="noopener noreferrer"
                     class="transition-colors hover:text-foreground/80 text-foreground/60">
                     {{ label }}

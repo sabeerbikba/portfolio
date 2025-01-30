@@ -1,6 +1,5 @@
 {
-  "name": "nuxt-app",
-  "private": true,
+  "name": "portfolio",
   "type": "module",
   "scripts": {
     "build": "nuxt build",
@@ -13,6 +12,8 @@
   "dependencies": {
     "@nuxtjs/tailwindcss": "6.12.2",
     "@octokit/types": "^13.6.2",
+    "@oku-ui/motion": "^0.4.3",
+    "@oku-ui/primitives": "0.7.8",
     "@pinia/nuxt": "0.9.0",
     "@visx/responsive": "^3.12.0",
     "@vitejs/plugin-react": "^4.3.4",
@@ -22,7 +23,6 @@
     "@vueuse/motion": "^2.2.6",
     "clsx": "^2.1.1",
     "d3-hierarchy": "^3.1.2",
-    "framer-motion": "^11.13.3",
     "marked": "^15.0.4",
     "mini-svg-data-uri": "^1.4.4",
     "motion": "^11.13.3",

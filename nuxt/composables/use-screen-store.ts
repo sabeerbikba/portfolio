@@ -1,4 +1,5 @@
 import { projects } from "~/data/projects";
+import response from "~/data/dev/tmp-fetch-all-response";
 import type { ProjectDataType } from "~/types/github";
 
 interface State {
@@ -24,54 +25,58 @@ export default () => {
     handlers[view](value);
   };
 
-  onMounted(async () => {
-    const fetchPromises = projects.map((project) => {
-      const baseUrl = `https://api.github.com/repos/${project.repo}`;
-      return Promise.all([
-        fetch(baseUrl).then((res) => res.json()), // repoDetails
-        fetch(`${baseUrl}/languages`).then((res) => res.json()), // languages
-        fetch(`${baseUrl}/contributors`).then((res) => res.json()), // contributors
-        fetch(`${baseUrl}/branches`).then((res) => res.json()), // branches
-        fetch(`${baseUrl}/tags`).then((res) => res.json()), // tags
-        fetch(`${baseUrl}/contents/LICENSE`) // license
-          .then(async (res) => {
-            const data = await res.json();
-            return data.message === "Not Found" ? null : data;
-          }),
-        fetch(`${baseUrl}/contents/README.md`) // readme
-          .then(async (res) => {
-            const data = await res.json();
-            return data.message === "Not Found" ? null : data;
-          }),
-      ]);
-    });
+  // TODO: tmp
+  // @ts-ignore
+  state.data = response;
 
-    try {
-      const results = await Promise.all(fetchPromises);
-      const formattedData: ProjectDataType[] = results.map(
-        ([
-          repoDetails,
-          languages,
-          contributors,
-          branches,
-          tags,
-          license,
-          readme,
-        ]) => ({
-          repoDetails,
-          languages,
-          contributors,
-          branches,
-          tags,
-          license,
-          readme,
-        })
-      );
-      state.data = formattedData;
-    } catch (error) {
-      console.error("Error fetching data from GitHub API:", error);
-    }
-  });
+  // onMounted(async () => {
+  //   const fetchPromises = projects.map((project) => {
+  //     const baseUrl = `https://api.github.com/repos/${project.repo}`;
+  //     return Promise.all([
+  //       fetch(baseUrl).then((res) => res.json()), // repoDetails
+  //       fetch(`${baseUrl}/languages`).then((res) => res.json()), // languages
+  //       fetch(`${baseUrl}/contributors`).then((res) => res.json()), // contributors
+  //       fetch(`${baseUrl}/branches`).then((res) => res.json()), // branches
+  //       fetch(`${baseUrl}/tags`).then((res) => res.json()), // tags
+  //       fetch(`${baseUrl}/contents/LICENSE`) // license
+  //         .then(async (res) => {
+  //           const data = await res.json();
+  //           return data.message === "Not Found" ? null : data;
+  //         }),
+  //       fetch(`${baseUrl}/contents/README.md`) // readme
+  //         .then(async (res) => {
+  //           const data = await res.json();
+  //           return data.message === "Not Found" ? null : data;
+  //         }),
+  //     ]);
+  //   });
+
+  //   try {
+  //     const results = await Promise.all(fetchPromises);
+  //     const formattedData: ProjectDataType[] = results.map(
+  //       ([
+  //         repoDetails,
+  //         languages,
+  //         contributors,
+  //         branches,
+  //         tags,
+  //         license,
+  //         readme,
+  //       ]) => ({
+  //         repoDetails,
+  //         languages,
+  //         contributors,
+  //         branches,
+  //         tags,
+  //         license,
+  //         readme,
+  //       })
+  //     );
+  //     state.data = formattedData;
+  //   } catch (error) {
+  //     console.error("Error fetching data from GitHub API:", error);
+  //   }
+  // });
 
   return {
     state,

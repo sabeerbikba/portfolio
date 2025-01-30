@@ -1,4 +1,5 @@
 <script setup lang="ts">
+
 const props = defineProps({
   mouseX: {
     type: Number,
@@ -28,25 +29,27 @@ const calculateSize = (dist: number, min: number, max: number) => {
   return min + ((max - min) * (150 - Math.abs(dist))) / 150;
 };
 
-const width = computed(() => calculateSize(distance.value, 35, 70));
-const height = computed(() => calculateSize(distance.value, 35, 70));
-const widthIcon = computed(() => calculateSize(distance.value, 12, 24));
-const heightIcon = computed(() => calculateSize(distance.value, 12, 24));
+// const width = computed(() => calculateSize(distance.value, 35, 70));
+// const height = computed(() => calculateSize(distance.value, 35, 70));
+// const widthIcon = computed(() => calculateSize(distance.value, 12, 24));
+// const heightIcon = computed(() => calculateSize(distance.value, 12, 24));
 
-console.log('widthIcon', widthIcon);
-console.log('heightIcon', heightIcon);
+const width = computed(() => calculateSize(distance.value, 40, 65));
+const height = computed(() => calculateSize(distance.value, 50, 65));
+const widthIcon = computed(() => calculateSize(distance.value, 40, 75));
+const heightIcon = computed(() => calculateSize(distance.value, 40, 75));
 </script>
 
 <template>
   <div ref="iconRef" :style="{ width: width + 'px', height: height + 'px' }" @mouseenter="hovered = true"
-    @mouseleave="hovered = false" class="aspect-square rounded-xl bg-transparent icon-container" @click="onClick"
+    @mouseleave="hovered = false" class="rounded-xl bg-transparent icon-container" @click="onClick && onClick($event)"
     role="button">
     <div v-if="hovered" class="tooltip">{{ title }}</div>
-    <div :style="{
-      width: widthIcon + 'px',
-      height: heightIcon + 'px',
-    }" class="icon-box" :class="{ 'dock-hover': isHoverdOnDock }">
-      <img :src="icon" alt="icon" class="icon-image" />
+    <div class="icon-box" :class="{ 'dock-hover': isHoverdOnDock }" :style="{
+      width: `${widthIcon}px`,
+      height: `${heightIcon}px`,
+    }">
+      <img :src="icon" alt="icon" class="icon-image w-full h-full" />
     </div>
     <div v-if="isHoverdOnDock" class="center mt-0.5">
       <span class="indicator" />
@@ -106,7 +109,6 @@ console.log('heightIcon', heightIcon);
 
 .icon-image {
   width: 100%;
-  height: 100%;
 }
 
 .indicator {

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 const isMediumScreen = ref(false);
 
+const isVisible = useState('isVisible', () => false);
+
 const handleResize = () => {
   isMediumScreen.value = window.matchMedia("(min-width: 768px)").matches;
 };
@@ -17,8 +19,7 @@ onUnmounted(() => {
 
 <template>
   <div class="relative">
-    <div>sabeer bikba</div>
-    <ProjectsFloatingDockDesktop :hidden="isMediumScreen" />
-    <ProjectsFloatingDockMobile :hidden="!isMediumScreen" />
+    <ProjectsFloatingDockDesktop :hidden="!isMediumScreen" />
+    <ProjectsFloatingDockMobile :hidden="isMediumScreen" />
   </div>
 </template>

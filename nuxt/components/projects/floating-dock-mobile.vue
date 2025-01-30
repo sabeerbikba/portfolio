@@ -2,6 +2,7 @@
   defineProps({ hidden: { type: Boolean, required: true } });
   import { projects } from "~/data/projects";
   import { apps } from "~/data/projects";
+  import { Motion, MotionPresence } from '@oku-ui/motion';
   const open = ref<boolean>(false);
   const mobileDockRef = ref<HTMLDivElement | null>(null);
   const { state, setScreen } = useScreenStore();
@@ -11,8 +12,6 @@
       open.value = false;
     }
   };
-
-
 
   const toggleDock = () => {
     open.value = !open.value;
@@ -28,10 +27,11 @@
 </script>
 
 <template>
-  <div ref="mobileDockRef" class="absolute block md:hidden top-36 right-3 z-10" v-show="hidden">
-    <Transition name="fade">
-      <div v-if="open"
-        class="flex pl-1 w-[190px] h-[200px] absolute top-[-75px] right-[-12px] rounded-[50px_160px_160px_50px] bg-gradient-to-r from-white/30 to-white/5 text-white">
+  <div ref="mobileDockRef" class="absolute block md:hidden top-36 right-3 z-10" v-show="!hidden">
+    <MotionPresence>
+      <Motion v-if="open" :initial="{ opacity: 0, x: 50, scale: 0.95 }" :animate="{ opacity: 1, x: 0, scale: 1 }"
+        :exit="{ opacity: 0, x: 50, scale: 0.95 }" :transition="{ duration: 0.3, ease: 'easeInOut' }"
+        className="flex pl-1 w-[190px] h-[200px] absolute top-[-75px] right-[-12px] rounded-[50px_160px_160px_50px] bg-[linear-gradient(90deg,_rgba(255,255,255,0.3)_0%,_rgba(255,255,255,0.01)_100%)] text-white border border-red-300">
         <!-- Column 1 -->
         <div class="w-1/3 h-full py-[9px] border-white">
           <button v-for="(project, id) in projects" :key="project.title" @click="setScreen(id + 1, 'project')"
@@ -54,20 +54,25 @@
         </div>
         <!-- Column 3 -->
         <div class="w-1/3 h-full border-white"></div>
-      </div>
-    </Transition>
+      </Motion>
+    </MotionPresence>
 
-    <button @click="toggleDock" class="h-10 w-10 center">
+    <button @click="toggleDock" class="h-10 w-10 center border border-black">
       <span v-if="!open" class="ring-indicator" />
       <div v-else class="relative w-7 h-7">
-        <div class="absolute inset-0 rotate-45 w-1 rounded-sm bg-gray-700"></div>
-        <div class="absolute inset-0 -rotate-45 w-1 rounded-sm bg-gray-700"></div>
+        <div class="absolute inset-0 rotate-45 w-1 rounded-sm bg-gray-700" />
+        <div class="absolute inset-0 -rotate-45 w-1 rounded-sm bg-gray-700" />
       </div>
     </button>
   </div>
 </template>
 
 <style scoped>
+/* 
+ as="div" :initial="{ opacity: 0, x: 50, scale: 0.95 }"
+        :animate="{ opacity: 1, x: 0, scale: 1 }" :exit="{ opacity: 0, x: 50, scale: 0.95 }"
+*/
+
 /* Add custom styles */
 .ring-indicator {
   display: block;
@@ -77,5 +82,3 @@
   background: rgba(255, 255, 255, 0.5);
 }
 </style>
-
-<!-- RingSpan Component missing here  -->
