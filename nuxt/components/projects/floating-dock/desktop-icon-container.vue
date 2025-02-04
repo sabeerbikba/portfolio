@@ -42,7 +42,7 @@ const heightIcon = computed(() => calculateSize(distance.value, 40, 75));
 
 <template>
   <div ref="iconRef" :style="{ width: width + 'px', height: height + 'px' }" @mouseenter="hovered = true"
-    @mouseleave="hovered = false" class="rounded-xl bg-transparent icon-container" @click="onClick && onClick($event)"
+    @mouseleave="hovered = false" class="aspect-square rounded-xl bg-transparent" @click="onClick && onClick($event)"
     role="button">
     <div v-if="hovered" class="tooltip">{{ title }}</div>
     <div class="icon-box" :class="{ 'dock-hover': isHoverdOnDock }" :style="{
@@ -58,14 +58,6 @@ const heightIcon = computed(() => calculateSize(distance.value, 40, 75));
 </template>
 
 <style scoped>
-.icon-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  transition: all 0.3s ease;
-}
-
 .tooltip {
   position: absolute;
   left: 50%;

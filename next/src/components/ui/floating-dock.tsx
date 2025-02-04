@@ -347,7 +347,6 @@ const IconContainer = ({
         <div className="center mt-0.5">
           <span
             // animate={{ backgroundColor: "rgb(255,255,255)", }}
-
             className="h-1 w-1 rounded-2xl bg-slate-500 mix-blend-color "
           />
         </div>
@@ -366,3 +365,4 @@ const RingSpan = (
     {children}
   </span>
 );
+    

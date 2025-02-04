@@ -136,3 +136,124 @@ useHead({
     </footer>
   </div>
 </template>
+
+<style>
+.center {
+  @apply flex items-center justify-center;
+}
+
+/* TODO: */
+
+/* .loader::before,
+.loader::after {
+  position: absolute;
+  content: "";
+  height: 8em;
+  width: 8em;
+  border: 1em solid gray;
+  border-radius: 50%;
+  animation: loader_79178 2s linear infinite;
+}
+
+.loader::after {
+  opacity: 0;
+  animation-delay: 1s;
+} 
+
+@keyframes loader_79178 {
+  0% {
+    border: 1em solid black;
+    transform: scale(0);
+    opacity: 1;
+  }
+
+  100% {
+    border: 0 solid gray;
+    transform: scale(1);
+    opacity: 0;
+  }
+} */
+
+.repo-overview-button::after {
+  position: absolute;
+  right: 50%;
+  bottom: calc(50% - calc(var(--control-xlarge-size, 48px) / 2 + 1px));
+  width: 100%;
+  height: 2px;
+  content: "";
+  background-color: transparent;
+  border-radius: 0;
+  transform: translate(50%, -50%);
+}
+
+
+.repo-overview-button[aria-current]:not([aria-current="false"])::after,
+.repo-overview-button[aria-selected="true"]::after {
+  background-color: #fd8c73;
+}
+
+
+.notes-body h3 {
+  @apply text-3xl font-extrabold mb-6 text-[#d4d4d4];
+}
+
+.notes-body h4 {
+  @apply text-2xl font-bold mb-4 text-[#d4d4d4];
+}
+
+.notes-body h5 {
+  @apply text-xl font-semibold mb-3 text-[#d4d4d4];
+}
+
+.notes-body p {
+  @apply text-base leading-relaxed mb-5 text-[#cecece];
+}
+
+.notes-body a {
+  @apply text-blue-500 underline hover:text-blue-600;
+}
+
+.notes-body ul {
+  @apply list-disc ml-6 mb-4 text-[#cecece];
+}
+
+.notes-body ol {
+  @apply list-decimal ml-6 mb-4 text-[#cecece];
+}
+
+.notes-body li {
+  @apply mb-2 leading-6;
+}
+
+.notes-body code {
+  @apply rounded px-1 py-0.5 font-mono text-sm;
+}
+
+.notes-body blockquote {
+  @apply border-l-4 border-[#d4d4d4] pl-4 italic py-2 my-4 text-[#a8a8a8];
+}
+
+.notes-body img {
+  @apply max-w-full rounded-lg border border-gray-300 shadow-sm mt-4 mb-6;
+}
+
+.notes-body hr {
+  @apply border-t border-gray-200 my-6;
+}
+
+.notes-body table {
+  @apply w-full border-collapse overflow-hidden rounded-lg shadow-sm mb-5 text-[#a8a8a8];
+}
+
+.notes-body th {
+  @apply font-semibold px-[9px] py-[7px] border-2 border-[#2f2f2f];
+}
+
+.notes-body td {
+  @apply px-[9px] py-[7px] border-2 border-[#2f2f2f];
+}
+
+.notes-body pre {
+  @apply bg-[#202020] p-4 rounded-lg text-sm overflow-x-auto mb-6 text-[#a8a8a8];
+}
+</style>

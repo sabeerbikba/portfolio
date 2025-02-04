@@ -1,4 +1,6 @@
-<!-- <script setup></script> -->
+<script setup>
+// TODO: where this neeed to use 
+</script>
 <template>
   <section aria-labelledby="project-section"
     class="card-section max-w-5xl -mt-12 mx-auto h-[30rem] md:h-[40rem] w-full border-4 border-[#6C6C6C] p-2 md:p-6 bg-[#222222] rounded-[30px] shadow-2xl">

@@ -1,12 +1,11 @@
 <script setup lang="ts">
-// import DevTools from "./DevTools.vue";
-// import Rickshaw from "./Rickshaw.vue";
-
 const props = defineProps<{
   number: [number, number];
 }>();
 
 const [project, app] = props.number;
+console.log('about.vue:  project, app', project, app);
+
 </script>
 
 <template>

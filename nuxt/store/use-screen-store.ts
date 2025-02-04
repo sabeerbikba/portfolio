@@ -1,25 +1,42 @@
 import { projects } from "~/data/projects";
 import response from "~/data/dev/tmp-fetch-all-response";
 import type { ProjectDataType } from "~/types/github";
+// import defineStore from '@pinia/nuxt';
+import { defineStore } from "pinia";
+/**
+Creates a useStore function that retrieves the store instance
 
-// TODO:
-// TODO: not using 
-// TODO: not using 
-// TODO: not using 
-// TODO:
+@param id — id of the store (must be unique)
 
-interface State {
-  previewProject: number;
-  previewApp: number;
-  // data: ProjectDataType[];
-}
+@param storeSetup — function that defines the store
 
-export default () => {
-  const state = reactive<State>({
-    previewProject: 1,
-    previewApp: 3,
-    // data: [],
-  });
+@param options — extra options
+
+
+Creates a useStore function that retrieves the store instance
+
+@param id — id of the store (must be unique)
+
+@param storeSetup — function that defines the store
+
+@param options — extra options
+*/
+
+// interface State {
+//   previewProject: number;
+//   previewApp: number;
+//   // data: ProjectDataType[];
+// }
+
+const useScreenStore = defineStore("screen", () => {
+  //  const state = reactive<State>({
+  //    previewProject: 1,
+  //    previewApp: 3,
+  //    // data: [],
+  //  });
+
+  const previewProject = ref(1);
+  const previewApp = ref(3);
 
   const data: Ref<ProjectDataType[]> = ref([]);
 
@@ -28,15 +45,18 @@ export default () => {
   // const previewProjectIndex = computed(() => state.previewProject - 1);
   const previewProjectIndex = useState(
     "previewProjectIndex",
-    () => state.previewProject - 1
+    //     () => state.previewProject - 1
+    () => previewProject.value - 1
   );
   const setScreen = (value: number, view: "project" | "app") => {
     const handlers = {
       project: (val: number) => {
-        state.previewProject = val;
+        // state.previewProject = val;
+        previewProject.value = val;
         previewProjectIndex.value = val - 1;
       },
-      app: (val: number) => (state.previewApp = val),
+      // app: (val: number) => (state.previewApp = val),
+      app: (val: number) => (previewApp.value = val),
     };
     handlers[view](value);
   };
@@ -98,13 +118,18 @@ export default () => {
   // });
 
   return {
-    state,
+    //     state,
+    previewProject,
+    previewApp,
+
     isDataAvailable,
     // previewProjectIndex,
     setScreen,
     data,
   };
-};
+});
+
+export default useScreenStore;
 
 // import { projects } from "~/data/projects";
 

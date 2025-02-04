@@ -26,6 +26,9 @@ const isReadmeAvailable = readme !== null;
 const repoName = repoDetails.full_name;
 const blobAbsoluteUrl = `${githubBaseURL + repoName}/blob/${repoDetails.default_branch
   }/`;
+
+console.log('github.vue: props.data', props.data);
+
 </script>
 
 <template>
@@ -33,11 +36,11 @@ const blobAbsoluteUrl = `${githubBaseURL + repoName}/blob/${repoDetails.default_
     <ProjectsGithubInfoCard :repoData="repoDetails" :branchData="branches" :tagData="tags"
       :hasReadme="isReadmeAvailable" />
 
-    <div class="px-4 bg-[#0d1117]">
+    <!-- <div class="px-4 bg-[#0d1117]">
       <ProjectsRepositoryOverview v-if="readme || license" :readmeData="readme" :licenseData="license"
         :repoName="repoName" :blobAbsoluteUrl="blobAbsoluteUrl" />
       <ProjectsContributors :contributorData="contributors" :repoName="repoName" />
       <ProjectsLanguagesUsed :languageData="languages" />
-    </div>
+    </div> -->
   </div>
 </template>

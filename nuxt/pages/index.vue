@@ -43,7 +43,8 @@ const aboutSectionParagraphs = [
         </UiHeading>
       </template>
       <template #screen>
-        <ProjectsFloatingDock />
+        <!-- <ProjectsFloatingDock /> -->
+         <ProjectsScreen />
       </template>
     </ContainerScroll>
 
@@ -58,14 +59,7 @@ const aboutSectionParagraphs = [
       <ToolsPack :tools="tools" />
     </section>
 
-    <section aria-labelledby="about-heading" class="about-section py-12 px-10 mt-9 bg-[rgb(240,240,240)]" style="
-        background: linear-gradient(
-          0deg,
-          rgba(255, 255, 255, 0.15) 0%,
-          rgb(240, 240, 240) 39%,
-          rgba(255, 255, 255, 0.15) 100%
-        );
-      ">
+    <section aria-labelledby="about-heading" class="about-section py-12 px-10 mt-9 bg-[rgb(240,240,240)] bg-[linear-gradient(0deg,_rgba(255,255,255,0.15)_0%,_rgb(240,240,240)_39%,_rgba(255,255,255,0.15)_100%)]">
       <UiHeading id="about-heading"> About Me </UiHeading>
       <div class="max-w-[1200px] mx-auto text-center">
         <p v-for="(paragraph, index) in aboutSectionParagraphs" :key="index"
@@ -97,8 +91,25 @@ const aboutSectionParagraphs = [
           </NuxtLink>
         </div>
       </div>
+      <div class=" text-b"></div>
     </section>
     <!-- <Teleport to="body"> -->
     <!-- <Teleport :to="teleportTarget"> </Teleport> -->
   </div>
 </template>
+
+<style>
+.spon-link {
+  transition: all .2s ease;
+  will-change: transform;
+}
+
+.spon-link:hover {
+  z-index: 10;
+  transform: scale(1.1);
+}
+
+.spon-link:hover .spon-tooltip {
+  opacity: 1;
+}
+</style>
