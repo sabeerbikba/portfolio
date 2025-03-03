@@ -19,7 +19,7 @@ const aboutSectionParagraphs = [
         class="font-normal text-neutral-600 mx-auto py-4 xs:py-5 sm:py-6 md:py-7 text-[24px] xs:text-[28px] sm:text-[34px] md:text-[40px]">
         Designing
         <AceternityFlipWords :words="['functional', 'beautiful', 'impactful', 'responsive']" :duration="3000"
-          class="text-4xl !text-primary" />
+          class="text-neutral-700" />
         <br />
         solutions for your business
       </div>
@@ -44,7 +44,7 @@ const aboutSectionParagraphs = [
       </template>
       <template #screen>
         <!-- <ProjectsFloatingDock /> -->
-         <ProjectsScreen />
+        <ProjectsScreen />
       </template>
     </ContainerScroll>
 
@@ -59,7 +59,8 @@ const aboutSectionParagraphs = [
       <ToolsPack :tools="tools" />
     </section>
 
-    <section aria-labelledby="about-heading" class="about-section py-12 px-10 mt-9 bg-[rgb(240,240,240)] bg-[linear-gradient(0deg,_rgba(255,255,255,0.15)_0%,_rgb(240,240,240)_39%,_rgba(255,255,255,0.15)_100%)]">
+    <section aria-labelledby="about-heading"
+      class="about-section py-12 px-10 mt-9 bg-[rgb(240,240,240)] bg-[linear-gradient(0deg,_rgba(255,255,255,0.15)_0%,_rgb(240,240,240)_39%,_rgba(255,255,255,0.15)_100%)]">
       <UiHeading id="about-heading"> About Me </UiHeading>
       <div class="max-w-[1200px] mx-auto text-center">
         <p v-for="(paragraph, index) in aboutSectionParagraphs" :key="index"

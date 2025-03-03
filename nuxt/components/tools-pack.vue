@@ -1,7 +1,7 @@
+<!-- <script setup lang="ts"> -->
 <script setup>
 import { hierarchy, pack } from "d3-hierarchy";
 
-// TODO: is computed function needed anywhere
 const props = defineProps({
   tools: {
     type: Array,
@@ -13,7 +13,7 @@ const containerWidth = ref(800);
 const width = ref(containerWidth.value);
 
 const updateWidth = () => {
-  width.value = Math.min(window.innerWidth, containerWidth.value);
+  width.value = Math.min(window.innerWidth - 17, containerWidth.value);
 };
 
 onMounted(() => {
@@ -73,6 +73,8 @@ const getTooltipClasses = (x, y) => {
 <template>
   <div class="max-w-[800px] mx-auto aspect-square text-2xl max-xs:-mt-4 max-sm:-mt-3 max-md:-mt-2">
     <div v-if="width > 10" :style="{
+      // width: ( width - 40) + 'px',
+      // height: ( width - 40) + 'px',
       width: width + 'px',
       height: width + 'px',
       // width: '100%',

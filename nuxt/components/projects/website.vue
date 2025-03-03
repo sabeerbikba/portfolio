@@ -118,7 +118,7 @@ watch(() => previewProjectIndex.value, (newTab) => {
 
 <template>
   <!-- <div class="w-full h-full center relative" :hidden="state.previewApp !== 3"> -->
-  <div class="w-full h-full center relative" :style="{ display: hidden ? 'none' : 'flex' }">
+  <div class="w-full h-full center relative overflow-auto scroll" :style="{ display: hidden ? 'none' : 'flex' }">
     <template v-for="(project, index) in projects" :key="index">
       <iframe v-if="loaded[index]" class="w-full h-full max-md:rounded-2xl" :hidden="previewProjectIndex !== index"
         :aria-hidden="previewProjectIndex !== index" :src="project.website"

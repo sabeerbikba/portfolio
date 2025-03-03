@@ -22,10 +22,10 @@ const {
   readme,
   license,
 }: ProjectDataType = props.data;
-const isReadmeAvailable = readme !== null;
-const repoName = repoDetails.full_name;
-const blobAbsoluteUrl = `${githubBaseURL + repoName}/blob/${repoDetails.default_branch
-  }/`;
+const isReadmeAvailable: ComputedRef<boolean> = computed(() => readme !== null);
+const repoName: ComputedRef<string> = computed(() => repoDetails.full_name);
+const blobAbsoluteUrl: ComputedRef<string> = computed(() => `${githubBaseURL + repoName.value}/blob/${repoDetails.default_branch
+  }/`);
 
 console.log('github.vue: props.data', props.data);
 
@@ -35,12 +35,11 @@ console.log('github.vue: props.data', props.data);
   <div>
     <ProjectsGithubInfoCard :repoData="repoDetails" :branchData="branches" :tagData="tags"
       :hasReadme="isReadmeAvailable" />
-
-    <!-- <div class="px-4 bg-[#0d1117]">
-      <ProjectsRepositoryOverview v-if="readme || license" :readmeData="readme" :licenseData="license"
+    <div class="px-4 bg-[#0d1117]">
+      <ProjectsGithubRepositoryOverview v-if="readme || license" :readmeData="readme" :licenseData="license"
         :repoName="repoName" :blobAbsoluteUrl="blobAbsoluteUrl" />
-      <ProjectsContributors :contributorData="contributors" :repoName="repoName" />
-      <ProjectsLanguagesUsed :languageData="languages" />
-    </div> -->
+      <ProjectsGithubContributors :contributorData="contributors" :repoName="repoName" />
+      <ProjectsGithubLanguagesUsed :languageData="languages" />
+    </div>
   </div>
 </template>
