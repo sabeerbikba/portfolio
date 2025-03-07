@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { marked } from "marked";
+// import { marked } from "marked";
 import type { ProjectDataType } from "~/types/github";
-import { useStorage } from "@vueuse/core";
+// import { useStorage } from "@vueuse/core";
 // import githubMarkdownCss from "~/assets/github-markdown-dark.css";
 
-const githubBaseURL = "https://github.com/";
+// const githubBaseURL = "https://github.com/";
+const { githubBaseURL } = useRuntimeConfig().public;
 
 // Props
 // defineProps({
@@ -24,10 +25,10 @@ const {
 }: ProjectDataType = props.data;
 const isReadmeAvailable: ComputedRef<boolean> = computed(() => readme !== null);
 const repoName: ComputedRef<string> = computed(() => repoDetails.full_name);
-const blobAbsoluteUrl: ComputedRef<string> = computed(() => `${githubBaseURL + repoName.value}/blob/${repoDetails.default_branch
-  }/`);
+const blobAbsoluteUrl: ComputedRef<string> =
+  computed(() => `${githubBaseURL + repoName.value}/blob/${repoDetails.default_branch}/`);
 
-console.log('github.vue: props.data', props.data);
+// console.log('github.vue: props.data', props.data);
 
 </script>
 

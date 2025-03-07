@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { useLocalStorage } from '@vueuse/core';
 
+// TODO: icons 
+
 import type {
     GitHubRepositoryType,
     GithubBranchesType,
@@ -14,7 +16,7 @@ const props = defineProps<{
     hasReadme: boolean
 }>();
 
-const { githubBaseURL } = useRuntimeConfig();
+const { githubBaseURL } = useRuntimeConfig().public;
 
 const { full_name, description, homepage, stargazers_count, forks_count, subscribers_count }: GitHubRepositoryType = props.repoData;
 const [userName, repositoryName] = full_name ? full_name.split("/") : ["", ""];
@@ -33,11 +35,11 @@ const stats = computed(() => [
 <template>
     <div class="p-4 border-b border-[#3d444d] text-[#9198a1]">
         <h2 class="space-y-4 text-2xl font-extrabold ml-1 mb-4 text-[#f0f6fc]">
-            <NuxtLink :to="`${githubBaseURL}${full_name}`" class="hover:underline">
+            <UiExternalLink :href="`${githubBaseURL}${full_name}`" class="hover:underline">
                 <MarkGithubIcon size="32" class="mr-2" />
                 <span class="text-xl text-[#9198a1]">{{ userName }}/</span>
                 {{ repositoryName }}
-            </NuxtLink>
+            </UiExternalLink>
         </h2>
         <div class="space-y-4">
             <p v-if="description" class="text-base font-normal">{{ description }}</p>
@@ -51,12 +53,12 @@ const stats = computed(() => [
             </div>
             <ul class="flex flex-wrap items-center gap-5 text-sm">
                 <li v-for="stat in stats" :key="stat.what">
-                    <NuxtLink :to="`${githubBaseURL}${stat.href}`"
+                    <UiExternalLink :href="`${githubBaseURL}${stat.href}`"
                         class="inline-flex items-center gap-2 text-current hover:text-blue-400">
                         <component :is="stat.icon" class="fill-current" />
                         <span v-if="stat.count != null" class="font-semibold">{{ stat.count }}</span>
                         <span>{{ stat.what }}</span>
-                    </NuxtLink>
+                    </UiExternalLink>
                 </li>
             </ul>
             <div class="inline-flex items-center gap-1 text-sm">
