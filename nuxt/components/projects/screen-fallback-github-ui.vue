@@ -18,7 +18,8 @@
             {{ userName }}/
           </span>
           {{ repositoryName }}
-          <MarkGithubIcon :size="32" class="ml-2" />
+          <!-- <MarkGithubIcon :size="32" class="ml-2" /> -->
+          <ProjectsIcon name="mark-github" class="fill-current" />
         </UiExternalLink>
       </div>
     </div>

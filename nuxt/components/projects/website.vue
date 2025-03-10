@@ -106,11 +106,13 @@ const loaded = ref(projects.map((_, index) => index === 0));
 // const state = useScreenStore().state;
 
 // TODO:
+// const previewProjectIndex = useState<number>("previewProjectIndex");
 const previewProjectIndex = useState<number>("previewProjectIndex");
 
 watch(() => previewProjectIndex.value, (newTab) => {
-  console.log('click');
+  console.log('click', newTab);
   if (!loaded.value[newTab]) {
+    previewProjectIndex.value = newTab;
     loaded.value[newTab] = true;
   }
 });

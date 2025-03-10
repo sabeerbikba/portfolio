@@ -95,23 +95,19 @@ useHead({
 
         <!-- Navigation -->
         <div class="grid grid-cols-3 gap-10 items-start mt-10 md:mt-0">
-          <div v-for="({ id, title, links }, index) in [
-            {
-              id: 'quick-links',
-              title: 'Quick Links',
-              links: quickLinks,
-            },
-            {
-              id: 'social-media',
-              title: 'Social Media',
-              links: socialMedia,
-            },
-            {
-              id: 'projects',
-              title: 'Projects',
-              links: projects,
-            },
-          ]" :key="id">
+          <div v-for="({ id, title, links }, index) in [{
+            id: 'quick-links',
+            title: 'Quick Links',
+            links: quickLinks,
+          }, {
+            id: 'social-media',
+            title: 'Social Media',
+            links: socialMedia,
+          }, {
+            id: 'projects',
+            title: 'Projects',
+            links: projects,
+          }]" :key="id">
             <nav :aria-labelledby="id">
               <h2 :id="id" class="sr-only">{{ title }}</h2>
               <ul class="flex justify-center space-y-4 flex-col mt-4">

@@ -7,12 +7,17 @@ import type { ProjectDataType } from "~/types/github";
 
 const store = useScreenStore();
 const { previewProject, previewApp, isDataAvailable, data } = storeToRefs(store);
-const previewProjectIndex: ComputedRef<number> =
-  computed(() => previewProject.value - 1);
-const isWebsiteComponentHidden = computed(() => previewApp.value !== 3);
-const isGithubComponentVisible = computed(() => previewApp.value === 5);
-const previewData: ComputedRef<ProjectDataType> =
-  computed(() => data.value[previewProjectIndex.value]);
+// const previewProjectIndex: ComputedRef<number> = computed(() => previewProject.value - 1);
+// const previewProjectIndex: Ref<number> =  ref(previewProject.value - 1);
+const previewProjectIndex = useState<number>('previewProjectIndex', () =>
+  previewProject.value - 1);
+  
+  
+  const isWebsiteComponentHidden = computed(() => previewApp.value !== 3);
+  const isGithubComponentVisible = computed(() => previewApp.value === 5);
+  const previewData: ComputedRef<ProjectDataType> =
+    computed(() => data.value[previewProjectIndex.value]);
+    console.log(previewData.value);
 
 </script>
 
