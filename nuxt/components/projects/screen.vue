@@ -17,7 +17,7 @@ const previewProjectIndex = useState<number>('previewProjectIndex', () =>
   const isGithubComponentVisible = computed(() => previewApp.value === 5);
   const previewData: ComputedRef<ProjectDataType> =
     computed(() => data.value[previewProjectIndex.value]);
-    console.log(previewData.value);
+    // console.log(previewData.value);
 
 </script>
 

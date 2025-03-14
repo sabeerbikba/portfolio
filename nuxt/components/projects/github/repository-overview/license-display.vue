@@ -1,7 +1,5 @@
 <script setup>
-const props = defineProps({
-  licenseData: Object,
-});
+const props = defineProps({ licenseData: Object });
 
 const license = computed(() => {
   return props.licenseData && typeof props.licenseData === 'object' && 'content' in props.licenseData
@@ -12,7 +10,7 @@ const license = computed(() => {
 
 <template>
   <div v-if="license" class="p-8 text-[#dfe5eb] text-xs font-medium overflow-auto w-full">
-    <pre class="whitespace-pre-wrap overflow-x-auto w-full" style="word-break: break-word;">
+    <pre class="overflow-x-auto w-full" style="white-space: pre-line; word-break: break-word;">
       {{ license }}
     </pre>
   </div>

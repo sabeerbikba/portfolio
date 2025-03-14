@@ -1,35 +1,22 @@
 <script setup lang="ts">
-// import { marked } from "marked";
 import type { ProjectDataType } from "~/types/github";
-// import { useStorage } from "@vueuse/core";
-// import githubMarkdownCss from "~/assets/github-markdown-dark.css";
+import { toRefs } from "vue";
 
-// const githubBaseURL = "https://github.com/";
 const { githubBaseURL } = useRuntimeConfig().public;
-
-// Props
-// defineProps({
-//   data: Object,
-// });
-
 const props = defineProps<{ data: ProjectDataType }>();
 
-const {
-  repoDetails,
-  languages,
-  contributors,
-  branches,
-  tags,
-  readme,
-  license,
-}: ProjectDataType = props.data;
+// TODO: add types 
+const repoDetails = computed(() => props.data.repoDetails);
+const languages = computed(() => props.data.languages);
+const contributors = computed(() => props.data.contributors);
+const branches = computed(() => props.data.branches);
+const tags = computed(() => props.data.tags);
+const readme = computed(() => props.data.readme);
+const license = computed(() => props.data.license);
 const isReadmeAvailable: ComputedRef<boolean> = computed(() => readme !== null);
-const repoName: ComputedRef<string> = computed(() => repoDetails.full_name);
+const repoName: ComputedRef<string> = computed(() => repoDetails.value.full_name);
 const blobAbsoluteUrl: ComputedRef<string> =
-  computed(() => `${githubBaseURL + repoName.value}/blob/${repoDetails.default_branch}/`);
-
-// console.log('github.vue: props.data', props.data);
-
+  computed(() => `${githubBaseURL + repoName.value}/blob/${repoDetails.value.default_branch}/`);
 </script>
 
 <template>

@@ -17,19 +17,24 @@ const props = defineProps<{
 
 const { githubBaseURL } = useRuntimeConfig().public;
 
-const { full_name, description, homepage, stargazers_count, forks_count, subscribers_count }: GitHubRepositoryType = props.repoData;
-const [userName, repositoryName] = full_name ? full_name.split("/") : ["", ""];
-const previewTab = useLocalStorage(`home:projects:RepositoryOverview:${full_name}`, 'README');
+const full_name = computed(() => props.repoData.full_name);
+const description = computed(() => props.repoData.description);
+const homepage = computed(() => props.repoData.homepage);
+const stargazers_count = computed(() => props.repoData.stargazers_count);
+const forks_count = computed(() => props.repoData.forks_count);
+const subscribers_count = computed(() => props.repoData.subscribers_count);
+const repo_name = computed(() => props.repoData.name);
+const repo_owner = computed(() => props.repoData.owner.login);
+const previewTab = useLocalStorage(`home:projects:RepositoryOverview:${full_name.value}`, 'README');
 
 const stats = computed<{ href: string; icon: IconName; count: number | null; what: string }[]>(() => [
-    { href: `${full_name}/stargazers`, icon: 'star', count: stargazers_count, what: 'stars' },
-    { href: `${full_name}/forks`, icon: 'repo-forked', count: forks_count, what: 'forks' },
-    { href: `${full_name}/watchers`, icon: 'eye', count: subscribers_count, what: 'watching' },
-    { href: `${full_name}/branches`, icon: 'git-branch', count: props.branchData.length, what: 'Branch' },
-    { href: `${full_name}/tags`, icon: 'tag', count: props.tagData.length, what: 'Tags' },
-    { href: `${full_name}/activity`, icon: 'pulse', count: null, what: 'Activity' },
+    { href: `${full_name.value}/stargazers`, icon: 'star', count: stargazers_count.value, what: 'stars' },
+    { href: `${full_name.value}/forks`, icon: 'repo-forked', count: forks_count.value, what: 'forks' },
+    { href: `${full_name.value}/watchers`, icon: 'eye', count: subscribers_count.value, what: 'watching' },
+    { href: `${full_name.value}/branches`, icon: 'git-branch', count: props.branchData.length, what: 'Branch' },
+    { href: `${full_name.value}/tags`, icon: 'tag', count: props.tagData.length, what: 'Tags' },
+    { href: `${full_name.value}/activity`, icon: 'pulse', count: null, what: 'Activity' },
 ]);
-
 </script>
 
 <template>
@@ -37,8 +42,8 @@ const stats = computed<{ href: string; icon: IconName; count: number | null; wha
         <h2 class="space-y-4 text-2xl font-extrabold ml-1 mb-4 text-[#f0f6fc]">
             <UiExternalLink :href="`${githubBaseURL}${full_name}`" class="hover:underline">
                 <ProjectsIcon name="mark-github" :size="32" class="mr-2" />
-                <span class="text-xl text-[#9198a1]">{{ userName }}/</span>
-                {{ repositoryName }}
+                <span class="text-xl text-[#9198a1]">{{ repo_owner }}/</span>
+                {{ repo_name }}
             </UiExternalLink>
         </h2>
         <div class="space-y-4">
@@ -52,10 +57,9 @@ const stats = computed<{ href: string; icon: IconName; count: number | null; wha
                 </button>
             </div>
             <ul class="flex flex-wrap items-center gap-5 text-sm">
-                <li v-for="({href, icon, count, what}) in stats" :key="what">
+                <li v-for="({ href, icon, count, what }) in stats" :key="what">
                     <UiExternalLink :href="`${githubBaseURL}${href}`"
                         class="inline-flex items-center gap-2 text-current hover:text-blue-400">
-                        <!-- <component :is="stat.icon" class="fill-current" /> -->
                         <ProjectsIcon :name="icon" class="fill-current" />
                         <span v-if="count != null" class="font-semibold">{{ count }}</span>
                         <span>{{ what }}</span>
@@ -63,7 +67,6 @@ const stats = computed<{ href: string; icon: IconName; count: number | null; wha
                 </li>
             </ul>
             <div class="inline-flex items-center gap-1 text-sm">
-                <!-- <GlobeIcon fill="#9198a1" /> -->
                 <ProjectsIcon name="globe" />
                 <span>Public repository</span>
             </div>
