@@ -2,7 +2,7 @@ import type { Config } from "tailwindcss";
 import svgToDataUri from "mini-svg-data-uri";
 // @ts-ignore
 import flattenColorPalette from "tailwindcss/lib/util/flattenColorPalette";
-// import languagesColor from "./data/languages-color";
+import languagesColor from "./css/languages-color";
 
 const config: Config = {
   content: [
@@ -64,19 +64,19 @@ const config: Config = {
         ":root": newVars,
       });
     },
-    // ({ addComponents }: any) => {
-    //   const components = Object.entries(languagesColor).map(
-    //     ([language, color]) => {
-    //       return {
-    //         [`[data-language="${language}"]`]: {
-    //           backgroundColor: color,
-    //         },
-    //       };
-    //     }
-    //   );
+    ({ addComponents }: any) => {
+      const components = Object.entries(languagesColor).map(
+        ([language, color]) => {
+          return {
+            [`[data-language="${language}"]`]: {
+              backgroundColor: color,
+            },
+          };
+        }
+      );
 
-    //   addComponents(components);
-    // },
+      addComponents(components);
+    },
   ],
 };
 

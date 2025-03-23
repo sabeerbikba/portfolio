@@ -1,4 +1,5 @@
 <script setup>
+import "~/css/github-markdown-dark.css";
 const props = defineProps({
   licenseData: Object,
   contributorData: Array,
@@ -12,15 +13,14 @@ const license = computed(() => {
     : '';
 });
 
-const contributors = computed(() => props.contributorData || []);
-
 const languagesBytesOnePercentage = computed(() => {
   return (
     Object.values(props.languageData).reduce((acc, curr) => acc + curr, 0) / 100
   );
 });
 
-const githubBaseURL = 'https://github.com';
+const contributors = computed(() => props.contributorData || []);
+const { githubBaseURL } = useRuntimeConfig().public;
 </script>
 
 <template>
@@ -32,7 +32,7 @@ const githubBaseURL = 'https://github.com';
   <div v-if="contributors.length" class="w-full text-[#f0f6fc] border-b border-[#3d444d]">
     <div class="py-4 w-full">
       <h2 class="h-7 mb-3 text-lg font-semibold">
-        <a :href="`${githubBaseURL}/${repoName}/graphs/contributors`" class="block hover:text-[#4493f8]">
+        <a :href="`${githubBaseURL + repoName}/graphs/contributors`" class="block hover:text-[#4493f8]">
           Contributors
           <span title="Contributors count"
             class="ml-1 rounded-full bg-[#1e242a] inline-block w-5 h-5 !text-[#f0f6fc] text-sm font-thin text-center">

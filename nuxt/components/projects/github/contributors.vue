@@ -10,12 +10,9 @@ const license = computed(() => {
     ? atob(props.licenseData.content)
     : '';
 });
-
 const contributors = computed(() => props.contributorData || []);
-
-const githubBaseURL = 'https://github.com';
+const { githubBaseURL } = useRuntimeConfig().public;
 </script>
-
 
 <template>
   <div v-if="license" class="p-8 text-[#dfe5eb] text-xs font-medium overflow-auto w-full">
@@ -26,7 +23,7 @@ const githubBaseURL = 'https://github.com';
   <div v-if="contributors.length" class="w-full text-[#f0f6fc] border-b border-[#3d444d]">
     <div class="py-4 w-full">
       <h2 class="h-7 mb-3 text-lg font-semibold">
-        <a :href="`${githubBaseURL}/${repoName}/graphs/contributors`" class="block hover:text-[#4493f8]">
+        <a :href="`${githubBaseURL + repoName}/graphs/contributors`" class="block hover:text-[#4493f8]">
           Contributors
           <span title="Contributors count"
             class="ml-1 rounded-full bg-[#1e242a] inline-block w-5 h-5 !text-[#f0f6fc] text-sm font-thin text-center">

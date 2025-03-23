@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { ProjectDataType } from "~/types/github";
-import { toRefs } from "vue";
 
 const { githubBaseURL } = useRuntimeConfig().public;
 const props = defineProps<{ data: ProjectDataType }>();

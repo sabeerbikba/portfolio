@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const isMediumScreen = ref(false);
-
+// TODO: 
 const isVisible = useState('isVisible', () => false);
 
 const handleResize = () => {

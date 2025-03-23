@@ -3,16 +3,16 @@
   import { projects } from "~/data/projects";
   import { apps } from "~/data/projects";
   import { Motion, MotionPresence } from '@oku-ui/motion';
-import { storeToRefs } from 'pinia';
-import useScreenStore from '~/store/use-screen-store';
+  import { storeToRefs } from 'pinia';
+  import useScreenStore from '~/store/use-screen-store';
 
-const store = useScreenStore();
-const { setScreen } = useScreenStore();
-const { previewApp, previewProject, } = storeToRefs(store);
+  const store = useScreenStore();
+  const { setScreen } = useScreenStore();
+  const { previewApp, previewProject, } = storeToRefs(store);
   const open = ref<boolean>(false);
   const mobileDockRef = ref<HTMLDivElement | null>(null);
   const showContent = ref<boolean>(true);
-//  const { state, setScreen } = useScreenStore();
+  //  const { state, setScreen } = useScreenStore();
 
   const handleClickOutside = (event: MouseEvent) => {
     if (mobileDockRef.value && !mobileDockRef.value.contains(event.target as Node)) {

@@ -31,7 +31,8 @@ watch(tabs, (newTabs) => {
       <h2 class="hidden">Repository files navigation</h2>
       <div class="h-11 px-2 py-1.5 text-[#9198a1]" aria-label="Repository files">
         <button v-for="({ icon, text }) in tabs" :key="text" @click="previewTab = text"
-          class="mx-0.5 px-1.5 py-0.5 repo-overview-button relative hover:bg-[#656c7633] rounded-md">
+          class="mx-0.5 px-1.5 py-0.5 repo-overview-button relative hover:bg-[#656c7633]"
+          :aria-selected="previewTab === text">
           <ProjectsIcon :name="icon" />
           <span :class="['m-1.5 text-[#f0f6fc] text-[15px]', previewTab === text ? 'font-semibold' : '']">
             {{ text }}
@@ -47,3 +48,23 @@ watch(tabs, (newTabs) => {
     </div>
   </div>
 </template>
+
+<style>
+.repo-overview-button::after {
+  position: absolute;
+  right: 50%;
+  bottom: calc(50% - calc(var(--control-xlarge-size, 48px) / 2 + 1px));
+  width: 100%;
+  height: 2px;
+  content: "";
+  background-color: transparent;
+  border-radius: 0;
+  transform: translate(50%, -50%);
+}
+
+
+.repo-overview-button[aria-current]:not([aria-current="false"])::after,
+.repo-overview-button[aria-selected="true"]::after {
+  background-color: #fd8c73;
+}
+</style>

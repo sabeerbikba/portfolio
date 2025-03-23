@@ -1,7 +1,8 @@
 <script setup lang="ts">
+// TODO: add note about ignoring error of css 
+
 import socialMedia from "~/data/social-media";
 import { projects as projectsObject } from "~/data/projects";
-import { boxIconString } from "~/data/constants";
 
 const route = useRoute();
 const isHomePage: ComputedRef<boolean> = computed(() => route.name === "home" || route.path === "/");
@@ -39,10 +40,11 @@ useHead({
     {
       rel: "icon",
       type: "image/svg+xml",
-      href: boxIconString,
+      href: `data:image/svg+xml,%3Csvg%20width%3D%2248%22%20height%3D%2248%22%20viewBox%3D%220%200%2048%2048%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2248%22%20height%3D%2248%22%20rx%3D%2220%22%20fill%3D%22white%22%2F%3E%0A%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M24.4674%207.37231C23.5339%206.85809%2022.3977%206.87771%2021.4825%207.42385L9.9751%2014.2911L9%2014.873V16.0085V31.1167C9%2032.2175%209.60288%2033.2299%2010.5707%2033.7544L24.0006%2041.0317L25.0749%2041.6138L26.0832%2040.9237L36.6945%2033.6605C37.5115%2033.1013%2038%2032.175%2038%2031.1849V16.0085V14.8269L36.965%2014.2567L24.4674%207.37231ZM15.4356%2015.6906L23.0398%2011.1527L31.7827%2015.9687L24.8544%2019.6166L15.4356%2015.6906ZM26.9535%2023.032L34%2019.3218V30.6575L26.9535%2035.4807V23.032Z%22%20fill%3D%22black%22%2F%3E%0A%3C%2Fsvg%3E`,
     },
   ],
   script: [
+    // TODO:
     {
       type: "application/ld+json",
       children: JSON.stringify({
@@ -170,23 +172,6 @@ useHead({
   }
 } */
 
-.repo-overview-button::after {
-  position: absolute;
-  right: 50%;
-  bottom: calc(50% - calc(var(--control-xlarge-size, 48px) / 2 + 1px));
-  width: 100%;
-  height: 2px;
-  content: "";
-  background-color: transparent;
-  border-radius: 0;
-  transform: translate(50%, -50%);
-}
-
-
-.repo-overview-button[aria-current]:not([aria-current="false"])::after,
-.repo-overview-button[aria-selected="true"]::after {
-  background-color: #fd8c73;
-}
 
 
 .notes-body h3 {

@@ -40,7 +40,7 @@ const stats = computed<{ href: string; icon: IconName; count: number | null; wha
 <template>
     <div class="p-4 border-b border-[#3d444d] text-[#9198a1]">
         <h2 class="space-y-4 text-2xl font-extrabold ml-1 mb-4 text-[#f0f6fc]">
-            <UiExternalLink :href="`${githubBaseURL}${full_name}`" class="hover:underline">
+            <UiExternalLink :href="`${githubBaseURL + full_name}`" class="hover:underline">
                 <ProjectsIcon name="mark-github" :size="32" class="mr-2" />
                 <span class="text-xl text-[#9198a1]">{{ repo_owner }}/</span>
                 {{ repo_name }}
@@ -58,7 +58,7 @@ const stats = computed<{ href: string; icon: IconName; count: number | null; wha
             </div>
             <ul class="flex flex-wrap items-center gap-5 text-sm">
                 <li v-for="({ href, icon, count, what }) in stats" :key="what">
-                    <UiExternalLink :href="`${githubBaseURL}${href}`"
+                    <UiExternalLink :href="`${githubBaseURL + href}`"
                         class="inline-flex items-center gap-2 text-current hover:text-blue-400">
                         <ProjectsIcon :name="icon" class="fill-current" />
                         <span v-if="count != null" class="font-semibold">{{ count }}</span>

@@ -1,6 +1,4 @@
-import environment from "./environment";
-
-const githubProfileName: string = environment.repoOwner;
+const githubProfileName = "sabeerbikba";
 
 type DataType = {
   // TODO: rename title to name
