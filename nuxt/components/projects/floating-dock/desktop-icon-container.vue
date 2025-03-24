@@ -1,17 +1,8 @@
 <script setup lang="ts">
-import { MotionValue, useTransform, Motion, useSpring } from 'motion-v';
+import { MotionValue, useTransform, Motion as MotionV, useSpring } from 'motion-v';
+import { Motion } from '@oku-ui/motion';
 
-// const props = defineProps({
-//   mouseX: {
-//     type: MotionValue<number>,
-//     required: true,
-//   },
-//   title: String,
-//   icon: String,
-//   isSelected: Boolean,
-//   onClick: Function as PropType<(event: MouseEvent) => void>,
-//   isHoverd: Boolean,
-// });
+// TODO: when hovering one desktip dock see error in console 
 
 const props = defineProps<{
   mouseX: MotionValue<number>;
@@ -19,12 +10,12 @@ const props = defineProps<{
   icon: string;
   isSelected: boolean;
   onClick: (event: MouseEvent) => void;
-  isHoverd: boolean;
+  isHovered: boolean;
 }>();
 
 const iconRef = ref<HTMLDivElement | null>(null);
 const hovered = ref(false);
-const isButtonSelected = computed(() => !props.isHoverd && props.isSelected);
+const isButtonSelected = computed(() => !props.isHovered && props.isSelected);
 
 const distance = computed(() => {
   return useTransform(props.mouseX, (val) => {
@@ -43,11 +34,20 @@ const height = useSpring(heightTransform.value, { mass: 0.1, stiffness: 150, dam
 const widthIcon = useSpring(widthIconTransform.value, { mass: 0.1, stiffness: 150, damping: 12 });
 const heightIcon = useSpring(heightIconTransform.value, { mass: 0.1, stiffness: 150, damping: 12 });
 
-// watchEffect(() => console.log('isButtonSelected', isButtonSelected.value));
+
+watchEffect(() => {
+  if (props.isHovered) {
+    width.set(widthTransform.value.get());
+    height.set(heightTransform.value.get());
+  } else {
+    width.set(35);
+    height.set(35);
+  }
+});
 </script>
 
 <template>
-  <Motion :style="{ width: width, height: height }" @mouseenter="hovered = true" @mouseleave="hovered = false">
+  <MotionV :style="{ width, height }" @mouseenter="hovered = true" @mouseleave="hovered = false">
     <div ref="iconRef" class="aspect-square rounded-xl bg-transparent" @click="onClick && onClick($event)"
       role="button">
       <Motion v-if="hovered" :initial="{ opacity: 0, y: 10, x: '-50%' }" :animate="{ opacity: 1, y: -10, x: '-50%' }"
@@ -63,8 +63,10 @@ const heightIcon = useSpring(heightIconTransform.value, { mass: 0.1, stiffness: 
         <span class="h-1 w-1 rounded-2xl bg-slate-500 mix-blend-color" />
       </div>
     </div>
-  </Motion>
+  </MotionV>
 </template>
+
+
 
 <style>
 /* TODO: remove styles and use tailwindcss */

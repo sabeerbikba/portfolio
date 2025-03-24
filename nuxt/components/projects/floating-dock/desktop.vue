@@ -17,9 +17,10 @@ const { previewApp, previewProject, } = storeToRefs(store);
 let timer: NodeJS.Timeout | null = null;
 const inViewRef = ref(null);
 const mouseX = useMotionValue(Infinity)
+// const mouseX = useMotionValue(0)
 // TODO:
 const isHovered = ref(false); // default: false 
-const isVisible = ref(true); // default: false 
+const isVisible = ref(false); // default: false 
 const elementVisible = useElementVisibility(inViewRef);
 const inView = computed(() => elementVisible.value);
 
@@ -31,14 +32,14 @@ watch([isHovered], ([hovered]) => {
       timer = null;
     }
   } else {
-    // startDelay()
+    startDelay()
   }
 });
 
 watch([inView], ([view]) => {
   if (view) {
     isVisible.value = true;
-    // startDelay();
+    startDelay();
   }
 });
 
@@ -62,10 +63,12 @@ const setIsHovered = (value: boolean) => {
 const handleMouseLeave = () => {
   setIsHovered(false);
   mouseX.set(Infinity);
+  // mouseX.set(0);
 };
 
 const handleMouseMove = (event: MouseEvent) => {
   mouseX.set(event.pageX);
+  // mouseX.set(event.clientX); // Use clientX instead of pageX for better accuracy
 };
 
 onUnmounted(() => clearTimer());
@@ -83,12 +86,12 @@ onUnmounted(() => clearTimer());
       class="max-w-80 mx-auto gap-2 bg-[rgba(255,255,255,0.4)] w-auto m-auto rounded-lg px-2.5 inline-flex items-center">
       <template v-if="isVisible">
         <ProjectsFloatingDockDesktopIconContainer v-for="(item, id) in projects" :key="item.title" :mouseX="mouseX"
-          :title="item.title" :icon="item.icon" :isSelected="id + 1 === previewProject" :isHoverd="isHovered"
+          :title="item.title" :icon="item.icon" :isSelected="id + 1 === previewProject" :isHovered="isHovered"
           @click="() => setScreen(id + 1, 'project')" />
         <div class="border-x-[1.9px] border-gray-700 rounded-2xl h-8"></div>
         <ProjectsFloatingDockDesktopIconContainer v-for="(item, id) in apps" :key="item.title" :mouseX="mouseX"
           :title="item.title" :icon="item.icon" :isSelected="id + 1 + projects.length === previewApp"
-          :isHoverd="isHovered" @click="() => setScreen(id + 1 + projects.length, 'app')" />
+          :isHovered="isHovered" @click="() => setScreen(id + 1 + projects.length, 'app')" />
       </template>
     </Motion>
   </div>
