@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 // TODO: where this neeed to use 
 </script>
 <template>

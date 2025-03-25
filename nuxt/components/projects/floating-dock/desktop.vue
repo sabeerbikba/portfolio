@@ -18,9 +18,8 @@ let timer: NodeJS.Timeout | null = null;
 const inViewRef = ref(null);
 const mouseX = useMotionValue(Infinity)
 // const mouseX = useMotionValue(0)
-// TODO:
-const isHovered = ref(false); // default: false 
-const isVisible = ref(false); // default: false 
+const isHovered = ref(false);
+const isVisible = ref(false);
 const elementVisible = useElementVisibility(inViewRef);
 const inView = computed(() => elementVisible.value);
 
