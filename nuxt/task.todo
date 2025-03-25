@@ -4,6 +4,7 @@
 - in project section some components is missing 
 - Footer line need to be rounded in smaller screen 
 - check types is correctly used 
+- add types in each in every file where possible 
 - TEST - check works fallback github ui 
 - need to color change for projects docks use blend color 
 - use setup languge="ts" in every .vue file 

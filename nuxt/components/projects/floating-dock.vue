@@ -1,7 +1,5 @@
 <script setup lang="ts">
 const isMediumScreen = ref(false);
-// TODO: 
-const isVisible = useState('isVisible', () => false);
 
 const handleResize = () => {
   isMediumScreen.value = window.matchMedia("(min-width: 768px)").matches;
