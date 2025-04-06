@@ -13,14 +13,16 @@ type GithubTagsType =
 type GitHubFileContentType =
   Endpoints["GET /repos/{owner}/{repo}/contents/{path}"]["response"]["data"];
 
+type NullableGitHubFileContent = GitHubFileContentType | null;
+
 type ProjectDataType = {
   repoDetails: GitHubRepositoryType;
   languages: GitHubLanguagesType;
   contributors: GitHubContributorType;
   branches: GithubBranchesType;
   tags: GithubTagsType;
-  readme: GitHubFileContentType | null;
-  license: GitHubFileContentType | null;
+  readme: NullableGitHubFileContent;
+  license: NullableGitHubFileContent;
 };
 
 type PreviewTabOption = "README" | "MIT license";
@@ -38,6 +40,7 @@ export type {
   GithubBranchesType,
   GithubTagsType,
   GitHubFileContentType,
+  NullableGitHubFileContent,
   ProjectDataType,
   PreviewTabOption,
   ScreenContextType,

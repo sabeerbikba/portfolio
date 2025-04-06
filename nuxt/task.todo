@@ -8,3 +8,14 @@
 - TEST - check works fallback github ui 
 - need to color change for projects docks use blend color 
 - use setup languge="ts" in every .vue file 
+- use tailwindcss instead normal styles 
+- remove all comments 
+- all pages not need to be render based on if else specially where images need to loaded initially like 
+ - all types of projects dock 
+- use modern javascript code ignore function 
+- clear browser console
+- adjust desktop dock position little low 
+- is all thing rendered as needed
+- think about links which need to open new tab which link need to open in same page 
+- tools-pack tool-top size need to change in smaller screen
+- something problem in github overview 
