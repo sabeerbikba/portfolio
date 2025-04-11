@@ -21,3 +21,5 @@
 - need to use svg string in /contact page where needed
 - is pinia really needed
 - remove react-icons lib from package.json file 
+- if any file have single export defalt remove the varible name and just export default 
+- if made any seprate file for svg make single file for svg files 

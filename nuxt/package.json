@@ -10,6 +10,7 @@
     "add:module": "nuxt module add"
   },
   "dependencies": {
+    "@nuxt/icon": "1.12.0",
     "@nuxtjs/tailwindcss": "6.12.2",
     "@oku-ui/motion": "^0.4.3",
     "@oku-ui/primitives": "^0.7.8",

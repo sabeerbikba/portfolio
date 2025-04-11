@@ -1,53 +1,34 @@
 <script setup lang="ts">
+import { Motion, MotionPresence } from "@oku-ui/motion";
 import { IoMdMail, IoIosArrowBack } from "vue3-icons/io";
 import { FaPhoneAlt } from "vue3-icons/fa";
 import { FaLocationDot } from "vue3-icons/fa6";
-import {} from "vue3-icons";
+import { IoIosSend } from "vue3-icons/io";
+import { FaCheckCircle } from "vue3-icons/fa";
+import { MdOutlineError } from "vue3-icons/md";
 import socialMedia from "@/data/social-media";
 import type { IconType } from "vue3-icons/lib";
 
-type IconKey = keyof typeof icons;
-
 type ContactInfoType = {
   icon: IconType;
-  // icon: string;
-  // icon: IconKey;
   text: string;
   href: string;
   ariaLabel: string;
 };
 
-const icons = {
-  IoMdMail,
-  FaPhoneAlt,
-  FaLocationDot,
-};
-
+let interval: number | undefined;
+// TODO: Use better way to send form without using ref()
 const name: Ref<string> = ref("");
 const email: Ref<string> = ref("");
 const message: Ref<string> = ref("");
 const status: Ref<string> = ref("Send");
-
-// const contactInfo: ContactInfoType[] = [
-//   {
-//     icon: 'IoMdMail',
-//     text: "sabeerbikba02@gmail.com",
-//     href: "mailto:sabeerbikba02@gmail.com",
-//     ariaLabel: "Email sabeerbikba02@gmail.com",
-//   },
-//   {
-//     icon: "FaPhoneAlt",
-//     text: "+91 861 871 8358",
-//     href: "tel:+918618718358",
-//     ariaLabel: "Call +91 861 871 8358",
-//   },
-//   {
-//     icon: "FaLocationDot",
-//     text: "India, Karnataka",
-//     href: "https://www.google.com/maps/place/Karnataka",
-//     ariaLabel: "Location India, Karnataka",
-//   },
-// ];
+const sendingFrame = ref<number>(0);
+const sendingFrames: string[] = [
+  "Sending",
+  "Sending.",
+  "Sending..",
+  "Sending...",
+];
 
 const contactInfo: ContactInfoType[] = [
   {
@@ -84,6 +65,20 @@ const handleSubmit = async (): Promise<void> => {
     status.value = "Retry";
   }
 };
+
+watchEffect(() => {
+  if (status.value === "Sending") {
+    interval = window.setInterval(() => {
+      sendingFrame.value = (sendingFrame.value + 1) % sendingFrames.length;
+    }, 500);
+  } else {
+    clearInterval(interval);
+  }
+});
+
+onUnmounted(() => {
+  clearInterval(interval);
+});
 </script>
 
 <template>
@@ -162,6 +157,7 @@ const handleSubmit = async (): Promise<void> => {
                     >
                   </UiLabelInputContainer>
 
+                  <!-- input hover bottom not working porperly  -->
                   <UiLabelInputContainer class="mb-4">
                     <UiLabel for="message">Message</UiLabel>
                     <UiInput
@@ -176,6 +172,7 @@ const handleSubmit = async (): Promise<void> => {
                       class="h-40 resize-none"
                       aria-describedby="messageDescription"
                     />
+                    <!-- // TODO: if small element using everywhere use part of Inputcontainer component  -->
                     <small id="messageDescription" class="sr-only"
                       >Please enter your message. Minimum 20 characters.</small
                     >
@@ -189,15 +186,44 @@ const handleSubmit = async (): Promise<void> => {
                     :aria-live="status === 'Sending' ? 'polite' : 'assertive'"
                     :aria-label="status"
                   >
-                    <span class="flex items-center justify-center">
-                      <i v-if="status === 'Send'" class="icon-send"></i>
-                      <i
-                        v-else-if="status === 'Sent'"
-                        class="icon-check-circle"
-                      ></i>
-                      <i v-else-if="status === 'Retry'" class="icon-error"></i>
-                      {{ status }}
-                    </span>
+                    <MotionPresence mode="wait">
+                      <Motion
+                        v-if="status === 'Sending'"
+                        as="span"
+                        :initial="{ y: 10, opacity: 0 }"
+                        :animate="{ y: 0, opacity: 1 }"
+                        :exit="{ y: -10, opacity: 0 }"
+                        :transition="{ duration: 0.3 }"
+                      >
+                        {{ sendingFrames[sendingFrame] }}
+                      </Motion>
+                      <Motion
+                        v-else
+                        as="span"
+                        :initial="{ y: 10, opacity: 0 }"
+                        :animate="{ y: 0, opacity: 1 }"
+                        :exit="{ y: -10, opacity: 0 }"
+                        :transition="{ duration: 0.3 }"
+                      >
+                        <div className="center gap-1">
+                          <IoIosSend
+                            v-if="status === 'Send'"
+                            aria-hidden="true"
+                          />
+                          <FaCheckCircle
+                            v-if="status === 'Sent'"
+                            aria-hidden="true"
+                          />
+                          <MdOutlineError
+                            v-if="status === 'Retry'"
+                            aria-hidden="true"
+                            class="pr-0.5"
+                          />
+
+                          <span>{{ status === "Sending" ? "" : status }} </span>
+                        </div>
+                      </Motion>
+                    </MotionPresence>
                     <UiBottomGradient />
                   </button>
                 </div>
@@ -228,27 +254,25 @@ const handleSubmit = async (): Promise<void> => {
 
                     <div class="space-y-4 mb-8">
                       <div
-                        v-for="(item, index) in contactInfo"
+                        v-for="(
+                          { href, ariaLabel, icon, text }, index
+                        ) in contactInfo"
                         :key="index"
                         class="center space-x-3 ml-2"
                       >
                         <UiExternalLink
-                          :href="item.href"
+                          :href="href"
                           class="pr-2 text-gray-600 hover:text-gray-800 center text-base sm:text-lg md:text-xl"
-                          :aria-label="item.ariaLabel"
+                          :aria-label="ariaLabel"
                         >
                           <div
                             class="w-7 sm:w-9 md:w-10 h-7 sm:h-9 md:h-10 mr-2 rounded-full bg-gray-100 center"
                             aria-hidden="true"
                             role="presentation"
                           >
-                            <item.icon
-                              class="h-[18px] sm:h-5 md:h-6 w-[18px] sm:w-5 md:w-6 fill-current"
-                              aria-hidden="true"
-                            />
-                            <!-- <div>{{ item.icon() }}</div> -->
+                            <component :is="icon" />
                           </div>
-                          {{ item.text }}
+                          {{ text }}
                         </UiExternalLink>
                       </div>
                     </div>
@@ -267,18 +291,10 @@ const handleSubmit = async (): Promise<void> => {
                         :aria-label="`Link to ${link.label}`"
                         class="w-10 h-10 rounded-full max-xs:!ml-[6px] text-gray-600 hover:text-gray-800 bg-gray-200 center hover:bg-gray-300 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400"
                       >
-                        <!-- <link.icon
-                          class="h-5 w-5 fill-current"
-                          aria-hidden="true"
-                        /> -->
-                        <!-- {{ link.icon }} -->
-                        <!-- :is="link.icon" -->
-                        <!-- <component
-                          :is="icons[link.icon as keyof typeof icons]"
-                          class="h-5 w-5 fill-current"
-                          aria-hidden="true"
-                        /> -->
-                        <component :is="contactInfo[0].icon" />
+                        <NuxtIcon
+                          :name="link.iconSvg"
+                          class="h-[21px] w-[21px] fill-current"
+                        />
                       </UiExternalLink>
                     </div>
                   </div>
@@ -308,6 +324,7 @@ const handleSubmit = async (): Promise<void> => {
       </div>
     </transition>
   </div>
+  <!-- //   TODO: is scoped really needed because generating unique id  -->
 </template>
 
 <style scoped>

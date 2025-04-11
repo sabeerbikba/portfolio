@@ -8,6 +8,7 @@ export default defineNuxtConfig({
     "@oku-ui/primitives",
     "@pinia/nuxt",
     "motion-v/nuxt",
+    "@nuxt/icon",
   ],
   runtimeConfig: {
     public: {
@@ -22,5 +23,9 @@ export default defineNuxtConfig({
     compilerOptions: {
       comments: false,
     },
+  },
+  icon: {
+    componentName: "NuxtIcon",
+    mode: "svg",
   },
 });
