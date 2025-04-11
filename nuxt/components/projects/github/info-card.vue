@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useLocalStorage } from "@vueuse/core";
+import numeral from "numeral";
 
 import type { IconName } from "@primer/octicons";
 import type {
@@ -30,6 +31,8 @@ const previewTab = useLocalStorage(
   `home:projects:RepositoryOverview:${full_name.value}`,
   "README"
 );
+
+const formatNumber = (num: number) => numeral(num).format("0.[0]a");
 
 const stats = computed<
   { href: string; icon: IconName; count: number | null; what: string }[]
@@ -116,7 +119,9 @@ const stats = computed<
             class="inline-flex items-center gap-2 text-current hover:text-blue-400"
           >
             <ProjectsIcon :name="icon" class="fill-current" />
-            <span v-if="count != null" class="font-semibold">{{ count }}</span>
+            <span v-if="count != null" class="font-semibold">
+              {{ formatNumber(count) }}
+            </span>
             <span>{{ what }}</span>
           </UiExternalLink>
         </li>

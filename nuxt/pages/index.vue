@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Motion } from "@oku-ui/motion";
+import icons from "~/data/icons";
 import tools from "~/data/tools";
 
 const aboutSectionParagraphs: string[] = [
@@ -46,7 +48,7 @@ const aboutSectionParagraphs: string[] = [
 
     <ContainerScroll>
       <template #title>
-        <UiHeading as="h2" class="md:text-[2.8rem]">
+        <UiHeading as="h2" className="md:text-[2.8rem]">
           Browse My Creations
           <br />
           <span
@@ -91,7 +93,10 @@ const aboutSectionParagraphs: string[] = [
 
     <section class="py-20 px-4 sm:px-6 lg:px-8 bg-white shadow-inner">
       <div class="max-w-3xl mx-auto text-center">
-        <UiHeading as="h2" class="text-xl xs:text-2xl sm:text-3xl md:text-4xl">
+        <UiHeading
+          as="h2"
+          className="text-xl xs:text-2xl sm:text-3xl md:text-4xl"
+        >
           Ready to start your next project?
         </UiHeading>
         <p
@@ -100,21 +105,31 @@ const aboutSectionParagraphs: string[] = [
           Let&apos;s connect and bring your ideas to reality. Get in touch
           today!
         </p>
-        <!-- whileHover={{ scale: 1.05 }} -->
-        <!-- whileTap={{ scale: 0.95 }} -->
-        <div class="mt-8" tabIndex="-1">
+        <Motion
+          :hover="{ scale: 1.05 }"
+          :press="{ scale: 0.95 }"
+          class="mt-8"
+          tabIndex="-1"
+        >
           <NuxtLink
             to="/contact"
             class="inline-flex items-center justify-center text-base font-medium rounded-3xl text-white bg-black hover:bg-black/90 px-7 py-2 md:py-3 md:text-lg md:px-8"
           >
             Contact Me
-            <!-- animate={{ x: [0, 5, 0] }} -->
-            <!-- transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }} -->
-            <span class="ml-2">
-              <!-- <TiArrowRight class="w-5 h-5" /> -->
-            </span>
+            <Motion
+              as="span"
+              class="ml-2"
+              :animate="{ x: [0, 5, 0] }"
+              :transition="{
+                repeat: Infinity,
+                duration: 1.5,
+                ease: 'easeInOut',
+              }"
+              v-html="icons.home.arrowRight"
+            >
+            </Motion>
           </NuxtLink>
-        </div>
+        </Motion>
       </div>
       <div class="text-b"></div>
     </section>

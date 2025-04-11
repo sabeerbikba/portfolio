@@ -1,21 +1,53 @@
 <script setup lang="ts">
-import { IoMdMail, IoIosArrowBack } from "react-icons/io";
-import { FaPhoneAlt } from "react-icons/fa";
-import { FaLocationDot } from "react-icons/fa6";
+import { IoMdMail, IoIosArrowBack } from "vue3-icons/io";
+import { FaPhoneAlt } from "vue3-icons/fa";
+import { FaLocationDot } from "vue3-icons/fa6";
+import {} from "vue3-icons";
 import socialMedia from "@/data/social-media";
-import type { IconType } from "react-icons/lib";
+import type { IconType } from "vue3-icons/lib";
+
+type IconKey = keyof typeof icons;
 
 type ContactInfoType = {
   icon: IconType;
+  // icon: string;
+  // icon: IconKey;
   text: string;
   href: string;
   ariaLabel: string;
+};
+
+const icons = {
+  IoMdMail,
+  FaPhoneAlt,
+  FaLocationDot,
 };
 
 const name: Ref<string> = ref("");
 const email: Ref<string> = ref("");
 const message: Ref<string> = ref("");
 const status: Ref<string> = ref("Send");
+
+// const contactInfo: ContactInfoType[] = [
+//   {
+//     icon: 'IoMdMail',
+//     text: "sabeerbikba02@gmail.com",
+//     href: "mailto:sabeerbikba02@gmail.com",
+//     ariaLabel: "Email sabeerbikba02@gmail.com",
+//   },
+//   {
+//     icon: "FaPhoneAlt",
+//     text: "+91 861 871 8358",
+//     href: "tel:+918618718358",
+//     ariaLabel: "Call +91 861 871 8358",
+//   },
+//   {
+//     icon: "FaLocationDot",
+//     text: "India, Karnataka",
+//     href: "https://www.google.com/maps/place/Karnataka",
+//     ariaLabel: "Location India, Karnataka",
+//   },
+// ];
 
 const contactInfo: ContactInfoType[] = [
   {
@@ -210,8 +242,11 @@ const handleSubmit = async (): Promise<void> => {
                             aria-hidden="true"
                             role="presentation"
                           >
-                            <!-- <item.icon class="h-[18px] sm:h-5 md:h-6 w-[18px] sm:w-5 md:w-6 fill-current"
-                              aria-hidden="true" /> -->
+                            <item.icon
+                              class="h-[18px] sm:h-5 md:h-6 w-[18px] sm:w-5 md:w-6 fill-current"
+                              aria-hidden="true"
+                            />
+                            <!-- <div>{{ item.icon() }}</div> -->
                           </div>
                           {{ item.text }}
                         </UiExternalLink>
@@ -232,7 +267,18 @@ const handleSubmit = async (): Promise<void> => {
                         :aria-label="`Link to ${link.label}`"
                         class="w-10 h-10 rounded-full max-xs:!ml-[6px] text-gray-600 hover:text-gray-800 bg-gray-200 center hover:bg-gray-300 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400"
                       >
-                        <!-- <link.icon class="h-5 w-5 fill-current" aria-hidden="true" /> -->
+                        <!-- <link.icon
+                          class="h-5 w-5 fill-current"
+                          aria-hidden="true"
+                        /> -->
+                        <!-- {{ link.icon }} -->
+                        <!-- :is="link.icon" -->
+                        <!-- <component
+                          :is="icons[link.icon as keyof typeof icons]"
+                          class="h-5 w-5 fill-current"
+                          aria-hidden="true"
+                        /> -->
+                        <component :is="contactInfo[0].icon" />
                       </UiExternalLink>
                     </div>
                   </div>

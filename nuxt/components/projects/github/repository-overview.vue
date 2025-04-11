@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useLocalStorage } from "@vueuse/core";
+import { useLocalStorage, useMounted } from "@vueuse/core";
 import type { IconName } from "@primer/octicons";
 import type { NullableGitHubFileContent } from "~/types/github";
 
@@ -10,6 +10,7 @@ const props = defineProps<{
   blobAbsoluteUrl: string;
 }>();
 
+const isMounted = useMounted();
 const previewTab = useLocalStorage(
   `home:projects:RepositoryOverview:${props.repoName}`,
   "README"
@@ -34,7 +35,7 @@ watch(
 </script>
 
 <template>
-  <div class="border border-[#3d444d] rounded-md w-full mt-4">
+  <div v-if="isMounted" class="border border-[#3d444d] rounded-md w-full mt-4">
     <div class="border-b border-[#3d444d] bg-[#0d1117] sticky top-0">
       <h2 class="hidden">Repository files navigation</h2>
       <div

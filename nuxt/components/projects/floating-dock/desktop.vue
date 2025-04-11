@@ -1,22 +1,22 @@
 <script setup lang="ts">
 import { projects } from "~/data/projects";
 import { apps } from "~/data/projects";
-import { useElementVisibility } from '@vueuse/core';
-import { Motion } from '@oku-ui/motion';
-import { useMotionValue } from 'motion-v';
+import { useElementVisibility } from "@vueuse/core";
+import { Motion } from "@oku-ui/motion";
+import { useMotionValue } from "motion-v";
 
 defineProps({ hidden: Boolean });
 
-import { storeToRefs } from 'pinia';
-import useScreenStore from '~/store/use-screen-store';
+import { storeToRefs } from "pinia";
+import useScreenStore from "~/store/use-screen-store";
 
 const store = useScreenStore();
 const { setScreen } = useScreenStore();
-const { previewApp, previewProject, } = storeToRefs(store);
+const { previewApp, previewProject } = storeToRefs(store);
 
 let timer: NodeJS.Timeout | null = null;
 const inViewRef = ref(null);
-const mouseX = useMotionValue(Infinity)
+const mouseX = useMotionValue(Infinity);
 // const mouseX = useMotionValue(0)
 const isHovered = ref(false);
 const isVisible = ref(false);
@@ -31,7 +31,7 @@ watch([isHovered], ([hovered]) => {
       timer = null;
     }
   } else {
-    startDelay()
+    startDelay();
   }
 });
 
@@ -74,23 +74,46 @@ onUnmounted(() => clearTimer());
 </script>
 
 <template>
-  <div class="w-full flex items-center absolute top-[34.87rem] z-10" :style="{ display: hidden ? 'none' : 'flex' }"
-    v-if="!hidden">
-    <Motion as="div" ref="inViewRef" @mouseenter="setIsHovered(true)" @mouseleave="handleMouseLeave"
-      @mousemove="handleMouseMove" :animate="{
+  <div
+    class="w-full flex items-center absolute top-[35.50rem] z-10"
+    :style="{ display: hidden ? 'none' : 'flex' }"
+    v-if="!hidden"
+  >
+    <Motion
+      as="div"
+      ref="inViewRef"
+      @mouseenter="setIsHovered(true)"
+      @mouseleave="handleMouseLeave"
+      @mousemove="handleMouseMove"
+      :animate="{
         height: isVisible ? '55px' : '5px',
         width: isVisible ? 'auto' : '120px',
-        y: isVisible ? -58 : 0
+        y: isVisible ? -58 : 0,
       }"
-      class="max-w-80 mx-auto gap-2 bg-[rgba(255,255,255,0.4)] w-auto m-auto rounded-lg px-2.5 inline-flex items-center">
+      class="max-w-80 mx-auto gap-2 bg-[rgba(255,255,255,0.4)] w-auto m-auto rounded-lg px-2.5 inline-flex items-center"
+    >
       <template v-if="isVisible">
-        <ProjectsFloatingDockDesktopIconContainer v-for="(item, id) in projects" :key="item.title" :mouseX="mouseX"
-          :title="item.title" :icon="item.icon" :isSelected="id + 1 === previewProject" :isHovered="isHovered"
-          @click="() => setScreen(id + 1, 'project')" />
+        <ProjectsFloatingDockDesktopIconContainer
+          v-for="(item, id) in projects"
+          :key="item.title"
+          :mouseX="mouseX"
+          :title="item.title"
+          :icon="item.icon"
+          :isSelected="id + 1 === previewProject"
+          :isHovered="isHovered"
+          @click="() => setScreen(id + 1, 'project')"
+        />
         <div class="border-x-[1.9px] border-gray-700 rounded-2xl h-8"></div>
-        <ProjectsFloatingDockDesktopIconContainer v-for="(item, id) in apps" :key="item.title" :mouseX="mouseX"
-          :title="item.title" :icon="item.icon" :isSelected="id + 1 + projects.length === previewApp"
-          :isHovered="isHovered" @click="() => setScreen(id + 1 + projects.length, 'app')" />
+        <ProjectsFloatingDockDesktopIconContainer
+          v-for="(item, id) in apps"
+          :key="item.title"
+          :mouseX="mouseX"
+          :title="item.title"
+          :icon="item.icon"
+          :isSelected="id + 1 + projects.length === previewApp"
+          :isHovered="isHovered"
+          @click="() => setScreen(id + 1 + projects.length, 'app')"
+        />
       </template>
     </Motion>
   </div>
