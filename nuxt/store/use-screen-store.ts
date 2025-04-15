@@ -28,7 +28,7 @@ Creates a useStore function that retrieves the store instance
 //   // data: ProjectDataType[];
 // }
 
-const useScreenStore = defineStore("screen", () => {
+export default defineStore("screen", () => {
   //  const state = reactive<State>({
   //    previewProject: 1,
   //    previewApp: 3,
@@ -128,8 +128,6 @@ const useScreenStore = defineStore("screen", () => {
     data,
   };
 });
-
-export default useScreenStore;
 
 // import { projects } from "~/data/projects";
 

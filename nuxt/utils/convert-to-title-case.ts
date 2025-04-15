@@ -1,6 +1,5 @@
-export default (input: string): string => {
-  return input
+export default (input: string): string =>
+  input
     .replace(/^\//, "")
     .replace(/-/g, " ")
     .replace(/\b\w/g, (char) => char.toUpperCase());
-};

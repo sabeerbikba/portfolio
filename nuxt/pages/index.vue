@@ -131,10 +131,9 @@ const aboutSectionParagraphs: string[] = [
           </NuxtLink>
         </Motion>
       </div>
+      <!-- TODO: those two empty divs : purpose  -->
       <div class="text-b"></div>
     </section>
-    <!-- <Teleport to="body"> -->
-    <!-- <Teleport :to="teleportTarget"> </Teleport> -->
   </div>
   <div class="scale"></div>
 </template>

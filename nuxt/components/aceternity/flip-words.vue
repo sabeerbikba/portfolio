@@ -17,7 +17,7 @@ const currentWord = ref(props.words[0]);
 const isVisible = ref(true);
 const timeoutId = ref<number | null>(null);
 
-function startAnimation() {
+const startAnimation = (): void => {
   isVisible.value = false;
 
   setTimeout(() => {
@@ -26,20 +26,25 @@ function startAnimation() {
     currentWord.value = nextWord;
     isVisible.value = true;
   }, 600);
-}
+};
 
-const splitWords = computed(() => {
+const splitWords = computed<
+  {
+    word: string;
+    letters: string[];
+  }[]
+>(() => {
   return currentWord.value.split(" ").map((word) => ({
     word,
     letters: word.split(""),
   }));
 });
 
-function startTimeout() {
+const startTimeout = (): void => {
   timeoutId.value = window.setTimeout(() => {
     startAnimation();
   }, props.duration);
-}
+};
 
 onMounted(() => {
   startTimeout();

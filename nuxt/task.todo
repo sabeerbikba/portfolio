@@ -23,3 +23,8 @@
 - remove react-icons lib from package.json file 
 - if any file have single export defalt remove the varible name and just export default 
 - if made any seprate file for svg make single file for svg files 
+- need to mention which icon used in nuxt.config.ts as shown in docs 
+- need to add seo thing like title all of things 
+- is any teleport component used check if not remove the code 
+- in project section MIT licnese in smaller screen text need to render in better use pre tag  
+- initially readme and licnese need to be display first readme if readme there 

@@ -1,6 +1,6 @@
 /* source: https://gist.github.com/robertpeteuil/bb2dc86f3b3e25d203664d61410bfa30 */
 
-const languagesColor = {
+export default {
   ABAP: "#E8274B",
   ActionScript: "#882B0F",
   Ada: "#02f88c",
@@ -204,5 +204,3 @@ const languagesColor = {
   XSLT: "#EB8CEB",
   Zephir: "#118f9e",
 };
-
-export default languagesColor;

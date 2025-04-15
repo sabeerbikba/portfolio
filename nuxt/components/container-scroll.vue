@@ -3,9 +3,9 @@ import { useWindowSize, useScroll, useElementBounding } from "@vueuse/core";
 const containerRef = ref(null);
 const isMobile = ref(false);
 
-function updateIsMobile() {
+const updateIsMobile = (): void => {
   isMobile.value = window.innerWidth <= 768;
-}
+};
 
 onMounted(() => {
   updateIsMobile();
