@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref, onMounted, watch } from "vue";
 import { hierarchy, pack } from "d3-hierarchy";
 import type { HierarchyCircularNode } from "d3-hierarchy";
 import type { ToolsType } from "~/data/tools";
@@ -14,22 +15,22 @@ type CircleData = {
   data: ToolsType;
 };
 
-const containerWidth = ref<number>(800);
-const width = ref<number>(containerWidth.value);
+const container = ref<HTMLElement | null>(null);
+const width = ref(0);
 
-const updateWidth = (): void => {
-  width.value = Math.min(window.innerWidth - 17, containerWidth.value);
+const circles = ref<CircleData[]>([]);
+let root = ref<HierarchyCircularNode<any> | null>(null);
+
+const updateWidth = () => {
+  if (container.value) {
+    width.value = container.value.clientWidth;
+  }
 };
 
-let root = ref<HierarchyCircularNode<any> | null>(null);
-const circles = ref<CircleData[]>([]);
-
-const calculateRoot = (): void => {
+const calculateRoot = () => {
   const rootNode = hierarchy<{ children: ToolsType[]; name: string }>({
     children: props.tools,
     name: "root",
-    // radius: 0,
-    // distance: 0,
   })
     .sum((d: any) => d.proficiency || 1)
     .sort(
@@ -38,9 +39,7 @@ const calculateRoot = (): void => {
 
   root.value = pack()
     .size([width.value, width.value])
-    .padding(width.value * 0.005)(
-    rootNode as unknown as HierarchyCircularNode<unknown>
-  );
+    .padding(width.value * 0.005)(rootNode as HierarchyCircularNode<unknown>);
 
   circles.value = root.value
     .descendants()
@@ -52,8 +51,6 @@ const calculateRoot = (): void => {
       data: node.data,
     }));
 };
-
-calculateRoot();
 
 const getTooltipClasses = (x: number, y: number): string[] => {
   const tooltipX = x > width.value / 2 ? "left" : "right";
@@ -69,28 +66,17 @@ const getTooltipClasses = (x: number, y: number): string[] => {
   ];
 };
 
-onMounted(() => {
-  window.addEventListener("resize", updateWidth);
-  updateWidth();
-});
+watch(width, calculateRoot);
 
-watch(width, () => {
-  calculateRoot();
+onMounted(() => {
+  updateWidth();
+  window.addEventListener("resize", updateWidth);
 });
 </script>
 
 <template>
-  <div
-    class="max-w-[800px] mx-auto aspect-square text-2xl max-xs:-mt-4 max-sm:-mt-3 max-md:-mt-2"
-  >
-    <div
-      v-if="width > 10"
-      :style="{
-        width: width + 'px',
-        height: width + 'px',
-        position: 'relative',
-      }"
-    >
+  <div class="max-w-[800px] mx-auto aspect-square" ref="container">
+    <div v-if="width > 10" class="w-full h-full relative">
       <div
         v-for="(circle, i) in circles"
         :key="`circle-${i}`"
@@ -108,7 +94,7 @@ watch(width, () => {
           v-html="circle.data.imageUrl"
         />
         <div
-          v-else="circle.data.imageUrl"
+          v-else
           class="absolute bg-no-repeat bg-center bg-contain rounded-full w-[95%] h-[95%] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
           :style="{ backgroundImage: `url(${circle.data.imageUrl})` }"
         />

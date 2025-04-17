@@ -10,28 +10,40 @@ const props = defineProps<{
   blobAbsoluteUrl: string;
 }>();
 
+type RepositoryOverviewTabType = "README" | "MIT License";
+
 const isMounted = useMounted();
-const previewTab = useLocalStorage(
+const previewTab = useLocalStorage<RepositoryOverviewTabType>(
   `home:projects:RepositoryOverview:${props.repoName}`,
   "README"
 );
 
-const tabs = computed<{ icon: IconName; text: string }[]>(() =>
-  [
-    props.readmeData ? { icon: "book" as IconName, text: "README" } : null,
-    props.licenseData ? { icon: "law" as IconName, text: "MIT License" } : null,
-  ].filter((tab): tab is { icon: IconName; text: string } => tab !== null)
+const tabs = computed<{ icon: IconName; text: RepositoryOverviewTabType }[]>(
+  () =>
+    [
+      props.readmeData ? { icon: "book" as IconName, text: "README" } : null,
+      props.licenseData
+        ? { icon: "law" as IconName, text: "MIT License" }
+        : null,
+    ].filter(
+      (tab): tab is { icon: IconName; text: RepositoryOverviewTabType } =>
+        tab !== null
+    )
 );
 
 watch(
   tabs,
   (newTabs) => {
     if (newTabs.length === 1) {
-      previewTab.value = newTabs[0].text;
+      previewTab.value = newTabs[0].text as RepositoryOverviewTabType;
     }
   },
   { immediate: true }
 );
+
+onMounted(() => {
+  previewTab.value = "README";
+});
 </script>
 
 <template>

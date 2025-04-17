@@ -6,10 +6,8 @@ import { FaLocationDot } from "vue3-icons/fa6";
 import { IoIosSend } from "vue3-icons/io";
 import { FaCheckCircle } from "vue3-icons/fa";
 import { MdOutlineError } from "vue3-icons/md";
-import socialMedia from "@/data/social-media";
 import type { IconType } from "vue3-icons/lib";
-
-// TODO: isNeeded : if focused in input remove placeholder text
+import socialMedia from "@/data/social-media";
 
 type ContactInfoType = {
   icon: IconType;
@@ -19,11 +17,9 @@ type ContactInfoType = {
 };
 
 let interval: number | undefined;
-// TODO: Use better way to send form without using ref()
-const name: Ref<string> = ref("");
-const email: Ref<string> = ref("");
-const message: Ref<string> = ref("");
-const status: Ref<string> = ref("Send");
+const lastScrollY = ref(0);
+const scrollDir = ref<"up" | "down">("up");
+const status = ref<string>("Send");
 const sendingFrame = ref<number>(0);
 const sendingFrames: string[] = [
   "Sending",
@@ -40,9 +36,9 @@ const handleSubmit = async (): Promise<void> => {
   const success = false;
   if (success) {
     status.value = "Sent";
-    name.value = "";
-    email.value = "";
-    message.value = "";
+    // name.value = "";
+    // email.value = "";
+    // message.value = "";
   } else {
     status.value = "Retry";
   }
@@ -60,6 +56,12 @@ watchEffect(() => {
 
 onUnmounted(() => {
   clearInterval(interval);
+
+  window.addEventListener("scroll", () => {
+    const currentY = window.scrollY;
+    scrollDir.value = currentY > lastScrollY.value ? "down" : "up";
+    lastScrollY.value = currentY;
+  });
 });
 </script>
 
@@ -97,11 +99,7 @@ onUnmounted(() => {
 
       <div class="mt-10 max-lg:mt-2">
         <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
-          <!-- <ContactForm /> start -->
           <div>
-            <!-- // TODO: shows error:
-            You are trying to animate opacity from "1" to "1". 1 is not an animatable value - to enable this animation set 1 to a value animatable to 1 via the `style` property.
-            -->
             <Motion
               as="div"
               :initial="{ opacity: 0, x: -50 }"
@@ -115,62 +113,84 @@ onUnmounted(() => {
               <form class="my-8" @submit.prevent="handleSubmit">
                 <div class="max-w-xl mx-auto">
                   <div
-                    class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4"
+                    class="flex flex-col space-y-2 w-full mb-4"
+                    role="group"
+                    aria-label="Input field group"
+                    v-for="{
+                      label,
+                      labelId,
+                      type,
+                      elementType,
+                      placeholder,
+                      minlength,
+                      maxlength,
+                      ariaDescribedbyId,
+                      ariaDescribedbyText,
+                    } in [
+                      {
+                        label: 'Name',
+                        labelId: 'name',
+                        type: 'text',
+                        elementType: 'input',
+                        placeholder: 'Your name',
+                        minlength: 3,
+                        maxlength: 70,
+                        ariaDescribedbyId: 'nameDescription',
+                        ariaDescribedbyText:
+                          'Please enter your full name (3–70 characters).',
+                      },
+                      {
+                        label: 'Email Address',
+                        labelId: 'email',
+                        type: 'email',
+                        elementType: 'input',
+                        placeholder: 'you@example.com',
+                        minlength: undefined,
+                        maxlength: undefined,
+                        ariaDescribedbyId: 'emailDescription',
+                        ariaDescribedbyText:
+                          'Please enter a valid email address.',
+                      },
+                      {
+                        label: 'Message',
+                        labelId: 'message',
+                        type: undefined,
+                        elementType: 'textarea',
+                        placeholder: 'Your message here...',
+                        minlength: 20,
+                        maxlength: 600,
+                        ariaDescribedbyId: 'messageDescription',
+                        ariaDescribedbyText:
+                          'Please enter your message. Minimum 20 characters.',
+                      },
+                    ]"
                   >
-                    <UiLabelInputContainer>
-                      <UiLabel for="name">Name</UiLabel>
-                      <UiInput
-                        id="name"
-                        type="text"
-                        v-model="name"
-                        placeholder="Your name"
-                        minlength="3"
-                        maxlength="70"
-                        required
-                        aria-required="true"
-                      />
-                    </UiLabelInputContainer>
+                    <label
+                      class="text-sm md:text-base font-medium text-black leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-left px-2"
+                      :for="labelId"
+                    >
+                      {{ label }}
+                    </label>
+                    <UiInput
+                      :id="labelId"
+                      :type="type"
+                      :placeholder="placeholder"
+                      :minlength="minlength"
+                      :maxlength="maxlength"
+                      :aria-describedby="ariaDescribedbyId"
+                      :class="
+                        elementType === 'textarea' ? 'h-40 resize-none' : ''
+                      "
+                      aria-required="true"
+                      required
+                      :element-type="elementType as 'input' | 'textarea'"
+                    />
+                    <small :id="ariaDescribedbyId" class="sr-only">
+                      {{ ariaDescribedbyText }}
+                    </small>
                   </div>
-
-                  <UiLabelInputContainer class="mb-4">
-                    <UiLabel for="email">Email Address</UiLabel>
-                    <UiInput
-                      id="email"
-                      type="email"
-                      v-model="email"
-                      placeholder="you@example.com"
-                      required
-                      aria-required="true"
-                      aria-describedby="emailDescription"
-                    />
-                    <small id="emailDescription" class="sr-only"
-                      >Please enter a valid email address.</small
-                    >
-                  </UiLabelInputContainer>
-
-                  <!-- input hover bottom not working porperly  -->
-                  <UiLabelInputContainer class="mb-4">
-                    <UiLabel for="message">Message</UiLabel>
-                    <UiInput
-                      element-type="textarea"
-                      id="message"
-                      v-model="message"
-                      placeholder="Your message here..."
-                      minlength="20"
-                      maxlength="600"
-                      required
-                      aria-required="true"
-                      class="h-40 resize-none"
-                      aria-describedby="messageDescription"
-                    />
-                    <!-- // TODO: if small element using everywhere use part of Inputcontainer component  -->
-                    <small id="messageDescription" class="sr-only"
-                      >Please enter your message. Minimum 20 characters.</small
-                    >
-                  </UiLabelInputContainer>
-
                   <button
-                    class="center text-xl gap-1 bg-gradient-to-br from-black to-neutral-600 block w-full text-white rounded-md h-11 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
+                    class="center text-xl gap-1 bg-gradient-to-br relative group/btn from-black to-neutral-600 block w-full text-white rounded-md h-11 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
                     type="submit"
                     :disabled="status === 'Sending'"
                     :aria-busy="status === 'Sending'"
@@ -215,14 +235,19 @@ onUnmounted(() => {
                         </div>
                       </Motion>
                     </MotionPresence>
-                    <!-- i think bottom gradient not working  -->
-                    <UiBottomGradient />
+
+                    <!-- Button Bottom Gradient  -->
+                    <span
+                      class="group-hover/btn:opacity-100 block transition duration-500 opacity-0 absolute h-px w-full -bottom-px inset-x-0 bg-gradient-to-r from-transparent via-gray-500 to-transparent"
+                    />
+                    <span
+                      class="group-hover/btn:opacity-100 blur-sm block transition duration-500 opacity-0 absolute h-px w-1/2 mx-auto -bottom-px inset-x-10 bg-gradient-to-r from-transparent via-red-500 to-transparent"
+                    />
                   </button>
                 </div>
               </form>
             </Motion>
           </div>
-          <!-- <ContactForm /> end -->
 
           <div>
             <Motion
@@ -317,21 +342,25 @@ onUnmounted(() => {
       </div>
     </div>
 
-    <!-- // TODO: button animation need to be when scrol bottom in smaller screen need to hide bottom and 
-    reverse take place again when scroll to top with animation 
-    -->
     <Motion
       as="div"
-      :initial="{ opacity: 0 }"
-      :animate="{ opacity: 1 }"
-      :transition="{ duration: 0.8, delay: 0.4 }"
-      class="bg-[#ffffffcf] fixed top-5 left-5 border-2 lg:border-[3px] border-black text-black rounded-full shadow-2xl hover:shadow-none shadow-gray-300"
+      :initial="{ y: 0, opacity: 0 }"
+      :animate="
+        scrollDir === 'down' ? { y: -100, opacity: 0 } : { y: 0, opacity: 1 }
+      "
+      :transition="{
+        type: 'spring',
+        stiffness: 300,
+        damping: 30,
+        delay: scrollDir === 'down' ? 0.57 : 0,
+      }"
+      class="bg-[#ffffffcf] border-2 inline-table lg:border-[3px] border-black text-black rounded-full shadow-2xl hover:shadow-none shadow-gray-300 fixed top-4 inset-x-4"
     >
       <NuxtLink
         to="/"
+        class="flex items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
         aria-label="Back to home page"
         title="Back to home page"
-        class="flex items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
       >
         <IoIosArrowBack
           class="md:h-9 md:w-9 lg:h-12 lg:w-12 h-[30px] w-[30px] relative right-0.5"

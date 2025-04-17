@@ -7,24 +7,20 @@
 - add types in each in every file where possible 
 - TEST - check works fallback github ui 
 - need to color change for projects docks use blend color 
-- use setup languge="ts" in every .vue file 
-- use tailwindcss instead normal styles 
 - all pages not need to be render based on if else specially where images need to loaded initially like 
  - all types of projects dock 
-- use modern javascript code ignore function 
-- clear browser console
-- adjust desktop dock position little low 
 - is all thing rendered as needed
 - think about links which need to open new tab which link need to open in same page 
-- tools-pack tool-top size need to change in smaller screen
-- remove all console.log
+- tools-pack tool-tip size need to change in smaller screen
 - need to use svg string in /contact page where needed
 - is pinia really needed
-- remove react-icons lib from package.json file 
 - if any file have single export defalt remove the varible name and just export default 
-- if made any seprate file for svg make single file for svg files 
+- re-arrage the svg in single file and check 
+- check icons allrady avaible in icon lib 
+- set icons lib as shown in lib docs 
 - need to mention which icon used in nuxt.config.ts as shown in docs 
 - need to add seo thing like title all of things 
 - is any teleport component used check if not remove the code 
 - in project section MIT licnese in smaller screen text need to render in better use pre tag  
 - initially readme and licnese need to be display first readme if readme there 
+- after email sent need to send small email about we reach soon 
