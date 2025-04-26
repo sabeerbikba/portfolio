@@ -63,6 +63,9 @@ importers:
         specifier: ^0.1.13
         version: 0.1.13(vue@3.5.13(typescript@5.8.2))
     devDependencies:
+      '@iconify-json/mdi':
+        specifier: ^1.2.3
+        version: 1.2.3
       '@octokit/types':
         specifier: ^13.10.0
         version: 13.10.0
@@ -403,6 +406,9 @@ packages:
 
   '@floating-ui/vue@1.1.6':
     resolution: {integrity: sha512-XFlUzGHGv12zbgHNk5FN2mUB7ROul3oG2ENdTpWdE+qMFxyNxWSRmsoyhiEnpmabNm6WnUvR1OvJfUfN4ojC1A==}
+
+  '@iconify-json/mdi@1.2.3':
+    resolution: {integrity: sha512-O3cLwbDOK7NNDf2ihaQOH5F9JglnulNDFV7WprU2dSoZu3h3cWH//h74uQAB87brHmvFVxIOkuBX2sZSzYhScg==}
 
   '@iconify/collections@1.0.536':
     resolution: {integrity: sha512-ih/SpVV6+U/4YU0lasSOwqh8+EJn8UPA09tJmH4pH6jIkqbH1aq+U70NaK/DFDmYJlzGERJjDWmUcQWEbLob/A==}
@@ -3920,6 +3926,10 @@ snapshots:
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
+
+  '@iconify-json/mdi@1.2.3':
+    dependencies:
+      '@iconify/types': 2.0.0
 
   '@iconify/collections@1.0.536':
     dependencies:

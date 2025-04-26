@@ -83,7 +83,7 @@ const stats = computed<
         :href="`${githubBaseURL + full_name}`"
         class="hover:underline"
       >
-        <ProjectsIcon name="mark-github" :size="32" class="mr-2" />
+        <ProjectsOcticonsIcon name="mark-github" :size="32" class="mr-2" />
         <span class="text-xl text-[#9198a1]">{{ repo_owner }}/</span>
         {{ repo_name }}
       </UiExternalLink>
@@ -108,7 +108,7 @@ const stats = computed<
           class="flex items-center gap-2 hover:text-blue-400"
           @click="previewTab = 'MIT License'"
         >
-          <ProjectsIcon name="law" class="fill-current" />
+          <ProjectsOcticonsIcon name="law" class="fill-current" />
           <span class="text-sm">MIT license</span>
         </button>
       </div>
@@ -118,7 +118,7 @@ const stats = computed<
             :href="`${githubBaseURL + href}`"
             class="inline-flex items-center gap-2 text-current hover:text-blue-400"
           >
-            <ProjectsIcon :name="icon" class="fill-current" />
+            <ProjectsOcticonsIcon :name="icon" class="fill-current" />
             <span v-if="count != null" class="font-semibold">
               {{ formatNumber(count) }}
             </span>
@@ -127,7 +127,7 @@ const stats = computed<
         </li>
       </ul>
       <div class="inline-flex items-center gap-1 text-sm">
-        <ProjectsIcon name="globe" />
+        <ProjectsOcticonsIcon name="globe" />
         <span>Public repository</span>
       </div>
     </div>

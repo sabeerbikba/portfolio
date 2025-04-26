@@ -1,34 +1,42 @@
 <script setup lang="ts">
-import { projects } from '~/data/projects';
-import { storeToRefs } from 'pinia';
-import useScreenStore from '~/store/use-screen-store';
+import { projects } from "~/data/projects";
+import { storeToRefs } from "pinia";
+import useScreenStore from "~/store/use-screen-store";
 import type { ProjectDataType } from "~/types/github";
 
 const store = useScreenStore();
-const { previewProject, previewApp, isDataAvailable, data } = storeToRefs(store);
+const { previewProject, previewApp, isDataAvailable, data } =
+  storeToRefs(store);
 // TODO:
 // const previewProjectIndex: ComputedRef<number> = computed(() => previewProject.value - 1);
 // const previewProjectIndex: Ref<number> =  ref(previewProject.value - 1);
-const previewProjectIndex = useState<number>('previewProjectIndex', () =>
-  previewProject.value - 1);
-
+const previewProjectIndex = useState<number>(
+  "previewProjectIndex",
+  () => previewProject.value - 1
+);
 
 const isWebsiteComponentHidden = computed(() => previewApp.value !== 3);
 const isGithubComponentVisible = computed(() => previewApp.value === 5);
-const previewData: ComputedRef<ProjectDataType> =
-  computed(() => data.value[previewProjectIndex.value]);
+const previewData = computed<ProjectDataType>(
+  () => data.value[previewProjectIndex.value]
+);
 // console.log(previewData.value);
-
 </script>
 
 <template>
   <ProjectsFloatingDock />
   <div class="h-full w-full overflow-auto scroll">
     <ProjectsWebsite :hidden="isWebsiteComponentHidden" />
-    <ProjectsAbout :preview-project="previewProject" :preview-app="previewApp" />
+    <ProjectsAbout
+      :preview-project="previewProject"
+      :preview-app="previewApp"
+    />
     <div v-show="isGithubComponentVisible" class="bg-[#0d1117] h-full">
       <ProjectsGithub v-if="isDataAvailable" :data="previewData" />
-      <ProjectsScreenFallbackGithubUi v-else :repo="projects[previewProjectIndex]?.repo" />
+      <ProjectsScreenFallbackGithubUi
+        v-else
+        :repo="projects[previewProjectIndex]?.repo"
+      />
     </div>
   </div>
 </template>

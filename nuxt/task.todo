@@ -17,7 +17,7 @@
 - if any file have single export defalt remove the varible name and just export default 
 - re-arrage the svg in single file and check 
 - check icons allrady avaible in icon lib 
-- set icons lib as shown in lib docs 
+- - set icons lib as shown in lib docs 
 - need to mention which icon used in nuxt.config.ts as shown in docs 
 - need to add seo thing like title all of things 
 - is any teleport component used check if not remove the code 

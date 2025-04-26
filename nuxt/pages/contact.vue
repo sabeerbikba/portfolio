@@ -322,14 +322,14 @@ onUnmounted(() => {
 
                   <div class="flex justify-center space-x-4">
                     <UiExternalLink
-                      v-for="{ label, href, iconSvg } in socialMedia"
+                      v-for="{ label, href, icon } in socialMedia"
                       :key="label"
                       :href="href"
                       :aria-label="`Link to ${label}`"
                       class="w-10 h-10 rounded-full max-xs:!ml-[6px] text-gray-600 hover:text-gray-800 bg-gray-200 center hover:bg-gray-300 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400"
                     >
                       <NuxtIcon
-                        :name="iconSvg"
+                        :name="icon"
                         class="h-[21px] w-[21px] fill-current"
                       />
                     </UiExternalLink>

@@ -12,11 +12,9 @@ const branches = computed(() => props.data.branches);
 const tags = computed(() => props.data.tags);
 const readme = computed(() => props.data.readme);
 const license = computed(() => props.data.license);
-const isReadmeAvailable: ComputedRef<boolean> = computed(() => readme !== null);
-const repoName: ComputedRef<string> = computed(
-  () => repoDetails.value.full_name
-);
-const blobAbsoluteUrl: ComputedRef<string> = computed(
+const isReadmeAvailable = computed<boolean>(() => readme !== null);
+const repoName = computed<string>(() => repoDetails.value.full_name);
+const blobAbsoluteUrl = computed<string>(
   () =>
     `${githubBaseURL + repoName.value}/blob/${
       repoDetails.value.default_branch

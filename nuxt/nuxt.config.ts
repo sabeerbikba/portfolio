@@ -27,5 +27,8 @@ export default defineNuxtConfig({
   icon: {
     componentName: "NuxtIcon",
     mode: "svg",
+    serverBundle: {
+      collections: ["mdi"],
+    },
   },
 });

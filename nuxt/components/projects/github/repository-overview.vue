@@ -61,7 +61,7 @@ onMounted(() => {
           class="mx-0.5 px-1.5 py-0.5 repo-overview-button relative hover:bg-[#656c7633]"
           :aria-selected="previewTab === text"
         >
-          <ProjectsIcon :name="icon" />
+          <ProjectsOcticonsIcon :name="icon" />
           <span
             :class="[
               'm-1.5 text-[#f0f6fc] text-[15px]',

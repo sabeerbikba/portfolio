@@ -75,7 +75,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="max-w-[800px] mx-auto aspect-square" ref="container">
+  <div class="max-w-[1000px] mx-auto aspect-square" ref="container">
     <div v-if="width > 10" class="w-full h-full relative">
       <div
         v-for="(circle, i) in circles"

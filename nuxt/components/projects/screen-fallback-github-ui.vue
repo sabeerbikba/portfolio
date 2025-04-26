@@ -22,7 +22,7 @@ const repositoryName = computed(() => repoParts.value[1]);
           {{ userName }}/
         </span>
         {{ repositoryName }}
-        <ProjectsIcon name="mark-github" class="fill-current" />
+        <ProjectsOcticonsIcon name="mark-github" class="fill-current" />
       </UiExternalLink>
     </div>
   </div>

@@ -2,7 +2,7 @@
 import type { NullableGitHubFileContent } from "~/types/github";
 const props = defineProps<{ licenseData: NullableGitHubFileContent }>();
 
-const license: ComputedRef<string> = computed(() => {
+const license = computed<string>(() => {
   return props.licenseData &&
     typeof props.licenseData === "object" &&
     "content" in props.licenseData
