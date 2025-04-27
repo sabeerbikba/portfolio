@@ -24,3 +24,4 @@
 - in project section MIT licnese in smaller screen text need to render in better use pre tag  
 - initially readme and licnese need to be display first readme if readme there 
 - after email sent need to send small email about we reach soon 
+- make bundle sizze smaller using import()

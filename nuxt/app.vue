@@ -106,12 +106,15 @@ useHead({
       <div>
         <div class="mr-4 md:flex mb-1.5">
           <!-- // TODO: logoSB not rendering  -->
+          <!-- :v-html="icons.home.logoSB" -->
           <NuxtLink
+            :v-html="icons.home.logoSB"
             to="/"
             aria-label="Home page"
-            v-html="icons.home.logoSB"
             class="center justify-normal space-x-2 text-2xl font-bold text-center text-neutral-600 selection:bg-emerald-500 mr-10 py-0"
-          />
+          >
+            <!-- <component v-html="icons.home.logoSB"></component> -->
+          </NuxtLink>
         </div>
         <div class="text-base">Sabeer Bikba</div>
         <div class="font-medium text-base text-neutral-600">

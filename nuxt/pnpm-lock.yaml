@@ -17,9 +17,6 @@ importers:
       '@oku-ui/motion':
         specifier: ^0.4.3
         version: 0.4.3(@vue/shared@3.5.13)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vue@3.5.13(typescript@5.8.2))
-      '@oku-ui/primitives':
-        specifier: ^0.7.8
-        version: 0.7.8(vue@3.5.13(typescript@5.8.2))
       '@pinia/nuxt':
         specifier: 0.9.0
         version: 0.9.0(magicast@0.3.5)(pinia@2.3.1(typescript@5.8.2)(vue@3.5.13(typescript@5.8.2)))
@@ -59,10 +56,10 @@ importers:
       vue-router:
         specifier: latest
         version: 4.5.0(vue@3.5.13(typescript@5.8.2))
-      vue3-icons:
-        specifier: ^0.1.13
-        version: 0.1.13(vue@3.5.13(typescript@5.8.2))
     devDependencies:
+      '@iconify-json/ic':
+        specifier: ^1.2.2
+        version: 1.2.2
       '@iconify-json/mdi':
         specifier: ^1.2.3
         version: 1.2.3
@@ -406,6 +403,9 @@ packages:
 
   '@floating-ui/vue@1.1.6':
     resolution: {integrity: sha512-XFlUzGHGv12zbgHNk5FN2mUB7ROul3oG2ENdTpWdE+qMFxyNxWSRmsoyhiEnpmabNm6WnUvR1OvJfUfN4ojC1A==}
+
+  '@iconify-json/ic@1.2.2':
+    resolution: {integrity: sha512-QmjwS3lYiOmVWgTCEOTFyGODaR/+689+ajep/VsrCcsUN0Gdle5PmIcibDsdmRyrOsW/E77G41UUijdbjQUofw==}
 
   '@iconify-json/mdi@1.2.3':
     resolution: {integrity: sha512-O3cLwbDOK7NNDf2ihaQOH5F9JglnulNDFV7WprU2dSoZu3h3cWH//h74uQAB87brHmvFVxIOkuBX2sZSzYhScg==}
@@ -3525,11 +3525,6 @@ packages:
     peerDependencies:
       vue: ^3.2.0
 
-  vue3-icons@0.1.13:
-    resolution: {integrity: sha512-rZPuJBghHHrE6UjYZcHGUDBWbASxBso3Q7NVQ0QFiRmUGO+2DtIncM5biakXRg33Xo/jj5H0z0cqQJ6tTVsFsg==}
-    peerDependencies:
-      vue: 3.x
-
   vue@3.5.13:
     resolution: {integrity: sha512-wmeiSMxkZCSc+PM2w2VRsOYAZC8GdipNFRTsLSfodVqI9mbejKeXEGr8SckuLnrQPGe3oJN5c3K0vpoU9q/wCQ==}
     peerDependencies:
@@ -3926,6 +3921,10 @@ snapshots:
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
+
+  '@iconify-json/ic@1.2.2':
+    dependencies:
+      '@iconify/types': 2.0.0
 
   '@iconify-json/mdi@1.2.3':
     dependencies:
@@ -7472,10 +7471,6 @@ snapshots:
   vue-router@4.5.0(vue@3.5.13(typescript@5.8.2)):
     dependencies:
       '@vue/devtools-api': 6.6.4
-      vue: 3.5.13(typescript@5.8.2)
-
-  vue3-icons@0.1.13(vue@3.5.13(typescript@5.8.2)):
-    dependencies:
       vue: 3.5.13(typescript@5.8.2)
 
   vue@3.5.13(typescript@5.8.2):
