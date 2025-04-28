@@ -1,16 +1,8 @@
 <script setup lang="ts">
 import { Motion, MotionPresence } from "@oku-ui/motion";
-// import { IoMdMail, IoIosArrowBack } from "vue3-icons/io";
-// import { FaPhoneAlt } from "vue3-icons/fa";
-// import { FaLocationDot } from "vue3-icons/fa6";
-// import { IoIosSend } from "vue3-icons/io";
-// import { FaCheckCircle } from "vue3-icons/fa";
-// import { MdOutlineError } from "vue3-icons/md";
-// import type { IconType } from "vue3-icons/lib";
 import socialMedia from "@/data/social-media";
 
 type ContactInfoType = {
-  // icon: IconType;
   icon: string;
   text: string;
   href: string;
@@ -218,21 +210,12 @@ onUnmounted(() => {
                         :transition="{ duration: 0.3 }"
                       >
                         <div className="center gap-1">
-                          <!-- <IoIosSend
-                            v-if="status === 'Send'"
-                            aria-hidden="true"
-                          /> -->
                           <NuxtIcon
                             name="ic:sharp-send"
                             v-if="status === 'Send'"
                             aria-hidden="true"
                             class="rotate-[305deg] relative bottom-0.5 h-[18px] w-auto"
                           />
-                          <!-- <FaCheckCircle
-                            v-if="status === 'Sent'"
-                            aria-hidden="true"
-                          />
-                          ic:round-check-circle -->
                           <NuxtIcon
                             name="ic:baseline-check-circle"
                             v-if="status === 'Sent'"
@@ -290,21 +273,18 @@ onUnmounted(() => {
                     <div
                       v-for="({ href, ariaLabel, icon, text }, index) in [
                         {
-                          // icon: IoMdMail,
                           icon: 'ic:round-email',
                           text: 'sabeerbikba02@gmail.com',
                           href: 'mailto:sabeerbikba02@gmail.com',
                           ariaLabel: 'Email sabeerbikba02@gmail.com',
                         },
                         {
-                          // icon: FaPhoneAlt,
                           icon: 'ic:round-phone',
                           text: '+91 861 871 8358',
                           href: 'tel:+918618718358',
                           ariaLabel: 'Call +91 861 871 8358',
                         },
                         {
-                          // icon: FaLocationDot,
                           icon: 'mdi:map-marker',
                           text: 'India, Karnataka',
                           href: 'https://www.google.com/maps/place/Karnataka',
@@ -324,9 +304,6 @@ onUnmounted(() => {
                           aria-hidden="true"
                           role="presentation"
                         >
-                          <!-- <client-only>
-                            <component :is="icon" />
-                          </client-only> -->
                           <NuxtIcon :name="icon" />
                         </div>
                         {{ text }}
@@ -382,10 +359,6 @@ onUnmounted(() => {
         aria-label="Back to home page"
         title="Back to home page"
       >
-        <!-- <IoIosArrowBack
-          class="md:h-9 md:w-9 lg:h-12 lg:w-12 h-[30px] w-[30px] relative right-0.5"
-          aria-hidden="true"
-        /> -->
         <NuxtIcon
           name="ic:round-arrow-back-ios"
           class="md:h-9 md:w-9 lg:h-12 lg:w-12 h-[30px] w-[30px] relative right-0.5"

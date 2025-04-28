@@ -85,7 +85,6 @@ useHead({
 </script>
 
 <template>
-  <!-- <div> -->
   <main class="w-full h-full bg-white bg-dot-black/[0.4] relative">
     <div
       class="absolute pointer-events-none inset-0 bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"
@@ -105,15 +104,12 @@ useHead({
     >
       <div>
         <div class="mr-4 md:flex mb-1.5">
-          <!-- // TODO: logoSB not rendering  -->
-          <!-- :v-html="icons.home.logoSB" -->
           <NuxtLink
-            :v-html="icons.home.logoSB"
             to="/"
             aria-label="Home page"
-            class="center justify-normal space-x-2 text-2xl font-bold text-center text-neutral-600 selection:bg-emerald-500 mr-10 py-0"
+            class="flex justify-normal space-x-2 text-2xl font-bold text-center text-neutral-600 selection:bg-emerald-500 mr-10 py-0"
           >
-            <!-- <component v-html="icons.home.logoSB"></component> -->
+            <span v-html="icons.home.logoSB"></span>
           </NuxtLink>
         </div>
         <div class="text-base">Sabeer Bikba</div>
@@ -122,7 +118,6 @@ useHead({
         </div>
       </div>
 
-      <!-- Navigation -->
       <div class="grid grid-cols-3 gap-10 items-start mt-10 md:mt-0">
         <div
           v-for="({ id, title, links }, index) in [
@@ -177,7 +172,6 @@ useHead({
       </div>
     </div>
   </footer>
-  <!-- </div> -->
 </template>
 
 <style>
