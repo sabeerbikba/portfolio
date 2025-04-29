@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { Motion, MotionPresence } from "@oku-ui/motion";
-import socialMedia from "@/data/social-media";
+import socialMedia, { type IconName } from "@/data/social-media";
 
 type ContactInfoType = {
-  icon: string;
+  icon: IconName;
   text: string;
   href: string;
   ariaLabel: string;

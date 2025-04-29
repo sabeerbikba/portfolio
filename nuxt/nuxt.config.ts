@@ -5,7 +5,6 @@ export default defineNuxtConfig({
   devtools: { enabled: false },
   modules: [
     "@nuxtjs/tailwindcss",
-    // "@oku-ui/primitives",
     "@pinia/nuxt",
     "motion-v/nuxt",
     "@nuxt/icon",
@@ -29,6 +28,14 @@ export default defineNuxtConfig({
     mode: "svg",
     serverBundle: {
       collections: ["mdi", "ic"],
+    },
+  },
+
+  // TODO: TMP TMP
+  build: {
+    analyze: {
+      enabled: true,
+      mode: "static",
     },
   },
 });

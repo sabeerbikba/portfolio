@@ -25,3 +25,10 @@
 - initially readme and licnese need to be display first readme if readme there 
 - after email sent need to send small email about we reach soon 
 - make bundle sizze smaller using import()
+- make seo better using title or more 
+- use lazy load in technologies used like used in react project 
+
+Icons used
+ ['mark-github', 'law', 'star', 'repo-forked', 'eye', 'git-branch', 'tag', 'pulse', 'globe', 'book']
+ mark-github used 2 times
+ law used 2 times
