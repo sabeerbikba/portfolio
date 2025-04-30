@@ -1,4 +1,5 @@
 <template>
+  <!-- TODO: can i add this logo in octicons icon component -->
   <svg
     version="1.1"
     width="16"

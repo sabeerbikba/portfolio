@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { useLocalStorage, useMounted } from "@vueuse/core";
-import type { IconName } from "@primer/octicons";
+// import type { IconName } from "@primer/octicons";
 import type { NullableGitHubFileContent } from "~/types/github";
+import type { OcticonsIconName } from "~/types/icon";
 
 const props = defineProps<{
   readmeData: NullableGitHubFileContent;
@@ -18,15 +19,15 @@ const previewTab = useLocalStorage<RepositoryOverviewTabType>(
   "README"
 );
 
-const tabs = computed<{ icon: IconName; text: RepositoryOverviewTabType }[]>(
+const tabs = computed<{ icon: OcticonsIconName; text: RepositoryOverviewTabType }[]>(
   () =>
     [
-      props.readmeData ? { icon: "book" as IconName, text: "README" } : null,
+      props.readmeData ? { icon: "book" as OcticonsIconName, text: "README" } : null,
       props.licenseData
-        ? { icon: "law" as IconName, text: "MIT License" }
+        ? { icon: "law" as OcticonsIconName, text: "MIT License" }
         : null,
     ].filter(
-      (tab): tab is { icon: IconName; text: RepositoryOverviewTabType } =>
+      (tab): tab is { icon: OcticonsIconName; text: RepositoryOverviewTabType } =>
         tab !== null
     )
 );

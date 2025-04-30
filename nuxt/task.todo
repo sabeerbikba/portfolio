@@ -27,8 +27,4 @@
 - make bundle sizze smaller using import()
 - make seo better using title or more 
 - use lazy load in technologies used like used in react project 
-
-Icons used
- ['mark-github', 'law', 'star', 'repo-forked', 'eye', 'git-branch', 'tag', 'pulse', 'globe', 'book']
- mark-github used 2 times
- law used 2 times
+- record the old code webiste page insights and take screenshot and save in ../insights folder 

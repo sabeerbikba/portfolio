@@ -2,7 +2,8 @@
 import { useLocalStorage } from "@vueuse/core";
 import numeral from "numeral";
 
-import type { IconName } from "@primer/octicons";
+// import type { IconName } from "@primer/octicons";
+import type { OcticonsIconName } from "~/types/icon";
 import type {
   GitHubRepositoryType,
   GithubBranchesType,
@@ -35,7 +36,7 @@ const previewTab = useLocalStorage(
 const formatNumber = (num: number) => numeral(num).format("0.[0]a");
 
 const stats = computed<
-  { href: string; icon: IconName; count: number | null; what: string }[]
+  { href: string; icon: OcticonsIconName; count: number | null; what: string }[]
 >(() => [
   {
     href: `${full_name.value}/stargazers`,
@@ -83,7 +84,7 @@ const stats = computed<
         :href="`${githubBaseURL + full_name}`"
         class="hover:underline"
       >
-        <ProjectsOcticonsIcon name="mark-github" :size="32" class="mr-2" />
+        <ProjectsOcticonsIcon name="mark-github-24" class="mr-2" />
         <span class="text-xl text-[#9198a1]">{{ repo_owner }}/</span>
         {{ repo_name }}
       </UiExternalLink>
