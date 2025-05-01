@@ -27,4 +27,5 @@
 - make bundle sizze smaller using import()
 - make seo better using title or more 
 - use lazy load in technologies used like used in react project 
-- record the old code webiste page insights and take screenshot and save in ../insights folder 
+- tools-pack.client.vue component generating some random styles 
+- repo overview in project there is icon.vue component can i use that component within octiocons-icon component

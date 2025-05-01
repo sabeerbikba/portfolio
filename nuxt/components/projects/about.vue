@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const props = defineProps<{ previewProject: number; previewApp: number }>();
+defineProps<{ previewProject: number; previewApp: number }>();
 </script>
 
 <template>

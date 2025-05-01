@@ -9,7 +9,7 @@ import icons from "~/data/icons";
 // })
 
 // import Hi from "#components";
-import Hi from "~/components/hi.vue";
+// import Hi from "~/components/hi.vue";
 
 const aboutSectionParagraphs: string[] = [
   "Hi, I’m Sabeer Bikba, a <strong class='font-medium'>full-stack developer</strong> with a passion for creating dynamic <strong class='font-medium'>React front-end applications</strong>. I specialize in building intuitive and responsive user interfaces that provide smooth experiences across devices.",
@@ -64,27 +64,10 @@ const aboutSectionParagraphs: string[] = [
           Core Skills & Technologies
         </h2>
       </div>
-      <!-- TODO: need to make lazy load with animation -->
-      <!-- make that tools use inside component don't use that props.tools -->
+      <!-- <LazyToolsPack :hydrate-on-idle="4200" /> -->
+      <ToolsPack />
 
-      <!-- <client-only> -->
-      <!-- <Suspense>
-          <template #default> -->
-      <!-- <ToolsPack /> -->
-      <!-- <LazyToolsPackI />
-          </template>
-          <template #fallback>
-            <div class="max-w-[1000px] mx-auto aspect-square fal">
-              <div class="center w-full h-full">
-                <div class="relative center loader" />
-              </div>
-            </div>
-          </template>
-        </Suspense> -->
-      <!-- </client-only> -->
-      <!-- <ToolsPack /> -->
-      <LazyToolsPack :hydrate-on-idle="4200" />
-
+      <Hi />
     </section>
 
     <section aria-labelledby="about-heading"
@@ -125,35 +108,3 @@ const aboutSectionParagraphs: string[] = [
   </div>
   <div class="scale"></div>
 </template>
-
-<!-- <style>
-.loader::before,
-.loader::after {
-  position: absolute;
-  content: "";
-  height: 8em;
-  width: 8em;
-  border: 1em solid gray;
-  border-radius: 50%;
-  animation: loader_79178 2s linear infinite;
-}
-
-.loader::after {
-  opacity: 0;
-  animation-delay: 1s;
-}
-
-@keyframes loader_79178 {
-  0% {
-    border: 1em solid black;
-    transform: scale(0);
-    opacity: 1;
-  }
-
-  100% {
-    border: 0 solid gray;
-    transform: scale(1);
-    opacity: 0;
-  }
-}
-</style> -->
