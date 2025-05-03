@@ -1,5 +1,5 @@
 import { projects } from "~/data/projects";
-import response from "~/data/dev/tmp-fetch-all-response";
+// import response from "~/data/dev/tmp-fetch-all-response";
 import type { ProjectDataType } from "~/types/github";
 // import defineStore from '@pinia/nuxt';
 import { defineStore } from "pinia";
@@ -65,57 +65,58 @@ export default defineStore("screen", () => {
 
   // TODO: tmp
   // @ts-ignore
-  data.value = response;
+  // data.value = response;
 
-  // onMounted(async () => {
-  //   const fetchPromises = projects.map((project) => {
-  //     const baseUrl = `https://api.github.com/repos/${project.repo}`;
-  //     return Promise.all([
-  //       fetch(baseUrl).then((res) => res.json()), // repoDetails
-  //       fetch(`${baseUrl}/languages`).then((res) => res.json()), // languages
-  //       fetch(`${baseUrl}/contributors`).then((res) => res.json()), // contributors
-  //       fetch(`${baseUrl}/branches`).then((res) => res.json()), // branches
-  //       fetch(`${baseUrl}/tags`).then((res) => res.json()), // tags
-  //       fetch(`${baseUrl}/contents/LICENSE`) // license
-  //         .then(async (res) => {
-  //           const data = await res.json();
-  //           return data.message === "Not Found" ? null : data;
-  //         }),
-  //       fetch(`${baseUrl}/contents/README.md`) // readme
-  //         .then(async (res) => {
-  //           const data = await res.json();
-  //           return data.message === "Not Found" ? null : data;
-  //         }),
-  //     ]);
-  //   });
+  onMounted(async () => {
+    const fetchPromises = projects.map((project) => {
+      const baseUrl = `https://api.github.com/repos/${project.repo}`;
+      return Promise.all([
+        fetch(baseUrl).then((res) => res.json()), // repoDetails
+        fetch(`${baseUrl}/languages`).then((res) => res.json()), // languages
+        fetch(`${baseUrl}/contributors`).then((res) => res.json()), // contributors
+        fetch(`${baseUrl}/branches`).then((res) => res.json()), // branches
+        fetch(`${baseUrl}/tags`).then((res) => res.json()), // tags
+        fetch(`${baseUrl}/contents/LICENSE`) // license
+          .then(async (res) => {
+            const data = await res.json();
+            return data.message === "Not Found" ? null : data;
+          }),
+        fetch(`${baseUrl}/contents/README.md`) // readme
+          .then(async (res) => {
+            const data = await res.json();
+            return data.message === "Not Found" ? null : data;
+          }),
+      ]);
+    });
 
-  //   try {
-  //     const results = await Promise.all(fetchPromises);
-  //     const formattedData: ProjectDataType[] = results.map(
-  //       ([
-  //         repoDetails,
-  //         languages,
-  //         contributors,
-  //         branches,
-  //         tags,
-  //         license,
-  //         readme,
-  //       ]) => ({
-  //         repoDetails,
-  //         languages,
-  //         contributors,
-  //         branches,
-  //         tags,
-  //         license,
-  //         readme,
-  //       })
-  //     );
-  //     state.data = formattedData;
-  // // data.value = response;
-  //   } catch (error) {
-  //     console.error("Error fetching data from GitHub API:", error);
-  //   }
-  // });
+    try {
+      const results = await Promise.all(fetchPromises);
+      const formattedData: ProjectDataType[] = results.map(
+        ([
+          repoDetails,
+          languages,
+          contributors,
+          branches,
+          tags,
+          license,
+          readme,
+        ]) => ({
+          repoDetails,
+          languages,
+          contributors,
+          branches,
+          tags,
+          license,
+          readme,
+        })
+      );
+      // state.data = formattedData;
+      data.value = formattedData;
+      // data.value = response;
+    } catch (error) {
+      console.error("Error fetching data from GitHub API:", error);
+    }
+  });
 
   return {
     //     state,

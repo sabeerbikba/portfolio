@@ -20,23 +20,19 @@ const isGithubComponentVisible = computed(() => previewApp.value === 5);
 const previewData = computed<ProjectDataType>(
   () => data.value[previewProjectIndex.value]
 );
-// console.log(previewData.value);
+console.log('normal', previewData.value);
+console.log('fallback', projects[previewProjectIndex.value]?.repo);
+
 </script>
 
 <template>
   <ProjectsFloatingDock />
   <div class="h-full w-full overflow-auto scroll">
     <ProjectsWebsite :hidden="isWebsiteComponentHidden" />
-    <ProjectsAbout
-      :preview-project="previewProject"
-      :preview-app="previewApp"
-    />
+    <ProjectsAbout :preview-project="previewProject" :preview-app="previewApp" />
     <div v-show="isGithubComponentVisible" class="bg-[#0d1117] h-full">
       <ProjectsGithub v-if="isDataAvailable" :data="previewData" />
-      <ProjectsScreenFallbackGithubUi
-        v-else
-        :repo="projects[previewProjectIndex]?.repo"
-      />
+      <ProjectsScreenFallbackGithubUi v-else :repo="projects[previewProjectIndex]?.repo" />
     </div>
   </div>
 </template>

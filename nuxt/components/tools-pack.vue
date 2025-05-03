@@ -1,29 +1,23 @@
 <script setup lang="ts">
-import { hierarchy, pack } from "d3-hierarchy";
-import type { HierarchyCircularNode } from "d3-hierarchy";
-import type { ToolsType } from "~/data/tools";
-import tools from "~/data/tools";
+import { hierarchy, pack, type HierarchyCircularNode } from "d3-hierarchy";
+import tools, { type ToolsType } from "~/data/tools";
 
 // Inspiration URL: https://tanstack.com/query/latest
 // Source URL: https://github.com/TanStack/tanstack.com/blob/ee943e214df6f132a70120014096ed72775dee4b/app/components/ToolsPack.tsx   
 
-// TODO: Later optimization: d3-hierarchy uses DOM-like measurements and is meant for client-side use because of that rendering on client only, need to be render on server even it can be diffrent 
-// use method as shown here: https://nuxt.com/docs/guide/directory-structure/components#paired-with-a-client-component : in server.vue just copy rendered component
-// suggestion from ChatGPT: Add structured data (<script type="application/ld+json">) or meta description so bots get richer info.
+// suggestion: Add structured data (<script type="application/ld+json">) or meta description so bots get richer info.
 
-type CircleData = {
+export type CircleData = {
   x: number;
   y: number;
   r: number;
   data: ToolsType;
 };
 
-const width = ref(0);
-// console.log(width.value);
+const width = ref(200);
+const isLoading = ref<boolean>(false);
 const container = ref<HTMLElement | null>(null);
-
-const circles = ref<CircleData[]>([]);
-let root = ref<HierarchyCircularNode<any> | null>(null);
+const circles = ref(computeD3Layout(tools, width.value));
 
 const updateWidth = () => {
   if (container.value) {
@@ -31,9 +25,14 @@ const updateWidth = () => {
   }
 };
 
-const calculateRoot = () => {
+const recalculate = () => {
+  circles.value = computeD3Layout(tools, width.value);
+};
+
+// Using a named function (not arrow) for hoisting support
+function computeD3Layout(tools: ToolsType[], size: number): CircleData[] {
   const rootNode = hierarchy<{ children: ToolsType[]; name: string }>({
-    children: tools as ToolsType[],
+    children: tools,
     name: "root",
   })
     .sum((d: any) => d.proficiency || 1)
@@ -41,21 +40,21 @@ const calculateRoot = () => {
       (a: any, b: any) => (b.data.proficiency || 0) - (a.data.proficiency || 0)
     );
 
-  root.value = pack()
-    .size([width.value, width.value])
-    .padding(width.value * 0.005)(rootNode as HierarchyCircularNode<unknown>);
+  const root = pack()
+    .size([size, size])
+    .padding(size * 0.005)(rootNode as HierarchyCircularNode<unknown>);
 
-  circles.value = root.value
+  return root
     .descendants()
     .slice(1)
-    .map((node) => ({
-      x: node.x,
-      y: node.y,
-      r: node.r,
-      data: node.data,
-    }));
-
-  console.log(circles.value, 'width', width.value);
+    .map(
+      (node): CircleData => ({
+        x: node.x,
+        y: node.y,
+        r: node.r,
+        data: node.data as ToolsType,
+      })
+    );
 };
 
 const getTooltipClasses = (x: number, y: number): string[] => {
@@ -72,17 +71,22 @@ const getTooltipClasses = (x: number, y: number): string[] => {
   ];
 };
 
-watch(width, calculateRoot);
+watch(width, recalculate);
 
 onMounted(() => {
   updateWidth();
+  isLoading.value = true;
   window.addEventListener("resize", updateWidth);
 });
 </script>
 
 <template>
   <div class="max-w-[1000px] mx-auto aspect-square" ref="container">
-    <div v-if="width > 10" class="w-full h-full relative">
+    <!-- TODO: Need to add animation when in hydration -->
+    <!-- <div class="center w-full h-full">
+        <div class="relative center loader" />
+      </div> -->
+    <div class="w-full h-full relative">
       <div v-for="(circle, i) in circles" :key="`circle-${i}`"
         class="transition-all duration-200 ease-in-out will-change-transform group hover:scale-110 hover:z-10 absolute shadow-lg bg-white rounded-full z-0 border-[0.5px]"
         :style="{
@@ -106,12 +110,9 @@ onMounted(() => {
         </div>
       </div>
     </div>
-    <div v-else class="center w-full h-full">
-      <div class="relative center loader" />
-    </div>
   </div>
-  <!-- <button></button> -->
 </template>
+
 
 <style>
 .loader::before,

@@ -67,7 +67,7 @@ const aboutSectionParagraphs: string[] = [
       <!-- <LazyToolsPack :hydrate-on-idle="4200" /> -->
       <ToolsPack />
 
-      <Hi />
+      <!-- <Hi /> -->
     </section>
 
     <section aria-labelledby="about-heading"
