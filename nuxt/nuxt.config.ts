@@ -3,12 +3,7 @@
 export default defineNuxtConfig({
   compatibilityDate: "2024-11-01",
   devtools: { enabled: false },
-  modules: [
-    "@nuxtjs/tailwindcss",
-    "@pinia/nuxt",
-    "motion-v/nuxt",
-    "@nuxt/icon",
-  ],
+  modules: ["@nuxtjs/tailwindcss", "motion-v/nuxt", "@nuxt/icon"],
   runtimeConfig: {
     public: {
       baseUrl: process.env.VERCEL_URL
@@ -31,11 +26,10 @@ export default defineNuxtConfig({
     },
   },
 
-  // TODO: TMP TMP
-  build: {
-    analyze: {
-      enabled: true,
-      mode: "static",
-    },
-  },
+  // build: {
+  //   analyze: {
+  //     enabled: true,
+  //     mode: "static",
+  //   },
+  // },
 });

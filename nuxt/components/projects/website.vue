@@ -1,17 +1,18 @@
 <script setup lang="ts">
 import { projects } from "~/data/projects";
+import type { ScreenStoreType } from "~/types/store";
 
 defineProps<{ hidden: boolean }>();
 
 const loaded = ref(projects.map((_, index) => index === 0));
-const previewProjectIndex = useState<number>("previewProjectIndex");
+const store = inject("store") as ScreenStoreType;
 
 watch(
-  () => previewProjectIndex.value,
-  (newTab) => {
-    if (!loaded.value[newTab]) {
-      previewProjectIndex.value = newTab;
-      loaded.value[newTab] = true;
+  () => store.state.previewProject,
+  (newProject) => {
+    const index = newProject - 1;
+    if (!loaded.value[index]) {
+      loaded.value[index] = true;
     }
   }
 );
@@ -26,8 +27,8 @@ watch(
       <iframe
         v-if="loaded[index]"
         class="w-full h-full max-md:rounded-2xl"
-        :hidden="previewProjectIndex !== index"
-        :aria-hidden="previewProjectIndex !== index"
+        :hidden="store.state.previewProject - 1 !== index"
+        :aria-hidden="store.state.previewProject - 1 !== index"
         :src="website"
         :title="`Project showcase: ${title}`"
         loading="lazy"

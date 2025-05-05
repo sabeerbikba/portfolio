@@ -3,16 +3,14 @@
   import { projects } from "~/data/projects";
   import { apps } from "~/data/projects";
   import { Motion, MotionPresence } from '@oku-ui/motion';
-  import { storeToRefs } from 'pinia';
-  import useScreenStore from '~/store/use-screen-store';
+import type { ScreenStoreType } from "~/types/store";
 
-  const store = useScreenStore();
-  const { setScreen } = useScreenStore();
-  const { previewApp, previewProject, } = storeToRefs(store);
   const open = ref<boolean>(false);
   const mobileDockRef = ref<HTMLDivElement | null>(null);
   const showContent = ref<boolean>(true);
-  //  const { state, setScreen } = useScreenStore();
+
+const store = inject("store") as ScreenStoreType;
+
 
   const handleClickOutside = (event: MouseEvent) => {
     if (mobileDockRef.value && !mobileDockRef.value.contains(event.target as Node)) {
@@ -45,21 +43,21 @@
         className="flex pl-1 w-[190px] h-[200px] absolute top-[-75px] right-[-12px] rounded-[50px_160px_160px_50px] !bg-[linear-gradient(90deg,_rgba(255,255,255,0.3)_0%,_rgba(255,255,255,0.01)_100%)] text-white">
         <!-- Column 1 -->
         <div class="w-1/3 h-full py-[9px] border-white">
-          <button v-for="(project, id) in projects" :key="project.title" @click="setScreen(id + 1, 'project')"
+          <button v-for="(project, id) in projects" :key="project.title" @click="store.dispatch({type: 'TOGGLE_PROJECT', payload: id + 1 })"
             class="max-w-full p-2">
             <img :src="project.icon" :class="{
               'rounded-xl border border-zinc-600 shadow-[0_0_20px_4px_rgba(255,255,255,0.7)]':
-                previewProject === id + 1,
+                store.state.previewProject === id + 1,
             }" width="100%" height="100%" />
           </button>
         </div>
         <!-- Column 2 -->
         <div class="w-1/3 h-full py-[9px] border-white">
-          <button v-for="(app, id) in apps" :key="app.title" @click="setScreen(id + 1 + projects.length, 'app')"
+          <button v-for="(app, id) in apps" :key="app.title" @click="store.dispatch({type: 'TOGGLE_APP', payload: id + 1 + projects.length })"
             class="max-w-full p-2">
             <img :src="app.icon" :class="{
               'rounded-xl border border-zinc-600 shadow-[0_0_20px_4px_rgba(255,255,255,0.7)]':
-                previewApp === id + 1 + projects.length,
+                store.state.previewApp === id + 1 + projects.length,
             }" width="100%" height="100%" />
           </button>
         </div>

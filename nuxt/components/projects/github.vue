@@ -1,17 +1,30 @@
 <script setup lang="ts">
-import type { ProjectDataType } from "~/types/github";
+import type {
+  GitHubContributorType,
+  GithubBranchesType,
+  GitHubLanguagesType,
+  GitHubRepositoryType,
+  GithubTagsType,
+  NullableGitHubFileContent,
+  ProjectDataType,
+} from "~/types/github";
 
 const { githubBaseURL } = useRuntimeConfig().public;
 const props = defineProps<{ data: ProjectDataType }>();
 
 // TODO: add types
-const repoDetails = computed(() => props.data.repoDetails);
-const languages = computed(() => props.data.languages);
-const contributors = computed(() => props.data.contributors);
-const branches = computed(() => props.data.branches);
-const tags = computed(() => props.data.tags);
-const readme = computed(() => props.data.readme);
-const license = computed(() => props.data.license);
+const repoDetails = computed<GitHubRepositoryType>(
+  () => props.data.repoDetails
+);
+const languages = computed<GitHubLanguagesType>(() => props.data.languages);
+const contributors = computed<GitHubContributorType>(
+  () => props.data.contributors
+);
+const branches = computed<GithubBranchesType>(() => props.data.branches);
+const tags = computed<GithubTagsType>(() => props.data.tags);
+const readme = computed<NullableGitHubFileContent>(() => props.data.readme);
+const license = computed<NullableGitHubFileContent>(() => props.data.license);
+
 const isReadmeAvailable = computed<boolean>(() => readme !== null);
 const repoName = computed<string>(() => repoDetails.value.full_name);
 const blobAbsoluteUrl = computed<string>(

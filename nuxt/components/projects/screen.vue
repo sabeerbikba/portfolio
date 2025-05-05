@@ -1,38 +1,115 @@
 <script setup lang="ts">
 import { projects } from "~/data/projects";
-import { storeToRefs } from "pinia";
-import useScreenStore from "~/store/use-screen-store";
 import type { ProjectDataType } from "~/types/github";
 
-const store = useScreenStore();
-const { previewProject, previewApp, isDataAvailable, data } =
-  storeToRefs(store);
-// TODO:
-// const previewProjectIndex: ComputedRef<number> = computed(() => previewProject.value - 1);
-// const previewProjectIndex: Ref<number> =  ref(previewProject.value - 1);
-const previewProjectIndex = useState<number>(
-  "previewProjectIndex",
-  () => previewProject.value - 1
-);
+import type {
+  ScreenStoreActionType,
+  ScreenStoreStateType,
+  ScreenStoreType,
+} from "~/types/store";
 
-const isWebsiteComponentHidden = computed(() => previewApp.value !== 3);
-const isGithubComponentVisible = computed(() => previewApp.value === 5);
+const state = reactive<ScreenStoreStateType>({
+  previewProject: 1,
+  previewApp: 3,
+  data: [],
+});
+
+const isDataAvailable = computed<boolean>(() => state.data.length !== 0);
+
+const dispatch = ({ type, payload }: ScreenStoreActionType) => {
+  switch (type) {
+    case "TOGGLE_PROJECT": {
+      state.previewProject = payload;
+      break;
+    }
+    case "TOGGLE_APP": {
+      state.previewApp = payload;
+      break;
+    }
+    default: {
+      throw new Error("Unknown action");
+    }
+  }
+};
+
+const store: ScreenStoreType = { state, dispatch };
+provide("store", store);
+
+// For development purpose
+// import response from "~/data/dev/tmp-fetch-all-response";
+// store.state.data = response;
+
+onMounted(async () => {
+  const fetchPromises = projects.map((project) => {
+    const baseUrl = `https://api.github.com/repos/${project.repo}`;
+    return Promise.all([
+      fetch(baseUrl).then((res) => res.json()), // repoDetails
+      fetch(`${baseUrl}/languages`).then((res) => res.json()), // languages
+      fetch(`${baseUrl}/contributors`).then((res) => res.json()), // contributors
+      fetch(`${baseUrl}/branches`).then((res) => res.json()), // branches
+      fetch(`${baseUrl}/tags`).then((res) => res.json()), // tags
+      fetch(`${baseUrl}/contents/LICENSE`) // license
+        .then(async (res) => {
+          const data = await res.json();
+          return data.message === "Not Found" ? null : data;
+        }),
+      fetch(`${baseUrl}/contents/README.md`) // readme
+        .then(async (res) => {
+          const data = await res.json();
+          return data.message === "Not Found" ? null : data;
+        }),
+    ]);
+  });
+
+  try {
+    const results = await Promise.all(fetchPromises);
+    const formattedData: ProjectDataType[] = results.map(
+      ([
+        repoDetails,
+        languages,
+        contributors,
+        branches,
+        tags,
+        license,
+        readme,
+      ]) => ({
+        repoDetails,
+        languages,
+        contributors,
+        branches,
+        tags,
+        license,
+        readme,
+      })
+    );
+    
+    store.state.data = formattedData;
+  } catch (error) {
+    console.error("Error fetching data from GitHub API:", error);
+  }
+});
+
+const isWebsiteComponentHidden = computed(() => store.state.previewApp !== 3);
+const isGithubComponentVisible = computed(() => store.state.previewApp === 5);
 const previewData = computed<ProjectDataType>(
-  () => data.value[previewProjectIndex.value]
+  () => store.state.data[store.state.previewProject - 1]
 );
-console.log('normal', previewData.value);
-console.log('fallback', projects[previewProjectIndex.value]?.repo);
-
 </script>
 
 <template>
   <ProjectsFloatingDock />
   <div class="h-full w-full overflow-auto scroll">
     <ProjectsWebsite :hidden="isWebsiteComponentHidden" />
-    <ProjectsAbout :preview-project="previewProject" :preview-app="previewApp" />
+    <ProjectsAbout
+      :preview-project="store.state.previewProject"
+      :preview-app="store.state.previewApp"
+    />
     <div v-show="isGithubComponentVisible" class="bg-[#0d1117] h-full">
       <ProjectsGithub v-if="isDataAvailable" :data="previewData" />
-      <ProjectsScreenFallbackGithubUi v-else :repo="projects[previewProjectIndex]?.repo" />
+      <ProjectsScreenFallbackGithubUi
+        v-else
+        :repo="projects[store.state.previewProject]?.repo"
+      />
     </div>
   </div>
 </template>

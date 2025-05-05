@@ -98,7 +98,8 @@ const stats = computed<
         @mouseenter="isHoveredWebsiteLink = true"
         @mouseleave="isHoveredWebsiteLink = false"
       >
-        <ProjectsGithubLinkIcon
+        <ProjectsOcticonsIcon
+          name="link"
           :class="isHoveredWebsiteLink ? '!text-blue-400' : '!text-[#9198a1]'"
         />
         {{ homepage.split("://")[1] }}

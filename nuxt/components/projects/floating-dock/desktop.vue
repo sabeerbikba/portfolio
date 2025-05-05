@@ -4,15 +4,11 @@ import { apps } from "~/data/projects";
 import { useElementVisibility } from "@vueuse/core";
 import { Motion } from "@oku-ui/motion";
 import { useMotionValue } from "motion-v";
+import type { ScreenStoreType } from "~/types/store";
 
 defineProps({ hidden: Boolean });
 
-import { storeToRefs } from "pinia";
-import useScreenStore from "~/store/use-screen-store";
-
-const store = useScreenStore();
-const { setScreen } = useScreenStore();
-const { previewApp, previewProject } = storeToRefs(store);
+const store = inject("store") as ScreenStoreType;
 
 let timer: NodeJS.Timeout | null = null;
 const inViewRef = ref(null);
@@ -99,10 +95,13 @@ onUnmounted(() => clearTimer());
           :mouseX="mouseX"
           :title="item.title"
           :icon="item.icon"
-          :isSelected="id + 1 === previewProject"
+          :isSelected="id + 1 === store.state.previewProject"
           :isHovered="isHovered"
-          @click="() => setScreen(id + 1, 'project')"
+          @click="
+            () => store.dispatch({ type: 'TOGGLE_PROJECT', payload: id + 1 })
+          "
         />
+        <!-- @click="() => store.setScreen(id + 1, 'project')" -->
         <div class="border-x-[1.9px] border-gray-700 rounded-2xl h-8"></div>
         <ProjectsFloatingDockDesktopIconContainer
           v-for="(item, id) in apps"
@@ -110,10 +109,17 @@ onUnmounted(() => clearTimer());
           :mouseX="mouseX"
           :title="item.title"
           :icon="item.icon"
-          :isSelected="id + 1 + projects.length === previewApp"
+          :isSelected="id + 1 + projects.length === store.state.previewApp"
           :isHovered="isHovered"
-          @click="() => setScreen(id + 1 + projects.length, 'app')"
+          @click="
+            () =>
+              store.dispatch({
+                type: 'TOGGLE_APP',
+                payload: id + 1 + projects.length,
+              })
+          "
         />
+        <!-- @click="() => store.setScreen(id + 1 + projects.length, 'app')" -->
       </template>
     </Motion>
   </div>
