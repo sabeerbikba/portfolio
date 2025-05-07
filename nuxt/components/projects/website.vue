@@ -25,7 +25,7 @@ watch(
   >
     <template v-for="({ website, title }, index) in projects" :key="index">
       <iframe
-        v-if="loaded[index]"
+        v-show="loaded[index]"
         class="w-full h-full max-md:rounded-2xl"
         :hidden="store.state.previewProject - 1 !== index"
         :aria-hidden="store.state.previewProject - 1 !== index"

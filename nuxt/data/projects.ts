@@ -9,7 +9,6 @@ type DataType = {
 type ProjectType = DataType & {
   repo: string;
   website: string;
-  // image: string,
   about: string;
 };
 
@@ -19,20 +18,16 @@ const projects: ProjectType[] = [
     // 1
     title: "Dev.tools",
     repo: `${githubProfileName}/dev.tools`,
-    icon: "/images/Vector.png", // Also used in SEO LD+JSON TODO: rename image name
+    icon: "/images/dev-tools-icon.webp",
     website: "https://devtools-sabeerbikba.vercel.app/",
-    // TODO: need to update
-    // image: "https://example.com/thumbnails/devtools-thumbnail.png",
     about: "A collection of useful developer tools built with React.",
   },
   {
     // 2
     title: "Rickshaw",
     repo: `${githubProfileName}/rickshaw`,
-    icon: "/images/location.png", // Also used in SEO LD+JSON TODO: rename image name
+    icon: "/images/rickshaw-icon.webp",
     website: "https://honnavarrickshawservice.vercel.app/",
-    // TODO: need to update
-    // image: "https://example.com/thumbnails/rickshaw-thumbnail.png",
     about:
       "An open-source project for tourist contact info, featuring a rickshaw-themed design.",
   },
@@ -42,17 +37,17 @@ const apps: DataType[] = [
   {
     // 3
     title: "Website",
-    icon: "/images/chromium.png",
+    icon: "/images/app-chromium.webp",
   },
   {
     // 4
     title: "About",
-    icon: "/images/about.png",
+    icon: "/images/app-about.webp",
   },
   {
     // 6
     title: "GitHub",
-    icon: "/images/github.png",
+    icon: "/images/app-github.webp",
   },
 ];
 

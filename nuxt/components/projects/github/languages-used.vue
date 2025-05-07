@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import "~/css/github-markdown-dark.css";
+// i think we don't need this to import 
+// import "~/css/github-markdown-dark.css";
 import type { GitHubLanguagesType } from "~/types/github";
 
 const props = defineProps<{

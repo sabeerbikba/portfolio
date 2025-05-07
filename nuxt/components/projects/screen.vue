@@ -85,7 +85,9 @@ onMounted(async () => {
     
     store.state.data = formattedData;
   } catch (error) {
-    console.error("Error fetching data from GitHub API:", error);
+    if (import.meta.env.DEV) {
+      console.error("Error fetching data from GitHub API:", error);
+    }
   }
 });
 
@@ -108,7 +110,7 @@ const previewData = computed<ProjectDataType>(
       <ProjectsGithub v-if="isDataAvailable" :data="previewData" />
       <ProjectsScreenFallbackGithubUi
         v-else
-        :repo="projects[store.state.previewProject]?.repo"
+        :repo="projects[store.state.previewProject - 1]?.repo"
       />
     </div>
   </div>

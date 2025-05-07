@@ -12,7 +12,6 @@ import type {
 const { githubBaseURL } = useRuntimeConfig().public;
 const props = defineProps<{ data: ProjectDataType }>();
 
-// TODO: add types
 const repoDetails = computed<GitHubRepositoryType>(
   () => props.data.repoDetails
 );

@@ -38,13 +38,14 @@ const contributors = computed(() => props.contributorData || []);
         >
           <a :href="contributor.html_url" class="mr-2">
             <img
-              :src="contributor.avatar_url"
+              :src="`${contributor.avatar_url}&s=32`"
               :alt="'@' + contributor.login"
               height="32"
               width="32"
               :class="
                 contributor.type === 'Bot' ? 'rounded-md' : 'rounded-full'
               "
+              loading="lazy"
             />
           </a>
           <span class="text-ellipsis">

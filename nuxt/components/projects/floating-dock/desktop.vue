@@ -13,7 +13,6 @@ const store = inject("store") as ScreenStoreType;
 let timer: NodeJS.Timeout | null = null;
 const inViewRef = ref(null);
 const mouseX = useMotionValue(Infinity);
-// const mouseX = useMotionValue(0)
 const isHovered = ref(false);
 const isVisible = ref(false);
 const elementVisible = useElementVisibility(inViewRef);
@@ -58,12 +57,10 @@ const setIsHovered = (value: boolean) => {
 const handleMouseLeave = () => {
   setIsHovered(false);
   mouseX.set(Infinity);
-  // mouseX.set(0);
 };
 
 const handleMouseMove = (event: MouseEvent) => {
   mouseX.set(event.pageX);
-  // mouseX.set(event.clientX); // Use clientX instead of pageX for better accuracy
 };
 
 onUnmounted(() => clearTimer());
@@ -73,7 +70,7 @@ onUnmounted(() => clearTimer());
   <div
     class="w-full flex items-center absolute top-[35.50rem] z-10"
     :style="{ display: hidden ? 'none' : 'flex' }"
-    v-if="!hidden"
+    v-show="!hidden"
   >
     <Motion
       as="div"
@@ -101,7 +98,6 @@ onUnmounted(() => clearTimer());
             () => store.dispatch({ type: 'TOGGLE_PROJECT', payload: id + 1 })
           "
         />
-        <!-- @click="() => store.setScreen(id + 1, 'project')" -->
         <div class="border-x-[1.9px] border-gray-700 rounded-2xl h-8"></div>
         <ProjectsFloatingDockDesktopIconContainer
           v-for="(item, id) in apps"
@@ -119,7 +115,6 @@ onUnmounted(() => clearTimer());
               })
           "
         />
-        <!-- @click="() => store.setScreen(id + 1 + projects.length, 'app')" -->
       </template>
     </Motion>
   </div>
