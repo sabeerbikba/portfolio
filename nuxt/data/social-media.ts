@@ -1,9 +1,9 @@
 // Docs: https://nuxt.com/modules/icon
 
-type IconName = `${"ic" | "mdi"}:${Lowercase<string>}`;
+import type { NuxtIconName } from "~/types/icons";
 
 type TypeSocialMedia = {
-  icon: IconName;
+  icon: NuxtIconName;
   href: `/${Lowercase<string>}` | `https://${Lowercase<string>}`;
   label: string;
 };
@@ -36,10 +36,9 @@ const socialMedia: TypeSocialMedia[] = [
   },
   {
     icon: "mdi:twitter",
-    href: "https://x.com/sb28187",
+    href: "https://twitter.com/sb28187",
     label: "X (Twitter)",
   },
 ];
 
 export default socialMedia;
-export type { IconName };

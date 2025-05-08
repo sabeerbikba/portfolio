@@ -1,13 +1,16 @@
 <script setup lang="ts">
 import { Motion, MotionPresence } from "@oku-ui/motion";
-import socialMedia, { type IconName } from "@/data/social-media";
+import socialMedia from "@/data/social-media";
+import type { NuxtIconName } from "~/types/icons";
 
 type ContactInfoType = {
-  icon: IconName;
+  icon: NuxtIconName;
   text: string;
   href: string;
   ariaLabel: string;
 };
+
+const { baseUrl } = useRuntimeConfig().public;
 
 let interval: number | undefined;
 const lastScrollY = ref(0);

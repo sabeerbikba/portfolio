@@ -31,7 +31,17 @@ const config: Config = {
       },
     },
   },
+
   plugins: [
+    ({ addComponents }: any) => {
+      addComponents({
+        ".center": {
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        },
+      });
+    },
     ({ addBase, theme }: any) => {
       let allColors = flattenColorPalette(theme("colors"));
       let newVars = Object.fromEntries(

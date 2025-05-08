@@ -1,4 +1,4 @@
-import type { LocalIconsName } from "~/types/icon";
+import type { LocalIconsName } from "~/types/icons";
 
 const localIcons: LocalIconsName = {
   home: {

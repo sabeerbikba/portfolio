@@ -35,10 +35,10 @@
 - project section also need to be server render specially about and don't use v-if for render because it compoletely remove the element
 - need to add 404 page because it using nuxt default page 
 - /contact scroll down hide back button not working 
+- i think need to use front-end fallback error component in projects showcase 
 
 - - LightHouse imporvments
 - add title and other seo tags 
-- improve images 🟢
+- need to creat image for seo meta tags
+- after generating in sever on meta tags working fine // TODO:
 - test in https://search.google.com/test/rich-results after deployhed // TODO:
-- use lazy load image that not immideat needed 
-- use diffrent image format that loseless compression and better quality 

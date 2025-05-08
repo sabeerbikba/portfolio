@@ -2,7 +2,7 @@
 import { useLocalStorage, useMounted } from "@vueuse/core";
 // import type { IconName } from "@primer/octicons";
 import type { NullableGitHubFileContent } from "~/types/github";
-import type { OcticonsIconName } from "~/types/icon";
+import type { OcticonsIconName } from "~/types/icons";
 
 const props = defineProps<{
   readmeData: NullableGitHubFileContent;

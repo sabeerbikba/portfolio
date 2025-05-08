@@ -6,6 +6,7 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
+    "buildandpreview": "nuxt generate && nuxt preview",
     "postinstall": "nuxt prepare",
     "add:module": "nuxt module add"
   },

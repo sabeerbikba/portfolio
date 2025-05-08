@@ -6,6 +6,7 @@ export default defineNuxtConfig({
   modules: ["@nuxtjs/tailwindcss", "motion-v/nuxt", "@nuxt/icon"],
   runtimeConfig: {
     public: {
+      // TODO: rename baseUrl to baseURL 
       baseUrl: process.env.VERCEL_URL
         ? `https://${process.env.VERCEL_URL}/`
         : "https://sabeerbikba.vercel.app/",
@@ -26,10 +27,10 @@ export default defineNuxtConfig({
     },
   },
 
-  // build: {
-  //   analyze: {
-  //     enabled: true,
-  //     mode: "static",
-  //   },
-  // },
+  build: {
+    analyze: {
+      enabled: true,
+      mode: "static",
+    },
+  },
 });

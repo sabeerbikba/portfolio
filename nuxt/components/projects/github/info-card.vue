@@ -2,8 +2,7 @@
 import { useLocalStorage } from "@vueuse/core";
 import numeral from "numeral";
 
-// import type { IconName } from "@primer/octicons";
-import type { OcticonsIconName } from "~/types/icon";
+import type { OcticonsIconName } from "~/types/icons";
 import type {
   GitHubRepositoryType,
   GithubBranchesType,

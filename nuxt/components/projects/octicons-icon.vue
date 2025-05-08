@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { OcticonsIconName } from '~/types/icon';
+import type { OcticonsIconName } from '~/types/icons';
 // TODO: ADD LINKS
 // oldCode: https://github.com/sabeerbikba/portfolio/commit/0377e81645f030da42281dc533fcfdf61b1fbaf5
 // icons: https://primer.style/octicons/
