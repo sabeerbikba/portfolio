@@ -7,12 +7,14 @@ const props = defineProps<{
 }>();
 
 const { githubBaseURL } = useRuntimeConfig().public;
-const contributors = computed(() => props.contributorData || []);
+const contributors = computed<GitHubContributorType>(
+  () => props.contributorData || []
+);
 </script>
 
 <template>
   <div
-    v-if="contributors.length"
+    v-if="contributors.length || contributors !== undefined"
     class="w-full text-[#f0f6fc] border-b border-[#3d444d]"
   >
     <div class="py-4 w-full">
@@ -26,7 +28,7 @@ const contributors = computed(() => props.contributorData || []);
             title="Contributors count"
             class="ml-1 rounded-full bg-[#1e242a] inline-block w-5 h-5 !text-[#f0f6fc] text-sm font-thin text-center"
           >
-            {{ contributors.length }}
+            {{ contributors?.length || 0 }}
           </span>
         </a>
       </h2>

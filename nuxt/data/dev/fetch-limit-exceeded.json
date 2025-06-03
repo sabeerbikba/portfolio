@@ -1,0 +1,62 @@
+[
+  {
+    "repoDetails": {
+      "message": "API rate limit exceeded for 152.58.211.250. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)",
+      "documentation_url": "https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting"
+    },
+    "languages": {
+      "message": "API rate limit exceeded for 152.58.211.250. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)",
+      "documentation_url": "https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting"
+    },
+    "contributors": {
+      "message": "API rate limit exceeded for 152.58.211.250. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)",
+      "documentation_url": "https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting"
+    },
+    "branches": {
+      "message": "API rate limit exceeded for 152.58.211.250. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)",
+      "documentation_url": "https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting"
+    },
+    "tags": {
+      "message": "API rate limit exceeded for 152.58.211.250. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)",
+      "documentation_url": "https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting"
+    },
+    "license": {
+      "message": "API rate limit exceeded for 152.58.211.250. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)",
+      "documentation_url": "https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting"
+    },
+    "readme": {
+      "message": "API rate limit exceeded for 152.58.211.250. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)",
+      "documentation_url": "https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting"
+    }
+  },
+  {
+    "repoDetails": {
+      "message": "API rate limit exceeded for 152.58.211.250. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)",
+      "documentation_url": "https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting"
+    },
+    "languages": {
+      "message": "API rate limit exceeded for 152.58.211.250. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)",
+      "documentation_url": "https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting"
+    },
+    "contributors": {
+      "message": "API rate limit exceeded for 152.58.211.250. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)",
+      "documentation_url": "https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting"
+    },
+    "branches": {
+      "message": "API rate limit exceeded for 152.58.211.250. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)",
+      "documentation_url": "https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting"
+    },
+    "tags": {
+      "message": "API rate limit exceeded for 152.58.211.250. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)",
+      "documentation_url": "https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting"
+    },
+    "license": {
+      "message": "API rate limit exceeded for 152.58.211.250. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)",
+      "documentation_url": "https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting"
+    },
+    "readme": {
+      "message": "API rate limit exceeded for 152.58.211.250. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)",
+      "documentation_url": "https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting"
+    }
+  }
+]

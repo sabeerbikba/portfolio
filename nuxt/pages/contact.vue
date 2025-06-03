@@ -2,6 +2,7 @@
 import { Motion, MotionPresence } from "@oku-ui/motion";
 import socialMedia from "@/data/social-media";
 import type { NuxtIconName } from "~/types/icons";
+import seoMetaMap from "~/data/seo";
 
 type ContactInfoType = {
   icon: NuxtIconName;
@@ -11,6 +12,24 @@ type ContactInfoType = {
 };
 
 const { baseUrl } = useRuntimeConfig().public;
+
+  useSeoMeta({
+    robots: "index, follow",
+    title: seoMetaMap.contact.title,
+    description: seoMetaMap.contact.description,
+    keywords: seoMetaMap.contact.keywords,
+
+    ogTitle: seoMetaMap.contact.title,
+    ogDescription: seoMetaMap.contact.description,
+    // ogImage: ,
+    ogUrl: baseUrl + 'contact',
+    ogType: "website",
+
+    twitterCard: "summary_large_image",
+    twitterTitle: seoMetaMap.contact.title,
+    twitterDescription: seoMetaMap.contact.description,
+    // twitterImage: ,
+  });
 
 let interval: number | undefined;
 const lastScrollY = ref(0);

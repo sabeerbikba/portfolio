@@ -17,16 +17,19 @@ const props = defineProps<{
 }>();
 
 const isHoveredWebsiteLink = ref<boolean>(false);
-const { githubBaseURL } = useRuntimeConfig().public;
+// const { githubBaseURL } = useRuntimeConfig().public;
+// const { githubBaseURL }: { githubBaseURL: string } = useRuntimeConfig().public;
+const githubBaseURL: string = useRuntimeConfig().public.githubBaseURL;
 
-const full_name = computed(() => props.repoData.full_name);
-const description = computed(() => props.repoData.description);
-const homepage = computed(() => props.repoData.homepage);
-const stargazers_count = computed(() => props.repoData.stargazers_count);
-const forks_count = computed(() => props.repoData.forks_count);
-const subscribers_count = computed(() => props.repoData.subscribers_count);
-const repo_name = computed(() => props.repoData.name);
-const repo_owner = computed(() => props.repoData.owner.login);
+// TODO: give Types
+const full_name = computed(() => props.repoData?.full_name);
+const description = computed(() => props.repoData?.description);
+const homepage = computed(() => props.repoData?.homepage);
+const stargazers_count = computed(() => props.repoData?.stargazers_count);
+const forks_count = computed(() => props.repoData?.forks_count);
+const subscribers_count = computed(() => props.repoData?.subscribers_count);
+const repo_name = computed(() => props.repoData?.name);
+const repo_owner = computed(() => props.repoData?.owner.login);
 const previewTab = useLocalStorage(
   `home:projects:RepositoryOverview:${full_name.value}`,
   "README"

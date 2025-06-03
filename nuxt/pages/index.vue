@@ -1,8 +1,27 @@
 <script setup lang="ts">
 import { Motion } from "@oku-ui/motion";
 import localIcons from "~/data/icons";
+import seoMetaMap from "~/data/seo";
 
 const { baseUrl } = useRuntimeConfig().public;
+
+  useSeoMeta({
+    robots: "index, follow",
+    title: seoMetaMap.index.title,
+    description: seoMetaMap.index.description,
+    keywords: seoMetaMap.index.keywords,
+
+    ogTitle: seoMetaMap.index.title,
+    ogDescription: seoMetaMap.index.description,
+    // ogImage: ,
+    ogUrl: baseUrl,
+    ogType: "website",
+
+    twitterCard: "summary_large_image",
+    twitterTitle: seoMetaMap.index.title,
+    twitterDescription: seoMetaMap.index.description,
+    // twitterImage: ,
+  });
 
 const aboutSectionParagraphs: string[] = [
   "Hi, I’m Sabeer Bikba, a <strong class='font-medium'>full-stack developer</strong> with a passion for creating dynamic <strong class='font-medium'>React front-end applications</strong>. I specialize in building intuitive and responsive user interfaces that provide smooth experiences across devices.",

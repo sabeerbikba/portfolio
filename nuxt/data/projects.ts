@@ -1,7 +1,7 @@
 const githubProfileName = "sabeerbikba";
 
 type DataType = {
-  // TODO: rename title to name
+  // TODO: rename title to name or project
   title: string;
   icon: string;
 };

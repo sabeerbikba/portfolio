@@ -4,110 +4,90 @@ import socialMedia from "~/data/social-media";
 import { projects as projectsObject } from "~/data/projects";
 import type { QuickLinkType, ProjectLinkType } from "~/types/global";
 
+// type S
+
 const { baseUrl } = useRuntimeConfig().public;
 
 const route = useRoute();
 const isHomePage = computed<boolean>(
   () => route.name === "index" || route.path === "/"
 );
+// const currentPageURL = computed(
+//   () => baseUrl + (route.path as string).slice(1)
+// );
 
-const metaTag = {
-  index: {
-  title:
-    "Sabeer Bikba Portfolio – Web Developer Specialized in React, Next.js, Vue & Nuxt.js",
-  description:
-    "Explore my web development portfolio showcasing websites and applications I’ve built using React, Next.js, Vue, and Nuxt.js. Passionate about creating high-performance, modern, and scalable digital solutions.",
-  },
-  contact: {
-  title:
-    "Contact – Sabeer Bikba | Web Developer Specialized in React, Next.js, Vue & Nuxt.js",
-  description:
-    "Get in touch with Sabeer Bikba, a web developer specialized in React, Next.js, Vue, and Nuxt.js. I'm available for freelance projects, collaborations, and consultations.",
-  }
-};
 
-const meta = metaTag[route.name as keyof typeof metaTag] ?? metaTag.index;
 
-useSeoMeta({
-  robots: "index, follow",
-  title: meta.title,
-  description: meta.description,
-  keywords:
-    "web development, React, Next.js, Vue, Nuxt.js, JavaScript, front-end development, web developer portfolio",
+// const currentMeta =
+//   seoMetaMap[route.name as keyof typeof seoMetaMap] ?? seoMetaMap.index;
 
-  ogTitle: meta.title,
-  ogDescription: meta.description,
-  // ogImage: ,
-  ogUrl: baseUrl,
-  ogType: "website",
+// const updateSEO = () => {
 
-  twitterCard: "summary_large_image",
-  twitterTitle: meta.title,
-  twitterDescription: meta.description,
-  // twitterImage: ,
-});
 
-useHead({
-  htmlAttrs: { lang: "en" },
-  meta: [
-    {
-      name: "viewport",
-      content: "width=device-width, initial-scale=1.0",
-    },
-  ],
-  link: [
-    {
-      rel: "icon",
-      type: "image/svg+xml",
-      href: localIcons.home.headerLogoHref,
-    },
-    {
-      rel: "canonical",
-      href: baseUrl + (route.path as string).slice(1),
-    },
-  ],
-  script: [
-    // TODO: After creation of /project page it will render only in /project
-    ...(isHomePage.value
-      ? [
-          {
-            type: "application/ld+json",
-            innerHTML: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "CollectionPage",
-              name: "Featured Works",
-              description:
-                "Explore my featured projects and creations. See live previews, project details, and GitHub repo visuals.",
-              creator: {
-                "@type": "Person",
-                name: "Sabeer Bikba",
-              },
-              workExample: projectsObject.map(
-                ({ title, website, icon, about }: ProjectLinkType) => ({
-                  "@type": "WebPage",
-                  name: title,
-                  url: website,
-                  image: icon,
-                  about,
-                })
-              ),
-            }),
-          },
-        ]
-      : []),
-    {
-      type: "application/ld+json",
-      innerHTML: JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "Person",
-        name: "Sabeer Bikba",
-        url: baseUrl,
-        jobTitle: "Web Developer",
-        sameAs: socialMedia.map(({ href }) => href),
-      }),
-    },
-  ],
-});
+  useHead({
+    htmlAttrs: { lang: "en" },
+    meta: [
+      {
+        name: "viewport",
+        content: "width=device-width, initial-scale=1.0",
+      },
+    ],
+    link: [
+      {
+        rel: "icon",
+        type: "image/svg+xml",
+        href: localIcons.home.headerLogoHref,
+      },
+      {
+        rel: "canonical",
+        href: baseUrl + (route.path as string).slice(1),
+      },
+    ],
+    script: [
+      // TODO: After creation of /project page it will render only in /project
+      ...(isHomePage.value
+        ? [
+            {
+              type: "application/ld+json",
+              innerHTML: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "CollectionPage",
+                name: "Featured Works",
+                description:
+                  "Explore my featured projects and creations. See live previews, project details, and GitHub repo visuals.",
+                creator: {
+                  "@type": "Person",
+                  name: "Sabeer Bikba",
+                },
+                workExample: projectsObject.map(
+                  ({ title, website, icon, about }: ProjectLinkType) => ({
+                    "@type": "WebPage",
+                    name: title,
+                    url: website,
+                    image: icon,
+                    about,
+                  })
+                ),
+              }),
+            },
+          ]
+        : []),
+      {
+        type: "application/ld+json",
+        innerHTML: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Person",
+          name: "Sabeer Bikba",
+          url: baseUrl,
+          jobTitle: "Web Developer",
+          sameAs: socialMedia.map(({ href }) => href),
+        }),
+      },
+    ],
+  });
+// };
+
+// updateSEO();
 
 const quickLinks: QuickLinkType[] = useNuxtApp()
   .$router.getRoutes()
@@ -124,6 +104,10 @@ const projects: QuickLinkType[] = projectsObject.map(
     label: title,
   })
 );
+
+// watch(route, () => {
+//   updateSEO();
+// });
 </script>
 
 <template>

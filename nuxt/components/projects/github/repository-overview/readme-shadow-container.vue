@@ -36,6 +36,7 @@ const processMarkdown = async (): Promise<void> => {
       const absoluteUrl = href.startsWith("http")
         ? href
         : props.blobAbsoluteUrl + href;
+      // TODO: ;checkCode:1212
       link.setAttribute("href", absoluteUrl);
       link.setAttribute("target", "_blank");
       link.setAttribute("rel", "noopener noreferrer");
