@@ -11,66 +11,60 @@ import type {
   ProjectDataType,
 } from "~/types/github";
 
-const props = defineProps<{ data: ProjectDataType }>();
+const props = defineProps<{ data: ProjectDataType | undefined }>();
 const store = inject("store") as ScreenStoreType;
-const { githubBaseURL } = useRuntimeConfig().public;
 
-const isDataAvailable = computed<boolean>(
-  () => props.data.repoDetails === undefined || props.data === undefined
-);
-const repoDetails = computed<GitHubRepositoryType>(
-  () => props.data.repoDetails
-);
-const languages = computed<GitHubLanguagesType>(() => props.data.languages);
-const contributors = computed<GitHubContributorType>(
-  () => props.data.contributors
-);
-const branches = computed<GithubBranchesType>(() => props.data.branches);
-const tags = computed<GithubTagsType>(() => props.data.tags);
-const readme = computed<NullableGitHubFileContent>(() => props.data.readme);
-const license = computed<NullableGitHubFileContent>(() => props.data.license);
+const getComputedProp = <T>(key: keyof NonNullable<ProjectDataType>) => {
+  return computed(() => props.data?.[key] as T);
+};
 
-const isReadmeAvailable = computed<boolean>(() => readme !== null);
-// const repoName = computed<string | undefined>(() => repoDetails.value?.full_name);
+const isAvailable = <T>(
+  source: Ref<T | null | undefined>
+): ComputedRef<boolean> => {
+  return computed(() => source.value !== null && source.value !== undefined);
+};
+
+const repoDetails = getComputedProp<GitHubRepositoryType>("repoDetails");
+const languages = getComputedProp<GitHubLanguagesType>("languages");
+const contributors = getComputedProp<GitHubContributorType>("contributors");
+const branches = getComputedProp<GithubBranchesType>("branches");
+const tags = getComputedProp<GithubTagsType>("tags");
+const readme = getComputedProp<NullableGitHubFileContent>("readme");
+const license = getComputedProp<NullableGitHubFileContent>("license");
 const repoName = computed<string>(
   () => projects[store.state.previewProject - 1]?.repo
 );
-// const blobAbsoluteUrl = computed<string | undefined>(
-//   () =>
-//     `${githubBaseURL + repoName.value}/blob/${
-//       repoDetails.value?.default_branch
-//     }/`
-// );
-// TODO: how this link work is really needed 
-const blobAbsoluteUrl = computed<string>(
-  () => "sabeerbikba/dev.tool/blob/nextjs-back-end"
-);
 
-// sabeerbikba/dev.tool/blob/nextjs-back-end
+const isDataAvailable = computed<boolean>(
+  () => props.data?.repoDetails !== undefined || props.data !== undefined
+);
+const isReadmeAvailable = isAvailable(readme);
+const isGithubContributorsAvailable = isAvailable(contributors);
+const isGithubLanguagesUsedAvailable = isAvailable(languages);
 </script>
 
 <template>
-  <!-- which is good v-if or v-show -->
   <div v-if="isDataAvailable">
-    <!-- <ProjectsGithubInfoCard
+    <ProjectsGithubInfoCard
       :repoData="repoDetails"
       :branchData="branches"
       :tagData="tags"
       :hasReadme="isReadmeAvailable"
-    /> -->
+    />
     <div class="px-4 bg-[#0d1117]">
       <ProjectsGithubRepositoryOverview
         v-if="readme || license"
         :readmeData="readme"
         :licenseData="license"
         :repoName="repoName"
-        :blobAbsoluteUrl="blobAbsoluteUrl"
       />
       <ProjectsGithubContributors
+        v-if="isGithubContributorsAvailable"
         :contributorData="contributors"
         :repoName="repoName"
       />
       <ProjectsGithubLanguagesUsed
+        v-if="isGithubLanguagesUsedAvailable"
         :languageData="languages"
         :repoName="repoName"
       />

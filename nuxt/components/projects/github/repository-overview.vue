@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useLocalStorage, useMounted } from "@vueuse/core";
-// import type { IconName } from "@primer/octicons";
 import type { NullableGitHubFileContent } from "~/types/github";
 import type { OcticonsIconName } from "~/types/icons";
 
@@ -8,7 +7,6 @@ const props = defineProps<{
   readmeData: NullableGitHubFileContent;
   licenseData: NullableGitHubFileContent;
   repoName: string;
-  blobAbsoluteUrl: string;
 }>();
 
 type RepositoryOverviewTabType = "README" | "MIT License";
@@ -19,17 +17,20 @@ const previewTab = useLocalStorage<RepositoryOverviewTabType>(
   "README"
 );
 
-const tabs = computed<{ icon: OcticonsIconName; text: RepositoryOverviewTabType }[]>(
-  () =>
-    [
-      props.readmeData ? { icon: "book" as OcticonsIconName, text: "README" } : null,
-      props.licenseData
-        ? { icon: "law" as OcticonsIconName, text: "MIT License" }
-        : null,
-    ].filter(
-      (tab): tab is { icon: OcticonsIconName; text: RepositoryOverviewTabType } =>
-        tab !== null
-    )
+const tabs = computed<
+  { icon: OcticonsIconName; text: RepositoryOverviewTabType }[]
+>(() =>
+  [
+    props.readmeData
+      ? { icon: "book" as OcticonsIconName, text: "README" }
+      : null,
+    props.licenseData
+      ? { icon: "law" as OcticonsIconName, text: "MIT License" }
+      : null,
+  ].filter(
+    (tab): tab is { icon: OcticonsIconName; text: RepositoryOverviewTabType } =>
+      tab !== null
+  )
 );
 
 watch(
@@ -78,7 +79,7 @@ onMounted(() => {
       <ProjectsGithubRepositoryOverviewReadmeShadowContainer
         v-if="previewTab === 'README' && readmeData"
         :readmeData="readmeData"
-        :blobAbsoluteUrl="blobAbsoluteUrl"
+        :repoName="repoName"
       />
       <ProjectsGithubRepositoryOverviewLicenseDisplay
         v-if="previewTab === 'MIT License' && licenseData"

@@ -6,12 +6,12 @@ type ScreenStoreStateType = {
   data: ProjectDataType[];
 
   isLoading: boolean;
-  error: string | null;
+  // error: string | null;
 };
 
-type ScreenStoreActionType = 
-  | { type: 'TOGGLE_PROJECT'; payload: number }
-  | { type: 'TOGGLE_APP'; payload: number };
+type ScreenStoreActionType =
+  | { type: "TOGGLE_PROJECT"; payload: number }
+  | { type: "TOGGLE_APP"; payload: number };
 
 type ScreenStoreType = {
   state: ScreenStoreStateType;

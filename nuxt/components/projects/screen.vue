@@ -1,7 +1,6 @@
-<!-- <script setup lang="ts">
+<script setup lang="ts">
 import { projects } from "~/data/projects";
 import type { ProjectDataType } from "~/types/github";
-
 import type {
   ScreenStoreActionType,
   ScreenStoreStateType,
@@ -12,141 +11,8 @@ const state = reactive<ScreenStoreStateType>({
   previewProject: 1,
   previewApp: 3,
   data: [],
-});
-
-const dispatch = ({ type, payload }: ScreenStoreActionType) => {
-  switch (type) {
-    case "TOGGLE_PROJECT": {
-      state.previewProject = payload;
-      break;
-    }
-    case "TOGGLE_APP": {
-      state.previewApp = payload;
-      break;
-    }
-    default: {
-      throw new Error("Unknown action");
-    }
-  }
-};
-
-const store: ScreenStoreType = { state, dispatch };
-provide("store", store);
-
-// For development purpose
-// import response from "~/data/dev/tmp-fetch-all-response";
-// store.state.data = response;
-
-// TODO: License and readme.md fetch based on availabl or not from repoDetails if it is good 
-
-const safeJson = async (res: Response) => {
-  const data = await res.json();
-  return data.message?.includes("API rate limit exceeded") ? undefined : data;
-};
-
-const safeContent = async (res: Response) => {
-  const data = await safeJson(res);
-  if (!data) return undefined;
-  return data.message === "Not Found" ? null : data;
-};
-
-onMounted(async () => {
-  const fetchPromises = projects.map((project) => {
-    const baseUrl = `https://api.github.com/repos/${project.repo}`;
-    return Promise.all([
-      fetch(baseUrl).then(safeJson), // repoDetails
-      fetch(`${baseUrl}/languages`).then(safeJson), // languages
-      fetch(`${baseUrl}/contributors`).then(safeJson), // contributors
-      fetch(`${baseUrl}/branches`).then(safeJson), // branches
-      fetch(`${baseUrl}/tags`).then(safeJson), // tags
-      fetch(`${baseUrl}/contents/LICENSE`).then(safeContent), // license
-      fetch(`${baseUrl}/contents/README.md`).then(safeContent), // readme
-    ]);
-  });
-
-  try {
-    const results = await Promise.all(fetchPromises);
-    const formattedData: ProjectDataType[] = results.map(
-      ([
-        repoDetails,
-        languages,
-        contributors,
-        branches,
-        tags,
-        license,
-        readme,
-      // ], index) => ({
-      ]) => ({
-        // projectIndex: index,
-        repoDetails,
-        languages,
-        contributors,
-        branches,
-        tags,
-        license,
-        readme,
-      })
-    );
-    
-    store.state.data = formattedData;
-    console.log(formattedData);
-  } catch (error) {
-    if (import.meta.env.DEV) {
-      console.error("Error fetching data from GitHub API:", error);
-    }
-  }
-
-  console.log('store.state.data', store.state.data);
-});
-
-const isWebsiteComponentHidden = computed(() => store.state.previewApp !== 3);
-const isGithubComponentVisible = computed(() => store.state.previewApp === 5);
-const previewData = computed<ProjectDataType>(
-  () => store.state.data[store.state.previewProject - 1]
-);
-</script>
-
-<template>
-  <ProjectsFloatingDock />
-  <div class="h-full w-full overflow-auto scroll">
-    <ProjectsWebsite :hidden="isWebsiteComponentHidden" />
-    <ProjectsAbout
-      :preview-project="store.state.previewProject"
-      :preview-app="store.state.previewApp"
-    />
-    <div v-show="isGithubComponentVisible" class="bg-[#0d1117] h-full">
-      <ProjectsGithub v-if="store.state.data" :data="previewData" />
-    </div>
-  </div>
-</template>
-
-<style>
-.scroll {
-  overflow: auto;
-  scrollbar-width: thin;
-  scrollbar-color: #5b5d61 #191919;
-}
-
-.scroll::-webkit-scrollbar {
-  width: 8px;
-}
-</style> -->
-
-
-
-<script setup lang="ts">
-import { ref } from 'vue'
-import { onMounted } from 'vue'
-import { projects } from "~/data/projects";
-import type { ProjectDataType } from "~/types/github";
-import type { ScreenStoreActionType, ScreenStoreStateType, ScreenStoreType } from "~/types/store";
-
-const state = reactive<ScreenStoreStateType>({
-  previewProject: 1,
-  previewApp: 3,
-  data: [],
   isLoading: false,
-  error: null
+  // error: null,
 });
 
 const dispatch = ({ type, payload }: ScreenStoreActionType) => {
@@ -173,7 +39,7 @@ const safeJson = async (res: Response) => {
     const data = await res.json();
     return data.message?.includes("API rate limit exceeded") ? undefined : data;
   } catch (err) {
-    console.error('Error parsing response:', err);
+    log(["Error parsing response:", err], "error");
     return undefined;
   }
 };
@@ -185,9 +51,10 @@ const safeContent = async (res: Response) => {
 };
 
 onMounted(async () => {
+  // TODO:  isUsing
   state.isLoading = true;
-  state.error = null;
-  
+  // state.error = null;
+
   try {
     const fetchPromises = projects.map((project) => {
       const baseUrl = `https://api.github.com/repos/${project.repo}`;
@@ -198,34 +65,35 @@ onMounted(async () => {
         fetch(`${baseUrl}/branches`).then(safeJson),
         fetch(`${baseUrl}/tags`).then(safeJson),
         fetch(`${baseUrl}/contents/LICENSE`).then(safeContent),
-        fetch(`${baseUrl}/contents/README.md`).then(safeContent)
+        fetch(`${baseUrl}/contents/README.md`).then(safeContent),
       ]);
     });
 
     const results = await Promise.all(fetchPromises);
-    const formattedData: ProjectDataType[] = results.map(([
-      repoDetails,
-      languages,
-      contributors,
-      branches,
-      tags,
-      license,
-      readme
-    ]) => ({
-      repoDetails,
-      languages,
-      contributors,
-      branches,
-      tags,
-      license,
-      readme
-    }));
+    const formattedData: ProjectDataType[] = results.map(
+      ([
+        repoDetails,
+        languages,
+        contributors,
+        branches,
+        tags,
+        license,
+        readme,
+      ]) => ({
+        repoDetails,
+        languages,
+        contributors,
+        branches,
+        tags,
+        license,
+        readme,
+      })
+    );
 
     store.state.data = formattedData;
-    console.log('Data loaded successfully:', formattedData);
+    log(["Data loaded successfully:", formattedData]);
   } catch (err) {
-    console.error('Error fetching data:', err);
-    state.error = err instanceof Error ? err.message : 'An unknown error occurred';
+    log(["Error fetching data:", err], "error");
   } finally {
     state.isLoading = false;
   }
@@ -240,7 +108,7 @@ const previewData = computed<ProjectDataType | undefined>(() => {
 });
 
 const isLoading = computed(() => store.state.isLoading);
-const hasError = computed(() => store.state.error !== null);
+// const hasError = computed(() => store.state.error !== null);
 </script>
 
 <template>
@@ -255,15 +123,15 @@ const hasError = computed(() => store.state.error !== null);
       <div v-if="isLoading" class="flex items-center justify-center h-full">
         <div class="text-white">Loading data...</div>
       </div>
-      <div v-else-if="hasError" class="flex items-center justify-center h-full">
+      <!-- <div v-else-if="hasError" class="flex items-center justify-center h-full">
         <div class="text-red-400">{{ store.state.error }}</div>
-      </div>
-      <div v-else-if="previewData" class="h-full">
+      </div> -->
+      <div v-else="previewData" class="h-full">
         <ProjectsGithub :data="previewData" />
       </div>
-      <div v-else class="flex items-center justify-center h-full">
+      <!-- <div v-else class="flex items-center justify-center h-full">
         <div class="text-white">No data available</div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

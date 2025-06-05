@@ -1,16 +1,26 @@
 <script setup lang="ts">
 import { marked } from "marked";
 import githubMarkdownCss from "~/css/github-markdown-dark"; // .ts file
-// import type { GitHubFileContentType } from "~/types/github";
 import type { NullableGitHubFileContent } from "~/types/github";
+import type { ScreenStoreType } from "~/types/store";
 
 const props = defineProps<{
   readmeData: NullableGitHubFileContent;
-  blobAbsoluteUrl: String;
+  repoName: string;
 }>();
+const store = inject("store") as ScreenStoreType;
+const { githubBaseURL } = useRuntimeConfig().public;
 
 const hostRef: Ref<HTMLDivElement | null> = ref(null);
 const markdown: Ref<string> = ref("");
+
+const blobAbsoluteUrl = computed<string | undefined>(
+  () =>
+    `${githubBaseURL + props.repoName}/blob/${
+      store.state.data[store.state.previewProject - 1].repoDetails
+        ?.default_branch
+    }/`
+);
 
 if (
   props.readmeData &&
@@ -35,8 +45,7 @@ const processMarkdown = async (): Promise<void> => {
     if (href) {
       const absoluteUrl = href.startsWith("http")
         ? href
-        : props.blobAbsoluteUrl + href;
-      // TODO: ;checkCode:1212
+        : blobAbsoluteUrl.value + href;
       link.setAttribute("href", absoluteUrl);
       link.setAttribute("target", "_blank");
       link.setAttribute("rel", "noopener noreferrer");
