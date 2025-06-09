@@ -1,4 +1,7 @@
 <script setup lang="ts">
+// Inspiration URL: https://ui.aceternity.com/components/flip-words
+// Source URL: https://inspira-ui.com/components/text-animations/flip-words
+
 const props = withDefaults(
   defineProps<{
     words: string[];

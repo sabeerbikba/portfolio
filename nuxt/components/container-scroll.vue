@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import { useWindowSize, useScroll, useElementBounding } from "@vueuse/core";
+
+// Inspiration URL: https://ui.aceternity.com/components/container-scroll-animation
+// Source URL: https://inspira-ui.com/components/miscellaneous/container-scroll
+
 const containerRef = ref(null);
 const isMobile = ref(false);
 

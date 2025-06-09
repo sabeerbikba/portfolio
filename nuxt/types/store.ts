@@ -4,9 +4,7 @@ type ScreenStoreStateType = {
   previewProject: number;
   previewApp: number;
   data: ProjectDataType[];
-
   isLoading: boolean;
-  // error: string | null;
 };
 
 type ScreenStoreActionType =

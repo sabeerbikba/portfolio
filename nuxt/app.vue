@@ -4,90 +4,74 @@ import socialMedia from "~/data/social-media";
 import { projects as projectsObject } from "~/data/projects";
 import type { QuickLinkType, ProjectLinkType } from "~/types/global";
 
-// type S
-
+const route = useRoute();
 const { baseUrl } = useRuntimeConfig().public;
 
-const route = useRoute();
 const isHomePage = computed<boolean>(
   () => route.name === "index" || route.path === "/"
 );
-// const currentPageURL = computed(
-//   () => baseUrl + (route.path as string).slice(1)
-// );
 
-
-
-// const currentMeta =
-//   seoMetaMap[route.name as keyof typeof seoMetaMap] ?? seoMetaMap.index;
-
-// const updateSEO = () => {
-
-
-  useHead({
-    htmlAttrs: { lang: "en" },
-    meta: [
-      {
-        name: "viewport",
-        content: "width=device-width, initial-scale=1.0",
-      },
-    ],
-    link: [
-      {
-        rel: "icon",
-        type: "image/svg+xml",
-        href: localIcons.home.headerLogoHref,
-      },
-      {
-        rel: "canonical",
-        href: baseUrl + (route.path as string).slice(1),
-      },
-    ],
-    script: [
-      // TODO: After creation of /project page it will render only in /project
-      ...(isHomePage.value
-        ? [
-            {
-              type: "application/ld+json",
-              innerHTML: JSON.stringify({
-                "@context": "https://schema.org",
-                "@type": "CollectionPage",
-                name: "Featured Works",
-                description:
-                  "Explore my featured projects and creations. See live previews, project details, and GitHub repo visuals.",
-                creator: {
-                  "@type": "Person",
-                  name: "Sabeer Bikba",
-                },
-                workExample: projectsObject.map(
-                  ({ title, website, icon, about }: ProjectLinkType) => ({
-                    "@type": "WebPage",
-                    name: title,
-                    url: website,
-                    image: icon,
-                    about,
-                  })
-                ),
-              }),
-            },
-          ]
-        : []),
-      {
-        type: "application/ld+json",
-        innerHTML: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Person",
-          name: "Sabeer Bikba",
-          url: baseUrl,
-          jobTitle: "Web Developer",
-          sameAs: socialMedia.map(({ href }) => href),
-        }),
-      },
-    ],
-  });
-// };
-
-// updateSEO();
+useHead({
+  htmlAttrs: { lang: "en" },
+  meta: [
+    {
+      name: "viewport",
+      content: "width=device-width, initial-scale=1.0",
+    },
+  ],
+  link: [
+    {
+      rel: "icon",
+      type: "image/svg+xml",
+      href: localIcons.home.headerLogoHref,
+    },
+    {
+      rel: "canonical",
+      href: baseUrl + (route.path as string).slice(1),
+    },
+  ],
+  script: [
+    // TODO: After creation of /project page it will render only in /project
+    ...(isHomePage.value
+      ? [
+          {
+            type: "application/ld+json",
+            innerHTML: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "CollectionPage",
+              name: "Featured Works",
+              description:
+                "Explore my featured projects and creations. See live previews, project details, and GitHub repo visuals.",
+              creator: {
+                "@type": "Person",
+                name: "Sabeer Bikba",
+              },
+              workExample: projectsObject.map(
+                ({ title, website, icon, about }: ProjectLinkType) => ({
+                  "@type": "WebPage",
+                  name: title,
+                  url: website,
+                  image: icon,
+                  about,
+                })
+              ),
+            }),
+          },
+        ]
+      : []),
+    {
+      type: "application/ld+json",
+      innerHTML: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Person",
+        name: "Sabeer Bikba",
+        url: baseUrl,
+        jobTitle: "Web Developer",
+        sameAs: socialMedia.map(({ href }) => href),
+      }),
+    },
+  ],
+});
 
 const quickLinks: QuickLinkType[] = useNuxtApp()
   .$router.getRoutes()
@@ -104,10 +88,6 @@ const projects: QuickLinkType[] = projectsObject.map(
     label: title,
   })
 );
-
-// watch(route, () => {
-//   updateSEO();
-// });
 </script>
 
 <template>

@@ -45,12 +45,11 @@ const aboutSectionParagraphs: string[] = [
         class="font-normal text-neutral-600 mx-auto py-4 xs:py-5 sm:py-6 md:py-7 text-[24px] xs:text-[28px] sm:text-[34px] md:text-[40px]"
       >
         Designing
-        <AceternityFlipWords
+        <FlipWords
           :words="['functional', 'beautiful', 'impactful', 'responsive']"
           :duration="3000"
           class="text-neutral-700"
         />
-        <!-- <br /> tag is not good  -->
         <br />
         solutions for your business
       </div>
@@ -157,8 +156,8 @@ const aboutSectionParagraphs: string[] = [
         </Motion>
       </div>
       <!-- TODO: those two empty divs : purpose  -->
-      <div class="text-b"></div>
+      <!-- <div class="text-b"></div> -->
     </section>
   </div>
-  <div class="scale"></div>
+  <!-- <div class="scale"></div> -->
 </template>

@@ -12,7 +12,6 @@ const state = reactive<ScreenStoreStateType>({
   previewApp: 3,
   data: [],
   isLoading: false,
-  // error: null,
 });
 
 const dispatch = ({ type, payload }: ScreenStoreActionType) => {
@@ -51,9 +50,7 @@ const safeContent = async (res: Response) => {
 };
 
 onMounted(async () => {
-  // TODO:  isUsing
   state.isLoading = true;
-  // state.error = null;
 
   try {
     const fetchPromises = projects.map((project) => {
@@ -108,7 +105,6 @@ const previewData = computed<ProjectDataType | undefined>(() => {
 });
 
 const isLoading = computed(() => store.state.isLoading);
-// const hasError = computed(() => store.state.error !== null);
 </script>
 
 <template>
@@ -123,15 +119,9 @@ const isLoading = computed(() => store.state.isLoading);
       <div v-if="isLoading" class="flex items-center justify-center h-full">
         <div class="text-white">Loading data...</div>
       </div>
-      <!-- <div v-else-if="hasError" class="flex items-center justify-center h-full">
-        <div class="text-red-400">{{ store.state.error }}</div>
-      </div> -->
       <div v-else="previewData" class="h-full">
         <ProjectsGithub :data="previewData" />
       </div>
-      <!-- <div v-else class="flex items-center justify-center h-full">
-        <div class="text-white">No data available</div>
-      </div> -->
     </div>
   </div>
 </template>

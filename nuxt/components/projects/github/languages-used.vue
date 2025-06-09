@@ -1,20 +1,12 @@
 <script setup lang="ts">
-// i think we don't need this to import
-// import "~/css/github-markdown-dark.css";
 import type { GitHubLanguagesType } from "~/types/github";
 
 const props = defineProps<{
   repoName: String;
   languageData: GitHubLanguagesType;
 }>();
-
 const { githubBaseURL } = useRuntimeConfig().public;
 
-// const languagesBytesOnePercentage = computed(() => {
-//   return (
-//     Object.values(props.languageData).reduce((acc, curr) => acc + curr, 0) / 100
-//   );
-// });
 const languagesBytesOnePercentage = computed(() => {
   if (!props.languageData || Object.keys(props.languageData).length === 0) {
     return 0;
@@ -36,7 +28,7 @@ const languagesBytesOnePercentage = computed(() => {
     <div class="BorderGrid-cell text-[#f0f6fc] py-4">
       <h2 class="h4 mb-3 text-lg font-semibold">Languages</h2>
       <div class="mb-2 rounded-full">
-        <span class="flex rounded-full">
+        <span class="flex rounded-full overflow-hidden">
           <span
             v-for="(bytes, language) in languageData"
             :key="language"

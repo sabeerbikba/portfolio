@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { hierarchy, pack, type HierarchyCircularNode } from "d3-hierarchy";
-import tools, { type ToolsType } from "~/data/tools";
+import tools from "~/data/tools";
+import type { ToolsType } from "~/data/tools";
 
 // Inspiration URL: https://tanstack.com/query/latest
-// Source URL: https://github.com/TanStack/tanstack.com/blob/ee943e214df6f132a70120014096ed72775dee4b/app/components/ToolsPack.tsx   
-
-// suggestion: Add structured data (<script type="application/ld+json">) or meta description so bots get richer info.
+// Source URL: https://github.com/TanStack/tanstack.com/blob/ee943e214df6f132a70120014096ed72775dee4b/app/components/ToolsPack.tsx
 
 export type CircleData = {
   x: number;
@@ -55,7 +54,7 @@ function computeD3Layout(tools: ToolsType[], size: number): CircleData[] {
         data: node.data as ToolsType,
       })
     );
-};
+}
 
 const getTooltipClasses = (x: number, y: number): string[] => {
   const tooltipX = x > width.value / 2 ? "left" : "right";
@@ -81,29 +80,40 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="max-w-[1000px] mx-auto aspect-square" ref="container">
+  <div
+    class="max-w-[1000px] aspect-square lg:mx-auto max-xl:mx-10 max-md:mx-8 max-xs:mx-5"
+    ref="container"
+  >
     <!-- TODO: Need to add animation when in hydration -->
     <!-- <div class="center w-full h-full">
         <div class="relative center loader" />
       </div> -->
     <div class="w-full h-full relative">
-      <div v-for="(circle, i) in circles" :key="`circle-${i}`"
+      <div
+        v-for="(circle, i) in circles"
+        :key="`circle-${i}`"
         class="transition-all duration-200 ease-in-out will-change-transform group hover:scale-110 hover:z-10 absolute shadow-lg bg-white rounded-full z-0 border-[0.5px]"
         :style="{
           left: `${circle.x - circle.r}px`,
           top: `${circle.y - circle.r}px`,
           width: `${circle.r * 2}px`,
           height: `${circle.r * 2}px`,
-        }">
-        <div v-if="circle.data.imageUrl.startsWith('<svg')"
+        }"
+      >
+        <div
+          v-if="circle.data.imageUrl.startsWith('<svg')"
           class="absolute bg-no-repeat bg-center bg-contain rounded-full w-[95%] h-[95%] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-          v-html="circle.data.imageUrl" />
-        <div v-else
+          v-html="circle.data.imageUrl"
+        />
+        <div
+          v-else
           class="absolute bg-no-repeat bg-center bg-contain rounded-full w-[95%] h-[95%] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-          :style="{ backgroundImage: `url(${circle.data.imageUrl})` }" />
+          :style="{ backgroundImage: `url(${circle.data.imageUrl})` }"
+        />
         <div
           class="transition-opacity duration-300 ease-in-out absolute z-50 text-sm bg-gray-800 text-white p-2 pointer-events-none transform opacity-0 group-hover:opacity-100 shadow-xl rounded-lg flex flex-col items-center"
-          :class="getTooltipClasses(circle.x, circle.y)">
+          :class="getTooltipClasses(circle.x, circle.y)"
+        >
           <p class="whitespace-nowrap font-bold z-20 relative">
             {{ circle.data.name }}
           </p>
@@ -112,7 +122,6 @@ onMounted(() => {
     </div>
   </div>
 </template>
-
 
 <style>
 .loader::before,
