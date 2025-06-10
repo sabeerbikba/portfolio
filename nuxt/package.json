@@ -21,7 +21,6 @@
     "motion-v": "^0.13.0",
     "numeral": "^2.0.6",
     "nuxt": "^3.16.1",
-    "pinia": "^2.3.1",
     "tailwind-merge": "^2.6.0",
     "vue": "latest",
     "vue-router": "latest"

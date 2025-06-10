@@ -99,7 +99,6 @@ onMounted(async () => {
 const isWebsiteComponentHidden = computed(() => store.state.previewApp !== 3);
 const isGithubComponentVisible = computed(() => store.state.previewApp === 5);
 const previewData = computed<ProjectDataType | undefined>(() => {
-  if (store.state.data.length === 0) return undefined;
   const index = store.state.previewProject - 1;
   return store.state.data[index];
 });

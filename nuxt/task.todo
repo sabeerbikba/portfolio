@@ -30,21 +30,17 @@
 - tools-pack.client.vue component generating some random styles 
 - repo overview in project there is icon.vue component can i use that component within octiocons-icon component
 - is <script type="application/ld+json"> needed because that data allready in page 
-- need to add page transition: https://nuxt.com/docs/getting-started/transitions
 - need to optimze images in page it can be converting or using <NuxtImg /> component https://nuxt.com/docs/api/components/nuxt-img 
 - project section also need to be server render specially about and don't use v-if for render because it compoletely remove the element
-- need to add 404 page because it using nuxt default page 
-- /contact scroll down hide back button not working 
 - i think need to use front-end fallback error component in projects showcase 
 - show animation when screen change in project section  
+
+- github fallback not working when 403 error
+- projects github readme.md not looking good in smaler screen 
+    - i think solution is make font smaller
 
 - - LightHouse imporvments
 - add title and other seo tags 
 - need to creat image for seo meta tags
 - after generating in sever on meta tags working fine // TODO:
 - test in https://search.google.com/test/rich-results after deployhed // TODO:
-
-- problem in 
-    - info-card.vue
-    - languages-used.vue
-    - repository-overview.vue:81

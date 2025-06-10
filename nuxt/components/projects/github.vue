@@ -36,11 +36,14 @@ const repoName = computed<string>(
 );
 
 const isDataAvailable = computed<boolean>(
-  () => props.data?.repoDetails !== undefined || props.data !== undefined
+  () =>
+    props.data?.repoDetails !== undefined ||
+    Object.values(props.data ?? {}).some((val) => val !== undefined)
 );
 const isReadmeAvailable = isAvailable(readme);
 const isGithubContributorsAvailable = isAvailable(contributors);
 const isGithubLanguagesUsedAvailable = isAvailable(languages);
+log(["sabeer bikba"]);
 </script>
 
 <template>

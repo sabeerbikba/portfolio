@@ -13,23 +13,23 @@ type ContactInfoType = {
 
 const { baseUrl } = useRuntimeConfig().public;
 
-  useSeoMeta({
-    robots: "index, follow",
-    title: seoMetaMap.contact.title,
-    description: seoMetaMap.contact.description,
-    keywords: seoMetaMap.contact.keywords,
+useSeoMeta({
+  robots: "index, follow",
+  title: seoMetaMap.contact.title,
+  description: seoMetaMap.contact.description,
+  keywords: seoMetaMap.contact.keywords,
 
-    ogTitle: seoMetaMap.contact.title,
-    ogDescription: seoMetaMap.contact.description,
-    // ogImage: ,
-    ogUrl: baseUrl + 'contact',
-    ogType: "website",
+  ogTitle: seoMetaMap.contact.title,
+  ogDescription: seoMetaMap.contact.description,
+  // ogImage: ,
+  ogUrl: baseUrl + "contact",
+  ogType: "website",
 
-    twitterCard: "summary_large_image",
-    twitterTitle: seoMetaMap.contact.title,
-    twitterDescription: seoMetaMap.contact.description,
-    // twitterImage: ,
-  });
+  twitterCard: "summary_large_image",
+  twitterTitle: seoMetaMap.contact.title,
+  twitterDescription: seoMetaMap.contact.description,
+  // twitterImage: ,
+});
 
 let interval: number | undefined;
 const lastScrollY = ref(0);
@@ -69,14 +69,19 @@ watchEffect(() => {
   }
 });
 
+const handleScroll = () => {
+  const currentY = window.scrollY;
+  scrollDir.value = currentY > lastScrollY.value ? "down" : "up";
+  lastScrollY.value = currentY;
+};
+
+onMounted(() => {
+  window.addEventListener("scroll", handleScroll);
+});
+
 onUnmounted(() => {
   clearInterval(interval);
-
-  window.addEventListener("scroll", () => {
-    const currentY = window.scrollY;
-    scrollDir.value = currentY > lastScrollY.value ? "down" : "up";
-    lastScrollY.value = currentY;
-  });
+  window.removeEventListener("scroll", handleScroll);
 });
 </script>
 

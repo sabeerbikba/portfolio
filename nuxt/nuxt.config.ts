@@ -6,7 +6,7 @@ export default defineNuxtConfig({
   modules: ["@nuxtjs/tailwindcss", "motion-v/nuxt", "@nuxt/icon"],
   runtimeConfig: {
     public: {
-      // TODO: rename baseUrl to baseURL 
+      // TODO: rename baseUrl to baseURL
       baseUrl: process.env.VERCEL_URL
         ? `https://${process.env.VERCEL_URL}/`
         : "https://sabeerbikba.vercel.app/",

@@ -17,9 +17,9 @@ const props = defineProps<{
 }>();
 
 const isHoveredWebsiteLink = ref<boolean>(false);
-// const { githubBaseURL } = useRuntimeConfig().public;
+const { githubBaseURL } = useRuntimeConfig().public;
 // const { githubBaseURL }: { githubBaseURL: string } = useRuntimeConfig().public;
-const githubBaseURL: string = useRuntimeConfig().public.githubBaseURL;
+// const githubBaseURL: string = useRuntimeConfig().public.githubBaseURL;
 
 // TODO: give Types
 const full_name = computed(() => props.repoData?.full_name);
@@ -43,31 +43,31 @@ const stats = computed<
   {
     href: `${full_name.value}/stargazers`,
     icon: "star",
-    count: stargazers_count.value,
+    count: stargazers_count.value ?? null,
     what: "stars",
   },
   {
     href: `${full_name.value}/forks`,
     icon: "repo-forked",
-    count: forks_count.value,
+    count: forks_count.value ?? null,
     what: "forks",
   },
   {
     href: `${full_name.value}/watchers`,
     icon: "eye",
-    count: subscribers_count.value,
+    count: subscribers_count.value ?? null,
     what: "watching",
   },
   {
     href: `${full_name.value}/branches`,
     icon: "git-branch",
-    count: props.branchData.length,
+    count: props.branchData?.length ?? null,
     what: "Branch",
   },
   {
     href: `${full_name.value}/tags`,
     icon: "tag",
-    count: props.tagData.length,
+    count: props.tagData?.length ?? null,
     what: "Tags",
   },
   {
