@@ -5,8 +5,12 @@ defineProps<{ previewProject: number; previewApp: number }>();
 <template>
   <div class="text-black bg-[#191919]" :hidden="previewApp !== 4">
     <div class="notes-body max-w-prose mx-auto p-6">
-      <ProjectsAboutDevtools v-if="previewProject === 1" />
-      <ProjectsAboutRickshaw v-else />
+      <ProjectsAboutDevtools
+        :style="{ display: previewProject === 1 ? 'block' : 'none' }"
+      />
+      <ProjectsAboutRickshaw
+        :style="{ display: previewProject === 1 ? 'none' : 'block' }"
+      />
     </div>
   </div>
 </template>

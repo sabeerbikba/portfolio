@@ -1,4 +1,5 @@
-const githubProfileName = "sabeerbikba";
+// TODO: button.ts or projects.ts which one
+const githubProfileName: string = "sabeerbikba";
 
 type DataType = {
   // TODO: rename title to name or project
@@ -18,7 +19,7 @@ const projects: ProjectType[] = [
     // 1
     title: "Dev.tools",
     repo: `${githubProfileName}/dev.tools`,
-    icon: "/images/dev-tools-icon.webp",
+    icon: "/images/project-dev-tools-icon.webp",
     website: "https://devtools-sabeerbikba.vercel.app/",
     about: "A collection of useful developer tools built with React.",
   },
@@ -26,7 +27,7 @@ const projects: ProjectType[] = [
     // 2
     title: "Rickshaw",
     repo: `${githubProfileName}/rickshaw`,
-    icon: "/images/rickshaw-icon.webp",
+    icon: "/images/project-rickshaw-icon.webp",
     website: "https://honnavarrickshawservice.vercel.app/",
     about:
       "An open-source project for tourist contact info, featuring a rickshaw-themed design.",
@@ -37,17 +38,17 @@ const apps: DataType[] = [
   {
     // 3
     title: "Website",
-    icon: "/images/app-chromium.webp",
+    icon: "/images/app-website-icon.webp",
   },
   {
     // 4
     title: "About",
-    icon: "/images/app-about.webp",
+    icon: "/images/app-about-icon.webp",
   },
   {
     // 6
-    title: "GitHub",
-    icon: "/images/app-github.webp",
+    title: "Github",
+    icon: "/images/app-github-icon.webp",
   },
 ];
 

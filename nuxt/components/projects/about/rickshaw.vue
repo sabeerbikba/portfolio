@@ -6,8 +6,9 @@
       tourists traveling in rickshaws. The project was initially created as a
       request from a family member, blending utility with creative design.
       Available in the GitHub repository
-      <UiExternalLink href="http://github.com/sabeerbikba/rickshaw">sabeerbikba/rickshaw</UiExternalLink>, this project
-      aims to deliver a simple yet effective solution tailored
+      <UiExternalLink href="http://github.com/sabeerbikba/rickshaw"
+        >sabeerbikba/rickshaw</UiExternalLink
+      >, this project aims to deliver a simple yet effective solution tailored
       to a tourist audience.
     </p>
     <p>
@@ -35,17 +36,23 @@
         </UiExternalLink>
       </li>
       <li>
-        <UiExternalLink href="https://honnavarrickshawservice.vercel.app/about-me">
+        <UiExternalLink
+          href="https://honnavarrickshawservice.vercel.app/about-me"
+        >
           <strong>About Me Page</strong>
         </UiExternalLink>
       </li>
       <li>
-        <UiExternalLink href="https://honnavarrickshawservice.vercel.app/gallery">
+        <UiExternalLink
+          href="https://honnavarrickshawservice.vercel.app/gallery"
+        >
           <strong>Gallery Page</strong>
         </UiExternalLink>
       </li>
       <li>
-        <UiExternalLink href="https://honnavarrickshawservice.vercel.app/contact">
+        <UiExternalLink
+          href="https://honnavarrickshawservice.vercel.app/contact"
+        >
           <strong>Contact Page</strong>
         </UiExternalLink>
       </li>

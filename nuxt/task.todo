@@ -38,6 +38,12 @@
 - github fallback not working when 403 error
 - projects github readme.md not looking good in smaler screen 
     - i think solution is make font smaller
+- need to use v-show instead of v-if
+- entire project section need to be render except github (dynamic)
+    - show to boot this content is simmilar as specific link
+- add seo labels
+- in about section can be used atob btoa with md to make plain text and convet to normal html like [readme-shadow-container.vue]
+- use clean code when using display using v-show
 
 - - LightHouse imporvments
 - add title and other seo tags 

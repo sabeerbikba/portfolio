@@ -77,12 +77,12 @@ onMounted(() => {
     </div>
     <div class="p-4">
       <ProjectsGithubRepositoryOverviewReadmeShadowContainer
-        v-if="previewTab === 'README' && readmeData"
+        v-show="previewTab === 'README' && readmeData"
         :readmeData="readmeData"
         :repoName="repoName"
       />
       <ProjectsGithubRepositoryOverviewLicenseDisplay
-        v-if="previewTab === 'MIT License' && licenseData"
+        v-show="previewTab === 'MIT License' && licenseData"
         :licenseData="licenseData"
       />
     </div>

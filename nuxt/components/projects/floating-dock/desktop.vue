@@ -1,22 +1,21 @@
 <script setup lang="ts">
-import { projects } from "~/data/projects";
-import { apps } from "~/data/projects";
 import { useElementVisibility } from "@vueuse/core";
 import { Motion } from "@oku-ui/motion";
+import { apps } from "~/data/projects";
+import { projects } from "~/data/projects";
 import { useMotionValue } from "motion-v";
 import type { ScreenStoreType } from "~/types/store";
 
 defineProps({ hidden: Boolean });
-
 const store = inject("store") as ScreenStoreType;
 
 let timer: NodeJS.Timeout | null = null;
-const inViewRef = ref(null);
-const mouseX = useMotionValue(Infinity);
-const isHovered = ref(false);
-const isVisible = ref(false);
-const elementVisible = useElementVisibility(inViewRef);
-const inView = computed(() => elementVisible.value);
+const inViewRef = ref<HTMLDivElement | null>(null);
+const mouseX = useMotionValue<number>(Infinity);
+const isHovered = ref<boolean>(false);
+const isVisible = ref<boolean>(false);
+const elementVisible: Ref<boolean> = useElementVisibility(inViewRef);
+const inView = computed<boolean>(() => elementVisible.value);
 
 watch([isHovered], ([hovered]) => {
   if (hovered) {
@@ -70,7 +69,6 @@ onUnmounted(() => clearTimer());
   <div
     class="w-full flex items-center absolute top-[35.50rem] z-10"
     :style="{ display: hidden ? 'none' : 'flex' }"
-    v-show="!hidden"
   >
     <Motion
       as="div"
@@ -83,9 +81,12 @@ onUnmounted(() => clearTimer());
         width: isVisible ? 'auto' : '120px',
         y: isVisible ? -58 : 0,
       }"
-      class="max-w-80 mx-auto gap-2 bg-[rgba(255,255,255,0.4)] w-auto m-auto rounded-lg px-2.5 inline-flex items-center"
+      class="max-w-80 mx-auto gap-2 bg-[rgba(255,255,255,0.4)] w-auto m-auto rounded-lg inline-flex items-center"
     >
-      <template v-if="isVisible">
+      <div
+        v-show="isVisible"
+        class="max-w-80 mx-auto gap-2 w-auto rounded-lg px-2.5 inline-flex items-center"
+      >
         <ProjectsFloatingDockDesktopIconContainer
           v-for="(item, id) in projects"
           :key="item.title"
@@ -98,7 +99,12 @@ onUnmounted(() => clearTimer());
             () => store.dispatch({ type: 'TOGGLE_PROJECT', payload: id + 1 })
           "
         />
-        <div class="border-x-[1.9px] border-gray-700 rounded-2xl h-8"></div>
+        <div
+          role="separator"
+          aria-orientation="vertical"
+          aria-hidden="true"
+          class="border-x-[1.9px] border-gray-700 rounded-2xl h-8"
+        />
         <ProjectsFloatingDockDesktopIconContainer
           v-for="(item, id) in apps"
           :key="item.title"
@@ -115,7 +121,7 @@ onUnmounted(() => clearTimer());
               })
           "
         />
-      </template>
+      </div>
     </Motion>
   </div>
 </template>

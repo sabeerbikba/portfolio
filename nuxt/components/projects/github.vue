@@ -43,7 +43,6 @@ const isDataAvailable = computed<boolean>(
 const isReadmeAvailable = isAvailable(readme);
 const isGithubContributorsAvailable = isAvailable(contributors);
 const isGithubLanguagesUsedAvailable = isAvailable(languages);
-log(["sabeer bikba"]);
 </script>
 
 <template>

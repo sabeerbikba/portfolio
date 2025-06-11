@@ -116,9 +116,10 @@ const isLoading = computed(() => store.state.isLoading);
     />
     <div v-show="isGithubComponentVisible" class="bg-[#0d1117] h-full">
       <div v-if="isLoading" class="flex items-center justify-center h-full">
+        <!-- i think better to use animation that is used in hirechy tools-pack -->
         <div class="text-white">Loading data...</div>
       </div>
-      <div v-else="previewData" class="h-full">
+      <div v-else class="h-full">
         <ProjectsGithub :data="previewData" />
       </div>
     </div>

@@ -19,6 +19,9 @@ const props = defineProps<{
 const iconRef = ref<HTMLDivElement | null>(null);
 const hovered = ref(false);
 const isButtonVisible = computed(() => !props.isHovered && props.isSelected);
+const isProjectOrApp = computed<string>(() =>
+  ["Website", "About", "Github"].includes(props.title) ? "app" : "project"
+);
 
 const distance = computed(() => {
   return useTransform(props.mouseX, (val) => {
@@ -81,22 +84,28 @@ watchEffect(() => {
 </script>
 
 <template>
-  <MotionV
-    :style="{ width, height }"
-    @mouseenter="hovered = true"
-    @mouseleave="hovered = false"
+  <button
+    type="button"
+    role="button"
+    ref="iconRef"
+    :aria-label="`Navigate to ${title} ${isProjectOrApp}`"
+    class="aspect-square rounded-xl bg-transparent"
+    @click="onClick && onClick($event)"
   >
-    <div
-      ref="iconRef"
-      class="aspect-square rounded-xl bg-transparent"
-      @click="onClick && onClick($event)"
-      role="button"
+    <MotionV
+      :style="{ width, height }"
+      @mouseenter="hovered = true"
+      @mouseleave="hovered = false"
     >
       <Motion
-        v-if="hovered"
+        as="div"
+        role="tooltip"
         :initial="{ opacity: 0, y: 10, x: '-50%' }"
-        :animate="{ opacity: 1, y: -10, x: '-50%' }"
-        :exit="{ opacity: 0, y: 2, x: '-50%' }"
+        :animate="
+          hovered
+            ? { opacity: 1, y: -10, x: '-50%' }
+            : { opacity: 0, y: 2, x: '-50%' }
+        "
         class="px-2 py-0.5 whitespace-pre rounded-md bg-gray-100 border border-gray-200 text-neutral-700 absolute left-1/2 -translate-x-1/2 -top-8 w-fit text-xs"
       >
         {{ title }}
@@ -111,15 +120,16 @@ watchEffect(() => {
       >
         <img
           :src="icon"
-          alt="icon"
+          :alt="`${title} ${icon}`"
           width="100%"
           height="100%"
           loading="eager"
+          decoding="async"
         />
       </Motion>
-      <div v-if="isButtonVisible" class="center mt-0.5">
+      <div v-show="isButtonVisible" aria-hidden="true" class="center mt-0.5">
         <span class="h-1 w-1 rounded-2xl bg-slate-500 mix-blend-color" />
       </div>
-    </div>
-  </MotionV>
+    </MotionV>
+  </button>
 </template>

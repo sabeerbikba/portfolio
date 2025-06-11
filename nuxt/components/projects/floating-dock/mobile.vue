@@ -52,8 +52,9 @@ onUnmounted(() => {
         :transition="{ duration: 0.3, ease: 'easeInOut' }"
         className="flex pl-1 w-[190px] h-[200px] absolute top-[-75px] right-[-12px] rounded-[50px_160px_160px_50px] !bg-[linear-gradient(90deg,_rgba(255,255,255,0.3)_0%,_rgba(255,255,255,0.01)_100%)] text-white"
       >
-        <!-- Column 1 -->
-        <div class="w-1/3 h-full py-[9px] border-white">
+        <!-- code repeatative can be make it samller column to 3 -->
+        <!-- Column 1: Apps -->
+        <div class="w-1/3 h-full py-[9px]">
           <button
             v-for="(project, id) in projects"
             :key="project.title"
@@ -72,8 +73,8 @@ onUnmounted(() => {
             />
           </button>
         </div>
-        <!-- Column 2 -->
-        <div class="w-1/3 h-full py-[9px] border-white">
+        <!-- Column 2: Projects -->
+        <div class="w-1/3 h-full py-[9px]">
           <button
             v-for="(app, id) in apps"
             :key="app.title"
@@ -97,11 +98,12 @@ onUnmounted(() => {
             />
           </button>
         </div>
-        <!-- Column 3 -->
-        <div class="w-1/3 h-full border-white"></div>
+        <!-- Column 3: Empty -->
+        <div class="w-1/3 h-full" />
       </Motion>
     </MotionPresence>
 
+    <!-- using as button or give seo idea  -->
     <Motion
       as="button"
       @click="toggleDock"
@@ -115,9 +117,9 @@ onUnmounted(() => {
       }"
       :transition="{ duration: 0.3, ease: 'backIn' }"
     >
-      <template v-if="showContent">
+      <div v-show="showContent">
         <ProjectsFloatingDockMobileRingSpan
-          v-if="!open"
+          :style="{ display: !open ? 'flex' : 'none' }"
           :wh="30"
           :bgColor="`#525F65`"
         >
@@ -125,11 +127,14 @@ onUnmounted(() => {
             <ProjectsFloatingDockMobileRingSpan :wh="12" :bgColor="`#FCFFFF`" />
           </ProjectsFloatingDockMobileRingSpan>
         </ProjectsFloatingDockMobileRingSpan>
-        <div v-else class="relative w-7 h-7 left-[7px]">
+        <div
+          :style="{ display: open ? 'block' : 'none' }"
+          class="relative w-7 h-7 left-[10px]"
+        >
           <div class="absolute inset-0 rotate-45 w-1 rounded-sm bg-gray-700" />
           <div class="absolute inset-0 -rotate-45 w-1 rounded-sm bg-gray-700" />
         </div>
-      </template>
+      </div>
     </Motion>
   </div>
 </template>
