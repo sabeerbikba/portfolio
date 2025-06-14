@@ -30,10 +30,10 @@ if (
   markdown.value = atob(props.readmeData.content);
 }
 
-const processMarkdown = async (): Promise<void> => {
+const processMarkdown = () => {
   if (!markdown.value || !hostRef.value) return;
 
-  const htmlContent = await marked.parse(markdown.value);
+  const htmlContent = marked.parse(markdown.value, { async: false });
   const shadowRoot =
     hostRef.value.shadowRoot || hostRef.value.attachShadow({ mode: "open" });
   const tempDiv = document.createElement("div");

@@ -1,4 +1,4 @@
-// social-media links
+// TODO: need to add social-media links
 
 type QuickLinkType = {
   label: string;
@@ -7,9 +7,9 @@ type QuickLinkType = {
 
 type ProjectLinkType = {
   website: string;
-  title: string;
+  name: string;
   icon?: string;
-  about?: string;
+  descreption?: string;
 };
 
 export type { QuickLinkType, ProjectLinkType };

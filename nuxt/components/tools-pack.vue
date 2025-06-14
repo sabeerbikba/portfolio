@@ -86,7 +86,7 @@ onMounted(() => {
   >
     <!-- TODO: Need to add animation when in hydration -->
     <!-- <div class="center w-full h-full">
-        <div class="relative center loader" />
+        <div class="relative center loader-tools-pack" />
       </div> -->
     <div class="w-full h-full relative">
       <div
@@ -123,9 +123,10 @@ onMounted(() => {
   </div>
 </template>
 
-<style>
-.loader::before,
-.loader::after {
+<!-- <style>
+/* Don't remove */
+.loader-tools-pack::before,
+.loader-tools-pack::after {
   position: absolute;
   content: "";
   height: 8em;
@@ -135,7 +136,7 @@ onMounted(() => {
   animation: loader_79178 2s linear infinite;
 }
 
-.loader::after {
+.loader-tools-pack::after {
   opacity: 0;
   animation-delay: 1s;
 }
@@ -153,4 +154,4 @@ onMounted(() => {
     opacity: 0;
   }
 }
-</style>
+</style> -->

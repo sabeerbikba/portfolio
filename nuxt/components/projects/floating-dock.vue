@@ -1,23 +1,10 @@
-<script setup lang="ts">
-const isMediumScreen = ref(false);
-
-const handleResize = () => {
-  isMediumScreen.value = window.matchMedia("(min-width: 768px)").matches;
-};
-
-onMounted(() => {
-  handleResize();
-  window.addEventListener("resize", handleResize);
-});
-
-onUnmounted(() => {
-  window.removeEventListener("resize", handleResize);
-});
-</script>
-
 <template>
-  <div class="relative">
-    <ProjectsFloatingDockDesktop :hidden="!isMediumScreen" />
-    <ProjectsFloatingDockMobile :hidden="isMediumScreen" />
+  <div class="relative" aria-describedby="navigation-desc">
+    <p id="navigation-desc" class="sr-only">
+      Contains both desktop and mobile projects navigation components. Only one
+      is visible based on screen size.
+    </p>
+    <ProjectsFloatingDockDesktop class="max-md:hidden" />
+    <ProjectsFloatingDockMobile class="md:hidden" />
   </div>
 </template>

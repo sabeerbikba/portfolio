@@ -11,7 +11,10 @@ import type {
   ProjectDataType,
 } from "~/types/github";
 
-const props = defineProps<{ data: ProjectDataType | undefined }>();
+const props = defineProps<{
+  data: ProjectDataType | undefined;
+  isLoading: boolean;
+}>();
 const store = inject("store") as ScreenStoreType;
 
 const getComputedProp = <T>(key: keyof NonNullable<ProjectDataType>) => {
@@ -43,37 +46,53 @@ const isDataAvailable = computed<boolean>(
 const isReadmeAvailable = isAvailable(readme);
 const isGithubContributorsAvailable = isAvailable(contributors);
 const isGithubLanguagesUsedAvailable = isAvailable(languages);
+const isGithubComponentVisible = computed(() => store.state.previewApp === 5);
 </script>
 
 <template>
-  <div v-if="isDataAvailable">
-    <ProjectsGithubInfoCard
-      :repoData="repoDetails"
-      :branchData="branches"
-      :tagData="tags"
-      :hasReadme="isReadmeAvailable"
-    />
-    <div class="px-4 bg-[#0d1117]">
-      <ProjectsGithubRepositoryOverview
-        v-if="readme || license"
-        :readmeData="readme"
-        :licenseData="license"
-        :repoName="repoName"
+  <div v-show="isGithubComponentVisible" class="bg-[#0d1117] h-full">
+    <div v-if="isLoading" class="center w-full h-full">
+      <span
+        v-for="(bar, i) in 3"
+        :key="i"
+        :class="[
+          'inline-block w-[3px] h-[20px] rounded-[10px] bg-white/50 animate-scale-up4',
+          i === 1 && 'h-[35px] mx-[5px] [animation-delay:0.25s]',
+          i === 2 && '[animation-delay:0.5s]',
+        ]"
       />
-      <ProjectsGithubContributors
-        v-if="isGithubContributorsAvailable"
-        :contributorData="contributors"
-        :repoName="repoName"
-      />
-      <ProjectsGithubLanguagesUsed
-        v-if="isGithubLanguagesUsedAvailable"
-        :languageData="languages"
+    </div>
+    <div v-else class="h-full">
+      <div v-if="isDataAvailable">
+        <ProjectsGithubInfoCard
+          :repoData="repoDetails"
+          :branchData="branches"
+          :tagData="tags"
+          :hasReadme="isReadmeAvailable"
+        />
+        <div class="px-4 bg-[#0d1117]">
+          <ProjectsGithubRepositoryOverview
+            v-if="readme || license"
+            :readmeData="readme"
+            :licenseData="license"
+            :repoName="repoName"
+          />
+          <ProjectsGithubContributors
+            v-if="isGithubContributorsAvailable"
+            :contributorData="contributors"
+            :repoName="repoName"
+          />
+          <ProjectsGithubLanguagesUsed
+            v-if="isGithubLanguagesUsedAvailable"
+            :languageData="languages"
+            :repoName="repoName"
+          />
+        </div>
+      </div>
+      <ProjectsScreenFallbackGithubUi
+        v-if="!isDataAvailable"
         :repoName="repoName"
       />
     </div>
   </div>
-  <ProjectsScreenFallbackGithubUi
-    v-if="!isDataAvailable"
-    :repoName="repoName"
-  />
 </template>

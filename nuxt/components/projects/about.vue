@@ -1,16 +1,38 @@
 <script setup lang="ts">
-defineProps<{ previewProject: number; previewApp: number }>();
+import { marked } from "marked";
+import { projects } from "~/data/projects";
+import type { ScreenStoreType } from "~/types/store";
+
+const store = inject("store") as ScreenStoreType;
+
+const processMarkdown = (base64: string) => {
+  const markdown = atob(base64);
+  const html = marked.parse(markdown, { async: false });
+
+  const withAttrs = html.replace(
+    /<a\s/g,
+    '<a target="_blank" rel="noopener noreferrer" '
+  );
+
+  // Fix invalid <a><p></p></a> from marked caused by using withAttrs to add target/rel
+  const fixedStructure = withAttrs.replace(
+    /<a([^>]+)>\s*<p>(.*?)<\/p>\s*<\/a>/gi,
+    "<a$1>$2</a>"
+  );
+
+  return fixedStructure;
+};
 </script>
 
 <template>
-  <div class="text-black bg-[#191919]" :hidden="previewApp !== 4">
+  <div class="text-black bg-[#191919]" v-show="store.state.previewApp === 4">
     <div class="notes-body max-w-prose mx-auto p-6">
-      <ProjectsAboutDevtools
-        :style="{ display: previewProject === 1 ? 'block' : 'none' }"
-      />
-      <ProjectsAboutRickshaw
-        :style="{ display: previewProject === 1 ? 'none' : 'block' }"
-      />
+      <template v-for="({ aboutHtmlBase64 }, index) in projects" :key="index">
+        <div
+          v-show="store.state.previewProject === index + 1"
+          v-html="processMarkdown(aboutHtmlBase64)"
+        />
+      </template>
     </div>
   </div>
 </template>
@@ -29,7 +51,7 @@ defineProps<{ previewProject: number; previewApp: number }>();
 }
 
 .notes-body p {
-  @apply text-base leading-relaxed mb-5 text-[#cecece];
+  @apply text-base leading-relaxed mb-5 text-[#cecece] indent-2;
 }
 
 .notes-body a {

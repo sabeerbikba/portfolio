@@ -97,31 +97,24 @@ onMounted(async () => {
 });
 
 const isWebsiteComponentHidden = computed(() => store.state.previewApp !== 3);
-const isGithubComponentVisible = computed(() => store.state.previewApp === 5);
-const previewData = computed<ProjectDataType | undefined>(() => {
+// const isGithubComponentVisible = computed(() => store.state.previewApp === 5);
+const githubPreviewData = computed<ProjectDataType | undefined>(() => {
   const index = store.state.previewProject - 1;
   return store.state.data[index];
 });
 
-const isLoading = computed(() => store.state.isLoading);
+const isGithubPreviewDataLoading = computed(() => store.state.isLoading);
 </script>
 
 <template>
   <ProjectsFloatingDock />
   <div class="h-full w-full overflow-auto scroll">
+    <!-- better hidden not visible if possible -->
     <ProjectsWebsite :hidden="isWebsiteComponentHidden" />
-    <ProjectsAbout
-      :preview-project="store.state.previewProject"
-      :preview-app="store.state.previewApp"
+    <ProjectsAbout />
+    <ProjectsGithub
+      :data="githubPreviewData"
+      :isLoading="isGithubPreviewDataLoading"
     />
-    <div v-show="isGithubComponentVisible" class="bg-[#0d1117] h-full">
-      <div v-if="isLoading" class="flex items-center justify-center h-full">
-        <!-- i think better to use animation that is used in hirechy tools-pack -->
-        <div class="text-white">Loading data...</div>
-      </div>
-      <div v-else class="h-full">
-        <ProjectsGithub :data="previewData" />
-      </div>
-    </div>
   </div>
 </template>

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { Motion } from "@oku-ui/motion";
 import localIcons from "~/data/icons";
 import seoMetaMap from "~/data/seo";
 
@@ -129,35 +128,22 @@ const aboutSectionParagraphs: string[] = [
           Let&apos;s connect and bring your ideas to reality. Get in touch
           today!
         </p>
-        <Motion
-          :hover="{ scale: 1.05 }"
-          :press="{ scale: 0.95 }"
-          class="mt-8"
-          tabIndex="-1"
+        <div
+          class="mt-8 transition-transform duration-200 hover:scale-105 active:scale-95"
+          tabindex="-1"
         >
           <NuxtLink
             to="/contact"
             class="inline-flex items-center justify-center text-base font-medium rounded-3xl text-white bg-black hover:bg-black/90 px-7 py-2 md:py-3 md:text-lg md:px-8"
           >
             Contact Me
-            <Motion
-              as="span"
-              class="ml-2"
-              :animate="{ x: [0, 5, 0] }"
-              :transition="{
-                repeat: Infinity,
-                duration: 1.5,
-                ease: 'easeInOut',
-              }"
+            <span
+              class="ml-2 animate-wiggle"
               v-html="localIcons.home.arrowRight"
-            >
-            </Motion>
+            />
           </NuxtLink>
-        </Motion>
+        </div>
       </div>
-      <!-- TODO: those two empty divs : purpose  -->
-      <!-- <div class="text-b"></div> -->
     </section>
   </div>
-  <!-- <div class="scale"></div> -->
 </template>

@@ -1,12 +1,10 @@
 <script setup lang="ts">
 import { useElementVisibility } from "@vueuse/core";
 import { Motion } from "@oku-ui/motion";
-import { apps } from "~/data/projects";
-import { projects } from "~/data/projects";
+import { projects, apps } from "~/data/projects";
 import { useMotionValue } from "motion-v";
 import type { ScreenStoreType } from "~/types/store";
 
-defineProps({ hidden: Boolean });
 const store = inject("store") as ScreenStoreType;
 
 let timer: NodeJS.Timeout | null = null;
@@ -67,12 +65,14 @@ onUnmounted(() => clearTimer());
 
 <template>
   <div
+    role="navigation"
+    aria-label="Desktop projects navigation"
     class="w-full flex items-center absolute top-[35.50rem] z-10"
-    :style="{ display: hidden ? 'none' : 'flex' }"
   >
     <Motion
       as="div"
       ref="inViewRef"
+      aria-hidden="false"
       @mouseenter="setIsHovered(true)"
       @mouseleave="handleMouseLeave"
       @mousemove="handleMouseMove"
@@ -85,14 +85,17 @@ onUnmounted(() => clearTimer());
     >
       <div
         v-show="isVisible"
+        role="group"
+        aria-label="Navigation Items"
         class="max-w-80 mx-auto gap-2 w-auto rounded-lg px-2.5 inline-flex items-center"
       >
         <ProjectsFloatingDockDesktopIconContainer
-          v-for="(item, id) in projects"
-          :key="item.title"
+          v-for="({ name, icon }, id) in projects"
+          :aria-current="id + 1 === store.state.previewProject ? 'page' : null"
+          :key="name"
           :mouseX="mouseX"
-          :title="item.title"
-          :icon="item.icon"
+          :title="name"
+          :icon="icon"
           :isSelected="id + 1 === store.state.previewProject"
           :isHovered="isHovered"
           @click="
@@ -106,11 +109,14 @@ onUnmounted(() => clearTimer());
           class="border-x-[1.9px] border-gray-700 rounded-2xl h-8"
         />
         <ProjectsFloatingDockDesktopIconContainer
-          v-for="(item, id) in apps"
-          :key="item.title"
+          v-for="({ name, icon }, id) in apps"
+          :aria-current="
+            id + 1 + projects.length === store.state.previewApp ? 'page' : null
+          "
+          :key="name"
           :mouseX="mouseX"
-          :title="item.title"
-          :icon="item.icon"
+          :title="name"
+          :icon="icon"
           :isSelected="id + 1 + projects.length === store.state.previewApp"
           :isHovered="isHovered"
           @click="

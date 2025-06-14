@@ -29,6 +29,21 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+
+      keyframes: {
+        wiggle: {
+          "0%, 100%": { transform: "translateX(0)" },
+          "50%": { transform: "translateX(5px)" },
+        },
+        "scale-up4": {
+          "20%": { transform: "scaleY(1.5)", backgroundColor: "#fff" },
+          "40%": { transform: "scaleY(1)" },
+        },
+      },
+      animation: {
+        wiggle: "wiggle 1.5s ease-in-out infinite",
+        "scale-up4": "scale-up4 1s linear infinite",
+      },
     },
   },
 

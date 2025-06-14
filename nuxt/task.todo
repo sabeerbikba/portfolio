@@ -44,6 +44,12 @@
 - add seo labels
 - in about section can be used atob btoa with md to make plain text and convet to normal html like [readme-shadow-container.vue]
 - use clean code when using display using v-show
+- can we do some 403 request not show on console
+- need to move log.ts in composable if it's good 
+- if failed to load website show error page or reload button 
+- scroll top of the home page and scroll right side see the problem
+- about and in github app readdme and license all the text need to match same size including h1 - h6 means all the text  
+- try every animation with css 
 
 - - LightHouse imporvments
 - add title and other seo tags 

@@ -47,12 +47,12 @@ useHead({
                 name: "Sabeer Bikba",
               },
               workExample: projectsObject.map(
-                ({ title, website, icon, about }: ProjectLinkType) => ({
+                ({ name, website, icon, descreption }: ProjectLinkType) => ({
                   "@type": "WebPage",
-                  name: title,
+                  name,
                   url: website,
                   image: icon,
-                  about,
+                  about: descreption,
                 })
               ),
             }),
@@ -73,6 +73,12 @@ useHead({
   ],
 });
 
+const convertToTitleCase = (input: string): string =>
+  input
+    .replace(/^\//, "")
+    .replace(/-/g, " ")
+    .replace(/\b\w/g, (char) => char.toUpperCase());
+
 const quickLinks: QuickLinkType[] = useNuxtApp()
   .$router.getRoutes()
   .filter((route) => route.path !== "/:catchAll(.*)")
@@ -83,9 +89,9 @@ const quickLinks: QuickLinkType[] = useNuxtApp()
   .reverse();
 
 const projects: QuickLinkType[] = projectsObject.map(
-  ({ website, title }: ProjectLinkType) => ({
+  ({ website, name }: ProjectLinkType) => ({
     href: website,
-    label: title,
+    label: name,
   })
 );
 </script>

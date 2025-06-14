@@ -19,6 +19,14 @@ const props = defineProps<{
 const iconRef = ref<HTMLDivElement | null>(null);
 const hovered = ref(false);
 const isButtonVisible = computed(() => !props.isHovered && props.isSelected);
+const tooltipId = computed<string>(
+  () =>
+    `tooltip-${props.title
+      .trim()
+      .toLowerCase()
+      .replace(/[\s.]+/g, "-")}`
+);
+// TODO: not a boolean value `is` not good here
 const isProjectOrApp = computed<string>(() =>
   ["Website", "About", "Github"].includes(props.title) ? "app" : "project"
 );
@@ -86,7 +94,7 @@ watchEffect(() => {
 <template>
   <button
     type="button"
-    role="button"
+    :aria-describedby="tooltipId"
     ref="iconRef"
     :aria-label="`Navigate to ${title} ${isProjectOrApp}`"
     class="aspect-square rounded-xl bg-transparent"
@@ -100,6 +108,7 @@ watchEffect(() => {
       <Motion
         as="div"
         role="tooltip"
+        :id="tooltipId"
         :initial="{ opacity: 0, y: 10, x: '-50%' }"
         :animate="
           hovered
@@ -120,7 +129,7 @@ watchEffect(() => {
       >
         <img
           :src="icon"
-          :alt="`${title} ${icon}`"
+          :alt="`${title} icon`"
           width="100%"
           height="100%"
           loading="eager"

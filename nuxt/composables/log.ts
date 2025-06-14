@@ -4,6 +4,8 @@ export default (
 ): void => {
   if (!import.meta.env.DEV) return;
   if (typeof window !== "undefined") {
-    onMounted(() => console[level](...logArgs));
+    // onMounted(() =>
+    console[level](...logArgs);
+    // );
   }
 };
