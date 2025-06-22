@@ -19,10 +19,10 @@ type GitHubFileContentType =
   | Endpoints["GET /repos/{owner}/{repo}/contents/{path}"]["response"]["data"]
   | undefined;
 
-type NullableGitHubFileContent = GitHubFileContentType | null;
+// type NullableGitHubFileContent = GitHubFileContentType | null;
+type NullableGitHubFileContent = GitHubFileContentType | null | undefined;
 
 type ProjectDataType = {
-  // projectIndex: number,
   repoDetails: GitHubRepositoryType;
   languages: GitHubLanguagesType;
   contributors: GitHubContributorType;

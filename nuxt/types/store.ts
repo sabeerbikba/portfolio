@@ -3,8 +3,7 @@ import type { ProjectDataType } from "./github";
 type ScreenStoreStateType = {
   previewProject: number;
   previewApp: number;
-  data: ProjectDataType[];
-  isLoading: boolean;
+  // data: ProjectDataType[];
 };
 
 type ScreenStoreActionType =

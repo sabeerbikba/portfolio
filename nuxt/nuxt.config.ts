@@ -2,7 +2,7 @@
 
 export default defineNuxtConfig({
   compatibilityDate: "2024-11-01",
-  devtools: { enabled: false },
+  devtools: { enabled: true },
   modules: ["@nuxtjs/tailwindcss", "motion-v/nuxt", "@nuxt/icon"],
   runtimeConfig: {
     public: {
@@ -26,10 +26,17 @@ export default defineNuxtConfig({
     },
   },
 
-  build: {
-    analyze: {
-      enabled: true,
-      mode: "static",
+  // build: {
+  //   analyze: {
+  //     enabled: true,
+  //     mode: "static",
+  //   },
+  // },
+
+  // TODO: TMP TMP
+  nitro: {
+    prerender: {
+      ignore: ["/LICENSE"],
     },
   },
 });

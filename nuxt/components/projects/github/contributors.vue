@@ -13,10 +13,7 @@ const contributors = computed<GitHubContributorType>(
 </script>
 
 <template>
-  <div
-    v-if="contributors.length || contributors !== undefined"
-    class="w-full text-[#f0f6fc] border-b border-[#3d444d]"
-  >
+  <div class="w-full text-[#f0f6fc] border-b border-[#3d444d]">
     <div class="py-4 w-full">
       <h2 class="h-7 mb-3 text-lg font-semibold">
         <a

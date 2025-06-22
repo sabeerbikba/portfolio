@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<!-- <script setup lang="ts">
 import { marked } from "marked";
 import githubMarkdownCss from "~/css/github-markdown-dark"; // .ts file
 import type { NullableGitHubFileContent } from "~/types/github";
@@ -59,4 +59,55 @@ watch(markdown, processMarkdown);
 onMounted(processMarkdown);
 </script>
 
-<template><div v-if="markdown" class="p-8" ref="hostRef" /></template>
+<template><div v-if="markdown" class="p-8" ref="hostRef" /></template> -->
+
+<script setup lang="ts">
+import { marked } from "marked";
+// import githubMarkdownCss from "~/css/github-markdown-dark"; // string
+import "~/css/github-markdown-dark.css";
+import type { NullableGitHubFileContent } from "~/types/github";
+
+// this code generating links like <a href="LICENSE">MIT License</a> that throw build error
+
+const props = defineProps<{
+  readmeData: NullableGitHubFileContent;
+  repoName: string;
+}>();
+
+// let isMarkdownCssInjected = false;
+// const styleTag = ref<HTMLStyleElement>();
+
+const markdownHtml = computed(() => {
+  if (
+    props.readmeData &&
+    typeof props.readmeData === "object" &&
+    "content" in props.readmeData
+  ) {
+    const raw = atob(props.readmeData.content);
+    return marked.parse(raw, { async: false });
+  }
+  return "";
+});
+
+// onMounted(() => {
+//   if (!isMarkdownCssInjected) {
+//     if (!styleTag.value) {
+//       styleTag.value = document.createElement("style");
+//       styleTag.value.textContent = githubMarkdownCss;
+//       document.head.appendChild(styleTag.value);
+//     }
+//   }
+// });
+
+// onUnmounted(() => {
+//   if (styleTag.value) {
+//     styleTag.value.remove();
+//   }
+// });
+</script>
+
+<template>
+  <div v-if="markdownHtml" class="p-8 max-xs:p-5">
+    <article class="markdown-body" v-html="markdownHtml" />
+  </div>
+</template>

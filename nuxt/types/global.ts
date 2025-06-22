@@ -9,7 +9,7 @@ type ProjectLinkType = {
   website: string;
   name: string;
   icon?: string;
-  descreption?: string;
+  description?: string;
 };
 
 export type { QuickLinkType, ProjectLinkType };

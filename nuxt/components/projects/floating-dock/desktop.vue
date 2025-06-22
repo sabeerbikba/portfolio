@@ -12,6 +12,9 @@ const inViewRef = ref<HTMLDivElement | null>(null);
 const mouseX = useMotionValue<number>(Infinity);
 const isHovered = ref<boolean>(false);
 const isVisible = ref<boolean>(false);
+// const isHovered = ref<boolean>(true);
+// const isVisible = ref<boolean>(true);
+const isShrinking = ref<boolean>(true);
 const elementVisible: Ref<boolean> = useElementVisibility(inViewRef);
 const inView = computed<boolean>(() => elementVisible.value);
 
@@ -60,6 +63,17 @@ const handleMouseMove = (event: MouseEvent) => {
   mouseX.set(event.pageX);
 };
 
+watch(isHovered, (val) => {
+  if (!val) {
+    // delay shrinking to let exit animation play
+    setTimeout(() => {
+      isShrinking.value = true;
+    }, 200); // adjust this to match animation duration
+  } else {
+    isShrinking.value = false;
+  }
+});
+
 onUnmounted(() => clearTimer());
 </script>
 
@@ -69,6 +83,7 @@ onUnmounted(() => clearTimer());
     aria-label="Desktop projects navigation"
     class="w-full flex items-center absolute top-[35.50rem] z-10"
   >
+    <!-- class="max-w-80 mx-auto gap-2 bg-[rgba(255,255,255,0.4)] w-auto m-auto rounded-lg px-2.5 inline-flex items-center" -->
     <Motion
       as="div"
       ref="inViewRef"
@@ -83,6 +98,7 @@ onUnmounted(() => clearTimer());
       }"
       class="max-w-80 mx-auto gap-2 bg-[rgba(255,255,255,0.4)] w-auto m-auto rounded-lg inline-flex items-center"
     >
+      <!-- problem is here bottom: i using v-show as i needed  -->
       <div
         v-show="isVisible"
         role="group"
@@ -98,6 +114,7 @@ onUnmounted(() => clearTimer());
           :icon="icon"
           :isSelected="id + 1 === store.state.previewProject"
           :isHovered="isHovered"
+          :isShrinking="isShrinking"
           @click="
             () => store.dispatch({ type: 'TOGGLE_PROJECT', payload: id + 1 })
           "
@@ -119,6 +136,7 @@ onUnmounted(() => clearTimer());
           :icon="icon"
           :isSelected="id + 1 + projects.length === store.state.previewApp"
           :isHovered="isHovered"
+          :isShrinking="isShrinking"
           @click="
             () =>
               store.dispatch({

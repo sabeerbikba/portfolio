@@ -14,10 +14,11 @@ const props = defineProps<{
   isSelected: boolean;
   onClick: (event: MouseEvent) => void;
   isHovered: boolean;
+  isShrinking: boolean;
 }>();
 
 const iconRef = ref<HTMLDivElement | null>(null);
-const hovered = ref(false);
+const hovered = ref<boolean>(false);
 const isButtonVisible = computed(() => !props.isHovered && props.isSelected);
 const tooltipId = computed<string>(
   () =>
@@ -99,11 +100,15 @@ watchEffect(() => {
     :aria-label="`Navigate to ${title} ${isProjectOrApp}`"
     class="aspect-square rounded-xl bg-transparent"
     @click="onClick && onClick($event)"
+    :key="$route.fullPath"
   >
     <MotionV
       :style="{ width, height }"
       @mouseenter="hovered = true"
       @mouseleave="hovered = false"
+      :class="{
+        'max-w-[35px] max-h-[35px]': isShrinking,
+      }"
     >
       <Motion
         as="div"

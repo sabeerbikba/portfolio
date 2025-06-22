@@ -46,13 +46,14 @@ useHead({
                 "@type": "Person",
                 name: "Sabeer Bikba",
               },
+              // is this really needed because allready in html
               workExample: projectsObject.map(
-                ({ name, website, icon, descreption }: ProjectLinkType) => ({
+                ({ name, website, icon, description }: ProjectLinkType) => ({
                   "@type": "WebPage",
                   name,
                   url: website,
                   image: icon,
-                  about: descreption,
+                  about: description,
                 })
               ),
             }),

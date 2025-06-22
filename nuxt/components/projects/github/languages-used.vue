@@ -21,10 +21,8 @@ const languagesBytesOnePercentage = computed(() => {
 </script>
 
 <template>
-  <div
-    v-if="languageData && Object.keys(languageData).length"
-    class="BorderGrid-row"
-  >
+  <!-- write all the css class in lowercase -->
+  <div class="BorderGrid-row">
     <div class="BorderGrid-cell text-[#f0f6fc] py-4">
       <h2 class="h4 mb-3 text-lg font-semibold">Languages</h2>
       <div class="mb-2 rounded-full">

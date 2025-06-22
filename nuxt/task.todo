@@ -1,36 +1,22 @@
 // TODO:
 
-- comments not need to rendered
-- in project section some components is missing 
 - Footer line need to be rounded in smaller screen 
 - check types is correctly used 
-- add types in each in every file where possible 
-- TEST - check works fallback github ui 
+- add types in each in every file where ever possible 
 - need to color change for projects docks use blend color 
-- all pages not need to be render based on if else specially where images need to loaded initially like 
- - all types of projects dock 
+- all types of projects dock 
 - is all thing rendered as needed
 - think about links which need to open new tab which link need to open in same page 
 - tools-pack tool-tip size need to change in smaller screen
 - need to use svg string in /contact page where needed
-- is pinia really needed
-- if any file have single export defalt remove the varible name and just export default 
 - re-arrage the svg in single file and check 
-- check icons allrady avaible in icon lib 
-- - set icons lib as shown in lib docs 
-- need to mention which icon used in nuxt.config.ts as shown in docs 
 - need to add seo thing like title all of things 
-- is any teleport component used check if not remove the code 
-- in project section MIT licnese in smaller screen text need to render in better use pre tag  
 - initially readme and licnese need to be display first readme if readme there 
 - after email sent need to send small email about we reach soon 
 - make bundle sizze smaller using import()
 - make seo better using title or more 
 - use lazy load in technologies used like used in react project 
 - tools-pack.client.vue component generating some random styles 
-- repo overview in project there is icon.vue component can i use that component within octiocons-icon component
-- is <script type="application/ld+json"> needed because that data allready in page 
-- need to optimze images in page it can be converting or using <NuxtImg /> component https://nuxt.com/docs/api/components/nuxt-img 
 - project section also need to be server render specially about and don't use v-if for render because it compoletely remove the element
 - i think need to use front-end fallback error component in projects showcase 
 - show animation when screen change in project section  
@@ -50,9 +36,50 @@
 - scroll top of the home page and scroll right side see the problem
 - about and in github app readdme and license all the text need to match same size including h1 - h6 means all the text  
 - try every animation with css 
+- floading dock is not good name that groups desktop and mobiel nav bar for projects 
+- if navigate the page from any other page all the api call again 
+ = solution is save the data and in localStorage and website reload re call the Api 
+- if good move all github fetch data to github component because it looks like part of screen but it's not  
+- set bot revisit every week 
+- use useRouteAnnouncer component if it's good https://nuxt.com/docs/api/composables/use-route-announcer
+- how to use useLogger in client side https://nuxt.com/docs/api/kit/logging
+- i think we can use onNuxtReady util to show animation of tools-pack https://nuxt.com/docs/api/utils/on-nuxt-ready
+- if error thrown when loading in github if needed we can refresh the api data with button: https://nuxt.com/docs/api/utils/on-nuxt-ready
+- check how readme.md and license tab button woring fine
+- in github info-tab those svg logos gap need to decrese in smaller screen 
+- check where v-if and v-show needed based on SEO 
+- use SEO magic in github.vue components
+- gihtub.vue show bot that this page looks simmilar to github web page 
+- repository-overview.vue component some time even data is not loded show button and componennt render 
+- repository-overview.vue:45 onMounted always set README default tab need to be set based on ...  if both avaible readme else which avaible
+- github.vue not mapped it show data based on navigation bar number not maped that's not good for SEO
+- desktop.vue and mobile.vue can we use css sprites for images
+- need to add SEO image in good aspect ratio 
+- if html rendered on server json+ld script not needed
+- TEST the desktop-dock.vue animation working fine in in production by reloading again and again 
+- in info-card.vue that mitlicense button in those stats near showing with JavaScript 
+- after compoletely need to check all the link working fine by clicking every link and button 
+- WATCH need to see loading state how render that used condition
+- TEST check changing route can refetch github all requestss 
+- RENAME desktop.vue to desktop-floating-dock.vue search better name for mobile and both managing componennt
+- TEST desktop.vue component hover animation not working properly need to check same problem in production
+- NEW need to set html link when navigating throw projects for SEO purpose
+- CHECK all the links need to open where 
+- IMPROVEMENT all the client side animation need to wrap inside <ClientOnly> element docs: https://nuxt.com/docs/api/components/client-only
+- CHECK changed is useLocalStorage() funciton to useState check working as expected because of key
+- CHECK which component need to delete
+- CHECK NullableGitHubFileContent type in file types/github.ts has any effect in all the file that used this type
+
+-- -- floating-dock-desktop
+
+- working properly when v-if and isHoverd and isVisible both are false with <MotionV :style="{ width, height }">
 
 - - LightHouse imporvments
 - add title and other seo tags 
 - need to creat image for seo meta tags
 - after generating in sever on meta tags working fine // TODO:
 - test in https://search.google.com/test/rich-results after deployhed // TODO:
+
+-- -- TODO: TODO: 
+- if possible in server need to rebuild every week and set bot revisit in week: reason fetch latest data in github
+

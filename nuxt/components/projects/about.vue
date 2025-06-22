@@ -25,8 +25,8 @@ const processMarkdown = (base64: string) => {
 </script>
 
 <template>
-  <div class="text-black bg-[#191919]" v-show="store.state.previewApp === 4">
-    <div class="notes-body max-w-prose mx-auto p-6">
+  <div class="text-black" v-show="store.state.previewApp === 4">
+    <div class="notes-body max-w-prose mx-auto p-6 max-xs:px-7">
       <template v-for="({ aboutHtmlBase64 }, index) in projects" :key="index">
         <div
           v-show="store.state.previewProject === index + 1"
@@ -38,20 +38,20 @@ const processMarkdown = (base64: string) => {
 </template>
 
 <style>
-.notes-body h3 {
+.notes-body h1 {
   @apply text-3xl font-extrabold mb-6 text-[#d4d4d4];
 }
 
-.notes-body h4 {
+.notes-body h2 {
   @apply text-2xl font-bold mb-4 text-[#d4d4d4];
 }
 
-.notes-body h5 {
+.notes-body h3 {
   @apply text-xl font-semibold mb-3 text-[#d4d4d4];
 }
 
 .notes-body p {
-  @apply text-base leading-relaxed mb-5 text-[#cecece] indent-2;
+  @apply text-base leading-relaxed mb-5 text-[#cecece];
 }
 
 .notes-body a {

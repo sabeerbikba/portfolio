@@ -40,7 +40,7 @@ onUnmounted(() => {
     role="navigation"
     ref="mobileDockRef"
     aria-label="Mobile projects navigation"
-    class="absolute block md:hidden top-36 right-3 z-10"
+    class="md:hidden absolute block top-36 right-3 z-10"
   >
     <MotionPresence>
       <Motion

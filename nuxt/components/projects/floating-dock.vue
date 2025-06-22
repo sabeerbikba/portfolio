@@ -4,7 +4,7 @@
       Contains both desktop and mobile projects navigation components. Only one
       is visible based on screen size.
     </p>
-    <ProjectsFloatingDockDesktop class="max-md:hidden" />
-    <ProjectsFloatingDockMobile class="md:hidden" />
+    <ProjectsFloatingDockDesktop />
+    <ProjectsFloatingDockMobile />
   </div>
 </template>

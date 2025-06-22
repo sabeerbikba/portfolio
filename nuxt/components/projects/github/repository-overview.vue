@@ -1,21 +1,14 @@
 <script setup lang="ts">
-import { useLocalStorage, useMounted } from "@vueuse/core";
 import type { NullableGitHubFileContent } from "~/types/github";
 import type { OcticonsIconName } from "~/types/icons";
+
+type RepositoryOverviewTabType = "README" | "MIT License";
 
 const props = defineProps<{
   readmeData: NullableGitHubFileContent;
   licenseData: NullableGitHubFileContent;
   repoName: string;
 }>();
-
-type RepositoryOverviewTabType = "README" | "MIT License";
-
-const isMounted = useMounted();
-const previewTab = useLocalStorage<RepositoryOverviewTabType>(
-  `home:projects:RepositoryOverview:${props.repoName}`,
-  "README"
-);
 
 const tabs = computed<
   { icon: OcticonsIconName; text: RepositoryOverviewTabType }[]
@@ -33,25 +26,18 @@ const tabs = computed<
   )
 );
 
-watch(
-  tabs,
-  (newTabs) => {
-    if (newTabs.length === 1) {
-      previewTab.value = newTabs[0].text as RepositoryOverviewTabType;
-    }
-  },
-  { immediate: true }
-);
+const initialTab = tabs.value.length === 1 ? tabs.value[0].text : "README";
 
-onMounted(() => {
-  previewTab.value = "README";
-});
+const previewTab = useState<RepositoryOverviewTabType>(
+  `RepositoryOverview:${props.repoName}`,
+  () => initialTab
+);
 </script>
 
 <template>
-  <div v-if="isMounted" class="border border-[#3d444d] rounded-md w-full mt-4">
+  <div class="border border-[#3d444d] rounded-md w-full mt-4">
     <div class="border-b border-[#3d444d] bg-[#0d1117] sticky top-0">
-      <h2 class="hidden">Repository files navigation</h2>
+      <h2 class="sr-only">Repository files navigation</h2>
       <div
         class="h-11 px-2 py-1.5 text-[#9198a1]"
         aria-label="Repository files"
@@ -65,10 +51,10 @@ onMounted(() => {
         >
           <ProjectsOcticonsIcon :name="icon" />
           <span
-            :class="[
-              'm-1.5 text-[#f0f6fc] text-[15px]',
-              previewTab === text ? 'font-semibold' : '',
-            ]"
+            :class="{
+              'm-1.5 text-[#f0f6fc] text-[15px]': true,
+              'font-semibold': previewTab === text,
+            }"
           >
             {{ text }}
           </span>
@@ -95,11 +81,11 @@ onMounted(() => {
   right: 50%;
   bottom: calc(50% - calc(var(--control-xlarge-size, 48px) / 2 + 1px));
   width: 100%;
-  height: 2px;
+  height: 2.16px;
   content: "";
   background-color: transparent;
   border-radius: 0;
-  transform: translate(50%, -50%);
+  transform: translate(50%, 55%);
 }
 
 .repo-overview-button[aria-current]:not([aria-current="false"])::after,
