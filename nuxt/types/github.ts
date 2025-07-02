@@ -1,5 +1,7 @@
 import type { Endpoints } from "@octokit/types";
 
+// TODO: remove unsused types 
+
 type GitHubRepositoryType =
   | Endpoints["GET /repos/{owner}/{repo}"]["response"]["data"]
   | undefined;
@@ -19,7 +21,6 @@ type GitHubFileContentType =
   | Endpoints["GET /repos/{owner}/{repo}/contents/{path}"]["response"]["data"]
   | undefined;
 
-// type NullableGitHubFileContent = GitHubFileContentType | null;
 type NullableGitHubFileContent = GitHubFileContentType | null | undefined;
 
 type ProjectDataType = {
@@ -31,8 +32,6 @@ type ProjectDataType = {
   readme: NullableGitHubFileContent;
   license: NullableGitHubFileContent;
 };
-
-type PreviewTabOption = "README" | "MIT license";
 
 type ScreenContextType = {
   previewProject: number;
@@ -49,6 +48,5 @@ export type {
   GitHubFileContentType,
   NullableGitHubFileContent,
   ProjectDataType,
-  PreviewTabOption,
   ScreenContextType,
 };

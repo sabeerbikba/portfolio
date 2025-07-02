@@ -1,13 +1,15 @@
 <script setup lang="ts">
-import { useLocalStorage } from "@vueuse/core";
 import numeral from "numeral";
-
-import type { OcticonsIconName } from "~/types/icons";
+import type { RepositoryOverviewTabType } from "~/types/global";
 import type {
   GitHubRepositoryType,
   GithubBranchesType,
   GithubTagsType,
 } from "~/types/github";
+import type { OcticonsIconName } from "~/data/octicons-icons";
+
+type StringUndefined = string | undefined;
+type NumberUndefined = number | undefined;
 
 const props = defineProps<{
   repoData: GitHubRepositoryType;
@@ -19,30 +21,30 @@ const props = defineProps<{
 
 const isHoveredWebsiteLink = ref<boolean>(false);
 const { githubBaseURL } = useRuntimeConfig().public;
+const formatNumber = (num: number) => numeral(num).format("0.[0]a");
 
-const full_name = computed<string | undefined>(() => props.repoData?.full_name);
-const description = computed<string | undefined | null>(
+const full_name = computed<StringUndefined>(() => props.repoData?.full_name);
+const description = computed<StringUndefined | null>(
   () => props.repoData?.description
 );
-const homepage = computed<string | undefined | null>(
+const homepage = computed<StringUndefined | null>(
   () => props.repoData?.homepage
 );
-const stargazers_count = computed<number | undefined>(
+const stargazers_count = computed<NumberUndefined>(
   () => props.repoData?.stargazers_count
 );
-const forks_count = computed<number | undefined>(
+const forks_count = computed<NumberUndefined>(
   () => props.repoData?.forks_count
 );
-const subscribers_count = computed<number | undefined>(
+const subscribers_count = computed<NumberUndefined>(
   () => props.repoData?.subscribers_count
 );
-const repo_name = computed<string | undefined>(() => props.repoData?.name);
-const repo_owner = computed<string | undefined>(
-  () => props.repoData?.owner.login
-);
-const previewTab = useState(`RepositoryOverview:${full_name.value}`);
+const repo_name = computed<StringUndefined>(() => props.repoData?.name);
+const repo_owner = computed<StringUndefined>(() => props.repoData?.owner.login);
 
-const formatNumber = (num: number) => numeral(num).format("0.[0]a");
+const previewTab = useState<RepositoryOverviewTabType>(
+  `repository-overview-preview-tab:${full_name.value}`
+);
 
 const stats = computed<
   { href: string; icon: OcticonsIconName; count: number | null; what: string }[]
@@ -116,7 +118,7 @@ const stats = computed<
         {{ homepage ? homepage.split("://")[1] : "" }}
       </UiExternalLink>
       <div v-if="hasLicense">
-        <h3 class="sr-only">License</h3>
+        <UiHeadingSrOnly as="h3">License</UiHeadingSrOnly>
         <button
           class="flex items-center gap-2 hover:text-blue-400"
           @click="previewTab = 'MIT License'"

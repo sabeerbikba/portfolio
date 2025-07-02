@@ -13,6 +13,8 @@ type ContactInfoType = {
 
 const { baseUrl } = useRuntimeConfig().public;
 
+const isHommePageLoading = ref<boolean>(false);
+
 useSeoMeta({
   robots: "index, follow",
   title: seoMetaMap.contact.title,
@@ -129,13 +131,12 @@ onUnmounted(() => {
               role="form"
               aria-labelledby="contactFormTitle"
             >
-              <h2 id="contactFormTitle" class="sr-only">Contact Us Form</h2>
+              <UiHeadingSrOnly id="contactFormTitle"
+                >Contact Us Form</UiHeadingSrOnly
+              >
               <form class="my-8" @submit.prevent="handleSubmit">
                 <div class="max-w-xl mx-auto">
                   <div
-                    class="flex flex-col space-y-2 w-full mb-4"
-                    role="group"
-                    aria-label="Input field group"
                     v-for="{
                       label,
                       labelId,
@@ -184,6 +185,10 @@ onUnmounted(() => {
                           'Please enter your message. Minimum 20 characters.',
                       },
                     ]"
+                    :key="label"
+                    class="flex flex-col space-y-2 w-full mb-4"
+                    aria-label="Input field group"
+                    role="group"
                   >
                     <label
                       class="text-sm md:text-base font-medium text-black leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-left px-2"
@@ -238,19 +243,19 @@ onUnmounted(() => {
                       >
                         <div className="center gap-1">
                           <NuxtIcon
-                            name="ic:sharp-send"
                             v-if="status === 'Send'"
+                            name="ic:sharp-send"
                             aria-hidden="true"
                             class="rotate-[305deg] relative bottom-0.5 h-[18px] w-auto"
                           />
                           <NuxtIcon
-                            name="ic:baseline-check-circle"
                             v-if="status === 'Sent'"
+                            name="ic:baseline-check-circle"
                             aria-hidden="true"
                           />
                           <NuxtIcon
-                            name="ic:sharp-error"
                             v-if="status === 'Retry'"
+                            name="ic:sharp-error"
                             aria-hidden="true"
                             class="pr-0.5 h-[18px] w-auto"
                           />
@@ -378,19 +383,40 @@ onUnmounted(() => {
         damping: 30,
         delay: scrollDir === 'down' ? 0.57 : 0,
       }"
-      class="bg-[#ffffffcf] border-2 inline-table lg:border-[3px] border-black text-black rounded-full shadow-2xl hover:shadow-none shadow-gray-300 fixed top-4 inset-x-4"
+      :class="
+        useCn(
+          'bg-[#ffffffcf] inline-table border-2 lg:border-[3px] border-black text-black rounded-full shadow-2xl hover:shadow-none shadow-gray-300 fixed top-4 inset-x-4',
+          isHommePageLoading && 'border-black/55 border-none'
+        )
+      "
     >
       <NuxtLink
         to="/"
-        class="flex items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
+        class="center rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black md:h-9 md:w-9 lg:h-12 lg:w-12 h-[30px] w-[30px]"
         aria-label="Back to home page"
         title="Back to home page"
       >
         <NuxtIcon
+          v-if="!isHommePageLoading"
+          @click="isHommePageLoading = true"
           name="ic:round-arrow-back-ios"
-          class="md:h-9 md:w-9 lg:h-12 lg:w-12 h-[30px] w-[30px] relative right-0.5"
+          class="wh-full relative right-0.5"
           aria-hidden="true"
         />
+        <div
+          v-else
+          class="relative inline-block text-[28px] h-1 translate-x-[-14px] translate-y-[11px]"
+        >
+          <span
+            v-for="i in 12"
+            :key="i"
+            class="absolute left-[0.4629em] bottom-0 w-[0.074em] h-[0.2777em] rounded-[0.0555em] origin-[center_-0.2222em] animate-spinner"
+            :style="{
+              transform: `rotate(${(i - 1) * 30}deg)`,
+              animationDelay: `${(i - 1) * (1 / 12)}s`,
+            }"
+          />
+        </div>
       </NuxtLink>
     </Motion>
   </div>

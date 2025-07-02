@@ -12,30 +12,8 @@ const inViewRef = ref<HTMLDivElement | null>(null);
 const mouseX = useMotionValue<number>(Infinity);
 const isHovered = ref<boolean>(false);
 const isVisible = ref<boolean>(false);
-// const isHovered = ref<boolean>(true);
-// const isVisible = ref<boolean>(true);
-const isShrinking = ref<boolean>(true);
 const elementVisible: Ref<boolean> = useElementVisibility(inViewRef);
 const inView = computed<boolean>(() => elementVisible.value);
-
-watch([isHovered], ([hovered]) => {
-  if (hovered) {
-    isVisible.value = true;
-    if (timer) {
-      clearTimer();
-      timer = null;
-    }
-  } else {
-    startDelay();
-  }
-});
-
-watch([inView], ([view]) => {
-  if (view) {
-    isVisible.value = true;
-    startDelay();
-  }
-});
 
 const clearTimer = () => {
   if (timer) clearTimeout(timer);
@@ -50,6 +28,25 @@ const startDelay = () => {
   }, 4000);
 };
 
+watch(isHovered, (hovered) => {
+  if (hovered) {
+    isVisible.value = true;
+    if (timer) {
+      clearTimer();
+      timer = null;
+    }
+  } else {
+    startDelay();
+  }
+});
+
+watch(inView, (view) => {
+  if (view) {
+    isVisible.value = true;
+    startDelay();
+  }
+});
+
 const setIsHovered = (value: boolean) => {
   isHovered.value = value;
 };
@@ -63,17 +60,6 @@ const handleMouseMove = (event: MouseEvent) => {
   mouseX.set(event.pageX);
 };
 
-watch(isHovered, (val) => {
-  if (!val) {
-    // delay shrinking to let exit animation play
-    setTimeout(() => {
-      isShrinking.value = true;
-    }, 200); // adjust this to match animation duration
-  } else {
-    isShrinking.value = false;
-  }
-});
-
 onUnmounted(() => clearTimer());
 </script>
 
@@ -81,24 +67,22 @@ onUnmounted(() => clearTimer());
   <div
     role="navigation"
     aria-label="Desktop projects navigation"
-    class="w-full flex items-center absolute top-[35.50rem] z-10"
+    class="w-full flex items-center absolute top-[35.50rem] z-50"
   >
-    <!-- class="max-w-80 mx-auto gap-2 bg-[rgba(255,255,255,0.4)] w-auto m-auto rounded-lg px-2.5 inline-flex items-center" -->
     <Motion
-      as="div"
       ref="inViewRef"
+      as="div"
       aria-hidden="false"
-      @mouseenter="setIsHovered(true)"
-      @mouseleave="handleMouseLeave"
-      @mousemove="handleMouseMove"
       :animate="{
         height: isVisible ? '55px' : '5px',
         width: isVisible ? 'auto' : '120px',
         y: isVisible ? -58 : 0,
       }"
       class="max-w-80 mx-auto gap-2 bg-[rgba(255,255,255,0.4)] w-auto m-auto rounded-lg inline-flex items-center"
+      @mouseenter="setIsHovered(true)"
+      @mouseleave="handleMouseLeave"
+      @mousemove="handleMouseMove"
     >
-      <!-- problem is here bottom: i using v-show as i needed  -->
       <div
         v-show="isVisible"
         role="group"
@@ -107,14 +91,12 @@ onUnmounted(() => clearTimer());
       >
         <ProjectsFloatingDockDesktopIconContainer
           v-for="({ name, icon }, id) in projects"
-          :aria-current="id + 1 === store.state.previewProject ? 'page' : null"
           :key="name"
-          :mouseX="mouseX"
+          :mouse-x="mouseX"
           :title="name"
           :icon="icon"
-          :isSelected="id + 1 === store.state.previewProject"
-          :isHovered="isHovered"
-          :isShrinking="isShrinking"
+          :is-selected="id + 1 === store.state.previewProject"
+          :is-hovered="isHovered"
           @click="
             () => store.dispatch({ type: 'TOGGLE_PROJECT', payload: id + 1 })
           "
@@ -127,16 +109,12 @@ onUnmounted(() => clearTimer());
         />
         <ProjectsFloatingDockDesktopIconContainer
           v-for="({ name, icon }, id) in apps"
-          :aria-current="
-            id + 1 + projects.length === store.state.previewApp ? 'page' : null
-          "
           :key="name"
-          :mouseX="mouseX"
+          :mouse-x="mouseX"
           :title="name"
           :icon="icon"
-          :isSelected="id + 1 + projects.length === store.state.previewApp"
-          :isHovered="isHovered"
-          :isShrinking="isShrinking"
+          :is-selected="id + 1 + projects.length === store.state.previewApp"
+          :is-hovered="isHovered"
           @click="
             () =>
               store.dispatch({

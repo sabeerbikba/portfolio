@@ -2,7 +2,7 @@
 import type { GitHubLanguagesType } from "~/types/github";
 
 const props = defineProps<{
-  repoName: String;
+  repoName: string;
   languageData: GitHubLanguagesType;
 }>();
 const { githubBaseURL } = useRuntimeConfig().public;
@@ -21,9 +21,8 @@ const languagesBytesOnePercentage = computed(() => {
 </script>
 
 <template>
-  <!-- write all the css class in lowercase -->
-  <div class="BorderGrid-row">
-    <div class="BorderGrid-cell text-[#f0f6fc] py-4">
+  <div>
+    <div class="text-[#f0f6fc] py-4">
       <h2 class="h4 mb-3 text-lg font-semibold">Languages</h2>
       <div class="mb-2 rounded-full">
         <span class="flex rounded-full overflow-hidden">
@@ -41,7 +40,7 @@ const languagesBytesOnePercentage = computed(() => {
               '%'
             "
             class="h-2 mx-[.3px]"
-          ></span>
+          />
         </span>
       </div>
       <ul class="list-style-none text-sm">
@@ -50,7 +49,7 @@ const languagesBytesOnePercentage = computed(() => {
           :key="language"
           class="inline"
         >
-          <a
+          <UiExternalLink
             :href="`${githubBaseURL + repoName}/search?l=${language
               .toString()
               .toLowerCase()}`"
@@ -59,14 +58,14 @@ const languagesBytesOnePercentage = computed(() => {
             <span
               class="w-2 h-2 mr-2 block rounded-full"
               :data-language="language"
-            ></span>
+            />
             <span class="color-fg-default text-bold mr-1 font-semibold">
               {{ language }}
             </span>
             <span class="text-[#747b83]">
               {{ (bytes / languagesBytesOnePercentage).toFixed(1) + "%" }}
             </span>
-          </a>
+          </UiExternalLink>
         </li>
       </ul>
     </div>

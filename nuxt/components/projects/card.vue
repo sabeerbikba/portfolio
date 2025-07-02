@@ -1,8 +1,12 @@
 <template>
-  <section aria-labelledby="project-section"
-    class="card-section max-w-5xl -mt-12 mx-auto h-[30rem] md:h-[40rem] w-full border-4 border-[#6C6C6C] p-2 md:p-6 bg-[#222222] rounded-[30px] shadow-2xl">
-    <h2 id="project-section" class="sr-only">Project Details</h2>
-    <div class="screen-container overflow-hidden h-full w-full rounded-2xl bg-gray-100 md:rounded-2xl">
+  <section
+    aria-labelledby="project-section"
+    class="card-section max-w-5xl -mt-12 mx-auto h-[30rem] md:h-[40rem] w-full border-4 border-[#6C6C6C] p-2 md:p-6 bg-[#222222] rounded-[30px] shadow-2xl"
+  >
+    <UiHeadingSrOnly id="project-section">Project Details</UiHeadingSrOnly>
+    <div
+      class="screen-container overflow-hidden h-full w-full rounded-2xl bg-gray-100 md:rounded-2xl"
+    >
       <ProjectsScreen />
     </div>
   </section>

@@ -2,12 +2,27 @@
 import { projects, apps } from "~/data/projects";
 import { Motion, MotionPresence } from "@oku-ui/motion";
 import type { ScreenStoreType } from "~/types/store";
+import { createReusableTemplate } from "@vueuse/core";
 
 const store = inject("store") as ScreenStoreType;
 
 const isOpen = ref<boolean>(false);
 const mobileDockRef = ref<HTMLDivElement | null>(null);
 const showContent = ref<boolean>(true);
+
+const ButtonsGroup = createReusableTemplate();
+const CloseBtnLine = createReusableTemplate();
+const OpenBtnLineRing = createReusableTemplate<{
+  wh: number;
+  bgColor: string;
+}>({ inheritAttrs: false });
+const MobileButton = createReusableTemplate<{
+  name: string;
+  icon: string;
+  isSelected: boolean;
+  ariaLabelBtn: string;
+  onClick: () => void;
+}>({ inheritAttrs: false });
 
 const handleClickOutside = (event: MouseEvent) => {
   if (
@@ -36,11 +51,50 @@ onUnmounted(() => {
 </script>
 
 <template>
+  <ButtonsGroup.define v-slot="{ $slots }">
+    <div class="w-1/3 h-full py-[9px]" role="group">
+      <component :is="$slots.default" />
+    </div>
+  </ButtonsGroup.define>
+  <MobileButton.define
+    v-slot="{ name, icon, isSelected, ariaLabelBtn, onClick }"
+  >
+    <button class="max-w-full p-2" :aria-label="ariaLabelBtn" @click="onClick">
+      <img
+        :src="icon"
+        :alt="`${name} icon`"
+        width="100%"
+        height="100%"
+        loading="eager"
+        decoding="async"
+        :class="{
+          'rounded-xl border border-zinc-600 shadow-[0_0_20px_4px_rgba(255,255,255,0.7)]':
+            isSelected,
+        }"
+      />
+    </button>
+  </MobileButton.define>
+  <CloseBtnLine.define>
+    <div class="absolute inset-0 w-1 rounded-sm bg-gray-700" />
+  </CloseBtnLine.define>
+  <OpenBtnLineRing.define v-slot="{ $slots, wh, bgColor }">
+    <span
+      :style="{
+        width: `${wh}px`,
+        height: `${wh}px`,
+        backgroundColor: bgColor || 'transparent',
+      }"
+      class="rounded-full flex items-center justify-center"
+    >
+      <component :is="$slots.default" />
+    </span>
+  </OpenBtnLineRing.define>
+
   <div
-    role="navigation"
     ref="mobileDockRef"
+    role="navigation"
     aria-label="Mobile projects navigation"
-    class="md:hidden absolute block top-36 right-3 z-10"
+    class="md:hidden absolute block top-36 right-3 z-50"
   >
     <MotionPresence>
       <Motion
@@ -51,65 +105,36 @@ onUnmounted(() => {
         :transition="{ duration: 0.3, ease: 'easeInOut' }"
         className="flex pl-1 w-[190px] h-[200px] absolute top-[-75px] right-[-12px] rounded-[50px_160px_160px_50px] !bg-[linear-gradient(90deg,_rgba(255,255,255,0.3)_0%,_rgba(255,255,255,0.01)_100%)] text-white"
       >
-        <div
-          class="w-1/3 h-full py-[9px]"
-          role="group"
-          aria-label="Projects group 1"
-        >
-          <button
+        <ButtonsGroup.reuse aria-label="Projects group">
+          <MobileButton.reuse
             v-for="({ name, icon }, id) in projects"
-            type="button"
-            :aria-label="`Navigate to ${name} project`"
-            :key="name"
-            @click="store.dispatch({ type: 'TOGGLE_PROJECT', payload: id + 1 })"
-            class="max-w-full p-2"
-          >
-            <img
-              :src="icon"
-              :alt="`${name} icon`"
-              width="100%"
-              height="100%"
-              loading="eager"
-              decoding="async"
-              :class="{
-                'rounded-xl border border-zinc-600 shadow-[0_0_20px_4px_rgba(255,255,255,0.7)]':
-                  store.state.previewProject === id + 1,
-              }"
-            />
-          </button>
-        </div>
-        <div
-          class="w-1/3 h-full py-[9px] mr-auto"
-          role="group"
-          aria-label="Apps group 2"
-        >
-          <button
-            v-for="({ name, icon }, id) in apps"
-            type="button"
-            :aria-label="`Navigate to ${name} app`"
-            :key="name"
-            @click="
-              store.dispatch({
-                type: 'TOGGLE_APP',
-                payload: id + 1 + projects.length,
-              })
+            :key="`project-${name}`"
+            :name="name"
+            :icon="icon"
+            :is-selected="store.state.previewProject === id + 1"
+            :ariaLabelBtn="`Navigate to ${name} project`"
+            :on-click="
+              () => store.dispatch({ type: 'TOGGLE_PROJECT', payload: id + 1 })
             "
-            class="max-w-full p-2"
-          >
-            <img
-              :src="icon"
-              :alt="`${name} icon`"
-              width="100%"
-              height="100%"
-              loading="eager"
-              decoding="async"
-              :class="{
-                'rounded-xl border border-zinc-600 shadow-[0_0_20px_4px_rgba(255,255,255,0.7)]':
-                  store.state.previewApp === id + 1 + projects.length,
-              }"
-            />
-          </button>
-        </div>
+          />
+        </ButtonsGroup.reuse>
+        <ButtonsGroup.reuse class="mr-auto" aria-label="Apps group">
+          <MobileButton.reuse
+            v-for="({ name, icon }, id) in apps"
+            :key="`app-${name}`"
+            :name="name"
+            :icon="icon"
+            :is-selected="store.state.previewApp === id + 1 + projects.length"
+            :ariaLabelBtn="`Navigate to ${name} app`"
+            :on-click="
+              () =>
+                store.dispatch({
+                  type: 'TOGGLE_APP',
+                  payload: id + 1 + projects.length,
+                })
+            "
+          />
+        </ButtonsGroup.reuse>
       </Motion>
     </MotionPresence>
 
@@ -117,7 +142,6 @@ onUnmounted(() => {
       as="button"
       :aria-expanded="isOpen"
       aria-label="Toggle mobile navigation"
-      @click="toggleDock"
       :class="['h-10 w-10 center', !isOpen && 'mix-blend-exclusion']"
       :initial="false"
       :animate="{
@@ -127,23 +151,22 @@ onUnmounted(() => {
         padding: isOpen ? '0.625rem' : '0rem',
       }"
       :transition="{ duration: 0.3, ease: 'backIn' }"
+      @click="toggleDock"
     >
       <div v-show="showContent">
-        <ProjectsFloatingDockMobileRingSpan
-          :style="{ display: !isOpen ? 'flex' : 'none' }"
-          :wh="30"
-          :bgColor="`#525F65`"
-        >
-          <ProjectsFloatingDockMobileRingSpan :wh="20" :bgColor="`#91969C`">
-            <ProjectsFloatingDockMobileRingSpan :wh="12" :bgColor="`#FCFFFF`" />
-          </ProjectsFloatingDockMobileRingSpan>
-        </ProjectsFloatingDockMobileRingSpan>
+        <span :style="{ display: !isOpen ? 'flex' : 'none' }">
+          <OpenBtnLineRing.reuse :wh="30" bg-color="#525F65">
+            <OpenBtnLineRing.reuse :wh="20" bg-color="#91969C">
+              <OpenBtnLineRing.reuse :wh="12" bg-color="#FCFFFF" />
+            </OpenBtnLineRing.reuse>
+          </OpenBtnLineRing.reuse>
+        </span>
         <div
           :style="{ display: isOpen ? 'block' : 'none' }"
           class="relative w-7 h-7 left-[10px]"
         >
-          <div class="absolute inset-0 rotate-45 w-1 rounded-sm bg-gray-700" />
-          <div class="absolute inset-0 -rotate-45 w-1 rounded-sm bg-gray-700" />
+          <CloseBtnLine.reuse class="rotate-45" />
+          <CloseBtnLine.reuse class="-rotate-45" />
         </div>
       </div>
     </Motion>

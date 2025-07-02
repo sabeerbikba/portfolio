@@ -81,8 +81,8 @@ onMounted(() => {
 
 <template>
   <div
-    class="max-w-[1000px] aspect-square lg:mx-auto max-xl:mx-10 max-md:mx-8 max-xs:mx-5"
     ref="container"
+    class="max-w-[1000px] aspect-square lg:mx-auto max-xl:mx-10 max-md:mx-8 max-xs:mx-5"
   >
     <!-- TODO: Need to add animation when in hydration -->
     <!-- <div class="center w-full h-full">
@@ -125,6 +125,7 @@ onMounted(() => {
 
 <!-- <style>
 /* Don't remove */
+/** if using this css remove and add to tailwind.confg.ts file  */
 .loader-tools-pack::before,
 .loader-tools-pack::after {
   position: absolute;

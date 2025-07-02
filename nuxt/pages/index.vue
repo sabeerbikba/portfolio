@@ -24,6 +24,8 @@ useSeoMeta({
   // twitterImage: ,
 });
 
+const flipWords = ["functional", "beautiful", "impactful", "responsive"];
+
 const aboutSectionParagraphs: string[] = [
   "Hi, I’m Sabeer Bikba, a <strong class='font-medium'>full-stack developer</strong> with a passion for creating dynamic <strong class='font-medium'>React front-end applications</strong>. I specialize in building intuitive and responsive user interfaces that provide smooth experiences across devices.",
   "While my expertise spans both front-end and back-end development, I’m particularly focused on delivering high-quality, interactive React apps. I’m also exploring <strong class='font-medium'>mobile development with React Native</strong> to create seamless cross-platform mobile experiences.",
@@ -44,11 +46,20 @@ const aboutSectionParagraphs: string[] = [
         class="font-normal text-neutral-600 mx-auto py-4 xs:py-5 sm:py-6 md:py-7 text-[24px] xs:text-[28px] sm:text-[34px] md:text-[40px]"
       >
         Designing
-        <FlipWords
-          :words="['functional', 'beautiful', 'impactful', 'responsive']"
-          :duration="3000"
-          class="text-neutral-700"
-        />
+        <ClientOnly>
+          <FlipWords
+            :words="flipWords"
+            :duration="3000"
+            class="text-neutral-700"
+          />
+          <template #fallback>
+            <span class="sr-only">
+              <template v-for="(word, i) in flipWords" :key="i">
+                {{ word + (flipWords.length === i + 1 ? "" : ", ") }}
+              </template>
+            </span>
+          </template>
+        </ClientOnly>
         <br />
         solutions for your business
       </div>
@@ -67,9 +78,10 @@ const aboutSectionParagraphs: string[] = [
       </div>
     </section>
 
+    <!-- if good also add section here -->
     <ContainerScroll>
       <template #title>
-        <UiHeading as="h2" className="md:text-[2.8rem]">
+        <UiHeading as="h2" class-name="md:text-[2.8rem]">
           Browse My Creations
           <br />
           <span
@@ -107,7 +119,7 @@ const aboutSectionParagraphs: string[] = [
         <p
           v-for="(paragraph, index) in aboutSectionParagraphs"
           :key="index"
-          class="mt-10 max-sm:mt-6 text-gray-600 font-medium indent-6 tracking-wider text-base xs:text-lg sm:text-xl md:text-2xl"
+          class="mt-10 max-sm:mt-6 text-gray-600 font-medium indent-6 xs:tracking-wider text-base xs:text-lg sm:text-xl md:text-2xl"
           style="word-spacing: 4px"
           v-html="paragraph"
         />
@@ -118,7 +130,7 @@ const aboutSectionParagraphs: string[] = [
       <div class="max-w-3xl mx-auto text-center">
         <UiHeading
           as="h2"
-          className="text-xl xs:text-2xl sm:text-3xl md:text-4xl"
+          class-name="text-xl xs:text-2xl sm:text-3xl md:text-4xl"
         >
           Ready to start your next project?
         </UiHeading>

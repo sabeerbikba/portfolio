@@ -3,8 +3,11 @@ import type { GitHubContributorType } from "~/types/github";
 
 const props = defineProps<{
   contributorData: GitHubContributorType;
-  repoName: String;
+  repoName: string;
 }>();
+
+const imgFailedPlaceholder =
+  "data:image/webp;base64,UklGRg4BAABXRUJQVlA4IAIBAACQBgCdASogACAAPhkMhEGhBQFVBABhLSAAiCXjN+g/UZ/rXVd9ABa4z1fpibV1/D5jML3Qa0PHr5kxk+4AAP7//xvY3wvxj/v1x+ntFEzZfyoPYi7t30BbojhLx5FGiqIepSsUFQvCoH/koj+1+Nt4Omt8sstpk6h9krhVUcf//eyZAadm4N3OPGaP5/fU7/mbO1tai4mW6y+171sq0/6KV5iQqpxvQpc9eHzHprfbvyChmX/eLUdQg4C7zh6Ahra8bma2yN05wzTR/6lB7GN47qQqYVE/tN6Nna4m7O5pg1StgJr3ri/LRzQ+m0dwdllln/n8+lEUGRr3qY6ByHAAAAA=";
 
 const { githubBaseURL } = useRuntimeConfig().public;
 const contributors = computed<GitHubContributorType>(
@@ -16,7 +19,7 @@ const contributors = computed<GitHubContributorType>(
   <div class="w-full text-[#f0f6fc] border-b border-[#3d444d]">
     <div class="py-4 w-full">
       <h2 class="h-7 mb-3 text-lg font-semibold">
-        <a
+        <UiExternalLink
           :href="`${githubBaseURL + repoName}/graphs/contributors`"
           class="block hover:text-[#4493f8]"
         >
@@ -27,7 +30,7 @@ const contributors = computed<GitHubContributorType>(
           >
             {{ contributors?.length || 0 }}
           </span>
-        </a>
+        </UiExternalLink>
       </h2>
       <ul class="list-none">
         <li
@@ -35,9 +38,10 @@ const contributors = computed<GitHubContributorType>(
           :key="contributor.login"
           class="mb-2 flex"
         >
-          <a :href="contributor.html_url" class="mr-2">
-            <img
+          <UiExternalLink :href="contributor.html_url" class="mr-2">
+            <UiErrorFallbackImg
               :src="`${contributor.avatar_url}&s=32`"
+              :fallback-src="imgFailedPlaceholder"
               :alt="'@' + contributor.login"
               height="32"
               width="32"
@@ -46,13 +50,16 @@ const contributors = computed<GitHubContributorType>(
               "
               loading="lazy"
             />
-          </a>
+          </UiExternalLink>
           <span class="text-ellipsis">
-            <a :href="contributor.html_url" class="hover:text-[#4493f8]">
+            <UiExternalLink
+              :href="contributor.html_url"
+              class="hover:text-[#4493f8]"
+            >
               <strong class="font-semibold text-[15.2px]">{{
                 contributor.login
               }}</strong>
-            </a>
+            </UiExternalLink>
           </span>
         </li>
       </ul>

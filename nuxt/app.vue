@@ -6,7 +6,6 @@ import type { QuickLinkType, ProjectLinkType } from "~/types/global";
 
 const route = useRoute();
 const { baseUrl } = useRuntimeConfig().public;
-
 const isHomePage = computed<boolean>(
   () => route.name === "index" || route.path === "/"
 );
@@ -122,7 +121,7 @@ const projects: QuickLinkType[] = projectsObject.map(
             aria-label="Home page"
             class="flex justify-normal space-x-2 text-2xl font-bold text-center text-neutral-600 selection:bg-emerald-500 mr-10 py-0"
           >
-            <span v-html="localIcons.home.logoSB"></span>
+            <span v-html="localIcons.home.logoSB" />
           </NuxtLink>
         </div>
         <div class="text-base">Sabeer Bikba</div>
@@ -153,7 +152,7 @@ const projects: QuickLinkType[] = projectsObject.map(
           :key="id"
         >
           <nav :aria-labelledby="id">
-            <h2 :id="id" class="sr-only">{{ title }}</h2>
+            <UiHeadingSrOnly :id="id">{{ title }}</UiHeadingSrOnly>
             <ul class="flex justify-center space-y-4 flex-col mt-4">
               <li v-for="{ href, label } in links" :key="label">
                 <NuxtLink

@@ -12,6 +12,8 @@ export default function handler(_: any, res: { end: (arg0: string) => void }) {
       - Hit that URL from your Vercel Cron Job monthly → it will trigger a new build
 
       link: https://vercel.com/sabeer/{project-name}/settings/cron-jobs
+
+      if this code is use also need to set bot revisit
     */
   res.end("Hello Cron!");
 }

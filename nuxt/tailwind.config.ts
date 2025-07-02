@@ -29,7 +29,11 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
-
+      animation: {
+        wiggle: "wiggle 1.5s ease-in-out infinite",
+        "scale-up4": "scale-up4 1s linear infinite",
+        spinner: "spinner-fade 1s linear infinite",
+      },
       keyframes: {
         wiggle: {
           "0%, 100%": { transform: "translateX(0)" },
@@ -39,10 +43,10 @@ const config: Config = {
           "20%": { transform: "scaleY(1.5)", backgroundColor: "#fff" },
           "40%": { transform: "scaleY(1)" },
         },
-      },
-      animation: {
-        wiggle: "wiggle 1.5s ease-in-out infinite",
-        "scale-up4": "scale-up4 1s linear infinite",
+        "spinner-fade": {
+          "0%": { backgroundColor: "#69717d" },
+          "100%": { backgroundColor: "transparent" },
+        },
       },
     },
   },
@@ -55,11 +59,15 @@ const config: Config = {
           alignItems: "center",
           justifyContent: "center",
         },
+        ".wh-full": {
+          width: "100%",
+          height: "100%",
+        },
       });
     },
     ({ addBase, theme }: any) => {
-      let allColors = flattenColorPalette(theme("colors"));
-      let newVars = Object.fromEntries(
+      const allColors = flattenColorPalette(theme("colors"));
+      const newVars = Object.fromEntries(
         Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
       );
 
@@ -81,7 +89,7 @@ const config: Config = {
     },
     ({ addBase, theme }: any) => {
       let allColors = flattenColorPalette(theme("colors"));
-      let newVars = Object.fromEntries(
+      const newVars = Object.fromEntries(
         Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
       );
 

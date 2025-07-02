@@ -1,38 +1,54 @@
 <script setup lang="ts">
 import { projects } from "~/data/projects";
 import type { ScreenStoreType } from "~/types/store";
+import { useElementSize } from "@vueuse/core";
 
-defineProps<{ hidden: boolean }>();
-
-const loaded = ref(projects.map((_, index) => index === 0));
 const store = inject("store") as ScreenStoreType;
 
-watch(
-  () => store.state.previewProject,
-  (newProject) => {
-    const index = newProject - 1;
-    if (!loaded.value[index]) {
-      loaded.value[index] = true;
-    }
-  }
-);
+const webWrapperRef = useTemplateRef<HTMLDivElement>("webWrapperRef");
+const { width, height } = useElementSize(webWrapperRef);
+const isWebsiteComponentHidden = computed(() => store.state.previewApp !== 3);
 </script>
 
 <template>
   <div
-    class="w-full h-full center relative overflow-auto scroll"
-    :style="{ display: hidden ? 'none' : 'flex' }"
+    ref="webWrapperRef"
+    :style="{ display: isWebsiteComponentHidden ? 'none' : 'block' }"
+    :class="{
+      'wh-full relative': true,
+    }"
   >
-    <template v-for="({ website, name }, index) in projects" :key="index">
-      <iframe
-        v-show="loaded[index]"
-        class="w-full h-full max-md:rounded-2xl"
-        :hidden="store.state.previewProject - 1 !== index"
-        :aria-hidden="store.state.previewProject - 1 !== index"
-        :src="website"
-        :title="`Project showcase: ${name}`"
-        loading="lazy"
-      />
-    </template>
+    <div
+      v-for="({ website, name, webBgImg }, index) in projects"
+      v-show="store.state.previewProject === index + 1"
+      :key="index"
+      :class="{
+        'wh-full relative': true,
+        'bg-[#2a2a2a]': index === 0,
+        'bg-[#a67a42]': index === 1,
+      }"
+      :style="{ width: `${width}px`, height: `${height}px` }"
+    >
+      <div class="sr-only">
+        <h2>{{ name }}</h2>
+        <p>
+          This is a live preview of project: <strong>{{ name }}</strong
+          >.
+        </p>
+        <UiExternalLink :href="website">Visit {{ website }}</UiExternalLink>
+      </div>
+      <div class="wh-full">
+        <img
+          :src="webBgImg"
+          class="wh-full blur-sm absolute z-10 top-0"
+          :alt="`Blurred background of the ${name} project preview`"
+        />
+        <iframe
+          class="wh-full max-md:rounded-2xl absolute z-20 top-0"
+          :src="website"
+          :title="`Project showcase: ${name}`"
+        />
+      </div>
+    </div>
   </div>
 </template>

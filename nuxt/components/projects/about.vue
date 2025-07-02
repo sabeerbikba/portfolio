@@ -1,36 +1,17 @@
 <script setup lang="ts">
-import { marked } from "marked";
 import { projects } from "~/data/projects";
 import type { ScreenStoreType } from "~/types/store";
 
 const store = inject("store") as ScreenStoreType;
-
-const processMarkdown = (base64: string) => {
-  const markdown = atob(base64);
-  const html = marked.parse(markdown, { async: false });
-
-  const withAttrs = html.replace(
-    /<a\s/g,
-    '<a target="_blank" rel="noopener noreferrer" '
-  );
-
-  // Fix invalid <a><p></p></a> from marked caused by using withAttrs to add target/rel
-  const fixedStructure = withAttrs.replace(
-    /<a([^>]+)>\s*<p>(.*?)<\/p>\s*<\/a>/gi,
-    "<a$1>$2</a>"
-  );
-
-  return fixedStructure;
-};
 </script>
 
 <template>
-  <div class="text-black" v-show="store.state.previewApp === 4">
+  <div v-show="store.state.previewApp === 4">
     <div class="notes-body max-w-prose mx-auto p-6 max-xs:px-7">
       <template v-for="({ aboutHtmlBase64 }, index) in projects" :key="index">
         <div
           v-show="store.state.previewProject === index + 1"
-          v-html="processMarkdown(aboutHtmlBase64)"
+          v-html="useParsedMarkdown(aboutHtmlBase64)"
         />
       </template>
     </div>

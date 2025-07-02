@@ -42,26 +42,26 @@ const handleMouseMove = (event: MouseEvent): void => {
         isGradientVisible ? '100px' : '0px'
       } circle at ${mouseX}px ${mouseY}px, var(--gray-500), transparent 80%)`,
     }"
+    class="p-[2px] rounded-lg transition-all duration-300 ease-in-out relative overflow-hidden"
     @mousemove="handleMouseMove"
     @mouseenter="isGradientVisible = true"
     @mouseleave="isGradientVisible = false"
-    class="p-[2px] rounded-lg transition-all duration-300 ease-in-out relative overflow-hidden"
   >
     <textarea
       v-if="elementType === 'textarea'"
       v-bind="$attrs"
-      :class="cn(baseClasses, className)"
+      :class="useCn(baseClasses, className)"
+      :placeholder="isInputFocused ? '' : ($attrs.placeholder as string)"
       @focus="isInputFocused = true"
       @blur="isInputFocused = false"
-      :placeholder="isInputFocused ? '' : ($attrs.placeholder as string)"
     />
     <input
       v-else
       v-bind="$attrs"
-      :class="cn(baseClasses, className)"
+      :class="useCn(baseClasses, className)"
+      :placeholder="isInputFocused ? '' : ($attrs.placeholder as string)"
       @focus="isInputFocused = true"
       @blur="isInputFocused = false"
-      :placeholder="isInputFocused ? '' : ($attrs.placeholder as string)"
     />
   </div>
 </template>

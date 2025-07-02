@@ -8,27 +8,22 @@ import {
 import { Motion } from "@oku-ui/motion";
 
 const props = defineProps<{
-  mouseX: MotionValue<number>;
   title: string;
   icon: string;
   isSelected: boolean;
-  onClick: (event: MouseEvent) => void;
   isHovered: boolean;
-  isShrinking: boolean;
+  mouseX: MotionValue<number>;
+
+  // remove optional later
+  click?: [string, number];
 }>();
 
 const iconRef = ref<HTMLDivElement | null>(null);
 const hovered = ref<boolean>(false);
 const isButtonVisible = computed(() => !props.isHovered && props.isSelected);
-const tooltipId = computed<string>(
-  () =>
-    `tooltip-${props.title
-      .trim()
-      .toLowerCase()
-      .replace(/[\s.]+/g, "-")}`
-);
-// TODO: not a boolean value `is` not good here
-const isProjectOrApp = computed<string>(() =>
+const tooltipId = computed<string>(() => `tooltip-${useSlugify(props.title)}`);
+
+const viewType = computed<string>(() =>
   ["Website", "About", "Github"].includes(props.title) ? "app" : "project"
 );
 
@@ -94,39 +89,39 @@ watchEffect(() => {
 
 <template>
   <button
+    ref="iconRef"
+    :key="$route.fullPath"
     type="button"
     :aria-describedby="tooltipId"
-    ref="iconRef"
-    :aria-label="`Navigate to ${title} ${isProjectOrApp}`"
+    :aria-current="isSelected ? 'page' : undefined"
+    :aria-label="`Navigate to ${title} ${viewType}`"
     class="aspect-square rounded-xl bg-transparent"
-    @click="onClick && onClick($event)"
-    :key="$route.fullPath"
   >
     <MotionV
       :style="{ width, height }"
+      :class="{
+        'max-w-[35px] max-h-[35px]': !isHovered,
+      }"
       @mouseenter="hovered = true"
       @mouseleave="hovered = false"
-      :class="{
-        'max-w-[35px] max-h-[35px]': isShrinking,
-      }"
     >
       <Motion
+        :id="tooltipId"
         as="div"
         role="tooltip"
-        :id="tooltipId"
         :initial="{ opacity: 0, y: 10, x: '-50%' }"
         :animate="
           hovered
             ? { opacity: 1, y: -10, x: '-50%' }
             : { opacity: 0, y: 2, x: '-50%' }
         "
-        class="px-2 py-0.5 whitespace-pre rounded-md bg-gray-100 border border-gray-200 text-neutral-700 absolute left-1/2 -translate-x-1/2 -top-8 w-fit text-xs"
+        class="px-2 py-0.5 whitespace-pre rounded-md bg-gray-100 border border-gray-200 text-neutral-700 absolute left-1/2 -translate-x-1/2 -top-8 w-fit text-xs -z-50"
       >
         {{ title }}
       </Motion>
       <Motion
-        class="transition-all duration-300 ease-in-out center rounded-2xl"
         :class="{
+          'transition-all duration-300 ease-in-out center rounded-2xl': true,
           'shadow-[0_5px_12px_9px_rgba(0,0,0,0.3)] bg-[rgba(0,0,0,0.3)]':
             isButtonVisible,
         }"

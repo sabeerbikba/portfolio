@@ -1,9 +1,16 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
 export default defineNuxtConfig({
-  compatibilityDate: "2024-11-01",
-  devtools: { enabled: true },
-  modules: ["@nuxtjs/tailwindcss", "motion-v/nuxt", "@nuxt/icon"],
+  ssr: true,
+  nitro: {
+    preset: "static",
+  },
+  modules: [
+    "@nuxtjs/tailwindcss",
+    "motion-v/nuxt",
+    "@nuxt/icon",
+    "@nuxt/eslint",
+  ],
   runtimeConfig: {
     public: {
       baseUrl: process.env.VERCEL_URL
@@ -18,25 +25,33 @@ export default defineNuxtConfig({
       comments: false,
     },
   },
+  vite: {
+    esbuild: {
+      legalComments: "none",
+    },
+    build: {
+      terserOptions: {
+        format: {
+          comments: false,
+        },
+      },
+    },
+  },
   icon: {
     componentName: "NuxtIcon",
     mode: "svg",
+    provider: "server",
+    fallbackToApi: false,
     serverBundle: {
       collections: ["mdi", "ic"],
     },
   },
-
+  devtools: { enabled: false },
+  compatibilityDate: "2024-11-01",
   // build: {
   //   analyze: {
   //     enabled: true,
   //     mode: "static",
   //   },
   // },
-
-  // TODO: TMP TMP
-  nitro: {
-    prerender: {
-      ignore: ["/LICENSE"],
-    },
-  },
 });

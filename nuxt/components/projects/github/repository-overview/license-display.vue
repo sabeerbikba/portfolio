@@ -34,9 +34,11 @@ const license = computed<string[] | string>(() => {
         : 'text-xs',
     ]"
   >
-    <p v-if="isMitLicense" v-for="(para, i) in license" :key="i" >
-      {{ para }}
-    </p>
+    <template v-if="isMitLicense">
+      <p v-for="(para, i) in license" :key="i">
+        {{ para }}
+      </p>
+    </template>
     <pre
       v-else
       class="overflow-x-auto w-full"
