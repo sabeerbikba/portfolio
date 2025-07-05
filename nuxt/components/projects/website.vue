@@ -5,7 +5,7 @@ import { useElementSize } from "@vueuse/core";
 
 const store = inject("store") as ScreenStoreType;
 
-const webWrapperRef = useTemplateRef<HTMLDivElement>("webWrapperRef");
+const webWrapperRef = ref<HTMLDivElement | null>(null);
 const { width, height } = useElementSize(webWrapperRef);
 const isWebsiteComponentHidden = computed(() => store.state.previewApp !== 3);
 </script>
@@ -14,9 +14,7 @@ const isWebsiteComponentHidden = computed(() => store.state.previewApp !== 3);
   <div
     ref="webWrapperRef"
     :style="{ display: isWebsiteComponentHidden ? 'none' : 'block' }"
-    :class="{
-      'wh-full relative': true,
-    }"
+    class="wh-full relative"
   >
     <div
       v-for="({ website, name, webBgImg }, index) in projects"

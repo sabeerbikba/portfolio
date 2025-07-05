@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import localIcons from "~/data/icons";
+import { localIcons } from "~/data/icons";
 import seoMetaMap from "~/data/seo";
 
+const router = useRouter();
 const { baseUrl } = useRuntimeConfig().public;
+const homepageLink = useState<string>("home-page-link");
 
 useSeoMeta({
   robots: "index, follow",
@@ -31,10 +33,35 @@ const aboutSectionParagraphs: string[] = [
   "While my expertise spans both front-end and back-end development, I’m particularly focused on delivering high-quality, interactive React apps. I’m also exploring <strong class='font-medium'>mobile development with React Native</strong> to create seamless cross-platform mobile experiences.",
   "I’m always eager to take on new challenges and push the boundaries of web and mobile development.",
 ];
+
+onMounted(() => {
+  const setListeners = (() => {
+    const iifeFn = () => {
+      if (router.currentRoute.value.path === "/") {
+        const links = document.querySelectorAll("a[data-nuxt-link]");
+        links.forEach((link) => {
+          link.addEventListener("click", () => {
+            const href = link.getAttribute("href");
+            if (href !== "/") {
+              const link = router.currentRoute.value.fullPath;
+              homepageLink.value = link;
+            }
+          });
+        });
+      }
+    };
+    iifeFn();
+    return iifeFn;
+  })();
+
+  router.afterEach(() => {
+    setTimeout(setListeners, 0); // next tick
+  });
+});
 </script>
 
 <template>
-  <div>
+  <div class="overflow-x-hidden">
     <section
       aria-labelledby="hero-section"
       class="flex flex-col items-center justify-end h-[18rem] xs:h-[22rem] sm:h-[27rem] md:h-[32rem] bg-gradient-to-b from-white-400 via-gray-100 to-white-400"
@@ -68,13 +95,13 @@ const aboutSectionParagraphs: string[] = [
         aria-label="Call to action button"
         class="flex flex-col md:flex-row space-y-4 md:space-y-0 space-x-0 md:space-x-4"
       >
-        <NuxtLink
+        <UiNuxtLink
           to="/contact"
           aria-label="Start a conversation with me by visiting the contact page"
           class="border border-transparent font-medium rounded-3xl text-white bg-black hover:bg-black/90 px-7 py-1.5 md:py-2.5 md:text-lg md:px-8"
         >
           Let&apos;s Chat
-        </NuxtLink>
+        </UiNuxtLink>
       </div>
     </section>
 
@@ -115,12 +142,10 @@ const aboutSectionParagraphs: string[] = [
       class="about-section py-12 px-10 mt-9 bg-[rgb(240,240,240)] bg-[linear-gradient(0deg,_rgba(255,255,255,0.15)_0%,_rgb(240,240,240)_39%,_rgba(255,255,255,0.15)_100%)]"
     >
       <UiHeading id="about-heading"> About Me </UiHeading>
-      <div class="max-w-[1200px] mx-auto text-center">
+      <div class="max-w-[1200px] mx-auto text-center about-div">
         <p
           v-for="(paragraph, index) in aboutSectionParagraphs"
           :key="index"
-          class="mt-10 max-sm:mt-6 text-gray-600 font-medium indent-6 xs:tracking-wider text-base xs:text-lg sm:text-xl md:text-2xl"
-          style="word-spacing: 4px"
           v-html="paragraph"
         />
       </div>
@@ -144,7 +169,7 @@ const aboutSectionParagraphs: string[] = [
           class="mt-8 transition-transform duration-200 hover:scale-105 active:scale-95"
           tabindex="-1"
         >
-          <NuxtLink
+          <UiNuxtLink
             to="/contact"
             class="inline-flex items-center justify-center text-base font-medium rounded-3xl text-white bg-black hover:bg-black/90 px-7 py-2 md:py-3 md:text-lg md:px-8"
           >
@@ -153,9 +178,48 @@ const aboutSectionParagraphs: string[] = [
               class="ml-2 animate-wiggle"
               v-html="localIcons.home.arrowRight"
             />
-          </NuxtLink>
+          </UiNuxtLink>
         </div>
       </div>
     </section>
   </div>
 </template>
+
+<style>
+.about-div p {
+  @apply mt-10 max-sm:mt-6 text-gray-600 font-medium indent-6 xs:tracking-wider text-base xs:text-lg sm:text-xl md:text-2xl [word-spacing:4px] max-md:[word-spacing:2px] max-xs:[word-spacing:normal];
+}
+
+/* Moved styles here to avoid separate CSS file creation and reduce extra requests */
+/* tools-pack.vue */
+.circle-item {
+  @apply transition-all duration-200 ease-in-out will-change-transform
+    hover:scale-110 hover:z-10 absolute shadow-lg
+    bg-white rounded-full z-0 border-[0.5px];
+}
+
+.circle-image {
+  @apply absolute bg-no-repeat bg-center bg-contain rounded-full
+    w-[95%] h-[95%] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2;
+}
+
+.circle-tooltip {
+  @apply transition-opacity duration-300 ease-in-out absolute z-50
+    text-sm bg-gray-800 text-white p-2 pointer-events-none transform
+    opacity-0 shadow-xl rounded-lg
+    flex flex-col items-center;
+}
+
+.circle-tooltip-text {
+  @apply whitespace-nowrap font-bold z-20 relative;
+}
+
+/* app.vue */
+.footer-links li {
+  @apply flex justify-center space-y-4 flex-col mt-4;
+}
+
+.footer-links li a {
+  @apply transition-colors;
+}
+</style>

@@ -58,7 +58,7 @@ import type {
   GitHubLanguagesType,
   GitHubRepositoryType,
   GithubTagsType,
-  NullableGitHubFileContent,
+  NullableFileContent,
   ProjectDataType,
 } from "~/types/github";
 
@@ -123,12 +123,12 @@ const getEndpoints = (fullRepoName: string) =>
     {
       key: "license",
       url: `${fullRepoName}/contents/LICENSE`,
-      fn: fetchSafeContent<NullableGitHubFileContent>,
+      fn: fetchSafeContent<NullableFileContent>,
     },
     {
       key: "readme",
       url: `${fullRepoName}/contents/README.md`,
-      fn: fetchSafeContent<NullableGitHubFileContent>,
+      fn: fetchSafeContent<NullableFileContent>,
     },
   ] as const;
 
@@ -238,14 +238,14 @@ onMounted(async () => {
 
 <template>
   <div v-show="isGithubComponentVisible" class="h-full">
-    <div v-if="isGithubFreshDataLoading" class="center w-full h-full">
+    <div v-if="isGithubFreshDataLoading" class="center wh-full">
       <span
         v-for="(_, i) in 3"
         :key="i"
         :class="[
-          'inline-block w-[3px] h-[20px] rounded-[10px] bg-white/50 animate-scale-up4',
-          i === 1 && 'h-[35px] mx-[5px] [animation-delay:0.25s]',
-          i === 2 && '[animation-delay:0.5s]',
+          'loader-bar',
+          i === 1 && 'loader-bar-center',
+          i === 2 && 'loader-bar-right',
         ]"
       />
     </div>
@@ -260,7 +260,6 @@ onMounted(async () => {
         center: !hasAnyGithubDataAvailable(project),
       }"
     >
-      <!-- this condition used two time use create computed function for it -->
       <template v-if="hasAnyGithubDataAvailable(project)">
         <ProjectsGithubInfoCard
           :repoData="project.repoDetails"
@@ -269,7 +268,7 @@ onMounted(async () => {
           :hasLicense="Boolean(project.license)"
           :isPublicRepo="!project.repoDetails?.private"
         />
-        <div class="px-4">
+        <div class="px-4 bg-[#0d1117]">
           <ProjectsGithubRepositoryOverview
             v-if="project.license || project.readme"
             :readmeData="project.readme"
@@ -318,3 +317,18 @@ onMounted(async () => {
     </div>
   </div>
 </template>
+
+<style>
+.loader-bar {
+  @apply inline-block w-[3px] h-[20px] rounded-[10px] bg-white/50 animate-scale-up4;
+}
+
+.loader-bar-center {
+  @apply h-[35px] mx-[5px];
+  animation-delay: 0.25s;
+}
+
+.loader-bar-right {
+  animation-delay: 0.5s;
+}
+</style>

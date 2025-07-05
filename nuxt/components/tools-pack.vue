@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import { useElementSize } from "@vueuse/core";
 import { hierarchy, pack, type HierarchyCircularNode } from "d3-hierarchy";
-import tools from "~/data/tools";
-import type { ToolsType } from "~/data/tools";
+import tools, { type ToolsType } from "~/data/tools";
 
 // Inspiration URL: https://tanstack.com/query/latest
 // Source URL: https://github.com/TanStack/tanstack.com/blob/ee943e214df6f132a70120014096ed72775dee4b/app/components/ToolsPack.tsx
@@ -13,17 +13,9 @@ export type CircleData = {
   data: ToolsType;
 };
 
-const width = ref(200);
-const isLoading = ref<boolean>(false);
 const container = ref<HTMLElement | null>(null);
+const { width } = useElementSize(container, { width: 200, height: 0 });
 const circles = ref(computeD3Layout(tools, width.value));
-
-const updateWidth = () => {
-  if (container.value) {
-    width.value = container.value.clientWidth;
-  }
-};
-
 const recalculate = () => {
   circles.value = computeD3Layout(tools, width.value);
 };
@@ -71,12 +63,6 @@ const getTooltipClasses = (x: number, y: number): string[] => {
 };
 
 watch(width, recalculate);
-
-onMounted(() => {
-  updateWidth();
-  isLoading.value = true;
-  window.addEventListener("resize", updateWidth);
-});
 </script>
 
 <template>
@@ -92,7 +78,7 @@ onMounted(() => {
       <div
         v-for="(circle, i) in circles"
         :key="`circle-${i}`"
-        class="transition-all duration-200 ease-in-out will-change-transform group hover:scale-110 hover:z-10 absolute shadow-lg bg-white rounded-full z-0 border-[0.5px]"
+        class="circle-item group"
         :style="{
           left: `${circle.x - circle.r}px`,
           top: `${circle.y - circle.r}px`,
@@ -102,19 +88,19 @@ onMounted(() => {
       >
         <div
           v-if="circle.data.imageUrl.startsWith('<svg')"
-          class="absolute bg-no-repeat bg-center bg-contain rounded-full w-[95%] h-[95%] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+          class="circle-image"
           v-html="circle.data.imageUrl"
         />
         <div
           v-else
-          class="absolute bg-no-repeat bg-center bg-contain rounded-full w-[95%] h-[95%] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+          class="circle-image"
           :style="{ backgroundImage: `url(${circle.data.imageUrl})` }"
         />
         <div
-          class="transition-opacity duration-300 ease-in-out absolute z-50 text-sm bg-gray-800 text-white p-2 pointer-events-none transform opacity-0 group-hover:opacity-100 shadow-xl rounded-lg flex flex-col items-center"
+          class="circle-tooltip group-hover:opacity-100"
           :class="getTooltipClasses(circle.x, circle.y)"
         >
-          <p class="whitespace-nowrap font-bold z-20 relative">
+          <p class="circle-tooltip-text">
             {{ circle.data.name }}
           </p>
         </div>
@@ -126,7 +112,7 @@ onMounted(() => {
 <!-- <style>
 /* Don't remove */
 /** if using this css remove and add to tailwind.confg.ts file  */
-.loader-tools-pack::before,
+/* .loader-tools-pack::before,
 .loader-tools-pack::after {
   position: absolute;
   content: "";
@@ -154,5 +140,5 @@ onMounted(() => {
     transform: scale(1);
     opacity: 0;
   }
-}
+} */
 </style> -->

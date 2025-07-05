@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import type { OcticonsIconName } from "~/data/octicons-icons";
-import type { NullableGitHubFileContent } from "~/types/github";
+import type { OcticonsIconName } from "~/data/icons";
+import type { NullableFileContent } from "~/types/github";
 import type { RepositoryOverviewTabType } from "~/types/global";
 
 const props = defineProps<{
-  readmeData: NullableGitHubFileContent;
-  licenseData: NullableGitHubFileContent;
+  readmeData: NullableFileContent;
+  licenseData: NullableFileContent;
   repoName: string;
   defaultBranch: string | undefined;
 }>();
@@ -78,19 +78,14 @@ const previewTab = useState<RepositoryOverviewTabType>(
 
 <style>
 .repo-overview-button::after {
-  position: absolute;
-  right: 50%;
   bottom: calc(50% - calc(var(--control-xlarge-size, 48px) / 2 + 1px));
-  width: 100%;
-  height: 2.16px;
   content: "";
-  background-color: transparent;
-  border-radius: 0;
   transform: translate(50%, 55%);
+  @apply absolute right-1/2 w-full h-[2.16px] bg-transparent rounded-none;
 }
 
 .repo-overview-button[aria-current]:not([aria-current="false"])::after,
 .repo-overview-button[aria-selected="true"]::after {
-  background-color: #fd8c73;
+  @apply bg-[#fd8c73];
 }
 </style>

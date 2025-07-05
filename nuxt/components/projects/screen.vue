@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { useRouteQuery } from "@vueuse/router";
 import { apps, projects } from "~/data/projects";
-import type { ProjectPayloadType, AppPayloadType } from "~/types/store";
 import type {
+  ProjectPayloadType,
+  AppPayloadType,
   ScreenStoreActionType,
   ScreenStoreStateType,
   ScreenStoreType,

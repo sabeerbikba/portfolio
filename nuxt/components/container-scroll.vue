@@ -1,50 +1,39 @@
 <script setup lang="ts">
-import { useWindowSize, useScroll, useElementBounding } from "@vueuse/core";
+import {
+  useWindowSize,
+  useScroll,
+  useElementBounding,
+  useMediaQuery,
+} from "@vueuse/core";
 
 // Inspiration URL: https://ui.aceternity.com/components/container-scroll-animation
 // Source URL: https://inspira-ui.com/components/miscellaneous/container-scroll
 
-const containerRef = ref(null);
-const isMobile = ref(false);
-
-const updateIsMobile = (): void => {
-  isMobile.value = window.innerWidth <= 768;
-};
-
-onMounted(() => {
-  updateIsMobile();
-  window.addEventListener("resize", updateIsMobile);
-});
-
-onUnmounted(() => {
-  window.removeEventListener("resize", updateIsMobile);
-});
-
+const containerRef = ref<HTMLDivElement | null>(null);
+const isMobile = useMediaQuery("(max-width: 768px)", { ssrWidth: 200 });
 const { height } = useWindowSize();
 const { y: scrollY } = useScroll(window);
 const { bottom } = useElementBounding(containerRef);
 
+const rotate = computed(() => 20 * (1 - scrollYProgress.value));
+const translateY = computed(() => -100 * scrollYProgress.value);
 const scrollYProgress = computed(() => {
   if (!bottom.value) return 0;
   return 1 - Math.max(0, bottom.value - scrollY.value) / height.value;
 });
-
 const scaleDimensions = computed(() =>
   isMobile.value ? [0.7, 0.9] : [1.05, 1]
 );
-
-const rotate = computed(() => 20 * (1 - scrollYProgress.value));
 const scale = computed(() => {
   const [start, end] = scaleDimensions.value;
   return start + (end - start) * scrollYProgress.value;
 });
-const translateY = computed(() => -100 * scrollYProgress.value);
 </script>
 
 <template>
   <div
     ref="containerRef"
-    class="relative flex h-[60rem] items-center justify-center p-2 md:h-[80rem] md:p-20"
+    class="relative center h-[60rem] p-2 md:h-[80rem] md:p-20"
   >
     <div class="relative w-full py-10 md:py-40" style="perspective: 1000px">
       <div

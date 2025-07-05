@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import localIcons from "~/data/icons";
+import {localIcons} from "~/data/icons";
 import type { NuxtError } from "#app";
 
 const props = defineProps<{ error: NuxtError }>();

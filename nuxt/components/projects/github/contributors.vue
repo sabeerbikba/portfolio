@@ -56,9 +56,9 @@ const contributors = computed<GitHubContributorType>(
               :href="contributor.html_url"
               class="hover:text-[#4493f8]"
             >
-              <strong class="font-semibold text-[15.2px]">{{
-                contributor.login
-              }}</strong>
+              <strong class="font-semibold text-[15.2px]">
+                {{ contributor.login }}
+              </strong>
             </UiExternalLink>
           </span>
         </li>

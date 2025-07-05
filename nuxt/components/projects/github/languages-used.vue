@@ -18,6 +18,11 @@ const languagesBytesOnePercentage = computed(() => {
   );
   return total > 0 ? total / 100 : 0;
 });
+
+const getLanguagePercentage = (bytes: number) =>
+  languagesBytesOnePercentage.value === 0
+    ? 0
+    : parseFloat((bytes / languagesBytesOnePercentage.value).toFixed(1));
 </script>
 
 <template>
@@ -31,14 +36,9 @@ const languagesBytesOnePercentage = computed(() => {
             :key="language"
             :data-language="language"
             :style="{
-              width: (bytes / languagesBytesOnePercentage).toFixed(1) + '%',
+              width: getLanguagePercentage(bytes) + '%',
             }"
-            :aria-label="
-              language +
-              ' ' +
-              (bytes / languagesBytesOnePercentage).toFixed(1) +
-              '%'
-            "
+            :aria-label="`${language} ${getLanguagePercentage(bytes)}%`"
             class="h-2 mx-[.3px]"
           />
         </span>
@@ -53,17 +53,14 @@ const languagesBytesOnePercentage = computed(() => {
             :href="`${githubBaseURL + repoName}/search?l=${language
               .toString()
               .toLowerCase()}`"
-            class="inline-flex items-center flex-nowrap no-underline text-small mr-4"
+            class="github-languages-used-link"
           >
-            <span
-              class="w-2 h-2 mr-2 block rounded-full"
-              :data-language="language"
-            />
-            <span class="color-fg-default text-bold mr-1 font-semibold">
+            <span class="github-languages-used-dot" :data-language="language" />
+            <span class="github-languages-used-info">
               {{ language }}
             </span>
             <span class="text-[#747b83]">
-              {{ (bytes / languagesBytesOnePercentage).toFixed(1) + "%" }}
+              {{ getLanguagePercentage(bytes) + "%" }}
             </span>
           </UiExternalLink>
         </li>
@@ -71,3 +68,17 @@ const languagesBytesOnePercentage = computed(() => {
     </div>
   </div>
 </template>
+
+<style>
+.github-languages-used-link {
+  @apply inline-flex items-center flex-nowrap no-underline mr-4 text-[13.5px];
+}
+
+.github-languages-used-dot {
+  @apply w-2 h-2 mr-2 block rounded-full;
+}
+
+.github-languages-used-info {
+  @apply mr-1 font-semibold text-[#f0f6fc];
+}
+</style>

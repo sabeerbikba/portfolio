@@ -13,9 +13,9 @@ withDefaults(
 defineOptions({ inheritAttrs: false });
 
 const isInputFocused = ref(false);
-const mouseX: Ref<number> = ref(0);
-const mouseY: Ref<number> = ref(0);
-const isGradientVisible: Ref<boolean> = ref(false);
+const mouseX = ref<number>(0);
+const mouseY = ref<number>(0);
+const isGradientVisible = ref<boolean>(false);
 
 const baseClasses: string = `
   flex h-10 w-full border-none bg-gray-50 text-black shadow-input rounded-md px-3 py-2 text-sm 
@@ -42,7 +42,7 @@ const handleMouseMove = (event: MouseEvent): void => {
         isGradientVisible ? '100px' : '0px'
       } circle at ${mouseX}px ${mouseY}px, var(--gray-500), transparent 80%)`,
     }"
-    class="p-[2px] rounded-lg transition-all duration-300 ease-in-out relative overflow-hidden"
+    class="p-[2px] rounded-lg transition-all duration-300 ease-in-out relative overflow-hidden group hover:shadow-none"
     @mousemove="handleMouseMove"
     @mouseenter="isGradientVisible = true"
     @mouseleave="isGradientVisible = false"
@@ -50,7 +50,13 @@ const handleMouseMove = (event: MouseEvent): void => {
     <textarea
       v-if="elementType === 'textarea'"
       v-bind="$attrs"
-      :class="useCn(baseClasses, className)"
+      :class="
+        useCn(
+          baseClasses,
+          className,
+          'shadow-[0_1px_3px_#0000001f,0_1px_2px_#0000003d] group-hover:shadow-none'
+        )
+      "
       :placeholder="isInputFocused ? '' : ($attrs.placeholder as string)"
       @focus="isInputFocused = true"
       @blur="isInputFocused = false"
@@ -58,20 +64,16 @@ const handleMouseMove = (event: MouseEvent): void => {
     <input
       v-else
       v-bind="$attrs"
-      :class="useCn(baseClasses, className)"
+      :class="
+        useCn(
+          baseClasses,
+          className,
+          'shadow-[0_1px_3px_#0000001f,0_1px_2px_#0000003d] group-hover:shadow-none'
+        )
+      "
       :placeholder="isInputFocused ? '' : ($attrs.placeholder as string)"
       @focus="isInputFocused = true"
       @blur="isInputFocused = false"
     />
   </div>
 </template>
-
-<style>
-.shadow-input {
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-}
-
-.group-hover-input:hover .shadow-input {
-  box-shadow: none;
-}
-</style>

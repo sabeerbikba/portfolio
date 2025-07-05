@@ -52,7 +52,7 @@ onUnmounted(() => {
 
 <template>
   <ButtonsGroup.define v-slot="{ $slots }">
-    <div class="w-1/3 h-full py-[9px]" role="group">
+    <div class="mobile-btn-base" role="group">
       <component :is="$slots.default" />
     </div>
   </ButtonsGroup.define>
@@ -60,22 +60,17 @@ onUnmounted(() => {
     v-slot="{ name, icon, isSelected, ariaLabelBtn, onClick }"
   >
     <button class="max-w-full p-2" :aria-label="ariaLabelBtn" @click="onClick">
-      <img
-        :src="icon"
-        :alt="`${name} icon`"
-        width="100%"
-        height="100%"
-        loading="eager"
-        decoding="async"
+      <ProjectsFloatingDockBtnImg
+        :icon="icon"
+        :name="name"
         :class="{
-          'rounded-xl border border-zinc-600 shadow-[0_0_20px_4px_rgba(255,255,255,0.7)]':
-            isSelected,
+          'mobile-btn-icon-active': isSelected,
         }"
       />
     </button>
   </MobileButton.define>
   <CloseBtnLine.define>
-    <div class="absolute inset-0 w-1 rounded-sm bg-gray-700" />
+    <div class="mobile-close-btn" />
   </CloseBtnLine.define>
   <OpenBtnLineRing.define v-slot="{ $slots, wh, bgColor }">
     <span
@@ -84,7 +79,7 @@ onUnmounted(() => {
         height: `${wh}px`,
         backgroundColor: bgColor || 'transparent',
       }"
-      class="rounded-full flex items-center justify-center"
+      class="rounded-full center"
     >
       <component :is="$slots.default" />
     </span>
@@ -111,8 +106,8 @@ onUnmounted(() => {
             :key="`project-${name}`"
             :name="name"
             :icon="icon"
-            :is-selected="store.state.previewProject === id + 1"
             :ariaLabelBtn="`Navigate to ${name} project`"
+            :is-selected="store.state.previewProject === id + 1"
             :on-click="
               () => store.dispatch({ type: 'TOGGLE_PROJECT', payload: id + 1 })
             "
@@ -142,7 +137,7 @@ onUnmounted(() => {
       as="button"
       :aria-expanded="isOpen"
       aria-label="Toggle mobile navigation"
-      :class="['h-10 w-10 center', !isOpen && 'mix-blend-exclusion']"
+      :class="{ 'h-10 w-10 center': true, 'mix-blend-exclusion': !isOpen }"
       :initial="false"
       :animate="{
         borderRadius: isOpen ? '50%' : '0.5rem',
@@ -172,3 +167,17 @@ onUnmounted(() => {
     </Motion>
   </div>
 </template>
+
+<style>
+.mobile-btn-base {
+  @apply w-1/3 h-full py-[9px];
+}
+
+.mobile-btn-icon-active {
+  @apply rounded-xl border border-zinc-600 shadow-[0_0_20px_4px_rgba(255,255,255,0.7)];
+}
+
+.mobile-close-btn {
+  @apply absolute inset-0 w-1 rounded-sm bg-gray-700;
+}
+</style>

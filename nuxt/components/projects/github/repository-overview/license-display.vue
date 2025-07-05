@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { NullableGitHubFileContent } from "~/types/github";
-const props = defineProps<{ licenseData: NullableGitHubFileContent }>();
+import type { NullableFileContent } from "~/types/github";
+const props = defineProps<{ licenseData: NullableFileContent }>();
 
 const decoded = computed<string>(() =>
   props.licenseData &&
@@ -41,8 +41,7 @@ const license = computed<string[] | string>(() => {
     </template>
     <pre
       v-else
-      class="overflow-x-auto w-full"
-      style="white-space: pre-line; word-break: break-word"
+      class="overflow-x-auto w-full whitespace-pre-line [word-break:break-word]"
     >
       {{ license }}
     </pre>

@@ -12,8 +12,8 @@ type ContactInfoType = {
 };
 
 const { baseUrl } = useRuntimeConfig().public;
-
 const isHommePageLoading = ref<boolean>(false);
+const homepageLink = useState<string>("home-page-link", () => "/");
 
 useSeoMeta({
   robots: "index, follow",
@@ -203,9 +203,9 @@ onUnmounted(() => {
                       :minlength="minlength"
                       :maxlength="maxlength"
                       :aria-describedby="ariaDescribedbyId"
-                      :class="
-                        elementType === 'textarea' ? 'h-40 resize-none' : ''
-                      "
+                      :class="{
+                        'h-40 resize-none': elementType === 'textarea'
+                      }"
                       aria-required="true"
                       required
                       :element-type="elementType as 'input' | 'textarea'"
@@ -391,17 +391,17 @@ onUnmounted(() => {
       "
     >
       <NuxtLink
-        to="/"
+        :to="homepageLink"
         class="center rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black md:h-9 md:w-9 lg:h-12 lg:w-12 h-[30px] w-[30px]"
         aria-label="Back to home page"
         title="Back to home page"
       >
         <NuxtIcon
           v-if="!isHommePageLoading"
-          @click="isHommePageLoading = true"
           name="ic:round-arrow-back-ios"
           class="wh-full relative right-0.5"
           aria-hidden="true"
+          @click="isHommePageLoading = true"
         />
         <div
           v-else

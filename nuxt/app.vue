@@ -1,8 +1,20 @@
 <script setup lang="ts">
-import localIcons from "~/data/icons";
+import { localIcons } from "~/data/icons";
 import socialMedia from "~/data/social-media";
 import { projects as projectsObject } from "~/data/projects";
-import type { QuickLinkType, ProjectLinkType } from "~/types/global";
+import { NuxtLink, UiNuxtLink } from "#components";
+
+type QuickLinkType = {
+  label: string;
+  href: string;
+};
+
+type ProjectLinkType = {
+  website: string;
+  name: string;
+  icon?: string;
+  description?: string;
+};
 
 const route = useRoute();
 const { baseUrl } = useRuntimeConfig().public;
@@ -85,8 +97,7 @@ const quickLinks: QuickLinkType[] = useNuxtApp()
   .map((route) => ({
     label: route.path === "/" ? "Home" : convertToTitleCase(route.path),
     href: route.path,
-  }))
-  .reverse();
+  }));
 
 const projects: QuickLinkType[] = projectsObject.map(
   ({ website, name }: ProjectLinkType) => ({
@@ -132,51 +143,48 @@ const projects: QuickLinkType[] = projectsObject.map(
 
       <div class="grid grid-cols-3 gap-10 items-start mt-10 md:mt-0">
         <div
-          v-for="({ id, title, links }, index) in [
+          v-for="{ title, links } in [
             {
-              id: 'quick-links',
               title: 'Quick Links',
               links: quickLinks,
             },
             {
-              id: 'social-media',
               title: 'Social Media',
               links: socialMedia,
             },
             {
-              id: 'projects',
               title: 'Projects',
               links: projects,
             },
           ]"
-          :key="id"
+          :key="title"
         >
-          <nav :aria-labelledby="id">
-            <UiHeadingSrOnly :id="id">{{ title }}</UiHeadingSrOnly>
-            <ul class="flex justify-center space-y-4 flex-col mt-4">
+          <nav :aria-labelledby="useSlugify(title)">
+            <UiHeadingSrOnly :id="useSlugify(title)">
+              {{ title }}
+            </UiHeadingSrOnly>
+            <ul class="footer-links">
               <li v-for="{ href, label } in links" :key="label">
-                <NuxtLink
-                  v-if="index === 0"
-                  :to="href"
-                  :aria-label="`Navigate to ${label} page`"
-                  class="transition-colors hover:text-foreground/80 text-foreground/60"
-                >
-                  {{ label }}
-                </NuxtLink>
-                <a
+                <template v-if="title === 'Quick Links'">
+                  <component
+                    :is="href !== '/' ? UiNuxtLink : NuxtLink"
+                    :to="href"
+                    :aria-label="`Navigate to ${label} page`"
+                  >
+                    {{ label }}
+                  </component>
+                </template>
+                <UiExternalLink
                   v-else
                   :href="href"
                   :aria-label="`${
-                    id === 'social-media'
+                    title === 'Social Media'
                       ? 'Link to'
                       : 'Visit the website for project'
                   } ${label}`"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="transition-colors hover:text-foreground/80 text-foreground/60"
                 >
                   {{ label }}
-                </a>
+                </UiExternalLink>
               </li>
             </ul>
           </nav>

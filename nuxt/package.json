@@ -13,18 +13,14 @@
     "add:module": "nuxt module add"
   },
   "dependencies": {
-    "@nuxt/eslint": "1.4.1",
     "@nuxt/icon": "1.12.0",
-    "@nuxtjs/tailwindcss": "6.12.2",
     "@oku-ui/motion": "^0.4.3",
     "@vueuse/core": "^12.8.2",
     "@vueuse/router": "^13.5.0",
     "clsx": "^2.1.1",
     "d3-hierarchy": "^3.1.2",
-    "eslint": "^9.0.0",
     "marked": "^15.0.7",
     "motion-v": "^0.13.0",
-    "numeral": "^2.0.6",
     "nuxt": "^3.16.1",
     "tailwind-merge": "^2.6.0",
     "vue": "latest",
@@ -34,11 +30,11 @@
   "devDependencies": {
     "@iconify-json/ic": "^1.2.2",
     "@iconify-json/mdi": "^1.2.3",
+    "@nuxt/eslint": "1.4.1",
+    "@nuxtjs/tailwindcss": "6.12.2",
     "@octokit/types": "^13.10.0",
     "@types/d3-hierarchy": "^3.1.7",
-    "@types/numeral": "^2.0.5",
-    "@types/primer__octicons": "^19.11.0",
-    "@types/tailwindcss": "^3.1.0",
+    "eslint": "^9.29.0",
     "mini-svg-data-uri": "^1.4.4",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.8.2"

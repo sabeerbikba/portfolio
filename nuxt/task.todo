@@ -29,11 +29,7 @@
 - in about section can be used atob btoa with md to make plain text and convet to normal html like [readme-shadow-container.vue]
 - use clean code when using display using v-show
 - can we do some 403 request not show on console
-- need to move log.ts in composable if it's good 
 - if failed to load website show error page or reload button 
-- scroll top of the home page and scroll right side see the problem
-- about and in github app readdme and license all the text need to match same size including h1 - h6 means all the text  
-- try every animation with css 
 - floading dock is not good name that groups desktop and mobiel nav bar for projects 
 - if navigate the page from any other page all the api call again 
  = solution is save the data and in localStorage and website reload re call the Api 
@@ -57,19 +53,44 @@
 - RENAME desktop.vue to desktop-floating-dock.vue search better name for mobile and both managing componennt
 - CHECK all the links need to open where 
 - IMPROVEMENT all the client side animation need to wrap inside <ClientOnly> element docs: https://nuxt.com/docs/api/components/client-only
-- CHECK which component need to delete
 - SET LAST need to set structure for defineProps,  useRuntimeConfig,  types,  Ref<> and  store which come first check which looks good first 
-- CHECK LAST where cn() composable need to use where css conflict  can be happen like inherit css
 - CHECK how animation element rendered where used <ClientOnly /> component docs: https://nuxt.com/docs/api/components/client-only
-- ADD need to use :key everywhere used v-for 
 - numeral lib only used is 11.8kb that go to final build make it small by creating function 
 - icons have some problem when rendering use another method like used for other icons 
 - IMPROVEMENT need to give code failed to website.veu compoment
-- USE createReusableTemplate() where possible 
-- remove all the teleport code if not using
+- TEST check in build and remove frrom prodction all teleport code
 - IMPROVEMENT OTHER-PROJECT in rickshaw project need to add background in pages other then home check in website section and navigate page and see 
-- IMPROVEMENT if in /contact page and pressed back button need to it time to laod page need to show something make responsive 
-- IMPROVEMENT need to use center where need - search flex and find where need to update 
+- IMPROVEMENT index.vue i think better to use paragraphs into base64 readmeMd string
+- IMPROVEMENT CODE add types where it is good 
+
+- -- if some palces attribute and are same rendere with condtion can be used componennt element by importing elemented in element from #components for example 
+
+<UiNuxtLink
+    v-if="href !== '/'"
+    :to="href"
+    :aria-label="`Navigate to ${label} page`"
+    class="transition-colors hover:text-foreground/80 text-foreground/60"
+>
+    {{ label }}
+</UiNuxtLink>
+<NuxtLink
+    v-else
+    :to="href"
+    :aria-label="`Navigate to ${label} page`"
+    class="transition-colors hover:text-foreground/80 text-foreground/60"
+>
+    {{ label }}
+</NuxtLink> -->
+
+<component
+  :is="href !== '/' ? 'UiNuxtLink' : 'NuxtLink'"
+  :to="href"
+  :aria-label="`Navigate to ${label} page`"
+  class="transition-colors hover:text-foreground/80 text-foreground/60"
+>
+  {{ label }}
+</component>
+
 
 
 -- -- floating-dock-desktop

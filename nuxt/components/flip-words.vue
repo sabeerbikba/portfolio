@@ -69,33 +69,33 @@ watch(isVisible, (newValue) => {
 <template>
   <div class="relative inline-block px-2 text-current">
     <Transition
+      enter-active-class="word-enter-active"
+      leave-active-class="word-leave-active"
       @after-enter="$emit('animationStart')"
       @after-leave="$emit('animationComplete')"
     >
       <div
         v-show="isVisible"
-        :class="[
-          'relative z-10 inline-block text-left text-neutral-600',
-          props.class,
-        ]"
+        :class="
+          useCn(
+            'relative z-10 inline-block text-left text-neutral-600',
+            props.class
+          )
+        "
       >
         <template
           v-for="(wordObj, wordIndex) in splitWords"
           :key="wordObj.word + wordIndex"
         >
           <span
-            class="inline-block whitespace-nowrap opacity-0"
-            :style="{
-              animation: `fadeInWord 0.3s ease forwards`,
-              animationDelay: `${wordIndex * 0.3}s`,
-            }"
+            class="word-fade-in"
+            :style="{ animationDelay: `${wordIndex * 0.3}s` }"
           >
             <span
               v-for="(letter, letterIndex) in wordObj.letters"
               :key="wordObj.word + letterIndex"
-              class="inline-block opacity-0"
+              class="letter-fade-in"
               :style="{
-                animation: `fadeInLetter 0.2s ease forwards`,
                 animationDelay: `${wordIndex * 0.3 + letterIndex * 0.05}s`,
               }"
             >
@@ -110,13 +110,30 @@ watch(isVisible, (newValue) => {
 </template>
 
 <style>
-@keyframes fadeInWord {
+.word-fade-in {
+  @apply inline-block whitespace-nowrap opacity-0;
+  animation: wordFadeIn 0.3s ease forwards;
+}
+
+.letter-fade-in {
+  @apply inline-block opacity-0;
+  animation: letterFadeIn 0.2s ease forwards;
+}
+
+.word-enter-active {
+  animation: wordEnter 0.6s ease-in-out forwards;
+}
+
+.word-leave-active {
+  animation: wordLeave 0.6s ease-in-out forwards;
+}
+
+@keyframes wordFadeIn {
   0% {
     opacity: 0;
     transform: translateY(10px);
     filter: blur(8px);
   }
-
   100% {
     opacity: 1;
     transform: translateY(0);
@@ -124,13 +141,12 @@ watch(isVisible, (newValue) => {
   }
 }
 
-@keyframes fadeInLetter {
+@keyframes letterFadeIn {
   0% {
     opacity: 0;
     transform: translateY(10px);
     filter: blur(8px);
   }
-
   100% {
     opacity: 1;
     transform: translateY(0);
@@ -138,33 +154,23 @@ watch(isVisible, (newValue) => {
   }
 }
 
-.v-enter-active {
-  animation: enterWord 0.6s ease-in-out forwards;
-}
-
-.v-leave-active {
-  animation: leaveWord 0.6s ease-in-out forwards;
-}
-
-@keyframes enterWord {
+@keyframes wordEnter {
   0% {
     opacity: 0;
     transform: translateY(10px);
   }
-
   100% {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-@keyframes leaveWord {
+@keyframes wordLeave {
   0% {
     opacity: 1;
     transform: scale(1);
     filter: blur(0);
   }
-
   100% {
     opacity: 0;
     transform: scale(2);

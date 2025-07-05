@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import numeral from "numeral";
 import type { RepositoryOverviewTabType } from "~/types/global";
 import type {
   GitHubRepositoryType,
   GithubBranchesType,
   GithubTagsType,
 } from "~/types/github";
-import type { OcticonsIconName } from "~/data/octicons-icons";
+import type { OcticonsIconName } from "~/data/icons";
 
 type StringUndefined = string | undefined;
 type NumberUndefined = number | undefined;
@@ -21,7 +20,11 @@ const props = defineProps<{
 
 const isHoveredWebsiteLink = ref<boolean>(false);
 const { githubBaseURL } = useRuntimeConfig().public;
-const formatNumber = (num: number) => numeral(num).format("0.[0]a");
+const formatNumber = (num: number) =>
+  new Intl.NumberFormat("en-US", {
+    notation: "compact",
+    maximumFractionDigits: 1,
+  }).format(num);
 
 const full_name = computed<StringUndefined>(() => props.repoData?.full_name);
 const description = computed<StringUndefined | null>(
@@ -131,7 +134,7 @@ const stats = computed<
         <li v-for="{ href, icon, count, what } in stats" :key="what">
           <UiExternalLink
             :href="`${githubBaseURL + href}`"
-            class="inline-flex items-center gap-2 text-current hover:text-blue-400"
+            class="github-info-card-stats-link"
           >
             <ProjectsOcticonsIcon :name="icon" class="fill-current" />
             <span v-if="count != null" class="font-semibold">
@@ -151,3 +154,9 @@ const stats = computed<
     </div>
   </div>
 </template>
+
+<style>
+.github-info-card-stats-link {
+  @apply inline-flex items-center gap-2 text-current hover:text-blue-400;
+}
+</style>

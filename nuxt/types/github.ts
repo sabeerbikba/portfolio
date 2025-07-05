@@ -1,7 +1,5 @@
 import type { Endpoints } from "@octokit/types";
 
-// TODO: remove unsused types 
-
 type GitHubRepositoryType =
   | Endpoints["GET /repos/{owner}/{repo}"]["response"]["data"]
   | undefined;
@@ -17,11 +15,11 @@ type GithubBranchesType =
 type GithubTagsType =
   | Endpoints["GET /repos/{owner}/{repo}/tags"]["response"]["data"]
   | undefined;
-type GitHubFileContentType =
+type FileContentType =
   | Endpoints["GET /repos/{owner}/{repo}/contents/{path}"]["response"]["data"]
   | undefined;
 
-type NullableGitHubFileContent = GitHubFileContentType | null | undefined;
+type NullableFileContent = FileContentType | null | undefined;
 
 type ProjectDataType = {
   repoDetails: GitHubRepositoryType;
@@ -29,14 +27,8 @@ type ProjectDataType = {
   contributors: GitHubContributorType;
   branches: GithubBranchesType;
   tags: GithubTagsType;
-  readme: NullableGitHubFileContent;
-  license: NullableGitHubFileContent;
-};
-
-type ScreenContextType = {
-  previewProject: number;
-  previewApp: number;
-  setScreen: (value: number, view: "project" | "app") => void;
+  readme: NullableFileContent;
+  license: NullableFileContent;
 };
 
 export type {
@@ -45,8 +37,6 @@ export type {
   GitHubLanguagesType,
   GithubBranchesType,
   GithubTagsType,
-  GitHubFileContentType,
-  NullableGitHubFileContent,
+  NullableFileContent,
   ProjectDataType,
-  ScreenContextType,
 };
