@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { localIcons } from "~/data/icons";
 import seoMetaMap from "~/data/seo";
+import { localIcons } from "~/data/icons";
 
 const router = useRouter();
 const { baseUrl } = useRuntimeConfig().public;
@@ -105,8 +105,12 @@ onMounted(() => {
       </div>
     </section>
 
-    <!-- if good also add section here -->
-    <ContainerScroll>
+    <ContainerScrollSection aria-labelledby="project-section">
+      <template #heading>
+        <UiHeadingSrOnly as="h1" id="project-section">
+          Projects Details
+        </UiHeadingSrOnly>
+      </template>
       <template #title>
         <UiHeading as="h2" class-name="md:text-[2.8rem]">
           Browse My Creations
@@ -121,7 +125,7 @@ onMounted(() => {
       <template #screen>
         <ProjectsScreen />
       </template>
-    </ContainerScroll>
+    </ContainerScrollSection>
 
     <section aria-describedby="tools-section">
       <div class="mb-4 text-center">
@@ -132,16 +136,16 @@ onMounted(() => {
           Core Skills & Technologies
         </h2>
       </div>
-      <!-- TODO: Is have any effect: in package size -->
+      <!-- TODO: Is have any effect: in package size need to test using generate command -->
       <LazyToolsPack :hydrate-on-idle="4200" />
       <!-- <ToolsPack /> -->
     </section>
 
     <section
       aria-labelledby="about-heading"
-      class="about-section py-12 px-10 mt-9 bg-[rgb(240,240,240)] bg-[linear-gradient(0deg,_rgba(255,255,255,0.15)_0%,_rgb(240,240,240)_39%,_rgba(255,255,255,0.15)_100%)]"
+      class="about-section py-12 px-10 mt-9 bg-[rgb(251 251 251 / 50%)] bg-[linear-gradient(0deg,_rgba(255,255,255,1)_0%,_rgba(250,250,250,50)_50%,_rgba(255,255,255,0)_100%)]"
     >
-      <UiHeading id="about-heading"> About Me </UiHeading>
+      <UiHeading id="about-heading">About Me</UiHeading>
       <div class="max-w-[1200px] mx-auto text-center about-div">
         <p
           v-for="(paragraph, index) in aboutSectionParagraphs"

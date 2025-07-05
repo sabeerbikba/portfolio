@@ -9,7 +9,7 @@ import {
 // Inspiration URL: https://ui.aceternity.com/components/container-scroll-animation
 // Source URL: https://inspira-ui.com/components/miscellaneous/container-scroll
 
-const containerRef = ref<HTMLDivElement | null>(null);
+const containerRef = ref<HTMLElement | null>(null);
 const isMobile = useMediaQuery("(max-width: 768px)", { ssrWidth: 200 });
 const { height } = useWindowSize();
 const { y: scrollY } = useScroll(window);
@@ -31,10 +31,11 @@ const scale = computed(() => {
 </script>
 
 <template>
-  <div
+  <section
     ref="containerRef"
     class="relative center h-[60rem] p-2 md:h-[80rem] md:p-20"
   >
+    <slot name="heading"/>
     <div class="relative w-full py-10 md:py-40" style="perspective: 1000px">
       <div
         :style="{ transform: `translateY(${translateY}px)` }"
@@ -57,5 +58,5 @@ const scale = computed(() => {
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>

@@ -99,7 +99,7 @@ provide("store", store);
 </script>
 
 <template>
-  <ProjectsFloatingDock />
+  <ProjectsNavigation />
   <div
     :class="{
       'h-full w-full overflow-auto scroll': true,

@@ -122,7 +122,7 @@ watchEffect(() => {
         }"
         :style="{ width: `${widthIcon}px`, height: `${heightIcon}px` }"
       >
-        <ProjectsFloatingDockBtnImg :icon="icon" :name="name" />
+        <ProjectsNavigationBtnImg :icon="icon" :name="name" />
       </Motion>
       <div v-show="isButtonVisible" aria-hidden="true" class="center mt-0.5">
         <span class="desktop-btn-status-dot" />

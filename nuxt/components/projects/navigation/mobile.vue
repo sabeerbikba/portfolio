@@ -60,7 +60,7 @@ onUnmounted(() => {
     v-slot="{ name, icon, isSelected, ariaLabelBtn, onClick }"
   >
     <button class="max-w-full p-2" :aria-label="ariaLabelBtn" @click="onClick">
-      <ProjectsFloatingDockBtnImg
+      <ProjectsNavigationBtnImg
         :icon="icon"
         :name="name"
         :class="{

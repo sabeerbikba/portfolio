@@ -89,7 +89,7 @@ onUnmounted(() => clearTimer());
         aria-label="Navigation Items"
         class="max-w-80 mx-auto gap-2 w-auto rounded-lg px-2.5 inline-flex items-center"
       >
-        <ProjectsFloatingDockDesktopIconContainer
+        <ProjectsNavigationDesktopIconContainer
           v-for="({ name, icon }, id) in projects"
           :key="name"
           :mouse-x="mouseX"
@@ -107,7 +107,7 @@ onUnmounted(() => clearTimer());
           aria-hidden="true"
           class="border-x-[1.9px] border-gray-700 rounded-2xl h-8"
         />
-        <ProjectsFloatingDockDesktopIconContainer
+        <ProjectsNavigationDesktopIconContainer
           v-for="({ name, icon }, id) in apps"
           :key="name"
           :mouse-x="mouseX"
