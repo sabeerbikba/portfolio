@@ -1,6 +1,5 @@
 // TODO:
 
-- Footer line need to be rounded in smaller screen 
 - check types is correctly used 
 - add types in each in every file where ever possible 
 - need to color change for projects docks use blend color 
@@ -43,25 +42,22 @@
 - check where v-if and v-show needed based on SEO 
 - use SEO magic in github.vue components
 - gihtub.vue show bot that this page looks simmilar to github web page 
-- github.vue not mapped it show data based on navigation bar number not maped that's not good for SEO
-- desktop.vue and mobile.vue can we use css sprites for images
 - need to add SEO image in good aspect ratio 
 - if html rendered on server json+ld script not needed
 - TEST the desktop-dock.vue animation working fine in in production by reloading again and again 
 - in info-card.vue that mitlicense button in those stats near showing with JavaScript 
 - after compoletely need to check all the link working fine by clicking every link and button 
 - RENAME desktop.vue to desktop-floating-dock.vue search better name for mobile and both managing componennt
-- CHECK all the links need to open where 
 - IMPROVEMENT all the client side animation need to wrap inside <ClientOnly> element docs: https://nuxt.com/docs/api/components/client-only
 - SET LAST need to set structure for defineProps,  useRuntimeConfig,  types,  Ref<> and  store which come first check which looks good first 
-- CHECK how animation element rendered where used <ClientOnly /> component docs: https://nuxt.com/docs/api/components/client-only
-- numeral lib only used is 11.8kb that go to final build make it small by creating function 
 - icons have some problem when rendering use another method like used for other icons 
-- IMPROVEMENT need to give code failed to website.veu compoment
-- TEST check in build and remove frrom prodction all teleport code
 - IMPROVEMENT OTHER-PROJECT in rickshaw project need to add background in pages other then home check in website section and navigate page and see 
-- IMPROVEMENT index.vue i think better to use paragraphs into base64 readmeMd string
-- IMPROVEMENT CODE add types where it is good 
+
+teleports
+
+- -- FINAL CHECK
+- CHECK all the links need to open where 
+- CHECK how animation element rendered where used <ClientOnly /> component docs: https://nuxt.com/docs/api/components/client-only
 
 - -- if some palces attribute and are same rendere with condtion can be used componennt element by importing elemented in element from #components for example 
 

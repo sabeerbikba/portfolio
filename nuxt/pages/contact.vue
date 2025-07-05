@@ -203,8 +203,11 @@ onUnmounted(() => {
                       :minlength="minlength"
                       :maxlength="maxlength"
                       :aria-describedby="ariaDescribedbyId"
+                      :autocomplete="
+                        elementType === 'input' ? labelId : undefined
+                      "
                       :class="{
-                        'h-40 resize-none': elementType === 'textarea'
+                        'h-40 resize-none': elementType === 'textarea',
                       }"
                       aria-required="true"
                       required

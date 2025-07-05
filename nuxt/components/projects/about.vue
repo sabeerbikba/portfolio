@@ -6,7 +6,7 @@ const store = inject("store") as ScreenStoreType;
 </script>
 
 <template>
-  <div v-show="store.state.previewApp === 4">
+  <div v-show="store.state.previewApp === 4" class="bg-[#191919]">
     <div class="notes-body max-w-prose mx-auto p-6 max-xs:px-7">
       <template v-for="({ aboutHtmlBase64 }, index) in projects" :key="index">
         <div

@@ -12,7 +12,7 @@ withDefaults(
 
 defineOptions({ inheritAttrs: false });
 
-const isInputFocused = ref(false);
+const isInputFocused = ref<boolean>(false);
 const mouseX = ref<number>(0);
 const mouseY = ref<number>(0);
 const isGradientVisible = ref<boolean>(false);
@@ -47,22 +47,8 @@ const handleMouseMove = (event: MouseEvent): void => {
     @mouseenter="isGradientVisible = true"
     @mouseleave="isGradientVisible = false"
   >
-    <textarea
-      v-if="elementType === 'textarea'"
-      v-bind="$attrs"
-      :class="
-        useCn(
-          baseClasses,
-          className,
-          'shadow-[0_1px_3px_#0000001f,0_1px_2px_#0000003d] group-hover:shadow-none'
-        )
-      "
-      :placeholder="isInputFocused ? '' : ($attrs.placeholder as string)"
-      @focus="isInputFocused = true"
-      @blur="isInputFocused = false"
-    />
-    <input
-      v-else
+    <component
+      :is="elementType"
       v-bind="$attrs"
       :class="
         useCn(
