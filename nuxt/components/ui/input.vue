@@ -1,21 +1,15 @@
 <script setup lang="ts">
-withDefaults(
-  defineProps<{
-    elementType?: "input" | "textarea";
-    className?: string;
-  }>(),
-  {
-    elementType: "input",
-    className: "",
-  }
-);
+const { elementType = "input", className = "" } = defineProps<{
+  elementType?: "input" | "textarea";
+  className?: string;
+}>();
 
 defineOptions({ inheritAttrs: false });
 
-const isInputFocused = ref<boolean>(false);
-const mouseX = ref<number>(0);
-const mouseY = ref<number>(0);
-const isGradientVisible = ref<boolean>(false);
+const mouseX = ref(0);
+const mouseY = ref(0);
+const isInputFocused = ref(false);
+const isGradientVisible = ref(false);
 
 const baseClasses: string = `
   flex h-10 w-full border-none bg-gray-50 text-black shadow-input rounded-md px-3 py-2 text-sm 

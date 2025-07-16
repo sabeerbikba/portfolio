@@ -37,8 +37,6 @@
 - update the nuxt framework to 4.0.0 and implement new folder structure
 - think about links in tools-pack component
 - IMPROVEMENT in container scroll component need to set value that avoid layout shift
-- if focused on navigation need to not close the navigation until unfocus
-- button index need to start from 0 instead of 1 because it creating boilerplate code 
 - need to decustruct props instead of using props.prop
 - need to install assertive extension to check how website working 
 - if focused on any github desktop navigation button timer will stop and don't close after focuse lose then close

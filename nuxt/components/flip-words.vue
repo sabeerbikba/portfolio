@@ -2,21 +2,19 @@
 // Inspiration URL: https://ui.aceternity.com/components/flip-words
 // Source URL: https://inspira-ui.com/components/text-animations/flip-words
 
-const props = withDefaults(
-  defineProps<{
-    words: string[];
-    duration?: number;
-    class?: string;
-  }>(),
-  {
-    duration: 3000,
-    class: "",
-  }
-);
+const {
+  words,
+  duration = 3000,
+  className = "",
+} = defineProps<{
+  words: string[];
+  duration?: number;
+  className?: string;
+}>();
 
 defineEmits(["animationStart", "animationComplete"]);
 
-const currentWord = ref(props.words[0]);
+const currentWord = ref(words[0]);
 const isVisible = ref(true);
 const timeoutId = ref<number | null>(null);
 
@@ -24,19 +22,14 @@ const startAnimation = (): void => {
   isVisible.value = false;
 
   setTimeout(() => {
-    const currentIndex = props.words.indexOf(currentWord.value);
-    const nextWord = props.words[currentIndex + 1] || props.words[0];
+    const currentIndex = words.indexOf(currentWord.value);
+    const nextWord = words[currentIndex + 1] || words[0];
     currentWord.value = nextWord;
     isVisible.value = true;
   }, 600);
 };
 
-const splitWords = computed<
-  {
-    word: string;
-    letters: string[];
-  }[]
->(() => {
+const splitWords = computed(() => {
   return currentWord.value.split(" ").map((word) => ({
     word,
     letters: word.split(""),
@@ -46,7 +39,7 @@ const splitWords = computed<
 const startTimeout = (): void => {
   timeoutId.value = window.setTimeout(() => {
     startAnimation();
-  }, props.duration);
+  }, duration);
 };
 
 onMounted(() => {
@@ -79,7 +72,7 @@ watch(isVisible, (newValue) => {
         :class="
           useCn(
             'relative z-10 inline-block text-left text-neutral-600',
-            props.class
+            className
           )
         "
       >

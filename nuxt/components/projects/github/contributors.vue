@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { GitHubContributorType } from "~/types/github";
 
-const props = defineProps<{
+const { contributorData } = defineProps<{
   contributorData: GitHubContributorType;
   repoName: string;
 }>();
@@ -10,9 +10,7 @@ const imgFailedPlaceholder =
   "data:image/webp;base64,UklGRg4BAABXRUJQVlA4IAIBAACQBgCdASogACAAPhkMhEGhBQFVBABhLSAAiCXjN+g/UZ/rXVd9ABa4z1fpibV1/D5jML3Qa0PHr5kxk+4AAP7//xvY3wvxj/v1x+ntFEzZfyoPYi7t30BbojhLx5FGiqIepSsUFQvCoH/koj+1+Nt4Omt8sstpk6h9krhVUcf//eyZAadm4N3OPGaP5/fU7/mbO1tai4mW6y+171sq0/6KV5iQqpxvQpc9eHzHprfbvyChmX/eLUdQg4C7zh6Ahra8bma2yN05wzTR/6lB7GN47qQqYVE/tN6Nna4m7O5pg1StgJr3ri/LRzQ+m0dwdllln/n8+lEUGRr3qY6ByHAAAAA=";
 
 const { githubBaseURL } = useRuntimeConfig().public;
-const contributors = computed<GitHubContributorType>(
-  () => props.contributorData || []
-);
+const contributors = computed(() => contributorData || []);
 </script>
 
 <template>

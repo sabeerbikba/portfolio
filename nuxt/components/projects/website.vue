@@ -4,7 +4,7 @@ import type { ScreenStoreType } from "~/types/store";
 
 const store = inject("store") as ScreenStoreType;
 
-const webWrapperRef = ref<HTMLDivElement | null>(null);
+const webWrapperRef = useTemplateRef("webWrapperRef");
 const { width, height } = useElementSize(webWrapperRef);
 </script>
 

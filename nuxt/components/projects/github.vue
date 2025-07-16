@@ -161,7 +161,7 @@ const { data: serverFetchedGithubData } = await useAsyncData<ProjectDataType[]>(
   { default: () => initilaGithubData }
 );
 
-const clientFetchedGithubData = useState<ProjectDataType[]>(
+const clientFetchedGithubData = useState(
   "client-fetched-github-data",
   () => initilaGithubData
 );
@@ -189,7 +189,7 @@ const fetchMissingClientGithubData = async () => {
   );
 };
 
-const mergedGithubData = computed<ProjectDataType[]>(() =>
+const mergedGithubData = computed(() =>
   clientFetchedGithubData.value.map((clientData, i) => {
     const serverData = serverFetchedGithubData.value?.[i] || {};
     const keys = Object.keys(clientData) as (keyof ProjectDataType)[];
@@ -207,7 +207,7 @@ const mergedGithubData = computed<ProjectDataType[]>(() =>
   })
 );
 
-const isGithubComponentVisible = computed<boolean>(
+const isGithubComponentVisible = computed(
   () => store.state.previewApp === 4
 );
 

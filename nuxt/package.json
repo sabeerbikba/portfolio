@@ -15,7 +15,6 @@
     "add:module": "nuxt module add"
   },
   "dependencies": {
-    "@nuxt/icon": "1.12.0",
     "@nuxtjs/html-validator": "2.1.0",
     "@oku-ui/motion": "^0.4.3",
     "@vueuse/core": "^13.5.0",
@@ -35,8 +34,9 @@
     "@iconify-json/ic": "^1.2.2",
     "@iconify-json/mdi": "^1.2.3",
     "@nuxt/eslint": "1.4.1",
+    "@nuxt/icon": "1.15.0",
     "@nuxtjs/device": "^3.2.4",
-    "@nuxtjs/tailwindcss": "6.12.2",
+    "@nuxtjs/tailwindcss": "6.14.0",
     "@octokit/types": "^13.10.0",
     "@types/d3-hierarchy": "^3.1.7",
     "eslint": "^9.29.0",

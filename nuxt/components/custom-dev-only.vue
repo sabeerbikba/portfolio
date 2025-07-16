@@ -1,5 +1,5 @@
 <script setup lang="ts">
-withDefaults(defineProps<{ textWhite?: boolean }>(), { textWhite: false });
+const { textWhite = false } = defineProps<{ textWhite?: boolean }>();
 </script>
 
 <template>

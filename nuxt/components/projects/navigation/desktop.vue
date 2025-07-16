@@ -23,9 +23,9 @@ If anything changes, verify the following:
 */
 
 let timer: NodeJS.Timeout | null = null;
+const isHovered = ref(false);
+const isVisible = ref(false);
 const inViewRef = useTemplateRef("inViewRef");
-const isHovered = ref<boolean>(false);
-const isVisible = ref<boolean>(false);
 const inView = useElementVisibility(inViewRef);
 const mouseX = useMotionValue<number>(Infinity);
 
@@ -140,15 +140,6 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <!-- <CustomDevOnly>
-    {{ focusedButton }}: {{ !focusedButton.every((v) => v === false) }}<br />
-    isclick: {{ isFocusedOnDesktopNavBtnByClick }}
-  </CustomDevOnly> -->
-  <!-- <CustomDevOnly>
-    focused: {{ isHeroCotBtn.focused }}<br />
-    tabClicked: {{ isHeroCotBtn.tabClicked }}<br />
-    combined: {{ Object.values(isHeroCotBtn).every((v) => v === true) }}
-  </CustomDevOnly> -->
   <div
     role="navigation"
     aria-label="Desktop projects navigation"

@@ -1,20 +1,18 @@
 <script setup lang="ts">
 import type { NullableFileContent } from "~/types/github";
-const props = defineProps<{ licenseData: NullableFileContent }>();
+const { licenseData } = defineProps<{ licenseData: NullableFileContent }>();
 
-const decoded = computed<string>(() =>
-  props.licenseData &&
-  typeof props.licenseData === "object" &&
-  "content" in props.licenseData
-    ? atob(props.licenseData.content)
+const decoded = computed(() =>
+  licenseData && typeof licenseData === "object" && "content" in licenseData
+    ? atob(licenseData.content)
     : ""
 );
 
-const isMitLicense = computed<boolean>(() =>
+const isMitLicense = computed(() =>
   decoded.value.trimStart().startsWith("MIT License")
 );
 
-const license = computed<string[] | string>(() => {
+const license = computed(() => {
   if (isMitLicense.value) {
     return decoded.value
       .split(/\n\s*\n/)

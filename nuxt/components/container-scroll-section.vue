@@ -4,8 +4,8 @@ import { useScroll } from "@vueuse/core";
 // Inspiration URL: https://ui.aceternity.com/components/container-scroll-animation
 // Source URL: https://inspira-ui.com/components/miscellaneous/container-scroll
 
-const containerRef = ref<HTMLDivElement | null>(null);
-const isMobile = ref<boolean>(false);
+const containerRef = useTemplateRef("containerRef");
+const isMobile = ref(false);
 const { height } = useWindowSize({ initialHeight: 1147 });
 const { y: scrollY } = useScroll(window);
 const { bottom } = useElementBounding(containerRef, { reset: false });

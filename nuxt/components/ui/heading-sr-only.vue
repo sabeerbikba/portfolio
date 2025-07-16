@@ -1,16 +1,13 @@
 <script setup lang="ts">
 import type { HeadingLevel } from "~/types/global";
 
-withDefaults(
-  defineProps<{
-    /**
-     * The tag to render the heading as.
-     * Defaults to "h1".
-     */
-    as?: HeadingLevel;
-  }>(),
-  { as: "h2" }
-);
+const { as = "h2" } = defineProps<{
+  /**
+   * The tag to render the heading as.
+   * Defaults to "h1".
+   */
+  as?: HeadingLevel;
+}>();
 </script>
 
 <template>

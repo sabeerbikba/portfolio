@@ -2,7 +2,7 @@
 import "~/css/github-markdown-dark.css";
 import type { NullableFileContent } from "~/types/github";
 
-const props = defineProps<{
+const { readmeData, repoName, defaultBranch } = defineProps<{
   readmeData: NullableFileContent;
   repoName: string;
   defaultBranch: string | undefined;
@@ -10,17 +10,13 @@ const props = defineProps<{
 
 const { githubBaseURL } = useRuntimeConfig().public;
 
-const blobAbsoluteUrl = computed<string | undefined>(
-  () => `${githubBaseURL + props.repoName}/blob/${props.defaultBranch}/`
+const blobAbsoluteUrl = computed(
+  () => `${githubBaseURL + repoName}/blob/${defaultBranch}/`
 );
 
 const markdownHtml = computed(() => {
-  if (
-    props.readmeData &&
-    typeof props.readmeData === "object" &&
-    "content" in props.readmeData
-  ) {
-    return useParsedMarkdown(props.readmeData.content).replace(
+  if (readmeData && typeof readmeData === "object" && "content" in readmeData) {
+    return useParsedMarkdown(readmeData.content).replace(
       /<a\s([^>]*href=")([^"]*)"/gi,
       (_, prefix, href) => {
         const isAbsolute = href.startsWith("http") || href.startsWith("#");

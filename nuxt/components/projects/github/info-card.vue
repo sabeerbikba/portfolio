@@ -7,16 +7,14 @@ import type {
 } from "~/types/github";
 import type { OcticonsIconName } from "~/data/icons";
 
-type StringUndefined = string | undefined;
-type NumberUndefined = number | undefined;
-
-const props = defineProps<{
-  repoData: GitHubRepositoryType;
-  branchData: GithubBranchesType;
-  tagData: GithubTagsType;
-  hasLicense: boolean;
-  isPublicRepo: boolean;
-}>();
+const { repoData, branchData, tagData, hasLicense, isPublicRepo } =
+  defineProps<{
+    repoData: GitHubRepositoryType;
+    branchData: GithubBranchesType;
+    tagData: GithubTagsType;
+    hasLicense: boolean;
+    isPublicRepo: boolean;
+  }>();
 
 const { githubBaseURL } = useRuntimeConfig().public;
 
@@ -26,24 +24,14 @@ const formatNumber = (num: number) =>
     maximumFractionDigits: 1,
   }).format(num);
 
-const full_name = computed<StringUndefined>(() => props.repoData?.full_name);
-const description = computed<StringUndefined | null>(
-  () => props.repoData?.description
-);
-const homepage = computed<StringUndefined | null>(
-  () => props.repoData?.homepage
-);
-const stargazers_count = computed<NumberUndefined>(
-  () => props.repoData?.stargazers_count
-);
-const forks_count = computed<NumberUndefined>(
-  () => props.repoData?.forks_count
-);
-const subscribers_count = computed<NumberUndefined>(
-  () => props.repoData?.subscribers_count
-);
-const repo_name = computed<StringUndefined>(() => props.repoData?.name);
-const repo_owner = computed<StringUndefined>(() => props.repoData?.owner.login);
+const full_name = computed(() => repoData?.full_name);
+const description = computed(() => repoData?.description);
+const homepage = computed(() => repoData?.homepage);
+const stargazers_count = computed(() => repoData?.stargazers_count);
+const forks_count = computed(() => repoData?.forks_count);
+const subscribers_count = computed(() => repoData?.subscribers_count);
+const repo_name = computed(() => repoData?.name);
+const repo_owner = computed(() => repoData?.owner.login);
 
 const previewTab = useState<RepositoryOverviewTabType>(
   `repository-overview-preview-tab:${full_name.value}`
@@ -73,13 +61,13 @@ const stats = computed<
   {
     href: `${full_name.value}/branches`,
     icon: "git-branch",
-    count: props.branchData?.length ?? null,
+    count: branchData?.length ?? null,
     what: "Branch",
   },
   {
     href: `${full_name.value}/tags`,
     icon: "tag",
-    count: props.tagData?.length ?? null,
+    count: tagData?.length ?? null,
     what: "Tags",
   },
   {
@@ -108,16 +96,16 @@ const stats = computed<
         {{ description }}
       </p>
       <UiExternalLink
-  v-if="homepage"
-  :href="homepage"
-  class="text-[#58a6ff] hover:underline inline-flex items-center gap-2 group"
->
-  <ProjectsOcticonsIcon
-    name="link"
-    class="!text-[#9198a1] group-hover:!text-blue-400"
-  />
-  {{ homepage ? homepage.split("://")[1] : "" }}
-</UiExternalLink>
+        v-if="homepage"
+        :href="homepage"
+        class="text-[#58a6ff] hover:underline inline-flex items-center gap-2 group"
+      >
+        <ProjectsOcticonsIcon
+          name="link"
+          class="!text-[#9198a1] group-hover:!text-blue-400"
+        />
+        {{ homepage ? homepage.split("://")[1] : "" }}
+      </UiExternalLink>
       <div v-if="hasLicense">
         <UiHeadingSrOnly as="h3">License</UiHeadingSrOnly>
         <button
@@ -129,7 +117,9 @@ const stats = computed<
           <span class="text-sm">MIT license</span>
         </button>
       </div>
-      <ul class="flex flex-wrap items-center gap-5 max-md:gap-4 max-sm:gap-3 max-xs:gap-2 text-sm">
+      <ul
+        class="flex flex-wrap items-center gap-5 max-md:gap-4 max-sm:gap-3 max-xs:gap-2 text-sm"
+      >
         <li v-for="{ href, icon, count, what } in stats" :key="what">
           <UiExternalLink
             :href="`${githubBaseURL + href}`"

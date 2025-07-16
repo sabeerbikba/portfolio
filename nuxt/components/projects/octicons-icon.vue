@@ -5,10 +5,10 @@ import { octiconsIcons, type OcticonsIconName } from "~/data/icons";
 // icons data.json: https://www.npmjs.com/package/@primer/octicons/file/d75ba132a9d5f0d94967b98a436f0dc08eb83f3c778ce30538a3336ba3777681
 // icons data.json in node_modules:  import icons from "@primer/octicons/build/data.json";
 
-const props = defineProps<{ name: OcticonsIconName }>();
+const { name } = defineProps<{ name: OcticonsIconName }>();
 
-const viewBox = props.name === "mark-github-24" ? 24 : 16;
-const widthHeight = props.name === "mark-github-24" ? 32 : 16;
+const viewBox = name === "mark-github-24" ? 24 : 16;
+const widthHeight = name === "mark-github-24" ? 32 : 16;
 </script>
 
 <template>

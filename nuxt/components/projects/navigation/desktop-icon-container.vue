@@ -1,11 +1,8 @@
 <script setup lang="ts">
-import {
-  Motion as MotionV,
-  type MotionValue,
-} from "motion-v";
+import { Motion as MotionV, type MotionValue } from "motion-v";
 import { Motion } from "@oku-ui/motion";
 
-const props = defineProps<{
+const { name, isSelected, isHovered, mouseX } = defineProps<{
   name: string;
   icon: string;
   isSelected: boolean;
@@ -13,17 +10,17 @@ const props = defineProps<{
   mouseX: MotionValue<number>;
 }>();
 
-const iconRef = ref<HTMLDivElement | null>(null);
-const hovered = ref<boolean>(false);
-const isButtonVisible = computed(() => !props.isHovered && props.isSelected);
-const tooltipId = computed<string>(() => `tooltip-${useSlugify(props.name)}`);
+const iconRef = useTemplateRef("iconRef");
+const hovered = ref(false);
+const isButtonVisible = computed(() => !isHovered && isSelected);
+const tooltipId = computed(() => `tooltip-${useSlugify(name)}`);
 
-const viewType = computed<string>(() =>
-  ["Website", "About", "Github"].includes(props.name) ? "app" : "project"
+const viewType = computed(() =>
+  ["Website", "About", "Github"].includes(name) ? "app" : "project"
 );
 
 const distance = computed(() => {
-  return useTransform(props.mouseX, (val) => {
+  return useTransform(mouseX, (val) => {
     const bounds = iconRef.value?.getBoundingClientRect() ?? { x: 0, width: 0 };
     return val - bounds.x - bounds.width / 2;
   });
@@ -72,7 +69,7 @@ const heightIcon = useSpring(heightIconTransform, {
 });
 
 watchEffect(() => {
-  if (props.isHovered) {
+  if (isHovered) {
     width.set(widthTransform.get());
     height.set(heightTransform.get());
   } else {

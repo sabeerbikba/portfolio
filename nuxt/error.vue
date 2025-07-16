@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import {localIcons} from "~/data/icons";
+import { localIcons } from "~/data/icons";
 import type { NuxtError } from "#app";
 
-const props = defineProps<{ error: NuxtError }>();
+const { error } = defineProps<{ error: NuxtError }>();
 
-const statusCode = props.error?.statusCode || 500;
-const statusMessage = props.error?.message || "Internal Server Error";
+const statusCode = error?.statusCode || 500;
+const statusMessage = error?.message || "Internal Server Error";
 
 useHead({
   htmlAttrs: { lang: "en" },

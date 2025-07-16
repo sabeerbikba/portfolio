@@ -13,7 +13,7 @@ export type CircleData = {
 };
 
 const isMounted = useMounted();
-const container = ref<HTMLElement | null>(null);
+const container = useTemplateRef("container");
 const { width } = useElementSize(container, { width: 200, height: 0 });
 const circles = ref(computeD3Layout(tools, width.value));
 const recalculate = () => {

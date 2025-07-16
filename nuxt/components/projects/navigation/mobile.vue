@@ -5,9 +5,9 @@ import type { ScreenStoreType } from "~/types/store";
 
 const store = inject("store") as ScreenStoreType;
 
-const isOpen = ref<boolean>(false);
-const mobileDockRef = ref<HTMLDivElement | null>(null);
-const showContent = ref<boolean>(true);
+const isOpen = ref(false);
+const mobileDockRef = useTemplateRef("mobileDockRef");
+const showContent = ref(true);
 
 const ButtonsGroup = createReusableTemplate();
 const CloseBtnLine = createReusableTemplate();

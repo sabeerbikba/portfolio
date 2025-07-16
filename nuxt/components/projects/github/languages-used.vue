@@ -1,18 +1,19 @@
 <script setup lang="ts">
 import type { GitHubLanguagesType } from "~/types/github";
 
-const props = defineProps<{
+const { githubBaseURL } = useRuntimeConfig().public;
+
+const { repoName, languageData } = defineProps<{
   repoName: string;
   languageData: GitHubLanguagesType;
 }>();
-const { githubBaseURL } = useRuntimeConfig().public;
 
 const languagesBytesOnePercentage = computed(() => {
-  if (!props.languageData || Object.keys(props.languageData).length === 0) {
+  if (!languageData || Object.keys(languageData).length === 0) {
     return 0;
   }
 
-  const total = Object.values(props.languageData).reduce(
+  const total = Object.values(languageData).reduce(
     (acc, curr) => acc + curr,
     0
   );
@@ -23,8 +24,6 @@ const getLanguagePercentage = (bytes: number) =>
   languagesBytesOnePercentage.value === 0
     ? 0
     : parseFloat((bytes / languagesBytesOnePercentage.value).toFixed(1));
-
-// const languagesBreakdown = props.languageData.map()
 </script>
 
 <template>

@@ -17,7 +17,7 @@ type ProjectLinkType = {
 };
 
 const route = useRoute();
-const isHomePage = computed<boolean>(
+const isHomePage = computed(
   () => route.name === "index" || route.path === "/"
 );
 
@@ -118,7 +118,6 @@ const projects: QuickLinkType[] = projectsObject.map(
             </UiHeadingSrOnly>
             <ul class="footer-links">
               <li v-for="{ href, label } in links" :key="label">
-                <!-- <template v-if="title === 'Quick Links'"> -->
                 <component
                   v-if="title === 'Quick Links'"
                   :is="href !== '/' ? UiNuxtLink : NuxtLink"
@@ -127,7 +126,6 @@ const projects: QuickLinkType[] = projectsObject.map(
                 >
                   {{ label }}
                 </component>
-                <!-- </template> -->
                 <UiExternalLink
                   v-else
                   :href="href"

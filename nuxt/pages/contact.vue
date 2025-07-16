@@ -13,8 +13,8 @@ type ContactInfoType = {
 
 const { baseUrl } = useRuntimeConfig().public;
 const route = useRoute();
-const isHommePageLoading = ref<boolean>(false);
-const homepageLink = useState<string>("home-page-link", () => "/");
+const isHommePageLoading = ref(false);
+const homepageLink = useState("home-page-link", () => "/");
 
 useHead({
   link: [
@@ -46,17 +46,12 @@ useSeoMeta({
 let interval: number | undefined;
 const lastScrollY = ref(0);
 const scrollDir = ref<"up" | "down">("up");
-const status = ref<string>("Send");
-const sendingFrame = ref<number>(0);
-const sendingFrames: string[] = [
-  "Sending",
-  "Sending.",
-  "Sending..",
-  "Sending...",
-];
+const status = ref("Send");
+const sendingFrame = ref(0);
+const sendingFrames = ["Sending", "Sending.", "Sending..", "Sending..."];
 
 const handleSubmit = async (): Promise<void> => {
-  // html message accepting empty spaces need to check before submit 
+  // html message accepting empty spaces need to check before submit
   // TODO: create api or use same page api link to process the data with post request
   status.value = "Sending";
   await new Promise((resolve) => setTimeout(resolve, 4000));

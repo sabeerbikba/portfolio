@@ -29,7 +29,7 @@ const tabs = computed<
 );
 
 const initialTab = tabs.value.length === 1 ? tabs.value[0].text : "README";
-const previewTab = useState<RepositoryOverviewTabType>(
+const previewTab = useState(
   `repository-overview-preview-tab:${repoName}`,
   () => initialTab
 );
@@ -81,8 +81,6 @@ const getTabMeta = (tabText: string) => {
         aria-label="Repository navigation"
         class="h-11 px-2 py-1.5 text-[#9198a1]"
       >
-        <!-- :aria-controls="`tab-${useSlugify(text + '-' + repoProject)}`"
-      :id="`tab-btn-${useSlugify(text + '-' + repoProject)}`" -->
         <button
           v-for="{ icon, text } in tabs"
           :key="text"
@@ -121,25 +119,6 @@ const getTabMeta = (tabText: string) => {
           ...getTabProps(tab.text),
         }"
       />
-      <!-- :id="`tab-${useSlugify(tab.text + '-' + repoProject)}`" -->
-      <!-- :aria-labelledby="`tab-btn-${useSlugify(tab.text + '-' + repoProject)}`" -->
-      <!-- v-bind="getTabProps(tab.text)" -->
-      <!-- <ProjectsGithubRepositoryOverviewReadmeContainer
-        role="tabpanel"
-        :id="tabs[0]?.text ? `tab-${useSlugify(tabs[0].text)}`: undefined"
-        :aria-labelledby="tabs[0]?.text ? `tab-button-${useSlugify(tabs[0]?.text)}` : undefined"
-        v-show="previewTab === 'README' && readmeData"
-        :readme-data="readmeData"
-        :repo-name="repoName"
-        :default-branch="defaultBranch"
-      />
-      <ProjectsGithubRepositoryOverviewLicenseDisplay
-        role="tabpanel"
-        :id="tabs[1]?.text ?` tab-${useSlugify(tabs[1].text)}` : undefined"
-        :aria-labelledby="tabs[1]?.text ? `tab-button-${useSlugify(tabs[1]?.text)}` : undefined"
-        v-show="previewTab === 'MIT License' && licenseData"
-        :license-data="licenseData"
-      /> -->
     </div>
   </div>
 </template>

@@ -75,7 +75,7 @@ export default defineNuxtConfig({
   compatibilityDate: "2024-11-01",
   // debug: true,
   devtools: {
-    enabled: false,
+    // enabled: false,
     // vscode: {
     //   reuseExistingServer: true,
     // },

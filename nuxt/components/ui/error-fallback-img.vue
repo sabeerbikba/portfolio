@@ -2,13 +2,13 @@
 import { useImage } from "@vueuse/core";
 
 defineOptions({ inheritAttrs: false });
-const rawAttrs = useAttrs();
-const props = defineProps<{
+const { src } = defineProps<{
   src: string;
   fallbackSrc: string;
 }>();
 
-const { isLoading, error } = useImage({ src: props.src }) as {
+const rawAttrs = useAttrs();
+const { isLoading, error } = useImage({ src: src }) as {
   isLoading: Ref<boolean>;
   error: Ref<Event | null>;
 };
