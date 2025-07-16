@@ -4,7 +4,9 @@
       Contains both desktop and mobile projects navigation components. Only one
       is visible based on screen size.
     </p>
-    <ProjectsNavigationDesktop />
-    <ProjectsNavigationMobile />
+    <LazyProjectsNavigationDesktop
+      hydrate-on-media-query="(min-width: 768px)"
+    />
+    <LazyProjectsNavigationMobile hydrate-on-media-query="(max-width: 768px)" />
   </div>
 </template>

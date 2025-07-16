@@ -33,6 +33,7 @@ const config: Config = {
         wiggle: "wiggle 1.5s ease-in-out infinite",
         "scale-up4": "scale-up4 1s linear infinite",
         spinner: "spinner-fade 1s linear infinite",
+        loader: "loader_79178 2s linear infinite",
       },
       keyframes: {
         wiggle: {
@@ -46,6 +47,18 @@ const config: Config = {
         "spinner-fade": {
           "0%": { backgroundColor: "#69717d" },
           "100%": { backgroundColor: "transparent" },
+        },
+        loader_79178: {
+          "0%": {
+            border: "1em solid black",
+            transform: "scale(0)",
+            opacity: "1",
+          },
+          "100%": {
+            border: "0 solid gray",
+            transform: "scale(1)",
+            opacity: "0",
+          },
         },
       },
     },
@@ -88,7 +101,7 @@ const config: Config = {
       );
     },
     ({ addBase, theme }: any) => {
-      let allColors = flattenColorPalette(theme("colors"));
+      const allColors = flattenColorPalette(theme("colors"));
       const newVars = Object.fromEntries(
         Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
       );

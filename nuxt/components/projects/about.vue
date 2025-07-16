@@ -6,11 +6,11 @@ const store = inject("store") as ScreenStoreType;
 </script>
 
 <template>
-  <div v-show="store.state.previewApp === 4" class="bg-[#191919]">
+  <div v-show="store.state.previewApp === 3" class="bg-[#191919]">
     <div class="notes-body max-w-prose mx-auto p-6 max-xs:px-7">
       <template v-for="({ aboutHtmlBase64 }, index) in projects" :key="index">
         <div
-          v-show="store.state.previewProject === index + 1"
+          v-show="store.state.previewProject === index"
           v-html="useParsedMarkdown(aboutHtmlBase64)"
         />
       </template>
@@ -19,6 +19,7 @@ const store = inject("store") as ScreenStoreType;
 </template>
 
 <style>
+/* about.vue */
 .notes-body h1 {
   @apply text-3xl font-extrabold mb-6 text-[#d4d4d4];
 }

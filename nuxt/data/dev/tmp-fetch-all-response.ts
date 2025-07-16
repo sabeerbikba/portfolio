@@ -537,6 +537,27 @@ const response = [
   },
 ];
 
+const empty = [
+    {
+        repoDetails: undefined,
+        languages: undefined,
+        contributors: undefined,
+        branches: undefined,
+        tags: undefined,
+        license: undefined,
+        readme: undefined
+    },
+    {
+        repoDetails: undefined,
+        languages: undefined,
+        contributors: undefined,
+        branches: undefined,
+        tags: undefined,
+        license: undefined,
+        readme: undefined
+    },
+];
+
 const newResponse = [
   {
     repoDetails: {

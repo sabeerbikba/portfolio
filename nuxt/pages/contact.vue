@@ -12,8 +12,18 @@ type ContactInfoType = {
 };
 
 const { baseUrl } = useRuntimeConfig().public;
+const route = useRoute();
 const isHommePageLoading = ref<boolean>(false);
 const homepageLink = useState<string>("home-page-link", () => "/");
+
+useHead({
+  link: [
+    {
+      rel: "canonical",
+      href: baseUrl + route.fullPath,
+    },
+  ],
+});
 
 useSeoMeta({
   robots: "index, follow",
@@ -46,6 +56,7 @@ const sendingFrames: string[] = [
 ];
 
 const handleSubmit = async (): Promise<void> => {
+  // html message accepting empty spaces need to check before submit 
   // TODO: create api or use same page api link to process the data with post request
   status.value = "Sending";
   await new Promise((resolve) => setTimeout(resolve, 4000));
@@ -123,18 +134,18 @@ onUnmounted(() => {
         <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
           <div>
             <Motion
-              as="div"
+              as="form"
+              @submit.prevent="handleSubmit"
               :initial="{ opacity: 0, x: -50 }"
               :animate="{ opacity: 1, x: 0 }"
               :transition="{ duration: 0.8, delay: 0.4 }"
               class="p-5 md:p-6 lg:p-8 rounded-lg shadow-lg grid grid-cols-1 gap-y-6 bg-[#00000008] border border-[#8080804f] max-lg:w-[80%] max-lg:mx-auto max-sm:w-full max-w-2xl ml-auto"
-              role="form"
               aria-labelledby="contactFormTitle"
             >
               <UiHeadingSrOnly id="contactFormTitle"
                 >Contact Us Form</UiHeadingSrOnly
               >
-              <form class="my-8" @submit.prevent="handleSubmit">
+              <div class="my-8">
                 <div class="max-w-xl mx-auto">
                   <div
                     v-for="{
@@ -244,7 +255,7 @@ onUnmounted(() => {
                         :exit="{ y: -10, opacity: 0 }"
                         :transition="{ duration: 0.3 }"
                       >
-                        <div className="center gap-1">
+                        <span className="center gap-1">
                           <NuxtIcon
                             v-if="status === 'Send'"
                             name="ic:sharp-send"
@@ -264,7 +275,7 @@ onUnmounted(() => {
                           />
 
                           <span>{{ status === "Sending" ? "" : status }} </span>
-                        </div>
+                        </span>
                       </Motion>
                     </MotionPresence>
 
@@ -277,7 +288,7 @@ onUnmounted(() => {
                     />
                   </button>
                 </div>
-              </form>
+              </div>
             </Motion>
           </div>
 
@@ -315,7 +326,8 @@ onUnmounted(() => {
                         },
                         {
                           icon: 'ic:round-phone',
-                          text: '+91 861 871 8358',
+                          // text: '+91 861 871 8358',
+                          text: '+91&nbsp;861&nbsp;871&nbsp;8358',
                           href: 'tel:+918618718358',
                           ariaLabel: 'Call +91 861 871 8358',
                         },
@@ -408,6 +420,7 @@ onUnmounted(() => {
         />
         <div
           v-else
+          data-nosnippet
           class="relative inline-block text-[28px] h-1 translate-x-[-14px] translate-y-[11px]"
         >
           <span

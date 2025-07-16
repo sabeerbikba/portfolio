@@ -2,7 +2,6 @@
 import { projects, apps } from "~/data/projects";
 import { Motion, MotionPresence } from "@oku-ui/motion";
 import type { ScreenStoreType } from "~/types/store";
-import { createReusableTemplate } from "@vueuse/core";
 
 const store = inject("store") as ScreenStoreType;
 
@@ -59,7 +58,12 @@ onUnmounted(() => {
   <MobileButton.define
     v-slot="{ name, icon, isSelected, ariaLabelBtn, onClick }"
   >
-    <button class="max-w-full p-2" :aria-label="ariaLabelBtn" @click="onClick">
+    <button
+      type="button"
+      class="max-w-full p-2"
+      :aria-label="ariaLabelBtn"
+      @click="onClick"
+    >
       <ProjectsNavigationBtnImg
         :icon="icon"
         :name="name"
@@ -107,9 +111,9 @@ onUnmounted(() => {
             :name="name"
             :icon="icon"
             :ariaLabelBtn="`Navigate to ${name} project`"
-            :is-selected="store.state.previewProject === id + 1"
+            :is-selected="store.state.previewProject === id"
             :on-click="
-              () => store.dispatch({ type: 'TOGGLE_PROJECT', payload: id + 1 })
+              () => store.dispatch({ type: 'TOGGLE_PROJECT', payload: id })
             "
           />
         </ButtonsGroup.reuse>
@@ -119,13 +123,13 @@ onUnmounted(() => {
             :key="`app-${name}`"
             :name="name"
             :icon="icon"
-            :is-selected="store.state.previewApp === id + 1 + projects.length"
+            :is-selected="store.state.previewApp === id + projects.length"
             :ariaLabelBtn="`Navigate to ${name} app`"
             :on-click="
               () =>
                 store.dispatch({
                   type: 'TOGGLE_APP',
-                  payload: id + 1 + projects.length,
+                  payload: id + projects.length,
                 })
             "
           />
@@ -135,6 +139,7 @@ onUnmounted(() => {
 
     <Motion
       as="button"
+      type="button"
       :aria-expanded="isOpen"
       aria-label="Toggle mobile navigation"
       :class="{ 'h-10 w-10 center': true, 'mix-blend-exclusion': !isOpen }"
@@ -167,17 +172,3 @@ onUnmounted(() => {
     </Motion>
   </div>
 </template>
-
-<style>
-.mobile-btn-base {
-  @apply w-1/3 h-full py-[9px];
-}
-
-.mobile-btn-icon-active {
-  @apply rounded-xl border border-zinc-600 shadow-[0_0_20px_4px_rgba(255,255,255,0.7)];
-}
-
-.mobile-close-btn {
-  @apply absolute inset-0 w-1 rounded-sm bg-gray-700;
-}
-</style>

@@ -1,10 +1,41 @@
 <script setup lang="ts">
+import "~/css/style.index.css";
 import seoMetaMap from "~/data/seo";
 import { localIcons } from "~/data/icons";
 
 const router = useRouter();
 const { baseUrl } = useRuntimeConfig().public;
 const homepageLink = useState<string>("home-page-link");
+const isHeroCotBtn = useState("is-hero-cot-btn", () => ({
+  focused: false,
+  tabClicked: false,
+}));
+
+const trimLinkSlash = (link: string) => link.trim().slice(0, -1);
+
+useHead({
+  link: [
+    {
+      rel: "canonical",
+      href: trimLinkSlash(baseUrl) + router.currentRoute.value.fullPath,
+    },
+  ],
+});
+
+watch(
+  router.currentRoute,
+  (routeQueryChanged) => {
+    useHead({
+      link: [
+        {
+          rel: "canonical",
+          href: trimLinkSlash(baseUrl) + routeQueryChanged.fullPath,
+        },
+      ],
+    });
+  },
+  { immediate: true }
+);
 
 useSeoMeta({
   robots: "index, follow",
@@ -58,6 +89,21 @@ onMounted(() => {
     setTimeout(setListeners, 0); // next tick
   });
 });
+
+// need to move this line to top
+
+const isToolsPackHydrationComplete = ref(false);
+const toolPackOpacityStyle = ref("0");
+const toolPackPointerEventsStyle = ref("none");
+
+const onToolPackHydreate = () => {
+  isToolsPackHydrationComplete.value = true;
+};
+
+watch(isToolsPackHydrationComplete, (isHydrated) => {
+  toolPackOpacityStyle.value = isHydrated ? "1" : "0";
+  toolPackPointerEventsStyle.value = isHydrated ? "auto" : "none";
+});
 </script>
 
 <template>
@@ -99,6 +145,8 @@ onMounted(() => {
           to="/contact"
           aria-label="Start a conversation with me by visiting the contact page"
           class="border border-transparent font-medium rounded-3xl text-white bg-black hover:bg-black/90 px-7 py-1.5 md:py-2.5 md:text-lg md:px-8"
+          @focus="isHeroCotBtn.focused = true"
+          @keydown.tab="isHeroCotBtn.tabClicked = true"
         >
           Let&apos;s Chat
         </UiNuxtLink>
@@ -136,9 +184,23 @@ onMounted(() => {
           Core Skills & Technologies
         </h2>
       </div>
-      <!-- TODO: Is have any effect: in package size need to test using generate command -->
-      <LazyToolsPack :hydrate-on-idle="4200" />
-      <!-- <ToolsPack /> -->
+      <div class="relative">
+        <LazyToolsPack
+          hydrate-on-visible
+          class="tools-pack-visible"
+          @hydrated="onToolPackHydreate"
+        />
+        <ClientOnly v-if="!isToolsPackHydrationComplete">
+          <div
+            data-nosnippet
+            class="center wh-full absolute top-0"
+            aria-hidden="true"
+            role="presentation"
+          >
+            <div class="relative center loader-tools-pack" />
+          </div>
+        </ClientOnly>
+      </div>
     </section>
 
     <section
@@ -180,6 +242,7 @@ onMounted(() => {
             Contact Me
             <span
               class="ml-2 animate-wiggle"
+              data-nosnippet
               v-html="localIcons.home.arrowRight"
             />
           </UiNuxtLink>
@@ -194,36 +257,7 @@ onMounted(() => {
   @apply mt-10 max-sm:mt-6 text-gray-600 font-medium indent-6 xs:tracking-wider text-base xs:text-lg sm:text-xl md:text-2xl [word-spacing:4px] max-md:[word-spacing:2px] max-xs:[word-spacing:normal];
 }
 
-/* Moved styles here to avoid separate CSS file creation and reduce extra requests */
-/* tools-pack.vue */
-.circle-item {
-  @apply transition-all duration-200 ease-in-out will-change-transform
-    hover:scale-110 hover:z-10 absolute shadow-lg
-    bg-white rounded-full z-0 border-[0.5px];
-}
-
-.circle-image {
-  @apply absolute bg-no-repeat bg-center bg-contain rounded-full
-    w-[95%] h-[95%] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2;
-}
-
-.circle-tooltip {
-  @apply transition-opacity duration-300 ease-in-out absolute z-50
-    text-sm bg-gray-800 text-white p-2 pointer-events-none transform
-    opacity-0 shadow-xl rounded-lg
-    flex flex-col items-center;
-}
-
-.circle-tooltip-text {
-  @apply whitespace-nowrap font-bold z-20 relative;
-}
-
-/* app.vue */
-.footer-links li {
-  @apply flex justify-center space-y-4 flex-col mt-4;
-}
-
-.footer-links li a {
-  @apply transition-colors;
+a.text-white[data-nuxt-link]:focus-visible {
+  @apply outline outline-gray-500 outline-[3px] outline-offset-4 border-2 border-transparent;
 }
 </style>

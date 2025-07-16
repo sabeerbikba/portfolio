@@ -1,3 +1,10 @@
+/*
+- Source URL: https://github.com/sindresorhus/github-markdown-css/blob/main/github-markdown-dark.css
+- NPM : github-markdown-css : https://www.npmjs.com/package/github-markdown-css 
+*/
+
+/* This bottom CSS is currently unused. If needed in the future, it can be enabled by removing the comments. */
+
 .markdown-body {
   color-scheme: dark;
   -ms-text-size-adjust: 100%;
@@ -6,7 +13,6 @@
   color: #f0f6fc;
   background-color: #0d1117;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-  /* font-size: 16px; */
   font-size: 1rem;
   line-height: 1.5;
   word-wrap: break-word;
@@ -19,7 +25,7 @@
   vertical-align: text-bottom;
 }
 
-.markdown-body h1:hover .anchor .octicon-link:before,
+/* .markdown-body h1:hover .anchor .octicon-link:before,
 .markdown-body h2:hover .anchor .octicon-link:before,
 .markdown-body h3:hover .anchor .octicon-link:before,
 .markdown-body h4:hover .anchor .octicon-link:before,
@@ -46,7 +52,7 @@
 
 .markdown-body [hidden] {
   display: none !important;
-}
+} */
 
 .markdown-body a {
   background-color: transparent;
@@ -54,11 +60,11 @@
   text-decoration: none;
 }
 
-.markdown-body abbr[title] {
+/* .markdown-body abbr[title] {
   border-bottom: none;
   -webkit-text-decoration: underline dotted;
   text-decoration: underline dotted;
-}
+} */
 
 .markdown-body b,
 .markdown-body strong {
@@ -73,12 +79,11 @@
   margin: .67em 0;
   font-weight: 600;
   padding-bottom: .3em;
-  /* font-size: 2em; */
   font-size: 1.875rem;
   border-bottom: 1px solid #3d444db3;
 }
 
-.markdown-body mark {
+/* .markdown-body mark {
   background-color: #bb800926;
   color: #f0f6fc;
 }
@@ -107,7 +112,7 @@
   border-style: none;
   max-width: 100%;
   box-sizing: content-box;
-}
+} */
 
 .markdown-body code,
 .markdown-body kbd,
@@ -117,7 +122,7 @@
   font-size: 1rem;
 }
 
-.markdown-body figure {
+/* .markdown-body figure {
   margin: 1em 2.5rem;
 }
 
@@ -261,7 +266,7 @@
   border-bottom-color: #3d444db3;
   border-radius: 6px;
   box-shadow: inset 0 -1px 0 #3d444db3;
-}
+} */
 
 .markdown-body h1,
 .markdown-body h2,
@@ -287,7 +292,7 @@
   font-size: 1.25rem;
 }
 
-.markdown-body h4 {
+/* .markdown-body h4 {
   font-weight: 600;
   font-size: 1rem;
 }
@@ -301,14 +306,14 @@
   font-weight: 600;
   font-size: .85rem;
   color: #9198a1;
-}
+} */
 
 .markdown-body p {
   margin-top: 0;
   margin-bottom: 10px;
 }
 
-.markdown-body blockquote {
+/* .markdown-body blockquote {
   margin: 0;
   padding: 0 1em;
   color: #9198a1;
@@ -337,7 +342,7 @@
 
 .markdown-body dd {
   margin-left: 0;
-}
+} */
 
 .markdown-body tt,
 .markdown-body code,
@@ -354,7 +359,7 @@
   word-wrap: normal;
 }
 
-.markdown-body .octicon {
+/* .markdown-body .octicon {
   display: inline-block;
   overflow: visible !important;
   vertical-align: text-bottom;
@@ -370,7 +375,7 @@
 
 .markdown-body .mr-2 {
   margin-right: 0.5rem !important;
-}
+} */
 
 .markdown-body::before {
   display: table;
@@ -391,7 +396,7 @@
   margin-bottom: 0 !important;
 }
 
-.markdown-body a:not([href]) {
+/* .markdown-body a:not([href]) {
   color: inherit;
   text-decoration: none;
 }
@@ -409,7 +414,7 @@
 
 .markdown-body .anchor:focus {
   outline: none;
-}
+} */
 
 .markdown-body p,
 .markdown-body blockquote,
@@ -423,7 +428,7 @@
   margin-bottom: 1rem;
 }
 
-.markdown-body blockquote>:first-child {
+/* .markdown-body blockquote>:first-child {
   margin-top: 0;
 }
 
@@ -540,13 +545,13 @@
 
 .markdown-body li>p {
   margin-top: 1rem;
-}
+} */
 
 .markdown-body li+li {
   margin-top: .25em;
 }
 
-.markdown-body dl {
+/* .markdown-body dl {
   padding: 0;
 }
 
@@ -690,7 +695,7 @@
   margin: 13px auto 0;
   overflow: hidden;
   text-align: right;
-}
+} */
 
 .markdown-body code,
 .markdown-body tt {
@@ -702,7 +707,7 @@
   border-radius: 6px;
 }
 
-.markdown-body code br,
+/* .markdown-body code br,
 .markdown-body tt br {
   display: none;
 }
@@ -713,7 +718,7 @@
 
 .markdown-body samp {
   font-size: 85%;
-}
+} */
 
 .markdown-body pre code {
   font-size: 100%;
@@ -728,14 +733,14 @@
   border: 0;
 }
 
-.markdown-body .highlight {
+/* .markdown-body .highlight {
   margin-bottom: 1rem;
 }
 
 .markdown-body .highlight pre {
   margin-bottom: 0;
   word-break: normal;
-}
+} */
 
 .markdown-body .highlight pre,
 .markdown-body pre {
@@ -761,7 +766,7 @@
   border: 0;
 }
 
-.markdown-body .csv-data td,
+/* .markdown-body .csv-data td,
 .markdown-body .csv-data th {
   padding: 5px;
   overflow: hidden;
@@ -1096,4 +1101,4 @@
 
 .markdown-body>*:first-child>.heading-element:first-child {
   margin-top: 0 !important;
-}
+} */

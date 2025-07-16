@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import {
-  useTransform,
-  useSpring,
   Motion as MotionV,
   type MotionValue,
 } from "motion-v";
@@ -85,6 +83,7 @@ watchEffect(() => {
 </script>
 
 <template>
+  <!-- here shows error `<div> element is not permitted as content under <button>` if not using link remove the div elements instead use span -->
   <button
     ref="iconRef"
     type="button"
@@ -130,27 +129,3 @@ watchEffect(() => {
     </MotionV>
   </button>
 </template>
-
-<style>
-.desktop-btn-base {
-  @apply aspect-square rounded-xl bg-transparent;
-}
-
-.desktop-btn-tooltip {
-  @apply absolute left-1/2 -translate-x-1/2 -top-8 w-fit text-xs -z-50
-    px-2 py-0.5 whitespace-pre rounded-md bg-gray-100 border border-gray-200
-    text-neutral-700;
-}
-
-.desktop-btn-icon-base {
-  @apply transition-all duration-300 ease-in-out center rounded-2xl;
-}
-
-.desktop-btn-icon-active {
-  @apply shadow-[0_5px_12px_9px_rgba(0,0,0,0.3)] bg-[rgba(0,0,0,0.3)];
-}
-
-.desktop-btn-status-dot {
-  @apply h-1 w-1 rounded-2xl bg-slate-500 mix-blend-color;
-}
-</style>

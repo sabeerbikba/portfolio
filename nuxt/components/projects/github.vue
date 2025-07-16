@@ -1,6 +1,6 @@
 <script setup lang="ts">
 /**
-📘 Flow Overview: 
+📘 Flow Overview:
 
 ┌────────────────────────────────────────────────────────┐
 │   clientFetchedGithubData (useState)                   │
@@ -65,9 +65,11 @@ import type {
 const { githubBaseURL, repoOwner } = useRuntimeConfig().public;
 const store = inject("store") as ScreenStoreType;
 
+const isGithubFreshDataLoading = ref(false);
+const isMounted = useMounted();
+
 const ABORT_TIMEOUT: number = 8000;
 const GITHUB_API_BASEURL: string = "https://api.github.com/repos/";
-const isGithubFreshDataLoading = ref(false);
 
 const createAbortSignal = (timeout = ABORT_TIMEOUT): AbortSignal => {
   const controller = new AbortController();
@@ -132,29 +134,37 @@ const getEndpoints = (fullRepoName: string) =>
     },
   ] as const;
 
-const clientFetchedGithubData = useState<ProjectDataType[]>(
-  "client-fetched-github-data",
-  () =>
-    projects.map(() =>
-      Object.fromEntries(getEndpoints("_").map(({ key }) => [key, undefined]))
-    ) as ProjectDataType[]
+const initilaGithubData = projects.map(() =>
+  Object.fromEntries(getEndpoints("_").map(({ key }) => [key, undefined]))
+) as ProjectDataType[];
+
+const { data: serverFetchedGithubData } = await useAsyncData<ProjectDataType[]>(
+  "server-fetched-github-data",
+  async () =>
+    await Promise.all(
+      projects.map((project) =>
+        (async (repoPath: string) => {
+          const baseUrl = GITHUB_API_BASEURL + repoPath;
+          const endpoints = getEndpoints(baseUrl);
+          const results = await Promise.all(endpoints.map((e) => e.fn(e.url)));
+
+          return endpoints.reduce(
+            (acc, e, i) => {
+              acc[e.key] = results[i];
+              return acc;
+            },
+            {} as Record<(typeof endpoints)[number]["key"], any>
+          );
+        })(project.repo)
+      )
+    ),
+  { default: () => initilaGithubData }
 );
 
-const fetchProjectData = async (): Promise<ProjectDataType[]> =>
-  await Promise.all(
-    projects.map((project) =>
-      (async (repoPath: string) => {
-        const baseUrl = GITHUB_API_BASEURL + repoPath;
-        const endpoints = getEndpoints(baseUrl);
-        const results = await Promise.all(endpoints.map((e) => e.fn(e.url)));
-
-        return endpoints.reduce((acc, e, i) => {
-          acc[e.key] = results[i];
-          return acc;
-        }, {} as Record<(typeof endpoints)[number]["key"], any>);
-      })(project.repo)
-    )
-  );
+const clientFetchedGithubData = useState<ProjectDataType[]>(
+  "client-fetched-github-data",
+  () => initilaGithubData
+);
 
 const fetchMissingClientGithubData = async () => {
   const allProjects = clientFetchedGithubData.value;
@@ -179,19 +189,10 @@ const fetchMissingClientGithubData = async () => {
   );
 };
 
-const { data: serverFetchedGithubData } = await useAsyncData<ProjectDataType[]>(
-  "server-fetched-github-data",
-  fetchProjectData,
-  {
-    default: () => [],
-  }
-);
-
 const mergedGithubData = computed<ProjectDataType[]>(() =>
   clientFetchedGithubData.value.map((clientData, i) => {
     const serverData = serverFetchedGithubData.value?.[i] || {};
     const keys = Object.keys(clientData) as (keyof ProjectDataType)[];
-
     const merged = {} as ProjectDataType;
 
     for (const key of keys) {
@@ -207,7 +208,7 @@ const mergedGithubData = computed<ProjectDataType[]>(() =>
 );
 
 const isGithubComponentVisible = computed<boolean>(
-  () => store.state.previewApp === 5
+  () => store.state.previewApp === 4
 );
 
 const hasAnyGithubDataAvailable = (project?: ProjectDataType): boolean =>
@@ -238,7 +239,7 @@ onMounted(async () => {
 
 <template>
   <div v-show="isGithubComponentVisible" class="h-full">
-    <div v-if="isGithubFreshDataLoading" class="center wh-full">
+    <div v-if="isGithubFreshDataLoading" data-nosnippet class="center wh-full">
       <span
         v-for="(_, i) in 3"
         :key="i"
@@ -251,13 +252,11 @@ onMounted(async () => {
     </div>
     <div
       v-for="(project, index) in mergedGithubData"
-      v-show="
-        store.state.previewProject === index + 1 && !isGithubFreshDataLoading
-      "
+      v-show="store.state.previewProject === index && !isGithubFreshDataLoading"
       :key="index"
       :class="{
         'h-full bg-[#0d1117]': true,
-        center: !hasAnyGithubDataAvailable(project),
+        center: !hasAnyGithubDataAvailable(project) && isMounted,
       }"
     >
       <template v-if="hasAnyGithubDataAvailable(project)">
@@ -294,8 +293,8 @@ onMounted(async () => {
         </div>
       </template>
       <div
-        v-if="
-          store.state.previewProject === index + 1 &&
+        v-show="
+          store.state.previewProject === index &&
           !hasAnyGithubDataAvailable(project)
         "
         class="max-xs:rounded-md rounded-xl bg-white p-2 max-md:p-1 border-slate-100 text-black max-xs:text-lg max-md:text-xl text-2xl"

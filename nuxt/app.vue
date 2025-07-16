@@ -17,7 +17,6 @@ type ProjectLinkType = {
 };
 
 const route = useRoute();
-const { baseUrl } = useRuntimeConfig().public;
 const isHomePage = computed<boolean>(
   () => route.name === "index" || route.path === "/"
 );
@@ -35,52 +34,6 @@ useHead({
       rel: "icon",
       type: "image/svg+xml",
       href: localIcons.home.headerLogoHref,
-    },
-    {
-      rel: "canonical",
-      href: baseUrl + (route.path as string).slice(1),
-    },
-  ],
-  script: [
-    // TODO: After creation of /project page it will render only in /project
-    ...(isHomePage.value
-      ? [
-          {
-            type: "application/ld+json",
-            innerHTML: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "CollectionPage",
-              name: "Featured Works",
-              description:
-                "Explore my featured projects and creations. See live previews, project details, and GitHub repo visuals.",
-              creator: {
-                "@type": "Person",
-                name: "Sabeer Bikba",
-              },
-              // is this really needed because allready in html
-              workExample: projectsObject.map(
-                ({ name, website, icon, description }: ProjectLinkType) => ({
-                  "@type": "WebPage",
-                  name,
-                  url: website,
-                  image: icon,
-                  about: description,
-                })
-              ),
-            }),
-          },
-        ]
-      : []),
-    {
-      type: "application/ld+json",
-      innerHTML: JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "Person",
-        name: "Sabeer Bikba",
-        url: baseUrl,
-        jobTitle: "Web Developer",
-        sameAs: socialMedia.map(({ href }) => href),
-      }),
     },
   ],
 });
@@ -165,15 +118,16 @@ const projects: QuickLinkType[] = projectsObject.map(
             </UiHeadingSrOnly>
             <ul class="footer-links">
               <li v-for="{ href, label } in links" :key="label">
-                <template v-if="title === 'Quick Links'">
-                  <component
-                    :is="href !== '/' ? UiNuxtLink : NuxtLink"
-                    :to="href"
-                    :aria-label="`Navigate to ${label} page`"
-                  >
-                    {{ label }}
-                  </component>
-                </template>
+                <!-- <template v-if="title === 'Quick Links'"> -->
+                <component
+                  v-if="title === 'Quick Links'"
+                  :is="href !== '/' ? UiNuxtLink : NuxtLink"
+                  :to="href"
+                  :aria-label="`Navigate to ${label} page`"
+                >
+                  {{ label }}
+                </component>
+                <!-- </template> -->
                 <UiExternalLink
                   v-else
                   :href="href"

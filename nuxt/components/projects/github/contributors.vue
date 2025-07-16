@@ -38,29 +38,28 @@ const contributors = computed<GitHubContributorType>(
           :key="contributor.login"
           class="mb-2 flex"
         >
-          <UiExternalLink :href="contributor.html_url" class="mr-2">
+          <UiExternalLink
+            :href="contributor.html_url"
+            class="flex hover:text-[#4493f8]"
+          >
             <UiErrorFallbackImg
               :src="`${contributor.avatar_url}&s=32`"
               :fallback-src="imgFailedPlaceholder"
               :alt="'@' + contributor.login"
               height="32"
               width="32"
-              :class="
-                contributor.type === 'Bot' ? 'rounded-md' : 'rounded-full'
-              "
+              :class="[
+                'mr-2',
+                contributor.type === 'Bot' ? 'rounded-md' : 'rounded-full',
+              ]"
               loading="lazy"
             />
-          </UiExternalLink>
-          <span class="text-ellipsis">
-            <UiExternalLink
-              :href="contributor.html_url"
-              class="hover:text-[#4493f8]"
-            >
-              <strong class="font-semibold text-[15.2px]">
+            <span class="text-ellipsis">
+              <strong class="font-semibold text-[15.2px] pt-[5px]">
                 {{ contributor.login }}
               </strong>
-            </UiExternalLink>
-          </span>
+            </span>
+          </UiExternalLink>
         </li>
       </ul>
     </div>

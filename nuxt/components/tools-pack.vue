@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useElementSize } from "@vueuse/core";
 import { hierarchy, pack, type HierarchyCircularNode } from "d3-hierarchy";
 import tools, { type ToolsType } from "~/data/tools";
 
@@ -13,6 +12,7 @@ export type CircleData = {
   data: ToolsType;
 };
 
+const isMounted = useMounted();
 const container = ref<HTMLElement | null>(null);
 const { width } = useElementSize(container, { width: 200, height: 0 });
 const circles = ref(computeD3Layout(tools, width.value));
@@ -62,19 +62,26 @@ const getTooltipClasses = (x: number, y: number): string[] => {
   ];
 };
 
+const id = (toolName: string, id: number) => `id-${useSlugify(toolName)}-${id}`;
+
 watch(width, recalculate);
 </script>
 
 <template>
   <div
     ref="container"
-    class="max-w-[1000px] aspect-square lg:mx-auto max-xl:mx-10 max-md:mx-8 max-xs:mx-5"
+    :class="{
+      'max-w-[1000px] aspect-square lg:mx-auto max-xl:mx-10 max-md:mx-8 max-xs:mx-5': true,
+      'py-[400px]': !isMounted,
+    }"
   >
-    <!-- TODO: Need to add animation when in hydration -->
-    <!-- <div class="center w-full h-full">
-        <div class="relative center loader-tools-pack" />
-      </div> -->
-    <div class="w-full h-full relative">
+    <div
+      :class="[
+        'h-full relative mx-auto',
+        isMounted ? 'w-full' : 'w-[200px]',
+        isMounted ? 'h-full' : 'h-[200px]',
+      ]"
+    >
       <div
         v-for="(circle, i) in circles"
         :key="`circle-${i}`"
@@ -87,18 +94,26 @@ watch(width, recalculate);
         }"
       >
         <div
-          v-if="circle.data.imageUrl.startsWith('<svg')"
+          :aria-describedby="id(circle.data.name, i)"
           class="circle-image"
-          v-html="circle.data.imageUrl"
+          role="img"
+          v-html="
+            circle.data.imageUrl.startsWith('<svg')
+              ? circle.data.imageUrl
+              : undefined
+          "
+          :style="
+            !circle.data.imageUrl.startsWith('<svg')
+              ? { backgroundImage: `url(${circle.data.imageUrl})` }
+              : undefined
+          "
         />
         <div
-          v-else
-          class="circle-image"
-          :style="{ backgroundImage: `url(${circle.data.imageUrl})` }"
-        />
-        <div
-          class="circle-tooltip group-hover:opacity-100"
-          :class="getTooltipClasses(circle.x, circle.y)"
+          :id="id(circle.data.name, i)"
+          :class="[
+            'circle-tooltip group-hover:opacity-100',
+            getTooltipClasses(circle.x, circle.y),
+          ]"
         >
           <p class="circle-tooltip-text">
             {{ circle.data.name }}
@@ -108,37 +123,3 @@ watch(width, recalculate);
     </div>
   </div>
 </template>
-
-<!-- <style>
-/* Don't remove */
-/** if using this css remove and add to tailwind.confg.ts file  */
-/* .loader-tools-pack::before,
-.loader-tools-pack::after {
-  position: absolute;
-  content: "";
-  height: 8em;
-  width: 8em;
-  border: 1em solid gray;
-  border-radius: 50%;
-  animation: loader_79178 2s linear infinite;
-}
-
-.loader-tools-pack::after {
-  opacity: 0;
-  animation-delay: 1s;
-}
-
-@keyframes loader_79178 {
-  0% {
-    border: 1em solid black;
-    transform: scale(0);
-    opacity: 1;
-  }
-
-  100% {
-    border: 0 solid gray;
-    transform: scale(1);
-    opacity: 0;
-  }
-} */
-</style> -->

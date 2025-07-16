@@ -27,6 +27,7 @@ const license = computed<string[] | string>(() => {
 
 <template>
   <div
+    v-if="licenseData"
     :class="[
       'p-8 text-[#dfe5eb] font-medium overflow-auto w-full',
       isMitLicense

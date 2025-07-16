@@ -23,25 +23,37 @@ const getLanguagePercentage = (bytes: number) =>
   languagesBytesOnePercentage.value === 0
     ? 0
     : parseFloat((bytes / languagesBytesOnePercentage.value).toFixed(1));
+
+// const languagesBreakdown = props.languageData.map()
 </script>
 
 <template>
   <div>
     <div class="text-[#f0f6fc] py-4">
       <h2 class="h4 mb-3 text-lg font-semibold">Languages</h2>
-      <div class="mb-2 rounded-full">
-        <span class="flex rounded-full overflow-hidden">
-          <span
-            v-for="(bytes, language) in languageData"
-            :key="language"
-            :data-language="language"
-            :style="{
-              width: getLanguagePercentage(bytes) + '%',
-            }"
-            :aria-label="`${language} ${getLanguagePercentage(bytes)}%`"
-            class="h-2 mx-[.3px]"
-          />
-        </span>
+      <div
+        role="img"
+        :aria-label="
+          languageData
+            ? `Language usage breakdown: ${Object.entries(languageData)
+                .map(
+                  ([language, bytes]) =>
+                    `${language} ${getLanguagePercentage(bytes)}%`
+                )
+                .join(', ')}`
+            : ''
+        "
+        class="mb-2 rounded-full flex overflow-hidden"
+      >
+        <span
+          v-for="(bytes, language) in languageData"
+          :key="language"
+          :data-language="language"
+          :style="{
+            width: getLanguagePercentage(bytes) + '%',
+          }"
+          class="h-2 mx-[.3px]"
+        />
       </div>
       <ul class="list-style-none text-sm">
         <li

@@ -10,12 +10,13 @@ import type {
 } from "~/types/store";
 
 const state = reactive<ScreenStoreStateType>({
-  previewProject: 1,
-  previewApp: 3,
+  previewProject: 0,
+  previewApp: 2,
 });
 
-const project = useRouteQuery<ProjectPayloadType>("project", "dev-tools");
-const app = useRouteQuery<AppPayloadType>("app", "website");
+// here use better varibale name 
+const project = useRouteQuery("project", useSlugify(projects[0].name));
+const app = useRouteQuery("app", useSlugify(apps[0].name));
 
 const initAppIdx = apps.findIndex((a) => useSlugify(a.name) === app.value);
 const initProjectIdx = projects.findIndex(
@@ -23,23 +24,21 @@ const initProjectIdx = projects.findIndex(
 );
 
 if (initProjectIdx !== -1) {
-  state.previewProject = initProjectIdx + 1;
+  state.previewProject = initProjectIdx;
 }
 
 if (initAppIdx !== -1) {
-  state.previewApp = initAppIdx + projects.length + 1;
+  state.previewApp = initAppIdx + projects.length;
 }
 
 const setRouteQueryVal = (payload: number, type: "project" | "app") => {
   if (type === "project") {
-    project.value = useSlugify(
-      projects[payload - 1].name
-    ) as ProjectPayloadType;
+    project.value = useSlugify(projects[payload].name) as ProjectPayloadType;
   }
 
   if (type === "app") {
     app.value = useSlugify(
-      apps[payload - (projects.length + 1)].name
+      apps[payload - projects.length].name
     ) as AppPayloadType;
   }
 };
@@ -65,13 +64,13 @@ const dispatch = ({ type, payload }: ScreenStoreActionType) => {
 watch(
   [() => state.previewProject, () => project.value],
   ([newStoreVal, newQueryVal]) => {
-    const expectedSlug = useSlugify(projects[newStoreVal - 1].name);
+    const expectedSlug = useSlugify(projects[newStoreVal].name);
     if (newQueryVal !== expectedSlug) {
       project.value = expectedSlug as ProjectPayloadType;
     } else {
       const idx = projects.findIndex((p) => useSlugify(p.name) === newQueryVal);
-      if (idx !== -1 && state.previewProject !== idx + 1) {
-        state.previewProject = idx + 1;
+      if (idx !== -1 && state.previewProject !== idx) {
+        state.previewProject = idx;
       }
     }
   }
@@ -80,15 +79,13 @@ watch(
 watch(
   [() => state.previewApp, () => app.value],
   ([newStoreVal, newQueryVal]) => {
-    const expectedSlug = useSlugify(
-      apps[newStoreVal - (projects.length + 1)].name
-    );
+    const expectedSlug = useSlugify(apps[newStoreVal - projects.length].name);
     if (newQueryVal !== expectedSlug) {
       app.value = expectedSlug as AppPayloadType;
     } else {
       const idx = apps.findIndex((a) => useSlugify(a.name) === newQueryVal);
-      if (idx !== -1 && state.previewApp !== idx + projects.length + 1) {
-        state.previewApp = idx + projects.length + 1;
+      if (idx !== -1 && state.previewApp !== idx + projects.length) {
+        state.previewApp = idx + projects.length;
       }
     }
   }
@@ -103,8 +100,8 @@ provide("store", store);
   <div
     :class="{
       'h-full w-full overflow-auto scroll': true,
-      'bg-[#191919]': store.state.previewApp === 4,
-      'bg-[#0d1117]': store.state.previewApp === 5,
+      'bg-[#191919]': store.state.previewApp === 3,
+      'bg-[#0d1117]': store.state.previewApp === 4,
     }"
   >
     <ProjectsWebsite />

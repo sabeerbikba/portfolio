@@ -18,8 +18,8 @@ const props = defineProps<{
   isPublicRepo: boolean;
 }>();
 
-const isHoveredWebsiteLink = ref<boolean>(false);
 const { githubBaseURL } = useRuntimeConfig().public;
+
 const formatNumber = (num: number) =>
   new Intl.NumberFormat("en-US", {
     notation: "compact",
@@ -108,21 +108,20 @@ const stats = computed<
         {{ description }}
       </p>
       <UiExternalLink
-        v-if="homepage"
-        :href="homepage"
-        class="text-[#58a6ff] hover:underline inline-flex items-center gap-2"
-        @mouseenter="isHoveredWebsiteLink = true"
-        @mouseleave="isHoveredWebsiteLink = false"
-      >
-        <ProjectsOcticonsIcon
-          name="link"
-          :class="isHoveredWebsiteLink ? '!text-blue-400' : '!text-[#9198a1]'"
-        />
-        {{ homepage ? homepage.split("://")[1] : "" }}
-      </UiExternalLink>
+  v-if="homepage"
+  :href="homepage"
+  class="text-[#58a6ff] hover:underline inline-flex items-center gap-2 group"
+>
+  <ProjectsOcticonsIcon
+    name="link"
+    class="!text-[#9198a1] group-hover:!text-blue-400"
+  />
+  {{ homepage ? homepage.split("://")[1] : "" }}
+</UiExternalLink>
       <div v-if="hasLicense">
         <UiHeadingSrOnly as="h3">License</UiHeadingSrOnly>
         <button
+          type="button"
           class="flex items-center gap-2 hover:text-blue-400"
           @click="previewTab = 'MIT License'"
         >
@@ -130,7 +129,7 @@ const stats = computed<
           <span class="text-sm">MIT license</span>
         </button>
       </div>
-      <ul class="flex flex-wrap items-center gap-5 text-sm">
+      <ul class="flex flex-wrap items-center gap-5 max-md:gap-4 max-sm:gap-3 max-xs:gap-2 text-sm">
         <li v-for="{ href, icon, count, what } in stats" :key="what">
           <UiExternalLink
             :href="`${githubBaseURL + href}`"

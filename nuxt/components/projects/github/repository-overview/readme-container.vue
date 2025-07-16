@@ -34,7 +34,7 @@ const markdownHtml = computed(() => {
 </script>
 
 <template>
-  <div v-if="markdownHtml" class="p-8 max-xs:p-5">
+  <div v-if="markdownHtml && readmeData" class="p-8 max-xs:p-5">
     <article class="markdown-body" v-html="markdownHtml" />
   </div>
 </template>
