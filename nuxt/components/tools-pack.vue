@@ -12,16 +12,12 @@ export type CircleData = {
   data: ToolsType;
 };
 
+const { isTouch } = useCustomPointer();
 const isMounted = useMounted();
 const container = useTemplateRef("container");
 const { width } = useElementSize(container, { width: 200, height: 0 });
-const circles = ref(computeD3Layout(tools, width.value));
-const recalculate = () => {
-  circles.value = computeD3Layout(tools, width.value);
-};
 
-// Using a named function (not arrow) for hoisting support
-function computeD3Layout(tools: ToolsType[], size: number): CircleData[] {
+const computeD3Layout = (tools: ToolsType[], size: number): CircleData[] => {
   const rootNode = hierarchy<{ children: ToolsType[]; name: string }>({
     children: tools,
     name: "root",
@@ -46,7 +42,12 @@ function computeD3Layout(tools: ToolsType[], size: number): CircleData[] {
         data: node.data as ToolsType,
       })
     );
-}
+};
+
+const circles = ref(computeD3Layout(tools, width.value));
+const recalculate = () => {
+  circles.value = computeD3Layout(tools, width.value);
+};
 
 const getTooltipClasses = (x: number, y: number): string[] => {
   const tooltipX = x > width.value / 2 ? "left" : "right";
@@ -62,8 +63,6 @@ const getTooltipClasses = (x: number, y: number): string[] => {
   ];
 };
 
-const id = (toolName: string, id: number) => `id-${useSlugify(toolName)}-${id}`;
-
 watch(width, recalculate);
 </script>
 
@@ -75,7 +74,17 @@ watch(width, recalculate);
       'py-[400px]': !isMounted,
     }"
   >
+    <p class="sr-only" aria-hidden="false">
+      My core development stack includes <b>Nuxt.js</b> for full-stack
+      applications, <b>React</b> and <b>Vue.js</b> for frontend frameworks,
+      <b>TypeScript</b> for type-safe JavaScript, <b>Figma</b> for design
+      collaboration, and <b>Tailwind CSS</b> for utility-first styling. I
+      frequently deploy with <b>Vercel</b> and also work with
+      <b>React Native</b> for mobile app development.
+    </p>
+
     <div
+      @mousemove="useBlurAll"
       :class="[
         'h-full relative mx-auto',
         isMounted ? 'w-full' : 'w-[200px]',
@@ -85,7 +94,7 @@ watch(width, recalculate);
       <div
         v-for="(circle, i) in circles"
         :key="`circle-${i}`"
-        class="circle-item group"
+        class="circle-item"
         :style="{
           left: `${circle.x - circle.r}px`,
           top: `${circle.y - circle.r}px`,
@@ -94,9 +103,10 @@ watch(width, recalculate);
         }"
       >
         <div
-          :aria-describedby="id(circle.data.name, i)"
           class="circle-image"
           role="img"
+          :aria-label="`${circle.data.name} logo`"
+          tabindex="-1"
           v-html="
             circle.data.imageUrl.startsWith('<svg')
               ? circle.data.imageUrl
@@ -109,15 +119,15 @@ watch(width, recalculate);
           "
         />
         <div
-          :id="id(circle.data.name, i)"
           :class="[
-            'circle-tooltip group-hover:opacity-100',
+            'circle-tooltip',
             getTooltipClasses(circle.x, circle.y),
+            isTouch ? 'underline' : 'hover:underline',
           ]"
         >
-          <p class="circle-tooltip-text">
+          <UiExternalLink :href="circle.data.linkUrl" class="circle-tooltip-a">
             {{ circle.data.name }}
-          </p>
+          </UiExternalLink>
         </div>
       </div>
     </div>

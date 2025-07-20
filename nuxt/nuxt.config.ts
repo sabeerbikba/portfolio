@@ -1,5 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
+const BASE_URL = process.env.VERCEL_URL
+  ? `https://${process.env.VERCEL_URL}/`
+  : "https://sabeerbikba.vercel.app/";
+
 export default defineNuxtConfig({
   ssr: true,
 
@@ -14,18 +18,21 @@ export default defineNuxtConfig({
     "@nuxt/eslint",
     "@nuxtjs/html-validator",
     "@vueuse/nuxt",
-    "@nuxtjs/device",
+    "nuxt-og-image",
   ],
 
-  // experimental: {
-  //   payloadExtraction: true,
-  // },
+  site: {
+    url: BASE_URL,
+    name: "nuxt.config Test My Awesome Website",
+  },
+
+  ogImage: {
+    zeroRuntime: true, // OG image code is removed from the final output
+  },
 
   runtimeConfig: {
     public: {
-      baseUrl: process.env.VERCEL_URL
-        ? `https://${process.env.VERCEL_URL}/`
-        : "https://sabeerbikba.vercel.app/",
+      baseUrl: BASE_URL,
       repoOwner: process.env.VERCEL_GIT_REPO_OWNER || "sabeerbikba",
       githubBaseURL: "https://github.com/",
     },
@@ -75,7 +82,7 @@ export default defineNuxtConfig({
   compatibilityDate: "2024-11-01",
   // debug: true,
   devtools: {
-    // enabled: false,
+    enabled: true,
     // vscode: {
     //   reuseExistingServer: true,
     // },

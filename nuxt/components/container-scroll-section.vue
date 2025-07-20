@@ -4,6 +4,8 @@ import { useScroll } from "@vueuse/core";
 // Inspiration URL: https://ui.aceternity.com/components/container-scroll-animation
 // Source URL: https://inspira-ui.com/components/miscellaneous/container-scroll
 
+// ⚠️ Can't prevent layout shift — animation uses computed transforms from 6+ dynamic values
+
 const containerRef = useTemplateRef("containerRef");
 const isMobile = ref(false);
 const { height } = useWindowSize({ initialHeight: 1147 });
@@ -43,7 +45,7 @@ onUnmounted(() => {
 <template>
   <section
     ref="containerRef"
-    class="relative center h-[60rem] max-sm:h-[56rem] max-xs:h-[50rem] p-2 md:h-[80rem] md:p-20"
+    class="relative center max-xs:h-[50rem] max-sm:h-[56rem] h-[60rem] p-2 md:h-[80rem] md:p-20"
   >
     <slot name="heading" />
     <div class="relative w-full py-10 md:py-40" style="perspective: 1000px">

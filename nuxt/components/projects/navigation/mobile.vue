@@ -95,6 +95,40 @@ onUnmounted(() => {
     aria-label="Mobile projects navigation"
     class="md:hidden absolute block top-36 right-3 z-50"
   >
+    <Motion
+      as="button"
+      type="button"
+      :aria-expanded="isOpen"
+      aria-label="Toggle mobile navigation"
+      :class="{ 'h-10 w-10 center': true, 'mix-blend-exclusion': !isOpen }"
+      :initial="false"
+      :animate="{
+        borderRadius: isOpen ? '50%' : '0.5rem',
+        opacity: isOpen ? 1 : 0.55,
+        backgroundColor: isOpen ? '#9CA3AF' : '#323232',
+        padding: isOpen ? '0.625rem' : '0rem',
+      }"
+      :transition="{ duration: 0.3, ease: 'backIn' }"
+      @click="toggleDock"
+    >
+      <div v-show="showContent">
+        <span :style="{ display: !isOpen ? 'flex' : 'none' }">
+          <OpenBtnLineRing.reuse :wh="30" bg-color="#525F65">
+            <OpenBtnLineRing.reuse :wh="20" bg-color="#91969C">
+              <OpenBtnLineRing.reuse :wh="12" bg-color="#FCFFFF" />
+            </OpenBtnLineRing.reuse>
+          </OpenBtnLineRing.reuse>
+        </span>
+        <div
+          :style="{ display: isOpen ? 'block' : 'none' }"
+          class="relative w-7 h-7 left-[10px] z-[60]"
+        >
+          <CloseBtnLine.reuse class="rotate-45" />
+          <CloseBtnLine.reuse class="-rotate-45" />
+        </div>
+      </div>
+    </Motion>
+
     <MotionPresence>
       <Motion
         v-show="isOpen"
@@ -136,39 +170,5 @@ onUnmounted(() => {
         </ButtonsGroup.reuse>
       </Motion>
     </MotionPresence>
-
-    <Motion
-      as="button"
-      type="button"
-      :aria-expanded="isOpen"
-      aria-label="Toggle mobile navigation"
-      :class="{ 'h-10 w-10 center': true, 'mix-blend-exclusion': !isOpen }"
-      :initial="false"
-      :animate="{
-        borderRadius: isOpen ? '50%' : '0.5rem',
-        opacity: isOpen ? 1 : 0.55,
-        backgroundColor: isOpen ? '#9CA3AF' : '#323232',
-        padding: isOpen ? '0.625rem' : '0rem',
-      }"
-      :transition="{ duration: 0.3, ease: 'backIn' }"
-      @click="toggleDock"
-    >
-      <div v-show="showContent">
-        <span :style="{ display: !isOpen ? 'flex' : 'none' }">
-          <OpenBtnLineRing.reuse :wh="30" bg-color="#525F65">
-            <OpenBtnLineRing.reuse :wh="20" bg-color="#91969C">
-              <OpenBtnLineRing.reuse :wh="12" bg-color="#FCFFFF" />
-            </OpenBtnLineRing.reuse>
-          </OpenBtnLineRing.reuse>
-        </span>
-        <div
-          :style="{ display: isOpen ? 'block' : 'none' }"
-          class="relative w-7 h-7 left-[10px]"
-        >
-          <CloseBtnLine.reuse class="rotate-45" />
-          <CloseBtnLine.reuse class="-rotate-45" />
-        </div>
-      </div>
-    </Motion>
   </div>
 </template>

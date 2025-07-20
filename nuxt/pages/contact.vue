@@ -11,8 +11,7 @@ type ContactInfoType = {
   ariaLabel: string;
 };
 
-const { baseUrl } = useRuntimeConfig().public;
-const route = useRoute();
+const URL = useNormalizeUrl();
 const isHommePageLoading = ref(false);
 const homepageLink = useState("home-page-link", () => "/");
 
@@ -20,7 +19,7 @@ useHead({
   link: [
     {
       rel: "canonical",
-      href: baseUrl + route.fullPath,
+      href: URL,
     },
   ],
 });
@@ -34,7 +33,7 @@ useSeoMeta({
   ogTitle: seoMetaMap.contact.title,
   ogDescription: seoMetaMap.contact.description,
   // ogImage: ,
-  ogUrl: baseUrl + "contact",
+  ogUrl: URL,
   ogType: "website",
 
   twitterCard: "summary_large_image",
@@ -46,6 +45,7 @@ useSeoMeta({
 let interval: number | undefined;
 const lastScrollY = ref(0);
 const scrollDir = ref<"up" | "down">("up");
+const isBackBtnFocused = ref(false);
 const status = ref("Send");
 const sendingFrame = ref(0);
 const sendingFrames = ["Sending", "Sending.", "Sending..", "Sending..."];
@@ -115,7 +115,7 @@ onUnmounted(() => {
         <h2
           class="text-2xl font-extrabold sm:text-3xl md:text-4xl text-black/70"
         >
-          Let&apos;s Create Something Amazing
+          Let's Create Something Amazing
         </h2>
         <p
           class="mt-3 max-w-md mx-auto text-xl text-gray-600 sm:text-2xl md:mt-5 md:max-w-3xl"
@@ -385,13 +385,15 @@ onUnmounted(() => {
       as="div"
       :initial="{ y: 0, opacity: 0 }"
       :animate="
-        scrollDir === 'down' ? { y: -100, opacity: 0 } : { y: 0, opacity: 1 }
+        scrollDir === 'up' || isBackBtnFocused
+          ? { y: 0, opacity: 1 }
+          : { y: -100, opacity: 0 }
       "
       :transition="{
         type: 'spring',
         stiffness: 300,
         damping: 30,
-        delay: scrollDir === 'down' ? 0.57 : 0,
+        delay: scrollDir === 'up' || isBackBtnFocused ? 0 : 0.57,
       }"
       :class="
         useCn(
@@ -399,6 +401,8 @@ onUnmounted(() => {
           isHommePageLoading && 'border-black/55 border-none'
         )
       "
+      @focusin="isBackBtnFocused = true"
+      @focusout="isBackBtnFocused = false"
     >
       <NuxtLink
         :to="homepageLink"

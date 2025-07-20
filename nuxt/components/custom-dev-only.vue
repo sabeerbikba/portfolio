@@ -1,10 +1,17 @@
 <script setup lang="ts">
-const { textWhite = false } = defineProps<{ textWhite?: boolean }>();
+defineOptions({ inheritAttrs: false });
+const { textWhite = false, className = "" } = defineProps<{
+  textWhite?: boolean;
+  className?: string;
+}>();
 </script>
 
 <template>
   <DevOnly>
-    <div :class="[textWhite ? 'text-white' : 'text-black']">
+    <div
+      v-bind="$attrs"
+      :class="[textWhite ? 'text-white' : 'text-black', className]"
+    >
       <slot />
     </div>
   </DevOnly>

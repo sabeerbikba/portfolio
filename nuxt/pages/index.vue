@@ -4,38 +4,25 @@ import seoMetaMap from "~/data/seo";
 import { localIcons } from "~/data/icons";
 
 const router = useRouter();
-const { baseUrl } = useRuntimeConfig().public;
+const URL = useNormalizeUrl();
 const homepageLink = useState<string>("home-page-link");
 const isHeroCotBtn = useState("is-hero-cot-btn", () => ({
   focused: false,
   tabClicked: false,
 }));
 
-const trimLinkSlash = (link: string) => link.trim().slice(0, -1);
+const isToolsPackHydrationComplete = ref(false);
+const toolPackOpacityStyle = ref("0");
+const toolPackPointerEventsStyle = ref("none");
 
 useHead({
   link: [
     {
       rel: "canonical",
-      href: trimLinkSlash(baseUrl) + router.currentRoute.value.fullPath,
+      href: URL,
     },
   ],
 });
-
-watch(
-  router.currentRoute,
-  (routeQueryChanged) => {
-    useHead({
-      link: [
-        {
-          rel: "canonical",
-          href: trimLinkSlash(baseUrl) + routeQueryChanged.fullPath,
-        },
-      ],
-    });
-  },
-  { immediate: true }
-);
 
 useSeoMeta({
   robots: "index, follow",
@@ -47,7 +34,7 @@ useSeoMeta({
   ogDescription: seoMetaMap.index.description,
   // TODO:
   // ogImage: ,
-  ogUrl: baseUrl,
+  ogUrl: URL,
   ogType: "website",
 
   twitterCard: "summary_large_image",
@@ -90,12 +77,6 @@ onMounted(() => {
   });
 });
 
-// need to move this line to top
-
-const isToolsPackHydrationComplete = ref(false);
-const toolPackOpacityStyle = ref("0");
-const toolPackPointerEventsStyle = ref("none");
-
 const onToolPackHydreate = () => {
   isToolsPackHydrationComplete.value = true;
 };
@@ -104,17 +85,32 @@ watch(isToolsPackHydrationComplete, (isHydrated) => {
   toolPackOpacityStyle.value = isHydrated ? "1" : "0";
   toolPackPointerEventsStyle.value = isHydrated ? "auto" : "none";
 });
+
+onMounted(() => {
+  const hash = window.location.hash;
+
+  if (hash) {
+    useTimeoutFn(
+      () => {
+        const el = document.querySelector(hash);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth" });
+        }
+      },
+      6,
+      { immediate: true }
+    );
+  }
+});
 </script>
 
 <template>
   <div class="overflow-x-hidden">
     <section
-      aria-labelledby="hero-section"
+      aria-labelledby="hero"
       class="flex flex-col items-center justify-end h-[18rem] xs:h-[22rem] sm:h-[27rem] md:h-[32rem] bg-gradient-to-b from-white-400 via-gray-100 to-white-400"
     >
-      <UiHeading id="hero-section">
-        Let&apos;s Build Something Amazing
-      </UiHeading>
+      <UiHeading id="hero"> Let&apos;s Build Something Amazing </UiHeading>
       <div
         class="font-normal text-neutral-600 mx-auto py-4 xs:py-5 sm:py-6 md:py-7 text-[24px] xs:text-[28px] sm:text-[34px] md:text-[40px]"
       >
@@ -153,14 +149,14 @@ watch(isToolsPackHydrationComplete, (isHydrated) => {
       </div>
     </section>
 
-    <ContainerScrollSection aria-labelledby="project-section">
+    <ContainerScrollSection aria-labelledby="projects">
       <template #heading>
-        <UiHeadingSrOnly as="h1" id="project-section">
+        <UiHeadingSrOnly as="h1" id="projects">
           Projects Details
         </UiHeadingSrOnly>
       </template>
       <template #title>
-        <UiHeading as="h2" class-name="md:text-[2.8rem]">
+        <UiHeading as="h1" class-name="md:text-[2.8rem]">
           Browse My Creations
           <br />
           <span
@@ -175,9 +171,9 @@ watch(isToolsPackHydrationComplete, (isHydrated) => {
       </template>
     </ContainerScrollSection>
 
-    <section aria-describedby="tools-section">
+    <section aria-describedby="tools-using">
       <div class="mb-4 text-center">
-        <UiHeading id="tools-section">Development Tools & Expertise</UiHeading>
+        <UiHeading id="tools-using">Development Tools & Expertise</UiHeading>
         <h2
           class="font-bold text-xg xs:text-2xl sm:text-3xl md:text-4xl max-xs:px-3 text-black/70"
         >
@@ -186,7 +182,7 @@ watch(isToolsPackHydrationComplete, (isHydrated) => {
       </div>
       <div class="relative">
         <LazyToolsPack
-          hydrate-on-visible
+          :hydrate-after="2300"
           class="tools-pack-visible"
           @hydrated="onToolPackHydreate"
         />
@@ -204,10 +200,10 @@ watch(isToolsPackHydrationComplete, (isHydrated) => {
     </section>
 
     <section
-      aria-labelledby="about-heading"
+      aria-labelledby="about-me"
       class="about-section py-12 px-10 mt-9 bg-[rgb(251 251 251 / 50%)] bg-[linear-gradient(0deg,_rgba(255,255,255,1)_0%,_rgba(250,250,250,50)_50%,_rgba(255,255,255,0)_100%)]"
     >
-      <UiHeading id="about-heading">About Me</UiHeading>
+      <UiHeading id="about-me">About Me</UiHeading>
       <div class="max-w-[1200px] mx-auto text-center about-div">
         <p
           v-for="(paragraph, index) in aboutSectionParagraphs"
@@ -217,10 +213,14 @@ watch(isToolsPackHydrationComplete, (isHydrated) => {
       </div>
     </section>
 
-    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-white shadow-inner">
+    <section
+      aria-labelledby="connect"
+      class="py-20 px-4 sm:px-6 lg:px-8 bg-white shadow-inner"
+    >
       <div class="max-w-3xl mx-auto text-center">
         <UiHeading
           as="h2"
+          id="connect"
           class-name="text-xl xs:text-2xl sm:text-3xl md:text-4xl"
         >
           Ready to start your next project?
@@ -258,6 +258,12 @@ watch(isToolsPackHydrationComplete, (isHydrated) => {
 }
 
 a.text-white[data-nuxt-link]:focus-visible {
-  @apply outline outline-gray-500 outline-[3px] outline-offset-4 border-2 border-transparent;
+  @apply outline outline-gray-500 outline-[3px] outline-offset-4;
+}
+
+.tools-pack-visible {
+  opacity: v-bind(toolPackOpacityStyle);
+  pointer-events: v-bind(toolPackPointerEventsStyle);
+  transition: opacity 0.3s ease;
 }
 </style>

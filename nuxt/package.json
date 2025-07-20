@@ -4,14 +4,17 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
-    "code": "code-server",
-    "code-dev": "run-p dev code",
+    "postinstall": "nuxt prepare",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
+    "typecheck": "nuxt typecheck --logLevel=verbose",
+    "cleanup": "nuxt cleanup",
+    "analyze": "nuxt analyze --logLevel=verbose",
+    "code": "code-server",
+    "code-dev": "run-p dev code",
     "bp": "nuxt generate && nuxt preview",
     "gp": "nuxt generate && nuxt preview",
     "lint": "eslint .",
-    "postinstall": "nuxt prepare",
     "add:module": "nuxt module add"
   },
   "dependencies": {
@@ -35,13 +38,13 @@
     "@iconify-json/mdi": "^1.2.3",
     "@nuxt/eslint": "1.4.1",
     "@nuxt/icon": "1.15.0",
-    "@nuxtjs/device": "^3.2.4",
     "@nuxtjs/tailwindcss": "6.14.0",
     "@octokit/types": "^13.10.0",
     "@types/d3-hierarchy": "^3.1.7",
     "eslint": "^9.29.0",
     "mini-svg-data-uri": "^1.4.4",
     "npm-run-all": "^4.1.5",
+    "nuxt-og-image": "^5.1.9",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.8.2"
   }

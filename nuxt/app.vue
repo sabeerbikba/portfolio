@@ -17,9 +17,7 @@ type ProjectLinkType = {
 };
 
 const route = useRoute();
-const isHomePage = computed(
-  () => route.name === "index" || route.path === "/"
-);
+const isHomePage = computed(() => route.name === "index" || route.path === "/");
 
 useHead({
   htmlAttrs: { lang: "en" },
@@ -34,6 +32,7 @@ useHead({
       rel: "icon",
       type: "image/svg+xml",
       href: localIcons.home.headerLogoHref,
+      sizes: "any",
     },
   ],
 });
@@ -61,16 +60,25 @@ const projects: QuickLinkType[] = projectsObject.map(
 </script>
 
 <template>
-  <main class="w-full h-full bg-white bg-dot-black/[0.4] relative">
+  <NuxtLoadingIndicator>
+    <div
+      class="h-full w-full animate-[loading-indicator_2s_infinite] bg-gradient-to-r from-white via-gray-500 to-black"
+    />
+  </NuxtLoadingIndicator>
+  <div class="w-full h-full bg-white bg-dot-black/[0.4] bg-fixed relative">
     <div
       class="absolute pointer-events-none inset-0 bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"
     />
-    <div
+    <main
       class="relative z-20 bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500"
     >
+      <NuxtRouteAnnouncer politeness="assertive">
+        {{ route.name === "index" ? "home" : route.name }} page was loaded.
+      </NuxtRouteAnnouncer>
       <NuxtPage />
-    </div>
-  </main>
+    </main>
+  </div>
+
   <footer
     v-if="isHomePage"
     class="border-t border-neutral-300 px-8 py-20 bg-white"

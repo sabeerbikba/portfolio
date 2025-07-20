@@ -1,14 +1,10 @@
 // TODO:
 
 - Need to add SEO image in good aspect ratio in og:image 
-- use useRouteAnnouncer component if it's good https://nuxt.com/docs/api/composables/use-route-announcer
-    - First need to use those Assistive Technologies to see how it works 
 -- github.vue --
-    - in github info-tab those svg logos gap need to decrese in smaller screen 
     - use SEO magic in github.vue components
     - LATER we can achive tab achive tab selected code with just css and html instead of javascript
     - gihtub.vue show bot that this page looks simmilar to github web page 
-    - TEST PRODCUTION in developement mode total 28 requests making is there same problem in prodction
 
 - PROBLEM: icons have some problem when rendering use another method like used for other icons 
     - FIX is to we can use custom icons as per Nuxt/icons docs download and save the in project as per docs and use it 
@@ -16,35 +12,31 @@
 - OTHER-PROJECT -- 
   - In rickshaw project need to add background in pages other then home check in website section and navigate page and see 
   - In dev.tools project need to add this website made for specific size when initially user open in smaller screen
+
 -- project section --
-    - projectsif good need to add dynamic link 
-    - LATER cancel request only when coming from another route not in same route 
-    - if anythng failed in project section need to show error screen inside that screen
+    - check every link is correct in page 
+    - mobile nav always closed do something that animation stuff the make user focus on that nav 
+    - LINK is that possbile to naviagte apps from link instead of button with JavaScipt
+    - IMPROVEMENT LATER need to add buttons for make bigger screen that match 16:9 aspect ration if it is better specially for website component think for other part of project 
+    - projects if good need to add dynamic link 
+    - LATER cancel request only when coming from another route not in same route (initiLly page load)
     - LATER [first need to complete the project]: Can we animation when screen change in project section like window change with client only if good
         - when animation in progress button need to make unresponsive until animation complete only where animation working (if animation working in desktop only for that)
--- tools-pack.vue
-    - ADD tools-pack.vue which technologies newly learned like nuxt vue 
-    - in mobile removed tool-tip other way to say what image is that
-- IMPROVEMENT LATER need to add buttons for make bigger screen that match 16:9 aspect ration if it is better specially for website component think for other part of project 
-- if focused on hero section button and pressed tab need to open desktop navigation bar only if that visible checck with media query 
-- need to comment not used styles in github.vue and check is comments is ignored in production build 
-- if nuxt/device not used anywhere remove that lib
-- focus line not visible on cot button create single class using tailwind class for that and apply both button 
-- is that possbile to naviagte apps from link instead of button with JavaScipt
 
-- need to add parmalink everywhere possible for SEO reason, and specially in github readme.md use method simmilar to github readme.md done 
-- Need to improve svg in tools.ts using svgo or svgoWeb tool
-- update the nuxt framework to 4.0.0 and implement new folder structure
-- think about links in tools-pack component
-- IMPROVEMENT in container scroll component need to set value that avoid layout shift
-- need to decustruct props instead of using props.prop
-- need to install assertive extension to check how website working 
-- if focused on any github desktop navigation button timer will stop and don't close after focuse lose then close
-- move all the css in where it need to move except lazy
-- need to remove data-allow-mismatch attribute i think that is part of vue not nuxt 
-- where i can use @nuxtjs/device lib code device header set and based on import the code
-- not navigating from /contact to / (home) page
-    - before touching this code need to commit all the code first 
+-- tools-pack.vue
+    - is underline color is looking good or not 
+    - LATER ANIMATION that animation not starting middle it strating from side 
+        - i think we can use to show animation: https://nuxt.com/docs/3.x/api/utils/on-nuxt-ready
+
+- need to change about section with latest used technologies
+- use correct heading level,  single h1 in section  
+- check where can i use nuxtIslnad component: https://nuxt.com/docs/3.x/api/components/nuxt-island
+- check which lib support auto-import if supported add in config file check each and every file 
+- need to add sitemap open graph FIRST add dynamic link in projects section: https://nuxtseo.com/docs/sitemap/guides/multi-sitemaps 
+- need to add og:image and test in nuxt devtools:  https://nuxtseo.com/docs/og-image/getting-started/getting-familar-with-nuxt-og-image
+- add base64 paragraph if it's good 
+- check all link following trilling slash rule to avoid dublicate content 
+- can i use 'use' as default prefix to import composable and utils 
 
 -- API LATER --
     - API after email sent need to send small email about we reach soon 
@@ -52,10 +44,12 @@
        - How to do mentioned in that file 
     - how api work is first send msg to owner if failed send user failed and try diffrent mail option if success reach as soon as possible 
     - after email send and sucess true need to diaable the button 
+    - also create api for logErr
 
 
 - -- FINAL CHECK
-- if nuxt/device not used anywhere remove that lib
+- remove all the consoles 
+- DEPLOYED TEST check how link working: https://nuxtseo.com/learn/routes-and-rendering/trailing-slashes
 - lighthouse materic by changeing all apps and project
 - IS github.vue hydration mismatch error still facing 
 - IMPROVEMENT need to `data-nosnippet` attribute every non indexing component
@@ -72,262 +66,3 @@
 - need to creat image for seo meta tags
 - after generating in sever on meta tags working fine // TODO:
 - test in https://search.google.com/test/rich-results after deployhed // TODO:
-
-
-[3:23:49 PM]  WARN  .nuxt/dist/server/node_modules/.pnpm/motion-utils_12.5.0/node_modules/motion-utils/dist/es/errors.mjs (1:0): Module level directives cause errors when bundled, "prerender" in ".nuxt/dist/server/node_modules/.pnpm/motion-utils_12.5.0/node_modules/motion-utils/dist/es/errors.mjs" was ignored.
-
-- if i use hidden height width not setting problem
-- apply style need to hydrate 
-
-
-json-editor-vue-huf8dypo.js:16 TypeError: Cannot assign to read only property '0' of string 'README'
-    at v (state-editor.vue-lnhqkmb1.js:1:1103)
-    at P.deep (state-editor.vue-lnhqkmb1.js:1:924)
-    at pf (json-editor-vue-huf8dypo.js:16:655)
-    at ys (json-editor-vue-huf8dypo.js:16:726)
-    at a.call (json-editor-vue-huf8dypo.js:29:29196)
-    at w (json-editor-vue-huf8dypo.js:9:16029)
-    at m2 (json-editor-vue-huf8dypo.js:16:2002)
-    at se (json-editor-vue-huf8dypo.js:29:23462)
-    at eE.we [as fn] (json-editor-vue-huf8dypo.js:29:22319)
-    at eE.run (json-editor-vue-huf8dypo.js:9:1810)
-kvwmbylm.js:2 Timer '[nuxt-app] vue:error' already exists
-json-editor-vue-huf8dypo.js:16 TypeError: Cannot assign to read only property '0' of string 'MIT License'
-    at v (state-editor.vue-lnhqkmb1.js:1:1103)
-    at P.deep (state-editor.vue-lnhqkmb1.js:1:924)
-    at pf (json-editor-vue-huf8dypo.js:16:655)
-    at ys (json-editor-vue-huf8dypo.js:16:726)
-    at a.call (json-editor-vue-huf8dypo.js:29:29196)
-    at w (json-editor-vue-huf8dypo.js:9:16029)
-    at m2 (json-editor-vue-huf8dypo.js:16:2002)
-    at se (json-editor-vue-huf8dypo.js:29:23462)
-    at eE.we [as fn] (json-editor-vue-huf8dypo.js:29:22319)
-    at eE.run (json-editor-vue-huf8dypo.js:9:1810)
-
-    Vue warn]: Hydration node mismatch:
-- rendered on server: <!--[--> (start of fragment) 
-- expected on client: Symbol(v-cmt) 
-  at <Github onVnodeMounted=fn<onVnodeMounted> > 
-  at <AsyncComponentWrapper onVnodeMounted=fn<onVnodeMounted> > 
-  at <AsyncComponentWrapper onVnodeMounted=fn<onVnodeMounted> > 
-  at <Anonymous hydrate-when=true > 
-  at <Screen> 
-  at <ContainerScrollSection aria-labelledby="project-section" > 
-  at <Index onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< Proxy(Object) {__v_skip: true} > > 
-  at <RouteProvider key="/" vnode= {__v_isVNode: true, __v_skip: true, type: {…}, props: {…}, key: null, …} route= {fullPath: '/?app=about', hash: '', query: {…}, name: 'index', path: '/', …}  ... > 
-  at <RouterView name=undefined route=undefined > 
-  at <NuxtPage> 
-  at <App key=4 > 
-  at <NuxtRoot>
-I
-installHook.js:1 [Vue warn]: Hydration node mismatch:
-
-- rendered on server: <!---->  
-- expected on client: span 
-  at <ClientOnly key=1 > 
-  at <Github onVnodeMounted=fn<onVnodeMounted> > 
-  at <AsyncComponentWrapper onVnodeMounted=fn<onVnodeMounted> > 
-  at <AsyncComponentWrapper onVnodeMounted=fn<onVnodeMounted> > 
-  at <Anonymous hydrate-when=true > 
-  at <Screen> 
-  at <ContainerScrollSection aria-labelledby="project-section" > 
-  at <Index onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< Proxy(Object) {__v_skip: true} > > 
-  at <RouteProvider key="/" vnode= {__v_isVNode: true, __v_skip: true, type: {…}, props: {…}, key: null, …} route= {fullPath: '/?app=about', hash: '', query: {…}, name: 'index', path: '/', …}  ... > 
-  at <RouterView name=undefined route=undefined > 
-  at <NuxtPage> 
-  at <App key=4 > 
-  at <NuxtRoot>
-
-installHook.js:1 [Vue warn]: Hydration node mismatch:
-
-- rendered on server: <!--[--> (start of fragment) 
-- expected on client: Symbol(v-cmt) 
-  at <Github onVnodeMounted=fn<onVnodeMounted> > 
-  at <AsyncComponentWrapper onVnodeMounted=fn<onVnodeMounted> > 
-  at <AsyncComponentWrapper onVnodeMounted=fn<onVnodeMounted> > 
-  at <Anonymous hydrate-when=true > 
-  at <Screen> 
-  at <ContainerScrollSection aria-labelledby="project-section" > 
-  at <Index onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< Proxy(Object) {__v_skip: true} > > 
-  at <RouteProvider key="/" vnode= {__v_isVNode: true, __v_skip: true, type: {…}, props: {…}, key: null, …} route= {fullPath: '/?app=about', hash: '', query: {…}, name: 'index', path: '/', …}  ... > 
-  at <RouterView name=undefined route=undefined > 
-  at <NuxtPage> 
-  at <App key=4 > 
-  at <NuxtRoot>
-
-   ERROR  HTML validation errors found for /200.html                                                                                                                                                                     5:34:17 PM
-error: <html> is missing required "lang" attribute (element-required-attributes) at inline:2:2:
-  1 | <!DOCTYPE html>
-> 2 | <html>
-    |  ^^^^
-  3 |   <head>
-  4 |     <meta charset="utf-8" />
-  5 |     <meta name="viewport" content="width=device-width, initial-scale=1" />
-Details: https://html-validate.org/rules/element-required-attributes.html
-
-
-error: <head> element must have <title> as content (element-required-content) at inline:3:4:
-  1 | <!DOCTYPE html>
-  2 | <html>
-> 3 |   <head>
-    |    ^^^^
-  4 |     <meta charset="utf-8" />
-  5 |     <meta name="viewport" content="width=device-width, initial-scale=1" />
-  6 |     <style>
-Details: https://html-validate.org/rules/element-required-content.html
-
-
-2 errors found.
-
-
-
- ERROR  HTML validation errors found for /404.html                                                                                                                                                                     5:34:17 PM
-error: <html> is missing required "lang" attribute (element-required-attributes) at inline:2:2:
-  1 | <!DOCTYPE html>
-> 2 | <html>
-    |  ^^^^
-  3 |   <head>
-  4 |     <meta charset="utf-8" />
-  5 |     <meta name="viewport" content="width=device-width, initial-scale=1" />
-Details: https://html-validate.org/rules/element-required-attributes.html
-
-
-error: <head> element must have <title> as content (element-required-content) at inline:3:4:
-  1 | <!DOCTYPE html>
-  2 | <html>
-> 3 |   <head>
-    |    ^^^^
-  4 |     <meta charset="utf-8" />
-  5 |     <meta name="viewport" content="width=device-width, initial-scale=1" />
-  6 |     <style>
-Details: https://html-validate.org/rules/element-required-content.html
-
-
-2 errors found.
-
-
-marged data                                                                                                                                                                                                            5:34:25 PM
-
- ERROR  Opening tag ":svg:path" not terminated. (240:7)                                                                                                                                                                5:34:25 PM
-  238 |       <path fill="#121212" d="M8.389 0v26.09h55.445c14.656 0 21.986 6.29 21.986 16.67 0 11.804-7.33 16.263-21.986 16.263H8.389v26.663h53.818c11.603 0 17.912 3.255 18.93 17.91.77 10.01.674 14.965.582 19.718-.03 1.53-.06 3.038-.06 4.686h34.218c0-7.567 0-14.5-1.15-29.29-1.425-14.857-9.161-22.386-22.393-25.032 15.674-2.036 27.277-14.248 27.277-32.973C119.611 15.671 103.122 0 69.941 0zm0 108.125V128h43.535v-12.72c0-2.674-1.312-7.155-7.356-7.155z" />
-  239 |     </svg></div><div class="left-1/4 -translate-x-full bottom-1/4 translate-y-full circle-tooltip group-hover:opacity-100"><p class="circle-tooltip-text">Remix</p></div></div><div class="circle-item group" style="left:139.49996532126505px;top:150.51757489409633px;width:19.82427745879469px;height:19.82427745879469px;"><div class="circle-image"><svg viewBox="-8 -8 145 145">
-> 240 |       <path style"lineHeight: normal; fontVariantLigatures: normal; fontVariantPosition: normal; fontVariantCaps: normal; fontVariantNumeric: normal; fontVariantAlternates: normal; fontVariantEastAsian: normal; fontFeatureSettings: normal; fontVariationSettings: normal; textIndent: 0, textAlign: start; textDecorationLine: none; textDecorationStyle: solid; textDecorationColor: #000; textTransform: none; textOrientation: mixed; whiteSpace: normal; shapeMargin: 0, inlineSize: 0, isolation: auto; mixBlendMode: normal;" d="M11.95 24.348c-5.836 0-10.618 4.867-10.618 10.681v57.942c0 5.814 4.782 10.681 10.617 10.681h104.102c5.835 0 10.617-4.867 10.617-10.681V35.03c0-5.814-4.783-10.681-10.617-10.681H14.898l-.002-.002H11.95zm-.007 9.543h104.108c.625 0 1.076.423 1.076 1.14v57.94c0 .717-.453 1.14-1.076 1.14H11.949c-.623 0-1.076-.423-1.076-1.14V35.029c0-.715.451-1.135 1.07-1.138z" color="#000" font-weight="400" font-family="sans-serif" overflow="visible" />
-      |       ^^^^^^^^^^^
-  241 |       <path d="M20.721 84.1V43.9H32.42l11.697 14.78L55.81 43.9h11.696v40.2H55.81V61.044l-11.694 14.78-11.698-14.78V84.1H20.722zm73.104 0L76.28 64.591h11.697V43.9h11.698v20.69h11.698zm0 0" />
-  242 |     </svg></div><div class="left-1/4 -translate-x-full top-1/4 -translate-y-full circle-tooltip group-hover:opacity-100"><p class="circle-tooltip-text">Markdown</p></div></div><div class="circle-item group" style="left:18.299951137051764px;top:90.53757651966812px;width:18.806960921077803px;height:18.806960921077803px;"><div class="circle-image" style="background-image:url(https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg);"></div><div class="right-1/4 translate-x-full bottom-1/4 translate-y-full circle-tooltip group-hover:opacity-100"><p class="circle-tooltip-text">Linux</p></div></div><div class="circle-item group" style="left:4.336025034287353px;top:79.47489855858234px;width:17.168327890987413px;height:17.168327890987413px;"><div class="circle-image"><svg viewBox="0 0 128 128">
-  243 |       <path fill="#019833" d="M64.461 7.136L8.529 63.173l55.779 55.898 56.085-56.037L64.461 7.136z" />
-
-    at Wo (node_modules/.pnpm/prettier@3.6.2/node_modules/prettier/plugins/html.mjs:19:7053)
-    at Ci (node_modules/.pnpm/prettier@3.6.2/node_modules/prettier/plugins/html.mjs:22:13358)
-    at Si (node_modules/.pnpm/prettier@3.6.2/node_modules/prettier/plugins/html.mjs:22:11876)
-    at _i (node_modules/.pnpm/prettier@3.6.2/node_modules/prettier/plugins/html.mjs:22:13653)
-    at Object.parse (node_modules/.pnpm/prettier@3.6.2/node_modules/prettier/plugins/html.mjs:22:14213)
-    at parse5 (node_modules/.pnpm/prettier@3.6.2/node_modules/prettier/index.mjs:16731:24)
-    at async coreFormat (node_modules/.pnpm/prettier@3.6.2/node_modules/prettier/index.mjs:17287:25)
-    at async formatWithCursor (node_modules/.pnpm/prettier@3.6.2/node_modules/prettier/index.mjs:17504:14)
-    at async format2 (node_modules/.pnpm/prettier@3.6.2/node_modules/prettier/index.mjs:19051:25)
-    at async checkHTML (node_modules/.pnpm/@nuxtjs+html-validator@2.1.0_magicast@0.3.5/node_modules/@nuxtjs/html-validator/dist/runtime/validator.js:13:16)
-
-  [cause]: t {
-  span:
-   h {
-     start: t { file: [ve], offset: 156343, line: 239, col: 6 },
-     end: t { file: [ve], offset: 156354, line: 239, col: 17 },
-     fullStart: t { file: [ve], offset: 156343, line: 239, col: 6 },
-     details: null },
-  msg: 'Opening tag ":svg:path" not terminated.',
-  level: 1,
-  relatedError: undefined,
-  elementName: ':svg:path' }
-
-
-
- ERROR  HTML validation errors found for /                                                                                                                                                                             5:34:26 PM
-
-inline
-    3:93     error  title text cannot be longer than 70 characters                        long-title
-   23:1744   error  Multiple <h1> are not allowed                                         heading-level
-   23:2972   error  Prefer to use the native <nav> element                                prefer-native-element
-   23:6770   error  Prefer to use the native <nav> element                                prefer-native-element
-   23:7211   error  <button> is missing recommended "type" attribute                      no-implicit-button-type
-   23:7450   error  <button> is missing recommended "type" attribute                      no-implicit-button-type
-   23:7775   error  <button> is missing recommended "type" attribute                      no-implicit-button-type
-   23:8000   error  <button> is missing recommended "type" attribute                      no-implicit-button-type
-   23:8196   error  <button> is missing recommended "type" attribute                      no-implicit-button-type
-   23:8423   error  <button> is missing recommended "type" attribute                      no-implicit-button-type
-   23:21319  error  Multiple <h1> are not allowed                                         heading-level
-   45:35     error  Multiple <h1> are not allowed                                         heading-level
-   60:2993   error  <button> is missing recommended "type" attribute                      no-implicit-button-type
-   60:11108  error  <button> is missing recommended "type" attribute                      no-implicit-button-type
-   60:12063  error  <button> is missing recommended "type" attribute                      no-implicit-button-type
-   60:13897  error  Multiple <h1> are not allowed                                         heading-level
-  114:8501   error  <button> is missing recommended "type" attribute                      no-implicit-button-type
-  114:16609  error  <button> is missing recommended "type" attribute                      no-implicit-button-type
-  126:4714   error  Multiple <h1> are not allowed                                         heading-level
-  240:18     error  failed to tokenize "\"lineHeigh...", expected attribute, ">" or "/>"  parser-error
-
-✖ 20 problems (20 errors, 0 warnings)
-
-More information:
-  https://html-validate.org/rules/long-title.html
-  https://html-validate.org/rules/heading-level.html
-  https://html-validate.org/rules/prefer-native-element.html
-  https://html-validate.org/rules/no-implicit-button-type.html
-
-
-
-  ├─ / (11912ms)                                                                                                                                                                                                 nitro 5:34:26 PM
-  ├─ /_payload.json?7e91ccd5-ea32-4634-a7c7-6967fe481560 (42ms) (skipped)                                                                                                                                        nitro 5:34:26 PM
-  ├─ /_payload.json (48ms)                                                                                                                                                                                       nitro 5:34:26 PM
-
- ERROR  HTML validation errors found for /contact                                                                                                                                                                      5:34:27 PM
-error: title text cannot be longer than 70 characters (long-title) at inline:9:12:
-   7 |       Contact – Sabeer Bikba | Web Developer Specialized in React, Vue &amp;
-   8 |       Nuxt.js
->  9 |     </title>
-     |            ^
-  10 |     <style>
-  11 |       *,
-  12 |       ::backdrop,
-Details: https://html-validate.org/rules/long-title.html
-
-
-error: <form> element is not permitted as a descendant of <form> (element-permitted-content) at inline:3111:24:
-  3109 |                         <!--[-->Contact Us Form<!--]-->
-  3110 |                       </h2>
-> 3111 |                       <form class="my-8">
-       |                        ^^^^
-  3112 |                         <div class="max-w-xl mx-auto">
-  3113 |                           <!--[-->
-  3114 |                           <div
-Details: https://html-validate.org/rules/element-permitted-content.html
-
-
-error: <div> element is not permitted as content under <button> (element-permitted-content) at inline:3233:30:
-  3231 |                             aria-label="Send"
-  3232 |                           >
-> 3233 |                             <div style="">
-       |                              ^^^
-  3234 |                               <!--[-->
-  3235 |                               <div class="center gap-1">
-  3236 |                                 <svg
-Details: https://html-validate.org/rules/element-permitted-content.html
-
-
-error: Multiple <h1> are not allowed (heading-level) at inline:3278:30:
-  3276 |                         >
-  3277 |                           <div class="mb-6 w-full">
-> 3278 |                             <h1
-       |                              ^^
-  3279 |                               class="text-3xl md:text-4xl font-bold text-black text-start lg:pl-6 center"
-  3280 |                             >
-  3281 |                               Sabeer Bikba
-Details: https://html-validate.org/rules/heading-level.html
-
-
-4 errors found.
-
-
-
-- first if working in nuxt parent component 
-- need to move in cmposable 

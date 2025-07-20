@@ -52,6 +52,7 @@
 
 import { projects } from "~/data/projects";
 import type { ScreenStoreType } from "~/types/store";
+import { UiExternalLink } from "#components";
 import type {
   GithubBranchesType,
   GitHubContributorType,
@@ -64,12 +65,33 @@ import type {
 
 const { githubBaseURL, repoOwner } = useRuntimeConfig().public;
 const store = inject("store") as ScreenStoreType;
+const GITHUB_API_BASEURL: string = "https://api.github.com/repos/";
+const ABORT_TIMEOUT: number = 8000;
 
 const isGithubFreshDataLoading = ref(false);
-const isMounted = useMounted();
+const isLogErrorApiCalled = ref(false);
+const clickCountInErrorBoundyFallback = ref(0);
+const FallbackScreen = createReusableTemplate<{
+  projectIndex: number;
+  isUsedinErrrBoundy?: boolean;
+}>();
 
-const ABORT_TIMEOUT: number = 8000;
-const GITHUB_API_BASEURL: string = "https://api.github.com/repos/";
+// const throwErr = () => {
+//   throw new Error("Testing Error!");
+// };
+
+const logErr = () => {
+  console.log("logErr");
+  if (
+    clickCountInErrorBoundyFallback.value >= 2 &&
+    !isLogErrorApiCalled.value
+  ) {
+    isLogErrorApiCalled.value = true;
+    console.log("logErr pass");
+    // TODO: call api
+    //  in api need to mention used cliked 3 times still error not resolved in comoent
+  }
+};
 
 const createAbortSignal = (timeout = ABORT_TIMEOUT): AbortSignal => {
   const controller = new AbortController();
@@ -78,13 +100,13 @@ const createAbortSignal = (timeout = ABORT_TIMEOUT): AbortSignal => {
 };
 
 // fetchSafeJson: returns data or undefined if fetch fails (e.g., network/server error)
-const fetchSafeJson = async <T>(api: string): Promise<T | undefined> => {
+const fetchSafeJson = async <T,>(api: string): Promise<T | undefined> => {
   const signal = import.meta.browser ? createAbortSignal() : undefined;
   return $fetch<T>(api, { signal }).catch(() => undefined);
 };
 
 // fetchSafeContent: returns data, null if file not found (404), or undefined on other errors
-const fetchSafeContent = async <T>(
+const fetchSafeContent = async <T,>(
   api: string
 ): Promise<T | null | undefined> => {
   const signal = import.meta.browser ? createAbortSignal() : undefined;
@@ -207,9 +229,7 @@ const mergedGithubData = computed(() =>
   })
 );
 
-const isGithubComponentVisible = computed(
-  () => store.state.previewApp === 4
-);
+const isGithubComponentVisible = computed(() => store.state.previewApp === 4);
 
 const hasAnyGithubDataAvailable = (project?: ProjectDataType): boolean =>
   Object.values(project ?? {}).some((val) => val !== undefined);
@@ -238,83 +258,119 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div v-show="isGithubComponentVisible" class="h-full">
-    <div v-if="isGithubFreshDataLoading" data-nosnippet class="center wh-full">
-      <span
-        v-for="(_, i) in 3"
-        :key="i"
-        :class="[
-          'loader-bar',
-          i === 1 && 'loader-bar-center',
-          i === 2 && 'loader-bar-right',
-        ]"
-      />
-    </div>
-    <div
-      v-for="(project, index) in mergedGithubData"
-      v-show="store.state.previewProject === index && !isGithubFreshDataLoading"
-      :key="index"
-      :class="{
-        'h-full bg-[#0d1117]': true,
-        center: !hasAnyGithubDataAvailable(project) && isMounted,
-      }"
-    >
-      <template v-if="hasAnyGithubDataAvailable(project)">
-        <ProjectsGithubInfoCard
-          :repoData="project.repoDetails"
-          :branchData="project.branches"
-          :tagData="project.tags"
-          :hasLicense="Boolean(project.license)"
-          :isPublicRepo="!project.repoDetails?.private"
-        />
-        <div class="px-4 bg-[#0d1117]">
-          <ProjectsGithubRepositoryOverview
-            v-if="project.license || project.readme"
-            :readmeData="project.readme"
-            :licenseData="project.license"
-            :repoName="project.repoDetails?.full_name || projects[index].repo"
-            :defaultBranch="
-              project.repoDetails?.default_branch ||
-              (index === 1 ? 'nextjs-back-end' : 'main')
-            "
-          />
-          <ProjectsGithubContributors
-            v-if="
-              project.contributors?.length || project.contributors !== undefined
-            "
-            :contributorData="project.contributors"
-            :repoName="project.repoDetails?.full_name || projects[index].repo"
-          />
-          <ProjectsGithubLanguagesUsed
-            v-if="Object.keys(project.languages || {}).length"
-            :languageData="project.languages"
-            :repoName="project.repoDetails?.full_name || projects[index].repo"
-          />
-        </div>
-      </template>
+  <FallbackScreen.define v-slot="{ projectIndex, isUsedinErrrBoundy }">
+    <div class="h-full center">
       <div
-        v-show="
-          store.state.previewProject === index &&
-          !hasAnyGithubDataAvailable(project)
-        "
         class="max-xs:rounded-md rounded-xl bg-white p-2 max-md:p-1 border-slate-100 text-black max-xs:text-lg max-md:text-xl text-2xl"
       >
-        <UiExternalLink
-          :href="githubBaseURL + projects[index].repo"
-          class="border-2 max-xs:p-0.5 max-xs:py-1 max-md:p-1 max-md:py-2 p-2 py-3 border-black max-xs:rounded-md rounded-xl flex"
+        <component
+          :is="
+            isUsedinErrrBoundy && clickCountInErrorBoundyFallback < 2
+              ? 'span'
+              : UiExternalLink
+          "
+          :href="
+            isUsedinErrrBoundy && clickCountInErrorBoundyFallback < 2
+              ? undefined
+              : githubBaseURL + projects[projectIndex].repo
+          "
+          class="border-2 max-xs:p-0.5 max-xs:py-1 max-md:p-1 max-md:py-2 p-2 py-3 border-black max-xs:rounded-md rounded-xl flex cursor-pointer"
         >
           <span class="text-xl max-xs:text-base max-md:text-lg pt-[2px]">
             {{ repoOwner }}/
           </span>
-          {{ projects[index].name.toLowerCase() }}
+          {{ projects[projectIndex].name.toLowerCase() }}
           <ProjectsOcticonsIcon
             name="mark-github-24"
             class="fill-current ml-2"
           />
-        </UiExternalLink>
+        </component>
       </div>
     </div>
-  </div>
+  </FallbackScreen.define>
+
+  <NuxtErrorBoundary @error="logErr">
+    <template #error="{ error, clearError }">
+      <div @click="clearError">
+        <FallbackScreen.reuse
+          @click="clickCountInErrorBoundyFallback++"
+          :project-index="store.state.previewProject"
+          :is-usedin-errr-boundy="true"
+        />
+      </div>
+    </template>
+
+    <div v-show="isGithubComponentVisible" class="h-full">
+      <div
+        v-if="isGithubFreshDataLoading"
+        data-nosnippet
+        class="center wh-full"
+      >
+        <span
+          v-for="(_, i) in 3"
+          :key="i"
+          :class="[
+            'loader-bar',
+            i === 1 && 'loader-bar-center',
+            i === 2 && 'loader-bar-right',
+          ]"
+        />
+      </div>
+      <div
+        v-for="(project, index) in mergedGithubData"
+        v-show="
+          store.state.previewProject === index && !isGithubFreshDataLoading
+        "
+        :key="index"
+        :class="{
+          'h-full bg-[#0d1117]': true,
+        }"
+      >
+        <template v-if="hasAnyGithubDataAvailable(project)">
+          <ProjectsGithubInfoCard
+            :repoData="project.repoDetails"
+            :branchData="project.branches"
+            :tagData="project.tags"
+            :hasLicense="Boolean(project.license)"
+            :isPublicRepo="!project.repoDetails?.private"
+          />
+          <div class="px-4 bg-[#0d1117]">
+            <ProjectsGithubRepositoryOverview
+              v-if="project.license || project.readme"
+              :readmeData="project.readme"
+              :licenseData="project.license"
+              :repoName="project.repoDetails?.full_name || projects[index].repo"
+              :defaultBranch="
+                project.repoDetails?.default_branch ||
+                (index === 1 ? 'nextjs-back-end' : 'main')
+              "
+            />
+            <ProjectsGithubContributors
+              v-if="
+                project.contributors?.length ||
+                project.contributors !== undefined
+              "
+              :contributorData="project.contributors"
+              :repoName="project.repoDetails?.full_name || projects[index].repo"
+            />
+            <ProjectsGithubLanguagesUsed
+              v-if="Object.keys(project.languages || {}).length"
+              :languageData="project.languages"
+              :repoName="project.repoDetails?.full_name || projects[index].repo"
+            />
+          </div>
+        </template>
+
+        <FallbackScreen.reuse
+          v-show="
+            store.state.previewProject === index &&
+            !hasAnyGithubDataAvailable(project)
+          "
+          :project-index="index"
+        />
+      </div>
+    </div>
+  </NuxtErrorBoundary>
 </template>
 
 <style>

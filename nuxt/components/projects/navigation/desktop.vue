@@ -23,6 +23,7 @@ If anything changes, verify the following:
 */
 
 let timer: NodeJS.Timeout | null = null;
+
 const isHovered = ref(false);
 const isVisible = ref(false);
 const inViewRef = useTemplateRef("inViewRef");
@@ -30,11 +31,15 @@ const inView = useElementVisibility(inViewRef);
 const mouseX = useMotionValue<number>(Infinity);
 
 const isFocusedOnDesktopNavBtnByClick = ref(false);
-const focusedButton = ref(Array(projects.length + apps.length).fill(false));
+const { width: windowWidth } = useWindowSize({ initialWidth: 760 });
+const isMobileNavVisible = computed(() => windowWidth.value <= 768.9);
+const focusedBtns = ref(Array(projects.length + apps.length).fill(false));
 const isHeroCotBtn = useState("is-hero-cot-btn", () => ({
   focused: false,
   tabClicked: false,
 }));
+
+const { isTouch } = useCustomPointer();
 
 const clearTimer = () => {
   if (timer) clearTimeout(timer);
@@ -44,8 +49,8 @@ const clearTimer = () => {
 const startDelay = () => {
   clearTimer();
   timer = setTimeout(() => {
-    if (!isHovered.value && focusedButton.value.every((v) => v === false)) {
-      isVisible.value = false;
+    if (!isHovered.value && focusedBtns.value.every((v) => v === false)) {
+      isVisible.value = isTouch.value ? true : false;
       isFocusedOnDesktopNavBtnByClick.value = false;
       clearTimer();
       if (Object.values(isHeroCotBtn.value).every((v) => v === true)) {
@@ -59,6 +64,7 @@ const startDelay = () => {
 
 watch(isHovered, (hovered) => {
   if (hovered) {
+    useBlurAll();
     isVisible.value = true;
     clearTimer();
   } else {
@@ -66,8 +72,13 @@ watch(isHovered, (hovered) => {
   }
 });
 
-watch(inView, (view) => {
+watch([inView, isTouch], ([view, pointerChnaged]) => {
   if (view && !isVisible.value) {
+    isVisible.value = true;
+    startDelay();
+  }
+
+  if (!pointerChnaged) {
     isVisible.value = true;
     startDelay();
   }
@@ -76,7 +87,10 @@ watch(inView, (view) => {
 watch(
   isHeroCotBtn,
   (val) => {
-    if (Object.values(val).every((v) => v === true || val.tabClicked)) {
+    if (
+      Object.values(val).every((v) => v === true || val.tabClicked) &&
+      !isMobileNavVisible.value
+    ) {
       isVisible.value = true;
       startDelay();
     }
@@ -101,7 +115,7 @@ const handleFocusIn = (id: number) => {
   useTimeoutFn(
     () => {
       if (!isFocusedOnDesktopNavBtnByClick.value) {
-        focusedButton.value[id] = true;
+        focusedBtns.value[id] = true;
       }
     },
     120,
@@ -122,10 +136,10 @@ watch(isFocusedOnDesktopNavBtnByClick, () => {
 });
 
 const handleFocusOut = (id: number) => {
-  focusedButton.value[id] = false;
+  focusedBtns.value[id] = false;
   useTimeoutFn(
     () => {
-      if (focusedButton.value.every((v) => v === false)) {
+      if (focusedBtns.value.every((v) => v === false)) {
         startDelay();
       }
     },

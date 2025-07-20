@@ -10,10 +10,39 @@ const { name, isSelected, isHovered, mouseX } = defineProps<{
   mouseX: MotionValue<number>;
 }>();
 
-const iconRef = useTemplateRef("iconRef");
+const { isTouch } = useCustomPointer();
+
 const hovered = ref(false);
-const isButtonVisible = computed(() => !isHovered && isSelected);
+const showTabletTooltip = ref(false);
+
+const iconRef = useTemplateRef("iconRef");
+const isIconShadowAndDotVisible = computed(() =>
+  isTouch.value ? isSelected : !isHovered && isSelected
+);
+
+watch(
+  () => isSelected,
+  (condtion) => {
+    if (condtion && isTouch.value) {
+      showTabletTooltip.value = true;
+      useTimeoutFn(
+        () => {
+          showTabletTooltip.value = false;
+        },
+        2500,
+        { immediate: true }
+      );
+    }
+  }
+);
+
 const tooltipId = computed(() => `tooltip-${useSlugify(name)}`);
+
+const showTooltipAnimation = computed(() =>
+  isTouch.value
+    ? isIconShadowAndDotVisible.value && showTabletTooltip.value
+    : hovered.value
+);
 
 const viewType = computed(() =>
   ["Website", "About", "Github"].includes(name) ? "app" : "project"
@@ -90,39 +119,49 @@ watchEffect(() => {
     class="desktop-btn-base"
   >
     <MotionV
+      as="span"
       :style="{ width, height }"
       :class="{
-        'max-w-[35px] max-h-[35px]': !isHovered,
+        block: true,
+        'max-w-[35px] max-h-[35px]': !isHovered && !isTouch,
+        '!max-w-[35px] !max-h-[35px]': isTouch,
       }"
       @mouseenter="hovered = true"
       @mouseleave="hovered = false"
     >
       <Motion
+        as="span"
         :id="tooltipId"
-        as="div"
         role="tooltip"
         :initial="{ opacity: 0, y: 10, x: '-50%' }"
         :animate="
-          hovered
+          showTooltipAnimation
             ? { opacity: 1, y: -10, x: '-50%' }
             : { opacity: 0, y: 2, x: '-50%' }
         "
+        :exit="isTouch ? { opacity: 0, y: 10, x: '-50%' } : undefined"
         class="desktop-btn-tooltip"
       >
         {{ name }}
       </Motion>
       <Motion
+        as="span"
         :class="{
           'desktop-btn-icon-base': true,
-          'desktop-btn-icon-active': isButtonVisible,
+          'desktop-btn-icon-active': isIconShadowAndDotVisible,
         }"
         :style="{ width: `${widthIcon}px`, height: `${heightIcon}px` }"
       >
         <ProjectsNavigationBtnImg :icon="icon" :name="name" />
       </Motion>
-      <div v-show="isButtonVisible" aria-hidden="true" class="center mt-0.5">
+
+      <span
+        v-show="isIconShadowAndDotVisible"
+        aria-hidden="true"
+        class="center mt-0.5"
+      >
         <span class="desktop-btn-status-dot" />
-      </div>
+      </span>
     </MotionV>
   </button>
 </template>
