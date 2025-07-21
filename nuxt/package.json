@@ -26,13 +26,13 @@
     "clsx": "^2.1.1",
     "d3-hierarchy": "^3.1.2",
     "marked": "^15.0.7",
-    "motion-v": "^0.13.0",
-    "nuxt": "^3.16.1",
+    "motion-v": "^1.5.0",
+    "nuxt": "^4.0.0",
     "tailwind-merge": "^2.6.0",
     "vue": "latest",
     "vue-router": "latest"
   },
-  "packageManager": "pnpm@9.14.4+sha512.c8180b3fbe4e4bca02c94234717896b5529740a6cbadf19fa78254270403ea2f27d4e1d46a08a0f56c89b63dc8ebfd3ee53326da720273794e6200fcf0d184ab",
+  "packageManager": "pnpm@10.13.1",
   "devDependencies": {
     "@iconify-json/ic": "^1.2.2",
     "@iconify-json/mdi": "^1.2.3",
@@ -45,6 +45,7 @@
     "mini-svg-data-uri": "^1.4.4",
     "npm-run-all": "^4.1.5",
     "nuxt-og-image": "^5.1.9",
+    "oxc-parser": "0.75.1",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.8.2"
   }
