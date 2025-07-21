@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import "~/css/style.index.css";
-import seoMetaMap from "~/data/seo";
-import { localIcons } from "~/data/icons";
+import "~/assets/css/style.index.css";
+import seoMetaMap from "~/content/seo";
+import { localIcons } from "~/content/icons";
 
 const router = useRouter();
 const URL = useNormalizeUrl();

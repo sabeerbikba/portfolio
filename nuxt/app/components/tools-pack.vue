@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { hierarchy, pack, type HierarchyCircularNode } from "d3-hierarchy";
-import tools, { type ToolsType } from "~/data/tools";
+import tools, { type ToolsType } from "~/content/tools";
 
 // Inspiration URL: https://tanstack.com/query/latest
 // Source URL: https://github.com/TanStack/tanstack.com/blob/ee943e214df6f132a70120014096ed72775dee4b/app/components/ToolsPack.tsx

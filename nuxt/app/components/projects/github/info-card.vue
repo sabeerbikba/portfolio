@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import type { RepositoryOverviewTabType } from "~/types/global";
+import type { RepositoryOverviewTabType } from "~~/types/global";
 import type {
   GitHubRepositoryType,
   GithubBranchesType,
   GithubTagsType,
-} from "~/types/github";
-import type { OcticonsIconName } from "~/data/icons";
+} from "~~/types/github";
+import type { OcticonsIconName } from "~/content/icons";
 
 const { repoData, branchData, tagData, hasLicense, isPublicRepo } =
   defineProps<{

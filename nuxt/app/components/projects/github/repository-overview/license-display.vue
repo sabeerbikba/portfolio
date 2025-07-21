@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { NullableFileContent } from "~/types/github";
+import type { NullableFileContent } from "~~/types/github";
 const { licenseData } = defineProps<{ licenseData: NullableFileContent }>();
 
 const decoded = computed(() =>

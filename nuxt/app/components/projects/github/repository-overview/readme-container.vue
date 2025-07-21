@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import "~/css/github-markdown-dark.css";
-import type { NullableFileContent } from "~/types/github";
+import "~/assets/css/github-markdown-dark.css";
+import type { NullableFileContent } from "~~/types/github";
 
 const { readmeData, repoName, defaultBranch } = defineProps<{
   readmeData: NullableFileContent;

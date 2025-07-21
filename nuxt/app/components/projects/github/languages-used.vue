@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { GitHubLanguagesType } from "~/types/github";
+import type { GitHubLanguagesType } from "~~/types/github";
 
 const { githubBaseURL } = useRuntimeConfig().public;
 

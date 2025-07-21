@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { useRouteQuery } from "@vueuse/router";
-import { apps, projects } from "~/data/projects";
+import { apps, projects } from "~/content/projects";
 import type {
   ProjectPayloadType,
   AppPayloadType,
   ScreenStoreActionType,
   ScreenStoreStateType,
   ScreenStoreType,
-} from "~/types/store";
+} from "~~/types/store";
 
 const state = reactive<ScreenStoreStateType>({
   previewProject: 0,

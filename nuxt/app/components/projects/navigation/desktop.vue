@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { Motion } from "@oku-ui/motion";
-import { projects, apps } from "~/data/projects";
+import { projects, apps } from "~/content/projects";
 import { useMotionValue } from "motion-v";
-import type { ScreenStoreType } from "~/types/store";
+import type { ScreenStoreType } from "~~/types/store";
 
 // Inspiration URL: https://ui.aceternity.com/components/floating-dock
 // Source URL: https://inspira-ui.com/docs/components/miscellaneous/dock

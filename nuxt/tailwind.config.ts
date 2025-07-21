@@ -2,7 +2,7 @@ import type { Config } from "tailwindcss";
 import svgToDataUri from "mini-svg-data-uri";
 // @ts-ignore
 import flattenColorPalette from "tailwindcss/lib/util/flattenColorPalette";
-import languagesColor from "./app/css/languages-color";
+import languagesColor from "./theme/languages-color";
 
 
 const config: Config = {

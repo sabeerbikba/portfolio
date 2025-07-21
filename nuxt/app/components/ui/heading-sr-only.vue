@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { HeadingLevel } from "~/types/global";
+import type { HeadingLevel } from "~~/types/global";
 
 const { as = "h2" } = defineProps<{
   /**

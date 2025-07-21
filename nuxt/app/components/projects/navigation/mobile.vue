@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { projects, apps } from "~/data/projects";
+import { projects, apps } from "~/content/projects";
 import { Motion, MotionPresence } from "@oku-ui/motion";
-import type { ScreenStoreType } from "~/types/store";
+import type { ScreenStoreType } from "~~/types/store";
 
 const store = inject("store") as ScreenStoreType;
 

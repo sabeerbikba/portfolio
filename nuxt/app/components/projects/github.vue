@@ -50,8 +50,8 @@
 └────────────────────────────────────────────────────────┘
  */
 
-import { projects } from "~/data/projects";
-import type { ScreenStoreType } from "~/types/store";
+import { projects } from "~/content/projects";
+import type { ScreenStoreType } from "~~/types/store";
 import { UiExternalLink } from "#components";
 import type {
   GithubBranchesType,
@@ -61,7 +61,7 @@ import type {
   GithubTagsType,
   NullableFileContent,
   ProjectDataType,
-} from "~/types/github";
+} from "~~/types/github";
 
 const { githubBaseURL, repoOwner } = useRuntimeConfig().public;
 const store = inject("store") as ScreenStoreType;

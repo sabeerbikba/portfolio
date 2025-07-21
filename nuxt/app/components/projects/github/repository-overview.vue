@@ -3,9 +3,9 @@ import {
   ProjectsGithubRepositoryOverviewLicenseDisplay,
   ProjectsGithubRepositoryOverviewReadmeContainer,
 } from "#components";
-import type { OcticonsIconName } from "~/data/icons";
-import type { NullableFileContent } from "~/types/github";
-import type { RepositoryOverviewTabType } from "~/types/global";
+import type { OcticonsIconName } from "~/content/icons";
+import type { NullableFileContent } from "~~/types/github";
+import type { RepositoryOverviewTabType } from "~~/types/global";
 
 const { readmeData, licenseData, repoName, defaultBranch } = defineProps<{
   readmeData: NullableFileContent;

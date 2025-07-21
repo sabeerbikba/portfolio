@@ -1,6 +1,6 @@
 // Docs: https://nuxt.com/modules/icon
 
-import type { NuxtIconName } from "~/types/icons";
+import type { NuxtIconName } from "~~/types/icons";
 
 type TypeSocialMedia = {
   icon: NuxtIconName;

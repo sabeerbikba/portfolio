@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { Motion, MotionPresence } from "@oku-ui/motion";
-import socialMedia from "@/data/social-media";
-import type { NuxtIconName } from "~/types/icons";
-import seoMetaMap from "~/data/seo";
+import socialMedia from "@/content/social-media";
+import type { NuxtIconName } from "~~/types/icons";
+import seoMetaMap from "~/content/seo";
 
 type ContactInfoType = {
   icon: NuxtIconName;

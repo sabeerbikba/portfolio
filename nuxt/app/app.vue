@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { localIcons } from "~/data/icons";
-import socialMedia from "~/data/social-media";
-import { projects as projectsObject } from "~/data/projects";
+import { localIcons } from "~/content/icons";
+import socialMedia from "~/content/social-media";
+import { projects as projectsObject } from "~/content/projects";
 import { NuxtLink, UiNuxtLink } from "#components";
 
 type QuickLinkType = {

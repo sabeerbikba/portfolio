@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { projects } from "~/data/projects";
-import type { ScreenStoreType } from "~/types/store";
+import { projects } from "~/content/projects";
+import type { ScreenStoreType } from "~~/types/store";
 
 const store = inject("store") as ScreenStoreType;
 </script>

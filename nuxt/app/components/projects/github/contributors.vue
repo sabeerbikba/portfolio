@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { GitHubContributorType } from "~/types/github";
+import type { GitHubContributorType } from "~~/types/github";
 
 const { contributorData } = defineProps<{
   contributorData: GitHubContributorType;
