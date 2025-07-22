@@ -17,7 +17,7 @@ const scrollYProgress = computed(() => {
   return 1 - Math.max(0, bottom.value - scrollY.value) / height.value;
 });
 
-const scaleDimensions = computed(() =>
+const scaleDimensions = computed<[number, number]>(() =>
   isMobile.value ? [0.7, 0.9] : [1.05, 1]
 );
 

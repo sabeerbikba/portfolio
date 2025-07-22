@@ -3,23 +3,40 @@ import { projects } from "~/content/projects";
 import type { ScreenStoreType } from "~~/types/store";
 
 const store = inject("store") as ScreenStoreType;
+const [isProjectsAbout] = useTabState(["is-projects-about"]);
 </script>
 
 <template>
   <div v-show="store.state.previewApp === 3" class="bg-[#191919]">
-    <div class="notes-body max-w-prose mx-auto p-6 max-xs:px-7">
-      <template v-for="({ aboutHtmlBase64 }, index) in projects" :key="index">
-        <div
-          v-show="store.state.previewProject === index"
-          v-html="useParsedMarkdown(aboutHtmlBase64)"
-        />
-      </template>
-    </div>
+    <AccessibilityNotifier :app-store="3" />
+    <template
+      v-for="({ aboutHtmlBase64, name }, index) in projects"
+      :key="index"
+    >
+      <div
+        @focus="isProjectsAbout.focused = true"
+        @keydown.tab="isProjectsAbout.tabClicked = true"
+        tabindex="0"
+        :aria-label="`scrollable about ${name} project`"
+        v-show="store.state.previewProject === index"
+        v-html="useParsedMarkdown(aboutHtmlBase64)"
+        class="notes-body"
+      />
+    </template>
   </div>
 </template>
 
 <style>
 /* about.vue */
+div.notes-body {
+  @apply max-w-prose mx-auto p-6 max-xs:px-7;
+}
+
+div.notes-body:focus {
+  @apply outline-none;
+  /* @apply outline-4 outline-double outline-offset-[50px] outline-[#606060]; */
+}
+
 .notes-body h1 {
   @apply text-3xl font-extrabold mb-6 text-[#d4d4d4];
 }

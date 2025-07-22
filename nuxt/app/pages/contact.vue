@@ -137,8 +137,8 @@ onUnmounted(() => {
               class="p-5 md:p-6 lg:p-8 rounded-lg shadow-lg grid grid-cols-1 gap-y-6 bg-[#00000008] border border-[#8080804f] max-lg:w-[80%] max-lg:mx-auto max-sm:w-full max-w-2xl ml-auto"
               aria-labelledby="contactFormTitle"
             >
-              <UiHeadingSrOnly id="contactFormTitle"
-                >Contact Us Form</UiHeadingSrOnly
+              <AccessibilityHeadingSrOnly id="contactFormTitle"
+                >Contact Us Form</AccessibilityHeadingSrOnly
               >
               <div class="my-8">
                 <div class="max-w-xl mx-auto">
@@ -202,12 +202,12 @@ onUnmounted(() => {
                     >
                       {{ label }}
                     </label>
-                    <UiInput
+                    <SharedInput
                       :id="labelId"
-                      :type="type"
-                      :placeholder="placeholder"
-                      :minlength="minlength"
-                      :maxlength="maxlength"
+                      :type
+                      :placeholder
+                      :minlength
+                      :maxlength
                       :aria-describedby="ariaDescribedbyId"
                       :autocomplete="
                         elementType === 'input' ? labelId : undefined
@@ -336,8 +336,8 @@ onUnmounted(() => {
                       :key="index"
                       class="center space-x-3 ml-2"
                     >
-                      <UiExternalLink
-                        :href="href"
+                      <SharedExternalLink
+                        :href
                         class="pr-2 text-gray-600 hover:text-gray-800 center text-base sm:text-lg md:text-xl"
                         :aria-label="ariaLabel"
                       >
@@ -349,7 +349,7 @@ onUnmounted(() => {
                           <NuxtIcon :name="icon" />
                         </div>
                         {{ text }}
-                      </UiExternalLink>
+                      </SharedExternalLink>
                     </div>
                   </div>
 
@@ -360,10 +360,10 @@ onUnmounted(() => {
                   />
 
                   <div class="flex justify-center space-x-4">
-                    <UiExternalLink
+                    <SharedExternalLink
                       v-for="{ label, href, icon } in socialMedia"
                       :key="label"
-                      :href="href"
+                      :href
                       :aria-label="`Link to ${label}`"
                       class="w-10 h-10 rounded-full max-xs:!ml-[6px] text-gray-600 hover:text-gray-800 bg-gray-200 center hover:bg-gray-300 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400"
                     >
@@ -371,7 +371,7 @@ onUnmounted(() => {
                         :name="icon"
                         class="h-[21px] w-[21px] fill-current"
                       />
-                    </UiExternalLink>
+                    </SharedExternalLink>
                   </div>
                 </div>
               </div>

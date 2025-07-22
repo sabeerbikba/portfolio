@@ -50,9 +50,9 @@
 └────────────────────────────────────────────────────────┘
  */
 
-import { projects } from "~/content/projects";
+import { iconsName, projects } from "~/content/projects";
 import type { ScreenStoreType } from "~~/types/store";
-import { UiExternalLink } from "#components";
+import { SharedExternalLink } from "#components";
 import type {
   GithubBranchesType,
   GitHubContributorType,
@@ -71,6 +71,7 @@ const ABORT_TIMEOUT: number = 8000;
 const isGithubFreshDataLoading = ref(false);
 const isLogErrorApiCalled = ref(false);
 const clickCountInErrorBoundyFallback = ref(0);
+const [isProjectsGithub] = useTabState(["is-projects-github"]);
 const FallbackScreen = createReusableTemplate<{
   projectIndex: number;
   isUsedinErrrBoundy?: boolean;
@@ -81,13 +82,11 @@ const FallbackScreen = createReusableTemplate<{
 // };
 
 const logErr = () => {
-  console.log("logErr");
   if (
     clickCountInErrorBoundyFallback.value >= 2 &&
     !isLogErrorApiCalled.value
   ) {
     isLogErrorApiCalled.value = true;
-    console.log("logErr pass");
     // TODO: call api
     //  in api need to mention used cliked 3 times still error not resolved in comoent
   }
@@ -100,19 +99,21 @@ const createAbortSignal = (timeout = ABORT_TIMEOUT): AbortSignal => {
 };
 
 // fetchSafeJson: returns data or undefined if fetch fails (e.g., network/server error)
-const fetchSafeJson = async <T,>(api: string): Promise<T | undefined> => {
+const fetchSafeJson = async <T>(api: string): Promise<T | undefined> => {
   const signal = import.meta.browser ? createAbortSignal() : undefined;
-  return $fetch<T>(api, { signal }).catch(() => undefined);
+  return $fetch<T>(api, { signal }).catch(() => undefined) as Promise<
+    T | undefined
+  >;
 };
 
 // fetchSafeContent: returns data, null if file not found (404), or undefined on other errors
-const fetchSafeContent = async <T,>(
+const fetchSafeContent = async <T>(
   api: string
 ): Promise<T | null | undefined> => {
   const signal = import.meta.browser ? createAbortSignal() : undefined;
   return $fetch<T>(api, { signal }).catch((err) =>
     err?.data?.message === "Not Found" ? null : undefined
-  );
+  ) as Promise<T | null | undefined>;
 };
 
 const getEndpoints = (fullRepoName: string) =>
@@ -170,13 +171,10 @@ const { data: serverFetchedGithubData } = await useAsyncData<ProjectDataType[]>(
           const endpoints = getEndpoints(baseUrl);
           const results = await Promise.all(endpoints.map((e) => e.fn(e.url)));
 
-          return endpoints.reduce(
-            (acc, e, i) => {
-              acc[e.key] = results[i];
-              return acc;
-            },
-            {} as Record<(typeof endpoints)[number]["key"], any>
-          );
+          return endpoints.reduce((acc, e, i) => {
+            acc[e.key] = results[i];
+            return acc;
+          }, {} as Record<(typeof endpoints)[number]["key"], any>);
         })(project.repo)
       )
     ),
@@ -193,7 +191,7 @@ const fetchMissingClientGithubData = async () => {
 
   await Promise.all(
     allProjects.map(async (projectData, index) => {
-      const repo = projects[index].repo;
+      const repo = projects[index]?.repo;
       const endpoints = getEndpoints(GITHUB_API_BASEURL + repo);
 
       await Promise.all(
@@ -213,7 +211,8 @@ const fetchMissingClientGithubData = async () => {
 
 const mergedGithubData = computed(() =>
   clientFetchedGithubData.value.map((clientData, i) => {
-    const serverData = serverFetchedGithubData.value?.[i] || {};
+    const serverData = (serverFetchedGithubData.value?.[i] ||
+      {}) as ProjectDataType;
     const keys = Object.keys(clientData) as (keyof ProjectDataType)[];
     const merged = {} as ProjectDataType;
 
@@ -221,8 +220,7 @@ const mergedGithubData = computed(() =>
       const clientVal = clientData[key];
       const serverVal = serverData[key];
 
-      // @ts-ignore
-      merged[key] = clientVal !== undefined ? clientVal : serverVal;
+      (merged as any)[key] = clientVal !== undefined ? clientVal : serverVal;
     }
 
     return merged;
@@ -267,19 +265,19 @@ onMounted(async () => {
           :is="
             isUsedinErrrBoundy && clickCountInErrorBoundyFallback < 2
               ? 'span'
-              : UiExternalLink
+              : SharedExternalLink
           "
           :href="
             isUsedinErrrBoundy && clickCountInErrorBoundyFallback < 2
               ? undefined
-              : githubBaseURL + projects[projectIndex].repo
+              : githubBaseURL + projects[projectIndex]?.repo
           "
           class="border-2 max-xs:p-0.5 max-xs:py-1 max-md:p-1 max-md:py-2 p-2 py-3 border-black max-xs:rounded-md rounded-xl flex cursor-pointer"
         >
           <span class="text-xl max-xs:text-base max-md:text-lg pt-[2px]">
             {{ repoOwner }}/
           </span>
-          {{ projects[projectIndex].name.toLowerCase() }}
+          {{ projects[projectIndex]?.name.toLowerCase() }}
           <ProjectsOcticonsIcon
             name="mark-github-24"
             class="fill-current ml-2"
@@ -301,6 +299,7 @@ onMounted(async () => {
     </template>
 
     <div v-show="isGithubComponentVisible" class="h-full">
+      <AccessibilityNotifier :app-store="4" />
       <div
         v-if="isGithubFreshDataLoading"
         data-nosnippet
@@ -322,9 +321,11 @@ onMounted(async () => {
           store.state.previewProject === index && !isGithubFreshDataLoading
         "
         :key="index"
-        :class="{
-          'h-full bg-[#0d1117]': true,
-        }"
+        tabindex="0"
+        :aria-label="`scrollable github ${iconsName.projects[index]} repository preview`"
+        @focus="isProjectsGithub.focused = true"
+        @keydown.tab="isProjectsGithub.tabClicked = true"
+        class="h-full bg-[#0d1117]"
       >
         <template v-if="hasAnyGithubDataAvailable(project)">
           <ProjectsGithubInfoCard
@@ -339,7 +340,9 @@ onMounted(async () => {
               v-if="project.license || project.readme"
               :readmeData="project.readme"
               :licenseData="project.license"
-              :repoName="project.repoDetails?.full_name || projects[index].repo"
+              :repoName="
+                project.repoDetails?.full_name || projects[index]?.repo || ''
+              "
               :defaultBranch="
                 project.repoDetails?.default_branch ||
                 (index === 1 ? 'nextjs-back-end' : 'main')
@@ -351,12 +354,16 @@ onMounted(async () => {
                 project.contributors !== undefined
               "
               :contributorData="project.contributors"
-              :repoName="project.repoDetails?.full_name || projects[index].repo"
+              :repoName="
+                project.repoDetails?.full_name || projects[index]?.repo || ''
+              "
             />
             <ProjectsGithubLanguagesUsed
               v-if="Object.keys(project.languages || {}).length"
               :languageData="project.languages"
-              :repoName="project.repoDetails?.full_name || projects[index].repo"
+              :repoName="
+                project.repoDetails?.full_name || projects[index]?.repo || ''
+              "
             />
           </div>
         </template>

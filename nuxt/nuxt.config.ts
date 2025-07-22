@@ -1,8 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+// Vercel ENV: https://vercel.com/docs/environment-variables/system-environment-variables
 
 const BASE_URL = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}/`
-  : "https://sabeerbikba.vercel.app/";
+  ? `https://${process.env.VERCEL_URL}`
+  : "https://sabeerbikba.vercel.app";
 
 export default defineNuxtConfig({
   ssr: true,
@@ -18,12 +19,14 @@ export default defineNuxtConfig({
     "@nuxt/eslint",
     "@nuxtjs/html-validator",
     "@vueuse/nuxt",
+    "@nuxtjs/robots",
+    "@nuxtjs/sitemap",
     "nuxt-og-image",
   ],
 
   site: {
     url: BASE_URL,
-    name: "nuxt.config Test My Awesome Website",
+    name: "sabeer bikba | portfolio",
   },
 
   ogImage: {
@@ -37,6 +40,39 @@ export default defineNuxtConfig({
       githubBaseURL: "https://github.com/",
     },
   },
+
+  // sitemap: {
+  //   defaults: {
+  //     lastmod: new Date().toISOString(),
+  //   },
+
+  //   // excludeAppSources: true,
+  //   urls: async () => {
+  //     const urls = [];
+
+  //     // Static pages
+  //     // urls.push({ loc: "" });
+  //     // urls.push({ loc: "/contact" });
+
+  //     // Dynamic pages with query parameters
+  //     const projects = ["dev-tools", "rickshaw"];
+  //     const apps = ["website", "about", "github"];
+
+  //     // Homepage variations
+  //     urls.push({ loc: "/?project=dev-tools&app=website" });
+  //     urls.push({ loc: "/?app=about" });
+  //     urls.push({ loc: "/?project=dev-tools&app=about" });
+  //     urls.push({ loc: "/?app=github" });
+  //     urls.push({ loc: "/?project=dev-tools&app=github" });
+
+  //     // Rickshaw variations
+  //     for (const app of apps) {
+  //       urls.push({ loc: `/?project=rickshaw&app=${app}` });
+  //     }
+
+  //     return urls;
+  //   },
+  // },
 
   vue: {
     compilerOptions: {

@@ -22,7 +22,7 @@ const filteredAttrs = computed(() => {
 <template>
   <ClientOnly>
     <template #fallback>
-      <img :src="src" v-bind="filteredAttrs" />
+      <img :src v-bind="filteredAttrs" />
     </template>
     <img :src="error || isLoading ? fallbackSrc : src" v-bind="filteredAttrs" />
   </ClientOnly>

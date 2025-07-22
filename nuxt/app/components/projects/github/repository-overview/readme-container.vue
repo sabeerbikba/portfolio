@@ -2,6 +2,11 @@
 import "~/assets/css/github-markdown-dark.css";
 import type { NullableFileContent } from "~~/types/github";
 
+// TODO: Implement permalinks similar to GitHub's readme headings.
+// - Must be done without using onMounted() to ensure server-side compatibility.
+// - Format: /?app=github&project=${useSlugify(project.name)}#github-readme-${useSlugify(headingName)}
+//   Example: /?app=github&project=rickshaw#github-readme-dev-tools
+
 const { readmeData, repoName, defaultBranch } = defineProps<{
   readmeData: NullableFileContent;
   repoName: string;

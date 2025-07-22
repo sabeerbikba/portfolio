@@ -4,12 +4,12 @@ import svgToDataUri from "mini-svg-data-uri";
 import flattenColorPalette from "tailwindcss/lib/util/flattenColorPalette";
 import languagesColor from "./theme/languages-color";
 
-
 const config: Config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/error/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   darkMode: "class",
   theme: {
@@ -79,16 +79,16 @@ const config: Config = {
         },
       });
     },
-    ({ addBase, theme }: any) => {
-      const allColors = flattenColorPalette(theme("colors"));
-      const newVars = Object.fromEntries(
-        Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
-      );
+    // ({ addBase, theme }: any) => {
+    //   const allColors = flattenColorPalette(theme("colors"));
+    //   const newVars = Object.fromEntries(
+    //     Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
+    //   );
 
-      addBase({
-        ":root": newVars,
-      });
-    },
+    //   addBase({
+    //     ":root": newVars,
+    //   });
+    // },
     ({ matchUtilities, theme }: any) => {
       matchUtilities(
         {
@@ -100,16 +100,6 @@ const config: Config = {
         },
         { values: flattenColorPalette(theme("backgroundColor")), type: "color" }
       );
-    },
-    ({ addBase, theme }: any) => {
-      const allColors = flattenColorPalette(theme("colors"));
-      const newVars = Object.fromEntries(
-        Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
-      );
-
-      addBase({
-        ":root": newVars,
-      });
     },
     ({ addComponents }: any) => {
       const components = Object.entries(languagesColor).map(

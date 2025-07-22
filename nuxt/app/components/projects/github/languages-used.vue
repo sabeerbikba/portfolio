@@ -60,7 +60,7 @@ const getLanguagePercentage = (bytes: number) =>
           :key="language"
           class="inline"
         >
-          <UiExternalLink
+          <SharedExternalLink
             :href="`${githubBaseURL + repoName}/search?l=${language
               .toString()
               .toLowerCase()}`"
@@ -73,7 +73,7 @@ const getLanguagePercentage = (bytes: number) =>
             <span class="text-[#747b83]">
               {{ getLanguagePercentage(bytes) + "%" }}
             </span>
-          </UiExternalLink>
+          </SharedExternalLink>
         </li>
       </ul>
     </div>

@@ -1,5 +1,9 @@
 {
   "name": "portfolio",
+  "description": "portfolio website | sabeer bikba",
+  "homepage": "https://sabeerbikba.vercel.app",
+  "repository": "https://github.com/sabeerbikba/portfolio",
+  "author": "sabeer bikba <sabeerbikba02@gmail.com>",
   "type": "module",
   "scripts": {
     "build": "nuxt build",
@@ -19,6 +23,7 @@
   },
   "dependencies": {
     "@nuxtjs/html-validator": "2.1.0",
+    "@nuxtjs/robots": "5.4.0",
     "@oku-ui/motion": "^0.4.3",
     "@vueuse/core": "^13.5.0",
     "@vueuse/nuxt": "13.5.0",
@@ -38,15 +43,20 @@
     "@iconify-json/mdi": "^1.2.3",
     "@nuxt/eslint": "1.4.1",
     "@nuxt/icon": "1.15.0",
+    "@nuxtjs/sitemap": "^7.4.3",
     "@nuxtjs/tailwindcss": "6.14.0",
     "@octokit/types": "^13.10.0",
     "@types/d3-hierarchy": "^3.1.7",
+    "@types/node": "^24.0.15",
+    "create-tailwind-type": "^1.0.9",
     "eslint": "^9.29.0",
     "mini-svg-data-uri": "^1.4.4",
     "npm-run-all": "^4.1.5",
     "nuxt-og-image": "^5.1.9",
     "oxc-parser": "0.75.1",
     "tailwindcss": "^3.4.17",
+    "tailwindcss-classnames": "^3.2.0",
+    "twin.macro": "^3.4.1",
     "typescript": "^5.8.2"
   }
 }

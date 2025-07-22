@@ -17,7 +17,7 @@ const contributors = computed(() => contributorData || []);
   <div class="w-full text-[#f0f6fc] border-b border-[#3d444d]">
     <div class="py-4 w-full">
       <h2 class="h-7 mb-3 text-lg font-semibold">
-        <UiExternalLink
+        <SharedExternalLink
           :href="`${githubBaseURL + repoName}/graphs/contributors`"
           class="block hover:text-[#4493f8]"
         >
@@ -28,7 +28,7 @@ const contributors = computed(() => contributorData || []);
           >
             {{ contributors?.length || 0 }}
           </span>
-        </UiExternalLink>
+        </SharedExternalLink>
       </h2>
       <ul class="list-none">
         <li
@@ -36,11 +36,11 @@ const contributors = computed(() => contributorData || []);
           :key="contributor.login"
           class="mb-2 flex"
         >
-          <UiExternalLink
-            :href="contributor.html_url"
+          <SharedExternalLink
+            :href="contributor.html_url || ''"
             class="flex hover:text-[#4493f8]"
           >
-            <UiErrorFallbackImg
+            <SharedErrorFallbackImg
               :src="`${contributor.avatar_url}&s=32`"
               :fallback-src="imgFailedPlaceholder"
               :alt="'@' + contributor.login"
@@ -57,7 +57,7 @@ const contributors = computed(() => contributorData || []);
                 {{ contributor.login }}
               </strong>
             </span>
-          </UiExternalLink>
+          </SharedExternalLink>
         </li>
       </ul>
     </div>

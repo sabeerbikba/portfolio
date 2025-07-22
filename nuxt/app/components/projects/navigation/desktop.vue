@@ -7,6 +7,8 @@ import type { ScreenStoreType } from "~~/types/store";
 // Inspiration URL: https://ui.aceternity.com/components/floating-dock
 // Source URL: https://inspira-ui.com/docs/components/miscellaneous/dock
 
+type TabState = Ref<{ focused: boolean; tabClicked: boolean }>;
+
 const store = inject("store") as ScreenStoreType;
 const DEFAULT_CLOSE_TIME = 4000; //ms
 
@@ -29,35 +31,68 @@ const isVisible = ref(false);
 const inViewRef = useTemplateRef("inViewRef");
 const inView = useElementVisibility(inViewRef);
 const mouseX = useMotionValue<number>(Infinity);
+const { isTouch } = useCustomPointer();
 
 const isFocusedOnDesktopNavBtnByClick = ref(false);
 const { width: windowWidth } = useWindowSize({ initialWidth: 760 });
 const isMobileNavVisible = computed(() => windowWidth.value <= 768.9);
 const focusedBtns = ref(Array(projects.length + apps.length).fill(false));
-const isHeroCotBtn = useState("is-hero-cot-btn", () => ({
-  focused: false,
-  tabClicked: false,
-}));
+const [isHeroCotBtn, isProjectsAbout, isProjectsGithub, isProjectsWebsite] =
+  useTabState([
+    "is-hero-cot-btn",
+    "is-projects-about",
+    "is-projects-github",
+    "is-projects-website",
+  ]);
 
-const { isTouch } = useCustomPointer();
+// const tabAndFocusState = useTabState([
+//   "is-hero-cot-btn",
+//   "is-projects-about",
+//   "is-projects-github",
+//   "is-projects-website",
+// ]);
+
+// console.log(tabAndFocusState);
 
 const clearTimer = () => {
   if (timer) clearTimeout(timer);
   timer = null;
 };
 
+const clearIf = (refVal: TabState) => {
+  if (
+    Object.values(refVal.value).every(
+      (v) => v === true || refVal.value.tabClicked
+    )
+  ) {
+    refVal.value.focused = false;
+    refVal.value.tabClicked = false;
+  }
+};
+
 const startDelay = () => {
+  console.log("start dleya");
   clearTimer();
   timer = setTimeout(() => {
     if (!isHovered.value && focusedBtns.value.every((v) => v === false)) {
+      console.log("passe");
       isVisible.value = isTouch.value ? true : false;
       isFocusedOnDesktopNavBtnByClick.value = false;
       clearTimer();
-      if (Object.values(isHeroCotBtn.value).every((v) => v === true)) {
-        isHeroCotBtn.value.focused = false;
-        isHeroCotBtn.value.tabClicked = false;
-        console.log("resest");
-      }
+
+      // tabAndFocusState.forEach((tab) => {
+      //   console.log("tabs");
+      //   if (!tab.value.focused || !tab.value.tabClicked) {
+      //     console.log("tabs pass");
+      //     tab.value.focused = false;
+      //     tab.value.tabClicked = false;
+      //   }
+      // });
+
+      clearIf(isHeroCotBtn);
+      clearIf(isProjectsAbout);
+      clearIf(isProjectsGithub);
+      clearIf(isProjectsWebsite);
     }
   }, DEFAULT_CLOSE_TIME);
 };
@@ -84,19 +119,78 @@ watch([inView, isTouch], ([view, pointerChnaged]) => {
   }
 });
 
-watch(
-  isHeroCotBtn,
-  (val) => {
-    if (
-      Object.values(val).every((v) => v === true || val.tabClicked) &&
-      !isMobileNavVisible.value
-    ) {
-      isVisible.value = true;
-      startDelay();
-    }
-  },
-  { deep: true }
-);
+const startDelayIf = (refVal: TabState) => {
+  watch(
+    refVal,
+    (val) => {
+      if (val === undefined) {
+        console.log(val);
+      }
+      if (
+        Object.values(val).every((v) => v === true || val.tabClicked) &&
+        !isMobileNavVisible.value
+      ) {
+        isVisible.value = true;
+        startDelay();
+      }
+    },
+    { deep: true }
+  );
+};
+
+startDelayIf(isHeroCotBtn);
+startDelayIf(isProjectsAbout);
+startDelayIf(isProjectsGithub);
+startDelayIf(isProjectsWebsite);
+
+// const startDelayIf = (refVal: Ref<TabState>) => {
+//   watch(
+//     refVal,
+//     (val) => {
+//       if (
+//         val &&
+//         Object.values(val).every((v) => v === true || val.tabClicked) &&
+//         !isMobileNavVisible.value
+//       ) {
+//         isVisible.value = true;
+//         startDelay();
+//       }
+//     },
+//     { deep: true }
+//   );
+// };
+
+// tabAndFocusState.forEach(startDelayIf);
+
+// watch(
+//   tabAndFocusState,
+//   (vals) => {
+//     const allTrueOrClicked = vals.every((val) =>
+//       Object.values(val).every((v) => v === true || val.tabClicked)
+//     );
+
+//     if (allTrueOrClicked && !isMobileNavVisible.value) {
+//       isVisible.value = true;
+//       startDelay();
+//     }
+//   },
+//   { deep: true }
+// );
+
+// watch(
+//   () => tabAndFocusState.map((ref) => ref.value),
+//   (vals) => {
+//     const allTrueOrClicked = vals.every((val) =>
+//       Object.values(val).every((v) => v === true || val.tabClicked)
+//     );
+
+//     if (allTrueOrClicked && !isMobileNavVisible.value) {
+//       isVisible.value = true;
+//       startDelay();
+//     }
+//   },
+//   { deep: true }
+// );
 
 const setIsHovered = (value: boolean) => {
   isHovered.value = value;
@@ -183,11 +277,11 @@ onUnmounted(() => {
         <ProjectsNavigationDesktopIconContainer
           v-for="({ name, icon }, id) in projects"
           :key="name"
-          :mouse-x="mouseX"
-          :name="name"
-          :icon="icon"
+          :mouseX
+          :name
+          :icon
           :is-selected="id === store.state.previewProject"
-          :is-hovered="isHovered"
+          :isHovered
           @focusin="handleFocusIn(id)"
           @focusout="handleFocusOut(id)"
           @click="store.dispatch({ type: 'TOGGLE_PROJECT', payload: id })"
@@ -201,11 +295,11 @@ onUnmounted(() => {
         <ProjectsNavigationDesktopIconContainer
           v-for="({ name, icon }, id) in apps"
           :key="name"
-          :mouse-x="mouseX"
-          :name="name"
-          :icon="icon"
+          :mouseX
+          :name
+          :icon
           :is-selected="id + projects.length === store.state.previewApp"
-          :is-hovered="isHovered"
+          :isHovered
           @focusin="handleFocusIn(id + projects.length)"
           @focusout="handleFocusOut(id + projects.length)"
           @click="

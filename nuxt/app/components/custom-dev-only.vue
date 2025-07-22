@@ -1,4 +1,7 @@
 <script setup lang="ts">
+// import type { TailWind } from "~~/types/tailwind";
+
+
 defineOptions({ inheritAttrs: false });
 const { textWhite = false, className = "" } = defineProps<{
   textWhite?: boolean;

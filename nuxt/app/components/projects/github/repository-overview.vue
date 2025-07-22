@@ -28,7 +28,7 @@ const tabs = computed<
   )
 );
 
-const initialTab = tabs.value.length === 1 ? tabs.value[0].text : "README";
+const initialTab = tabs.value.length === 1 ? tabs.value[0]?.text : "README";
 const previewTab = useState(
   `repository-overview-preview-tab:${repoName}`,
   () => initialTab
@@ -38,12 +38,15 @@ const repoProject = computed(() => repoName.split("/").pop());
 
 const getTabComponent = (tabText: RepositoryOverviewTabType) => {
   switch (tabText) {
-    case "README":
+    case "README": {
       return ProjectsGithubRepositoryOverviewReadmeContainer;
-    case "MIT License":
+    }
+    case "MIT License": {
       return ProjectsGithubRepositoryOverviewLicenseDisplay;
-    default:
+    }
+    default: {
       return "div"; // fallback
+    }
   }
 };
 
@@ -75,7 +78,7 @@ const getTabMeta = (tabText: string) => {
 <template>
   <div class="border border-[#3d444d] rounded-md w-full mt-4">
     <div class="border-b border-[#3d444d] bg-[#0d1117] sticky top-0">
-      <UiHeadingSrOnly>Repository files navigation</UiHeadingSrOnly>
+      <AccessibilityHeadingSrOnly>Repository files navigation</AccessibilityHeadingSrOnly>
       <div
         role="tablist"
         aria-label="Repository navigation"
@@ -91,7 +94,7 @@ const getTabMeta = (tabText: string) => {
             id: getTabMeta(text).labelId,
             'aria-selected': previewTab === text,
           }"
-            class="mx-0.5 px-1.5 py-0.5 repo-overview-button relative hover:bg-[#656c7633]"
+          class="mx-0.5 px-1.5 py-0.5 repo-overview-button relative hover:bg-[#656c7633]"
           @click="previewTab = text"
         >
           <ProjectsOcticonsIcon :name="icon" />
@@ -108,15 +111,15 @@ const getTabMeta = (tabText: string) => {
     </div>
     <div class="p-4">
       <component
-        v-for="tab in tabs"
-        :is="getTabComponent(tab.text)"
-        :key="tab.text"
+        v-for="{ text } in tabs"
+        :is="getTabComponent(text)"
+        :key="text"
         role="tabpanel"
-        v-show="previewTab === tab.text"
+        v-show="previewTab === text"
         v-bind="{
-          id: getTabMeta(tab.text).id,
-          'aria-labelledby': getTabMeta(tab.text).labelId,
-          ...getTabProps(tab.text),
+          id: getTabMeta(text).id,
+          'aria-labelledby': getTabMeta(text).labelId,
+          ...getTabProps(text),
         }"
       />
     </div>

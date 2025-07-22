@@ -82,20 +82,20 @@ const stats = computed<
 <template>
   <div class="p-4 border-b border-[#3d444d] text-[#9198a1]">
     <h2 class="space-y-4 text-2xl font-extrabold ml-1 mb-4 text-[#f0f6fc]">
-      <UiExternalLink
+      <SharedExternalLink
         :href="`${githubBaseURL + full_name}`"
         class="hover:underline"
       >
         <ProjectsOcticonsIcon name="mark-github-24" class="mr-2" />
         <span class="text-xl text-[#9198a1]">{{ repo_owner }}/</span>
         {{ repo_name }}
-      </UiExternalLink>
+      </SharedExternalLink>
     </h2>
     <div class="space-y-4">
       <p v-if="description" class="text-base font-normal">
         {{ description }}
       </p>
-      <UiExternalLink
+      <SharedExternalLink
         v-if="homepage"
         :href="homepage"
         class="text-[#58a6ff] hover:underline inline-flex items-center gap-2 group"
@@ -105,9 +105,9 @@ const stats = computed<
           class="!text-[#9198a1] group-hover:!text-blue-400"
         />
         {{ homepage ? homepage.split("://")[1] : "" }}
-      </UiExternalLink>
+      </SharedExternalLink>
       <div v-if="hasLicense">
-        <UiHeadingSrOnly as="h3">License</UiHeadingSrOnly>
+        <AccessibilityHeadingSrOnly as="h3">License</AccessibilityHeadingSrOnly>
         <button
           type="button"
           class="flex items-center gap-2 hover:text-blue-400"
@@ -121,7 +121,7 @@ const stats = computed<
         class="flex flex-wrap items-center gap-5 max-md:gap-4 max-sm:gap-3 max-xs:gap-2 text-sm"
       >
         <li v-for="{ href, icon, count, what } in stats" :key="what">
-          <UiExternalLink
+          <SharedExternalLink
             :href="`${githubBaseURL + href}`"
             class="github-info-card-stats-link"
           >
@@ -130,7 +130,7 @@ const stats = computed<
               {{ formatNumber(count || 0) }}
             </span>
             <span>{{ what }}</span>
-          </UiExternalLink>
+          </SharedExternalLink>
         </li>
       </ul>
       <div

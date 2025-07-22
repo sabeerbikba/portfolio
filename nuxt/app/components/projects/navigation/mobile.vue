@@ -65,8 +65,8 @@ onUnmounted(() => {
       @click="onClick"
     >
       <ProjectsNavigationBtnImg
-        :icon="icon"
-        :name="name"
+        :icon
+        :name
         :class="{
           'mobile-btn-icon-active': isSelected,
         }"
@@ -142,8 +142,8 @@ onUnmounted(() => {
           <MobileButton.reuse
             v-for="({ name, icon }, id) in projects"
             :key="`project-${name}`"
-            :name="name"
-            :icon="icon"
+            :name
+            :icon
             :ariaLabelBtn="`Navigate to ${name} project`"
             :is-selected="store.state.previewProject === id"
             :on-click="
@@ -155,8 +155,8 @@ onUnmounted(() => {
           <MobileButton.reuse
             v-for="({ name, icon }, id) in apps"
             :key="`app-${name}`"
-            :name="name"
-            :icon="icon"
+            :name
+            :icon
             :is-selected="store.state.previewApp === id + projects.length"
             :ariaLabelBtn="`Navigate to ${name} app`"
             :on-click="

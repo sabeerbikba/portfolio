@@ -2,7 +2,7 @@
 import { localIcons } from "~/content/icons";
 import socialMedia from "~/content/social-media";
 import { projects as projectsObject } from "~/content/projects";
-import { NuxtLink, UiNuxtLink } from "#components";
+import { NuxtLink, SharedNuxtLink } from "#components";
 
 type QuickLinkType = {
   label: string;
@@ -121,22 +121,24 @@ const projects: QuickLinkType[] = projectsObject.map(
           :key="title"
         >
           <nav :aria-labelledby="useSlugify(title)">
-            <UiHeadingSrOnly :id="useSlugify(title)">
+            <AccessibilityHeadingSrOnly :id="useSlugify(title)">
               {{ title }}
-            </UiHeadingSrOnly>
+            </AccessibilityHeadingSrOnly>
             <ul class="footer-links">
               <li v-for="{ href, label } in links" :key="label">
                 <component
                   v-if="title === 'Quick Links'"
-                  :is="href !== '/' ? UiNuxtLink : NuxtLink"
+                  :key="label + 1"
+                  :is="href !== '/' ? SharedNuxtLink : NuxtLink"
                   :to="href"
                   :aria-label="`Navigate to ${label} page`"
                 >
                   {{ label }}
                 </component>
-                <UiExternalLink
+                <SharedExternalLink
                   v-else
-                  :href="href"
+                  :key="label"
+                  :href
                   :aria-label="`${
                     title === 'Social Media'
                       ? 'Link to'
@@ -144,7 +146,7 @@ const projects: QuickLinkType[] = projectsObject.map(
                   } ${label}`"
                 >
                   {{ label }}
-                </UiExternalLink>
+                </SharedExternalLink>
               </li>
             </ul>
           </nav>

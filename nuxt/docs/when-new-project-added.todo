@@ -1,0 +1,3 @@
+- add values in ~/content/projects.ts
+- in languages tab only used which language used if new language used in new project enable that language in ~/theme/languages-color.ts
+- if css styling break in github readme component need to enable css in  ~/assets/css/github-markdow-dark.css 

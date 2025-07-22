@@ -125,9 +125,9 @@ watch(width, recalculate);
             isTouch ? 'underline' : 'hover:underline',
           ]"
         >
-          <UiExternalLink :href="circle.data.linkUrl" class="circle-tooltip-a">
+          <SharedExternalLink :href="circle.data.linkUrl" class="circle-tooltip-a">
             {{ circle.data.name }}
-          </UiExternalLink>
+          </SharedExternalLink>
         </div>
       </div>
     </div>

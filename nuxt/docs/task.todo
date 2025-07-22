@@ -14,8 +14,7 @@
   - In dev.tools project need to add this website made for specific size when initially user open in smaller screen
 
 -- project section --
-    - check every link is correct in page 
-    - mobile nav always closed do something that animation stuff the make user focus on that nav 
+    - LATER mobile nav always closed do something that animation stuff the make user focus on that nav 
     - LINK is that possbile to naviagte apps from link instead of button with JavaScipt
     - IMPROVEMENT LATER need to add buttons for make bigger screen that match 16:9 aspect ration if it is better specially for website component think for other part of project 
     - projects if good need to add dynamic link 
@@ -26,17 +25,26 @@
 -- tools-pack.vue
     - is underline color is looking good or not 
     - LATER ANIMATION that animation not starting middle it strating from side 
-        - i think we can use to show animation: https://nuxt.com/docs/3.x/api/utils/on-nuxt-ready
+        - i think we can use to show animation: useHydration https://nuxt.com/docs/3.x/api/utils/on-nuxt-ready
+
+-- sitemap --
+    - in sitemap don't index images because they don't add values and not need to index
 
 - need to change about section with latest used technologies
+- in ui/accessibility folder add components that need to be added 
+    - sr-only heading component 
+- better to use apps index from 0 instead of 2 
+- need to add aria-live evverywhere in poject section 
+- resolve error in github.vue component 
+- apps  need to give dynamically to make it less code to change when new project add 
+- in about section need to mention that dev.tools project is most loved project by other developers that have 30+ stars 
+- check why not css size is increased 
 - use correct heading level,  single h1 in section  
 - check where can i use nuxtIslnad component: https://nuxt.com/docs/3.x/api/components/nuxt-island
 - check which lib support auto-import if supported add in config file check each and every file 
 - need to add sitemap open graph FIRST add dynamic link in projects section: https://nuxtseo.com/docs/sitemap/guides/multi-sitemaps 
 - need to add og:image and test in nuxt devtools:  https://nuxtseo.com/docs/og-image/getting-started/getting-familar-with-nuxt-og-image
 - add base64 paragraph if it's good 
-- check all link following trilling slash rule to avoid dublicate content 
-- can i use 'use' as default prefix to import composable and utils 
 
 -- API LATER --
     - API after email sent need to send small email about we reach soon 
@@ -46,20 +54,10 @@
     - after email send and sucess true need to diaable the button 
     - also create api for logErr
 
-
-- -- FINAL CHECK
-- remove all the consoles 
-- DEPLOYED TEST check how link working: https://nuxtseo.com/learn/routes-and-rendering/trailing-slashes
-- lighthouse materic by changeing all apps and project
-- IS github.vue hydration mismatch error still facing 
-- IMPROVEMENT need to `data-nosnippet` attribute every non indexing component
-- need to remove all the type wher used only use in reactive values because it automatically inter the type only use type where needed 
-- and instead of using ref for html element use useTemplateRef instead 
-- CHECK all the links need to open where 
-- after compoletely need to check all the link working fine by clicking every link and button 
-- CHECK how animation element rendered where used <ClientOnly /> component docs: https://nuxt.com/docs/api/components/client-only
-- SET LAST need to set structure for defineProps,  useRuntimeConfig,  types,  Ref<> and  store which come first check which looks good first 
-
+- TASK 
+- seo image
+- dynamic url of project section 
+- sitemap.xml 
 
 - - LightHouse imporvments
 - add title and other seo tags 

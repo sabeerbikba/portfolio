@@ -14,10 +14,15 @@ const state = reactive<ScreenStoreStateType>({
   previewApp: 2,
 });
 
-const projectSelectedSlug = useRouteQuery("project", useSlugify(projects[0].name));
-const appSelectedSlug = useRouteQuery("app", useSlugify(apps[0].name));
+const projectSelectedSlug = useRouteQuery(
+  "project",
+  useSlugify(projects[0]!.name)
+);
+const appSelectedSlug = useRouteQuery("app", useSlugify(apps[0]!.name));
 
-const initAppIdx = apps.findIndex((a) => useSlugify(a.name) === appSelectedSlug.value);
+const initAppIdx = apps.findIndex(
+  (a) => useSlugify(a.name) === appSelectedSlug.value
+);
 const initProjectIdx = projects.findIndex(
   (p) => useSlugify(p.name) === projectSelectedSlug.value
 );
@@ -31,14 +36,17 @@ if (initAppIdx !== -1) {
 }
 
 const setRouteQueryVal = (payload: number, type: "project" | "app") => {
-  if (type === "project") {
-    projectSelectedSlug.value = useSlugify(projects[payload].name) as ProjectPayloadType;
+  if (type === "project" && projects[payload]) {
+    projectSelectedSlug.value = useSlugify(
+      projects[payload].name
+    ) as ProjectPayloadType;
   }
 
   if (type === "app") {
-    appSelectedSlug.value = useSlugify(
-      apps[payload - projects.length].name
-    ) as AppPayloadType;
+    const appIndex = payload - projects.length;
+    if (apps[appIndex]) {
+      appSelectedSlug.value = useSlugify(apps[appIndex].name) as AppPayloadType;
+    }
   }
 };
 
@@ -63,7 +71,11 @@ const dispatch = ({ type, payload }: ScreenStoreActionType) => {
 watch(
   [() => state.previewProject, () => projectSelectedSlug.value],
   ([newStoreVal, newQueryVal]) => {
-    const expectedSlug = useSlugify(projects[newStoreVal].name);
+    const project = projects[newStoreVal];
+    if (!project) return;
+
+    const expectedSlug = useSlugify(project.name);
+
     if (newQueryVal !== expectedSlug) {
       projectSelectedSlug.value = expectedSlug as ProjectPayloadType;
     } else {
@@ -78,7 +90,12 @@ watch(
 watch(
   [() => state.previewApp, () => appSelectedSlug.value],
   ([newStoreVal, newQueryVal]) => {
-    const expectedSlug = useSlugify(apps[newStoreVal - projects.length].name);
+    const appIndex = newStoreVal - projects.length;
+    const app = apps[appIndex];
+    if (!app) return;
+
+    const expectedSlug = useSlugify(app.name);
+
     if (newQueryVal !== expectedSlug) {
       appSelectedSlug.value = expectedSlug as AppPayloadType;
     } else {

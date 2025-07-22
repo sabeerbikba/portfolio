@@ -3,7 +3,7 @@
 - NPM : github-markdown-css : https://www.npmjs.com/package/github-markdown-css 
 */
 
-/* This bottom CSS is currently unused. If needed in the future, it can be enabled by removing the comments. */
+/* This bottom commented CSS is currently unused. If needed in the future, it can be enabled by removing the comments. */
 
 .markdown-body {
   color-scheme: dark;

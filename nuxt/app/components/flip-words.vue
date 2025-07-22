@@ -14,20 +14,23 @@ const {
 
 defineEmits(["animationStart", "animationComplete"]);
 
-const currentWord = ref(words[0]);
+const currentWord = ref(words[0] ?? "");
 const isVisible = ref(true);
 const timeoutId = ref<number | null>(null);
 
 const startAnimation = (): void => {
+  if (!words.length) return;
+
   isVisible.value = false;
 
   setTimeout(() => {
     const currentIndex = words.indexOf(currentWord.value);
-    const nextWord = words[currentIndex + 1] || words[0];
+    const nextWord = words[currentIndex + 1] || words[0] || "";
     currentWord.value = nextWord;
     isVisible.value = true;
   }, 600);
 };
+
 
 const splitWords = computed(() => {
   return currentWord.value.split(" ").map((word) => ({

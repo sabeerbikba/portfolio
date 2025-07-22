@@ -1,14 +1,15 @@
+// Usage: ~~/docs/how-to-svgo.md
+
 module.exports = {
    plugins: [
       {
          name: 'preset-default',
-         // params: {
-         //    overrides: {
-         //       cleanupIDs: true,
-         //    },
-         // },
+         params: {
+            overrides: {
+               cleanupIDs: true,
+            },
+         },
       },
-      // 'cleanupIDs',
       'removeTitle',
       'removeDesc',
       'removeDimensions',

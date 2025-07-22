@@ -6,10 +6,7 @@ import { localIcons } from "~/content/icons";
 const router = useRouter();
 const URL = useNormalizeUrl();
 const homepageLink = useState<string>("home-page-link");
-const isHeroCotBtn = useState("is-hero-cot-btn", () => ({
-  focused: false,
-  tabClicked: false,
-}));
+const [isHeroCotBtn] = useTabState(["is-projects-github"]);
 
 const isToolsPackHydrationComplete = ref(false);
 const toolPackOpacityStyle = ref("0");
@@ -110,7 +107,7 @@ onMounted(() => {
       aria-labelledby="hero"
       class="flex flex-col items-center justify-end h-[18rem] xs:h-[22rem] sm:h-[27rem] md:h-[32rem] bg-gradient-to-b from-white-400 via-gray-100 to-white-400"
     >
-      <UiHeading id="hero"> Let&apos;s Build Something Amazing </UiHeading>
+      <SharedHeading id="hero"> Let&apos;s Build Something Amazing </SharedHeading>
       <div
         class="font-normal text-neutral-600 mx-auto py-4 xs:py-5 sm:py-6 md:py-7 text-[24px] xs:text-[28px] sm:text-[34px] md:text-[40px]"
       >
@@ -137,7 +134,7 @@ onMounted(() => {
         aria-label="Call to action button"
         class="flex flex-col md:flex-row space-y-4 md:space-y-0 space-x-0 md:space-x-4"
       >
-        <UiNuxtLink
+        <SharedNuxtLink
           to="/contact"
           aria-label="Start a conversation with me by visiting the contact page"
           class="border border-transparent font-medium rounded-3xl text-white bg-black hover:bg-black/90 px-7 py-1.5 md:py-2.5 md:text-lg md:px-8"
@@ -145,18 +142,18 @@ onMounted(() => {
           @keydown.tab="isHeroCotBtn.tabClicked = true"
         >
           Let&apos;s Chat
-        </UiNuxtLink>
+        </SharedNuxtLink>
       </div>
     </section>
 
     <ContainerScrollSection aria-labelledby="projects">
       <template #heading>
-        <UiHeadingSrOnly as="h1" id="projects">
+        <AccessibilityHeadingSrOnly as="h1" id="projects">
           Projects Details
-        </UiHeadingSrOnly>
+        </AccessibilityHeadingSrOnly>
       </template>
       <template #title>
-        <UiHeading as="h1" class-name="md:text-[2.8rem]">
+        <SharedHeading as="h1" class-name="md:text-[2.8rem]">
           Browse My Creations
           <br />
           <span
@@ -164,7 +161,7 @@ onMounted(() => {
           >
             Featured Works
           </span>
-        </UiHeading>
+        </SharedHeading>
       </template>
       <template #screen>
         <ProjectsScreen />
@@ -173,7 +170,7 @@ onMounted(() => {
 
     <section aria-describedby="tools-using">
       <div class="mb-4 text-center">
-        <UiHeading id="tools-using">Development Tools & Expertise</UiHeading>
+        <SharedHeading id="tools-using">Development Tools & Expertise</SharedHeading>
         <h2
           class="font-bold text-xg xs:text-2xl sm:text-3xl md:text-4xl max-xs:px-3 text-black/70"
         >
@@ -203,11 +200,11 @@ onMounted(() => {
       aria-labelledby="about-me"
       class="about-section py-12 px-10 mt-9 bg-[rgb(251 251 251 / 50%)] bg-[linear-gradient(0deg,_rgba(255,255,255,1)_0%,_rgba(250,250,250,50)_50%,_rgba(255,255,255,0)_100%)]"
     >
-      <UiHeading id="about-me">About Me</UiHeading>
+      <SharedHeading id="about-me">About Me</SharedHeading>
       <div class="max-w-[1200px] mx-auto text-center about-div">
         <p
-          v-for="(paragraph, index) in aboutSectionParagraphs"
-          :key="index"
+          v-for="(paragraph, key) in aboutSectionParagraphs"
+          :key
           v-html="paragraph"
         />
       </div>
@@ -218,13 +215,13 @@ onMounted(() => {
       class="py-20 px-4 sm:px-6 lg:px-8 bg-white shadow-inner"
     >
       <div class="max-w-3xl mx-auto text-center">
-        <UiHeading
+        <SharedHeading
           as="h2"
           id="connect"
           class-name="text-xl xs:text-2xl sm:text-3xl md:text-4xl"
         >
           Ready to start your next project?
-        </UiHeading>
+        </SharedHeading>
         <p
           class="mt-4 text-gray-600 text-base xs:text-lg sm:text-xl md:text-2xl"
         >
@@ -235,7 +232,7 @@ onMounted(() => {
           class="mt-8 transition-transform duration-200 hover:scale-105 active:scale-95"
           tabindex="-1"
         >
-          <UiNuxtLink
+          <SharedNuxtLink
             to="/contact"
             class="inline-flex items-center justify-center text-base font-medium rounded-3xl text-white bg-black hover:bg-black/90 px-7 py-2 md:py-3 md:text-lg md:px-8"
           >
@@ -245,7 +242,7 @@ onMounted(() => {
               data-nosnippet
               v-html="localIcons.home.arrowRight"
             />
-          </UiNuxtLink>
+          </SharedNuxtLink>
         </div>
       </div>
     </section>
