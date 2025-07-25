@@ -4,11 +4,14 @@ import type { ScreenStoreType } from "~~/types/store";
 
 const store = inject("store") as ScreenStoreType;
 const [isProjectsAbout] = useTabState(["is-projects-about"]);
+const isVisble = computed(
+  () => store.state.previewApp === useFindProjectsBtnIndex("apps", "about")
+);
 </script>
 
 <template>
-  <div v-show="store.state.previewApp === 3" class="bg-[#191919]">
-    <AccessibilityNotifier :app-store="3" />
+  <div v-show="isVisble" class="bg-[#191919]">
+    <AccessibilityNotifier :app-store="1" />
     <template
       v-for="({ aboutHtmlBase64, name }, index) in projects"
       :key="index"

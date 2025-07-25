@@ -7,7 +7,7 @@ const { appStore } = defineProps<{ appStore: number }>();
 
 const notification = computed(() => {
   const openedProject = iconsName.projects[store.state.previewProject];
-  const openedApp = iconsName.apps[appStore - projects.length];
+  const openedApp = iconsName.apps[appStore];
 
   switch (openedApp) {
     case "github": {
@@ -25,6 +25,6 @@ const notification = computed(() => {
 
 <template>
   <div class="sr-only" aria-live="polite" aria-atomic="true">
-    {{ store.state.previewApp === appStore ? notification : "" }}
+    <p v-if="store.state.previewApp === appStore">{{ notification }}</p>
   </div>
 </template>

@@ -3,6 +3,7 @@ import { Motion as MotionV, type MotionValue } from "motion-v";
 import { Motion } from "@oku-ui/motion";
 
 const { name, isSelected, isHovered, mouseX } = defineProps<{
+  to: string;
   name: string;
   icon: string;
   isSelected: boolean;
@@ -110,58 +111,63 @@ watchEffect(() => {
 
 <template>
   <!-- here shows error `<div> element is not permitted as content under <button>` if not using link remove the div elements instead use span -->
-  <button
-    ref="iconRef"
-    type="button"
-    :aria-describedby="tooltipId"
-    :aria-current="isSelected ? 'page' : undefined"
-    :aria-label="`Navigate to ${name} ${viewType}`"
-    class="desktop-btn-base"
-  >
-    <MotionV
-      as="span"
-      :style="{ width, height }"
-      :class="{
-        block: true,
-        'max-w-[35px] max-h-[35px]': !isHovered && !isTouch,
-        '!max-w-[35px] !max-h-[35px]': isTouch,
-      }"
-      @mouseenter="hovered = true"
-      @mouseleave="hovered = false"
+  <!-- :to -->
+  <!-- <button
+    type="button" -->
+  <!-- TODO: list-noe can be moved to parent element -->
+  <li ref="iconRef" class="desktop-btn-base list-none">
+    <NuxtLink
+      :to
+      :aria-describedby="tooltipId"
+      :aria-current="isSelected ? 'page' : undefined"
+      :aria-label="`Navigate to ${name} ${viewType}`"
     >
-      <Motion
+      <MotionV
         as="span"
-        :id="tooltipId"
-        role="tooltip"
-        :initial="{ opacity: 0, y: 10, x: '-50%' }"
-        :animate="
-          showTooltipAnimation
-            ? { opacity: 1, y: -10, x: '-50%' }
-            : { opacity: 0, y: 2, x: '-50%' }
-        "
-        :exit="isTouch ? { opacity: 0, y: 10, x: '-50%' } : undefined"
-        class="desktop-btn-tooltip"
-      >
-        {{ name }}
-      </Motion>
-      <Motion
-        as="span"
+        :style="{ width, height }"
         :class="{
-          'desktop-btn-icon-base': true,
-          'desktop-btn-icon-active': isIconShadowAndDotVisible,
+          block: true,
+          'max-w-[35px] max-h-[35px]': !isHovered && !isTouch,
+          '!max-w-[35px] !max-h-[35px]': isTouch,
         }"
-        :style="{ width: `${widthIcon}px`, height: `${heightIcon}px` }"
+        @mouseenter="hovered = true"
+        @mouseleave="hovered = false"
       >
-        <ProjectsNavigationBtnImg :icon="icon" :name="name" />
-      </Motion>
+        <Motion
+          as="span"
+          :id="tooltipId"
+          role="tooltip"
+          :initial="{ opacity: 0, y: 10, x: '-50%' }"
+          :animate="
+            showTooltipAnimation
+              ? { opacity: 1, y: -10, x: '-50%' }
+              : { opacity: 0, y: 2, x: '-50%' }
+          "
+          :exit="isTouch ? { opacity: 0, y: 10, x: '-50%' } : undefined"
+          class="desktop-btn-tooltip"
+        >
+          {{ name }}
+        </Motion>
+        <Motion
+          as="span"
+          :class="{
+            'desktop-btn-icon-base': true,
+            'desktop-btn-icon-active': isIconShadowAndDotVisible,
+          }"
+          :style="{ width: `${widthIcon}px`, height: `${heightIcon}px` }"
+        >
+          <ProjectsNavigationBtnImg :icon="icon" :name="name" />
+        </Motion>
 
-      <span
-        v-show="isIconShadowAndDotVisible"
-        aria-hidden="true"
-        class="center mt-0.5"
-      >
-        <span class="desktop-btn-status-dot" />
-      </span>
-    </MotionV>
-  </button>
+        <span
+          v-show="isIconShadowAndDotVisible"
+          aria-hidden="true"
+          class="center mt-0.5"
+        >
+          <span class="desktop-btn-status-dot" />
+        </span>
+      </MotionV>
+    </NuxtLink>
+  </li>
+  <!-- </button> -->
 </template>

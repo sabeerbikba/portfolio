@@ -32,14 +32,12 @@ useSeoMeta({
 
   ogTitle: seoMetaMap.contact.title,
   ogDescription: seoMetaMap.contact.description,
-  // ogImage: ,
   ogUrl: URL,
   ogType: "website",
 
   twitterCard: "summary_large_image",
   twitterTitle: seoMetaMap.contact.title,
   twitterDescription: seoMetaMap.contact.description,
-  // twitterImage: ,
 });
 
 let interval: number | undefined;

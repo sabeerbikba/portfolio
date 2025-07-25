@@ -16,13 +16,14 @@ const OpenBtnLineRing = createReusableTemplate<{
   bgColor: string;
 }>({ inheritAttrs: false });
 const MobileButton = createReusableTemplate<{
+  to: string;
   name: string;
   icon: string;
   isSelected: boolean;
   ariaLabelBtn: string;
-  onClick: () => void;
 }>({ inheritAttrs: false });
 
+const { getLinkForProject, getLinkForApp } = useProjectAppLinks(store);
 const handleClickOutside = (event: MouseEvent) => {
   if (
     mobileDockRef.value &&
@@ -55,15 +56,8 @@ onUnmounted(() => {
       <component :is="$slots.default" />
     </div>
   </ButtonsGroup.define>
-  <MobileButton.define
-    v-slot="{ name, icon, isSelected, ariaLabelBtn, onClick }"
-  >
-    <button
-      type="button"
-      class="max-w-full p-2"
-      :aria-label="ariaLabelBtn"
-      @click="onClick"
-    >
+  <MobileButton.define v-slot="{ name, icon, isSelected, ariaLabelBtn, to }">
+    <NuxtLink :to class="max-w-full block p-2" :aria-label="ariaLabelBtn">
       <ProjectsNavigationBtnImg
         :icon
         :name
@@ -71,7 +65,7 @@ onUnmounted(() => {
           'mobile-btn-icon-active': isSelected,
         }"
       />
-    </button>
+    </NuxtLink>
   </MobileButton.define>
   <CloseBtnLine.define>
     <div class="mobile-close-btn" />
@@ -142,30 +136,22 @@ onUnmounted(() => {
           <MobileButton.reuse
             v-for="({ name, icon }, id) in projects"
             :key="`project-${name}`"
+            :to="getLinkForProject(id)"
             :name
             :icon
             :ariaLabelBtn="`Navigate to ${name} project`"
             :is-selected="store.state.previewProject === id"
-            :on-click="
-              () => store.dispatch({ type: 'TOGGLE_PROJECT', payload: id })
-            "
           />
         </ButtonsGroup.reuse>
         <ButtonsGroup.reuse class="mr-auto" aria-label="Apps group">
           <MobileButton.reuse
             v-for="({ name, icon }, id) in apps"
             :key="`app-${name}`"
+            :to="getLinkForApp(id)"
             :name
             :icon
-            :is-selected="store.state.previewApp === id + projects.length"
+            :is-selected="store.state.previewApp === id"
             :ariaLabelBtn="`Navigate to ${name} app`"
-            :on-click="
-              () =>
-                store.dispatch({
-                  type: 'TOGGLE_APP',
-                  payload: id + projects.length,
-                })
-            "
           />
         </ButtonsGroup.reuse>
       </Motion>

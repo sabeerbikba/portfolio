@@ -2,8 +2,6 @@
 import { useRouteQuery } from "@vueuse/router";
 import { apps, projects } from "~/content/projects";
 import type {
-  ProjectPayloadType,
-  AppPayloadType,
   ScreenStoreActionType,
   ScreenStoreStateType,
   ScreenStoreType,
@@ -11,7 +9,7 @@ import type {
 
 const state = reactive<ScreenStoreStateType>({
   previewProject: 0,
-  previewApp: 2,
+  previewApp: 0,
 });
 
 const projectSelectedSlug = useRouteQuery(
@@ -20,92 +18,51 @@ const projectSelectedSlug = useRouteQuery(
 );
 const appSelectedSlug = useRouteQuery("app", useSlugify(apps[0]!.name));
 
-const initAppIdx = apps.findIndex(
-  (a) => useSlugify(a.name) === appSelectedSlug.value
-);
-const initProjectIdx = projects.findIndex(
-  (p) => useSlugify(p.name) === projectSelectedSlug.value
-);
-
-if (initProjectIdx !== -1) {
-  state.previewProject = initProjectIdx;
-}
-
-if (initAppIdx !== -1) {
-  state.previewApp = initAppIdx + projects.length;
-}
-
-const setRouteQueryVal = (payload: number, type: "project" | "app") => {
-  if (type === "project" && projects[payload]) {
-    projectSelectedSlug.value = useSlugify(
-      projects[payload].name
-    ) as ProjectPayloadType;
-  }
-
-  if (type === "app") {
-    const appIndex = payload - projects.length;
-    if (apps[appIndex]) {
-      appSelectedSlug.value = useSlugify(apps[appIndex].name) as AppPayloadType;
-    }
-  }
-};
-
 const dispatch = ({ type, payload }: ScreenStoreActionType) => {
   switch (type) {
-    case "TOGGLE_PROJECT": {
+    case "TOGGLE_PROJECT":
       state.previewProject = payload;
-      setRouteQueryVal(payload, "project");
       break;
-    }
-    case "TOGGLE_APP": {
+    case "TOGGLE_APP":
       state.previewApp = payload;
-      setRouteQueryVal(payload, "app");
       break;
-    }
-    default: {
+    default:
       throw new Error("Unknown action");
-    }
   }
 };
 
-watch(
-  [() => state.previewProject, () => projectSelectedSlug.value],
-  ([newStoreVal, newQueryVal]) => {
-    const project = projects[newStoreVal];
-    if (!project) return;
+const syncFromQueryIifeFn = (() => {
+  const iifeFn = () => {
+    const projectIdx = projects.findIndex(
+      (p) => useSlugify(p.name) === projectSelectedSlug.value
+    );
+    if (projectIdx !== -1) state.previewProject = projectIdx;
 
-    const expectedSlug = useSlugify(project.name);
+    const appIdx = apps.findIndex(
+      (a) => useSlugify(a.name) === appSelectedSlug.value
+    );
+    if (appIdx !== -1) state.previewApp = appIdx;
+  };
+  iifeFn();
+  return iifeFn;
+})();
 
-    if (newQueryVal !== expectedSlug) {
-      projectSelectedSlug.value = expectedSlug as ProjectPayloadType;
-    } else {
-      const idx = projects.findIndex((p) => useSlugify(p.name) === newQueryVal);
-      if (idx !== -1 && state.previewProject !== idx) {
-        state.previewProject = idx;
-      }
-    }
+onMounted(syncFromQueryIifeFn);
+
+watch(projectSelectedSlug, (slug) => {
+  const idx = projects.findIndex((p) => useSlugify(p.name) === slug);
+  if (idx !== -1 && state.previewProject !== idx) {
+    state.previewProject = idx;
   }
-);
+});
 
-watch(
-  [() => state.previewApp, () => appSelectedSlug.value],
-  ([newStoreVal, newQueryVal]) => {
-    const appIndex = newStoreVal - projects.length;
-    const app = apps[appIndex];
-    if (!app) return;
-
-    const expectedSlug = useSlugify(app.name);
-
-    if (newQueryVal !== expectedSlug) {
-      appSelectedSlug.value = expectedSlug as AppPayloadType;
-    } else {
-      const idx = apps.findIndex((a) => useSlugify(a.name) === newQueryVal);
-      if (idx !== -1 && state.previewApp !== idx + projects.length) {
-        state.previewApp = idx + projects.length;
-      }
-    }
+watch(appSelectedSlug, (slug) => {
+  const idx = apps.findIndex((a) => useSlugify(a.name) === slug);
+  const appIdx = idx;
+  if (idx !== -1 && state.previewApp !== appIdx) {
+    state.previewApp = appIdx;
   }
-);
+});
 
 const store: ScreenStoreType = { state, dispatch };
 provide("store", store);
@@ -116,8 +73,8 @@ provide("store", store);
   <div
     :class="{
       'h-full w-full overflow-auto scroll': true,
-      'bg-[#191919]': store.state.previewApp === 3,
-      'bg-[#0d1117]': store.state.previewApp === 4,
+      'bg-[#191919]': store.state.previewApp === 1,
+      'bg-[#0d1117]': store.state.previewApp === 2,
     }"
   >
     <ProjectsWebsite />

@@ -7,20 +7,25 @@
     - gihtub.vue show bot that this page looks simmilar to github web page 
 
 - PROBLEM: icons have some problem when rendering use another method like used for other icons 
-    - FIX is to we can use custom icons as per Nuxt/icons docs download and save the in project as per docs and use it 
-    - if above task is possible check all other icons can add in that component to make it single component for icon
+    - LATER FIX is to we can use custom icons as per Nuxt/icons docs download and save the in project as per docs and use it 
+    - IMPROVEMENT if above task is possible check all other icons can add in that component to make it single component for icon
+
 - OTHER-PROJECT -- 
   - In rickshaw project need to add background in pages other then home check in website section and navigate page and see 
   - In dev.tools project need to add this website made for specific size when initially user open in smaller screen
 
 -- project section --
     - LATER mobile nav always closed do something that animation stuff the make user focus on that nav 
-    - LINK is that possbile to naviagte apps from link instead of button with JavaScipt
+    - FIRST LINK is that possbile to naviagte apps from link instead of button with JavaScipt
+        - projects if good need to add dynamic link 
     - IMPROVEMENT LATER need to add buttons for make bigger screen that match 16:9 aspect ration if it is better specially for website component think for other part of project 
-    - projects if good need to add dynamic link 
-    - LATER cancel request only when coming from another route not in same route (initiLly page load)
-    - LATER [first need to complete the project]: Can we animation when screen change in project section like window change with client only if good
+    - LATER FIRST cancel request only when coming from another route not in same route (initiLly page load)
+    - LATER Can we animation when screen change in project section like window change with client only if good
         - when animation in progress button need to make unresponsive until animation complete only where animation working (if animation working in desktop only for that)
+    - need to create proper navigation link 
+    - i think better to create and sitemap.xml or or use diffrent lib  
+    - navigation middle line not visible 
+    - check all todos 
 
 -- tools-pack.vue
     - is underline color is looking good or not 
@@ -31,20 +36,12 @@
     - in sitemap don't index images because they don't add values and not need to index
 
 - need to change about section with latest used technologies
-- in ui/accessibility folder add components that need to be added 
-    - sr-only heading component 
 - better to use apps index from 0 instead of 2 
-- need to add aria-live evverywhere in poject section 
-- resolve error in github.vue component 
 - apps  need to give dynamically to make it less code to change when new project add 
 - in about section need to mention that dev.tools project is most loved project by other developers that have 30+ stars 
-- check why not css size is increased 
 - use correct heading level,  single h1 in section  
-- check where can i use nuxtIslnad component: https://nuxt.com/docs/3.x/api/components/nuxt-island
-- check which lib support auto-import if supported add in config file check each and every file 
+- if needed add manullay libraries in auto import if possible
 - need to add sitemap open graph FIRST add dynamic link in projects section: https://nuxtseo.com/docs/sitemap/guides/multi-sitemaps 
-- need to add og:image and test in nuxt devtools:  https://nuxtseo.com/docs/og-image/getting-started/getting-familar-with-nuxt-og-image
-- add base64 paragraph if it's good 
 
 -- API LATER --
     - API after email sent need to send small email about we reach soon 
@@ -57,6 +54,7 @@
 - TASK 
 - seo image
 - dynamic url of project section 
+- if apply after chnaging dynamic link change the apps index start 2 from 0 
 - sitemap.xml 
 
 - - LightHouse imporvments
@@ -64,3 +62,13 @@
 - need to creat image for seo meta tags
 - after generating in sever on meta tags working fine // TODO:
 - test in https://search.google.com/test/rich-results after deployhed // TODO:
+
+
+desktop-icon-contain…?t=1753363842006:55 Uncaught TypeError: iconRef.value?.getBoundingClientRect is not a function
+    at desktop-icon-contain…1753363842006:55:39
+    at Set.forEach (<anonymous>)
+
+
+- when both app and project in index 0 links need to be 
+
+

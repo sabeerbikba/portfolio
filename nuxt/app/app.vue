@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { localIcons } from "~/content/icons";
 import socialMedia from "~/content/social-media";
+import { ogImg } from "~/content/seo";
 import { projects as projectsObject } from "~/content/projects";
 import { NuxtLink, SharedNuxtLink } from "#components";
 
@@ -36,6 +37,13 @@ useHead({
     },
   ],
 });
+
+useSeoMeta({
+  ogImage: ogImg,
+  twitterImage: ogImg,
+});
+
+// defineOgImageComponent("Custom");
 
 const convertToTitleCase = (input: string): string =>
   input

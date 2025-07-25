@@ -1,4 +1,3 @@
-// TODO: button.ts or projects.ts which one
 const githubProfileName: string = "sabeerbikba";
 
 type DataType = {
@@ -44,17 +43,17 @@ const projects: ProjectType[] = [
 
 const apps: DataType[] = [
   {
-    // 2
+    // 0
     name: "Website",
     icon: "/images/app-website-icon.webp",
   },
   {
-    // 3
+    // 1
     name: "About",
     icon: "/images/app-about-icon.webp",
   },
   {
-    // 4
+    // 2
     name: "Github",
     icon: "/images/app-github-icon.webp",
   },

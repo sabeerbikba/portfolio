@@ -9,6 +9,10 @@
   @apply transition-colors;
 }
 
+a {
+  @apply pointer-events-auto cursor-pointer;
+}
+
 /* tools-pack.vue */
 .loader-tools-pack::before,
 .loader-tools-pack::after {
@@ -45,8 +49,8 @@
     text-sm bg-gray-800 text-white p-2 max-md:p-1.5 max-sm:p-1 transform
     opacity-0 shadow-xl rounded-lg
     flex flex-col items-center
-    pointer-events-none
-    z-0;
+    pointer-events-none sm:underline-offset-[1.8px]
+    z-0 decoration-white/35;
 }
 
 @media (max-width: 225px) {
@@ -89,6 +93,11 @@
 
 .desktop-btn-icon-base {
   @apply transition-all duration-300 ease-in-out center rounded-2xl;
+}
+
+.glass-specular {
+  box-shadow: inset 0.5px 0.5px 0 rgba(255, 255, 255, 0.75),
+    inset 0 0 3px rgba(255, 255, 255, 0.75);
 }
 
 .desktop-btn-icon-active {

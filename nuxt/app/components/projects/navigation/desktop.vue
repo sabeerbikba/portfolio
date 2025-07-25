@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Motion } from "@oku-ui/motion";
-import { projects, apps } from "~/content/projects";
+import { projects, apps, iconsName } from "~/content/projects";
 import { useMotionValue } from "motion-v";
 import type { ScreenStoreType } from "~~/types/store";
 
@@ -34,6 +34,7 @@ const mouseX = useMotionValue<number>(Infinity);
 const { isTouch } = useCustomPointer();
 
 const isFocusedOnDesktopNavBtnByClick = ref(false);
+const { getLinkForProject, getLinkForApp } = useProjectAppLinks(store);
 const { width: windowWidth } = useWindowSize({ initialWidth: 760 });
 const isMobileNavVisible = computed(() => windowWidth.value <= 768.9);
 const focusedBtns = ref(Array(projects.length + apps.length).fill(false));
@@ -61,6 +62,7 @@ const clearTimer = () => {
 
 const clearIf = (refVal: TabState) => {
   if (
+    // something problem here
     Object.values(refVal.value).every(
       (v) => v === true || refVal.value.tabClicked
     )
@@ -263,7 +265,10 @@ onUnmounted(() => {
         width: isVisible ? 'auto' : '120px',
         y: isVisible ? -58 : 0,
       }"
-      class="max-w-80 mx-auto gap-2 bg-[rgba(255,255,255,0.4)] w-auto m-auto rounded-lg inline-flex items-center"
+      :class="[
+        'max-w-80 mx-auto gap-2 w-auto m-auto rounded-lg inline-flex items-center',
+        isVisible ? 'glass-specular bg-white/20' : 'bg-white/40',
+      ]"
       @mouseenter="setIsHovered(true)"
       @mouseleave="handleMouseLeave"
       @mousemove="handleMouseMove"
@@ -277,6 +282,7 @@ onUnmounted(() => {
         <ProjectsNavigationDesktopIconContainer
           v-for="({ name, icon }, id) in projects"
           :key="name"
+          :to="getLinkForProject(id)"
           :mouseX
           :name
           :icon
@@ -284,7 +290,6 @@ onUnmounted(() => {
           :isHovered
           @focusin="handleFocusIn(id)"
           @focusout="handleFocusOut(id)"
-          @click="store.dispatch({ type: 'TOGGLE_PROJECT', payload: id })"
         />
         <div
           role="separator"
@@ -295,19 +300,14 @@ onUnmounted(() => {
         <ProjectsNavigationDesktopIconContainer
           v-for="({ name, icon }, id) in apps"
           :key="name"
+          :to="getLinkForApp(id)"
           :mouseX
           :name
           :icon
-          :is-selected="id + projects.length === store.state.previewApp"
+          :is-selected="id === store.state.previewApp"
           :isHovered
           @focusin="handleFocusIn(id + projects.length)"
           @focusout="handleFocusOut(id + projects.length)"
-          @click="
-            store.dispatch({
-              type: 'TOGGLE_APP',
-              payload: id + projects.length,
-            })
-          "
         />
       </div>
     </Motion>

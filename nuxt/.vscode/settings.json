@@ -1,13 +1,9 @@
 {
   "css.lint.unknownAtRules": "ignore",
-  "tailwindCSS.experimental.classRegex": [
-    ["(?:class|className|class-name)\\s*=\\s*\"([^\"]*)\"", 1],
-    ["(?:class|className|class-name)\\s*=\\s*`([^`]*)`", 1],
-    ["tw\\(([^)]*)\\)", 1]
-  ],
-  "tailwindCSS.includeLanguages": {
-    "vue": "html",
-    "typescript": "javascript",
-    "typescriptreact": "javascript"
-  }
+  // "tailwindCSS.experimental.classRegex": [
+    // "(?:class-name)=\\s*(?:\"|'|{`)([^(?:\"|'|`})]*)",
+    // ["(?:class|className|class-name)\\s*=\\s*`([^`]*)`", 1],
+    // ["(?:class|className|class-name)\\s*=\\s*\"([^\"]*)\"", 1],
+    // ["tw\\(([^)]*)\\)", 1]
+  // ],
 }

@@ -25,12 +25,19 @@ export default defineNuxtConfig({
   ],
 
   site: {
+    // Used in og:image and sitemap.xsl
     url: BASE_URL,
     name: "sabeer bikba | portfolio",
   },
 
   ogImage: {
     zeroRuntime: true, // OG image code is removed from the final output
+    // provider: "satori",
+    // dir: "./components/og-image",
+    // routes: {
+    //   "/og-default": "custom.vue", // now accessible at /og-default.og.png
+    // },
+    
   },
 
   runtimeConfig: {

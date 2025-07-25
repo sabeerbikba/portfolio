@@ -29,18 +29,15 @@ useSeoMeta({
 
   ogTitle: seoMetaMap.index.title,
   ogDescription: seoMetaMap.index.description,
-  // TODO:
-  // ogImage: ,
   ogUrl: URL,
   ogType: "website",
 
   twitterCard: "summary_large_image",
   twitterTitle: seoMetaMap.index.title,
   twitterDescription: seoMetaMap.index.description,
-  // TODO:
-  // twitterImage: ,
 });
 
+// Can i move this to seo.ts file
 const flipWords = ["functional", "beautiful", "impactful", "responsive"];
 
 const aboutSectionParagraphs: string[] = [
@@ -107,7 +104,9 @@ onMounted(() => {
       aria-labelledby="hero"
       class="flex flex-col items-center justify-end h-[18rem] xs:h-[22rem] sm:h-[27rem] md:h-[32rem] bg-gradient-to-b from-white-400 via-gray-100 to-white-400"
     >
-      <SharedHeading id="hero"> Let&apos;s Build Something Amazing </SharedHeading>
+      <SharedHeading id="hero">
+        Let&apos;s Build Something Amazing
+      </SharedHeading>
       <div
         class="font-normal text-neutral-600 mx-auto py-4 xs:py-5 sm:py-6 md:py-7 text-[24px] xs:text-[28px] sm:text-[34px] md:text-[40px]"
       >
@@ -170,7 +169,9 @@ onMounted(() => {
 
     <section aria-describedby="tools-using">
       <div class="mb-4 text-center">
-        <SharedHeading id="tools-using">Development Tools & Expertise</SharedHeading>
+        <SharedHeading id="tools-using"
+          >Development Tools & Expertise</SharedHeading
+        >
         <h2
           class="font-bold text-xg xs:text-2xl sm:text-3xl md:text-4xl max-xs:px-3 text-black/70"
         >

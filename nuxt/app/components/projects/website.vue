@@ -7,13 +7,19 @@ const [isProjectsWebsite] = useTabState(["is-projects-website"]);
 
 const webWrapperRef = useTemplateRef("webWrapperRef");
 const { width, height } = useElementSize(webWrapperRef);
+
+const isVisble = computed<"block" | "none">(() =>
+  store.state.previewApp === useFindProjectsBtnIndex("apps", "website")
+    ? "block"
+    : "none"
+);
 </script>
 
 <template>
   <div
     ref="webWrapperRef"
     class="wh-full relative hidden"
-    :style="{ display: store.state.previewApp === 2 ? 'block' : 'none' }"
+    :style="{ display: isVisble }"
     tabindex="0"
     :aria-label="`website preview of ${
       iconsName.projects[store.state.previewProject]
@@ -42,7 +48,9 @@ const { width, height } = useElementSize(webWrapperRef);
           This is a live preview of project: <strong>{{ name }}</strong
           >.
         </p>
-        <SharedExternalLink :href="website">Visit {{ website }}</SharedExternalLink>
+        <SharedExternalLink :href="website"
+          >Visit {{ website }}</SharedExternalLink
+        >
       </div>
       <div class="wh-full">
         <img

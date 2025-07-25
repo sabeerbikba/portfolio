@@ -227,7 +227,9 @@ const mergedGithubData = computed(() =>
   })
 );
 
-const isGithubComponentVisible = computed(() => store.state.previewApp === 4);
+const isVisible = computed(
+  () => store.state.previewApp === useFindProjectsBtnIndex("apps", "github")
+);
 
 const hasAnyGithubDataAvailable = (project?: ProjectDataType): boolean =>
   Object.values(project ?? {}).some((val) => val !== undefined);
@@ -298,7 +300,7 @@ onMounted(async () => {
       </div>
     </template>
 
-    <div v-show="isGithubComponentVisible" class="h-full">
+    <div v-show="isVisible" class="h-full">
       <AccessibilityNotifier :app-store="4" />
       <div
         v-if="isGithubFreshDataLoading"
