@@ -100,13 +100,7 @@ const startDelayIf = (refVal: TabState) => {
   watch(
     refVal,
     (val) => {
-      if (val === undefined) {
-        console.log(val);
-      }
-      if (
-        Object.values(val).every((v) => v === true || val.tabClicked) &&
-        !isMobileNavVisible.value
-      ) {
+      if ((val.focused || val.tabClicked) && !isMobileNavVisible.value) {
         isVisible.value = true;
         startDelay();
       }
