@@ -78,7 +78,7 @@ const startDelay = () => {
   timer = setTimeout(() => {
     if (!isHovered.value && focusedBtns.value.every((v) => v === false)) {
       console.log("passe");
-      isVisible.value = isTouch.value ? true : false;
+      // isVisible.value = isTouch.value ? true : false;
       isFocusedOnDesktopNavBtnByClick.value = false;
       clearTimer();
 
@@ -273,43 +273,42 @@ onUnmounted(() => {
       @mouseleave="handleMouseLeave"
       @mousemove="handleMouseMove"
     >
-      <div
-        v-show="isVisible"
-        role="group"
-        aria-label="Navigation Items"
-        class="max-w-80 mx-auto gap-2 w-auto rounded-lg px-2.5 inline-flex items-center"
-      >
-        <ProjectsNavigationDesktopIconContainer
-          v-for="({ name, icon }, id) in projects"
-          :key="name"
-          :to="getLinkForProject(id)"
-          :mouseX
-          :name
-          :icon
-          :is-selected="id === store.state.previewProject"
-          :isHovered
-          @focusin="handleFocusIn(id)"
-          @focusout="handleFocusOut(id)"
-        />
-        <div
-          role="separator"
-          aria-orientation="vertical"
-          aria-hidden="true"
-          class="border-x-[1.9px] border-gray-700 rounded-2xl h-8"
-        />
-        <ProjectsNavigationDesktopIconContainer
-          v-for="({ name, icon }, id) in apps"
-          :key="name"
-          :to="getLinkForApp(id)"
-          :mouseX
-          :name
-          :icon
-          :is-selected="id === store.state.previewApp"
-          :isHovered
-          @focusin="handleFocusIn(id + projects.length)"
-          @focusout="handleFocusOut(id + projects.length)"
-        />
-      </div>
+      <nav v-show="isVisible" class="mt-1">
+        <ul
+          class="max-w-80 mx-auto gap-2 w-auto rounded-lg px-2.5 inline-flex items-center list-none"
+        >
+          <ProjectsNavigationDesktopIconContainer
+            v-for="({ name, icon }, id) in projects"
+            :key="name"
+            :to="getLinkForProject(id)"
+            :mouseX
+            :name
+            :icon
+            :is-selected="id === store.state.previewProject"
+            :isHovered
+            @focusin="handleFocusIn(id)"
+            @focusout="handleFocusOut(id)"
+          />
+          <div
+            role="separator"
+            aria-orientation="vertical"
+            aria-hidden="true"
+            class="border-x-[1.9px] border-white/40 rounded-2xl h-8"
+          />
+          <ProjectsNavigationDesktopIconContainer
+            v-for="({ name, icon }, id) in apps"
+            :key="name"
+            :to="getLinkForApp(id)"
+            :mouseX
+            :name
+            :icon
+            :is-selected="id === store.state.previewApp"
+            :isHovered
+            @focusin="handleFocusIn(id + projects.length)"
+            @focusout="handleFocusOut(id + projects.length)"
+          />
+        </ul>
+      </nav>
     </Motion>
   </div>
 </template>

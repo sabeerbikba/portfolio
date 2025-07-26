@@ -73,8 +73,10 @@ provide("store", store);
   <div
     :class="{
       'h-full w-full overflow-auto scroll': true,
-      'bg-[#191919]': store.state.previewApp === 1,
-      'bg-[#0d1117]': store.state.previewApp === 2,
+      'bg-[#191919]':
+        store.state.previewApp === useFindProjectsBtnIndex('apps', 'about'),
+      'bg-[#0d1117]':
+        store.state.previewApp === useFindProjectsBtnIndex('apps', 'github'),
     }"
   >
     <ProjectsWebsite />

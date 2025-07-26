@@ -347,7 +347,9 @@ onMounted(async () => {
               "
               :defaultBranch="
                 project.repoDetails?.default_branch ||
-                (index === 1 ? 'nextjs-back-end' : 'main')
+                (index === useFindProjectsBtnIndex('projects', 'dev.tools')
+                  ? 'nextjs-back-end'
+                  : 'main')
               "
             />
             <ProjectsGithubContributors

@@ -33,8 +33,10 @@ const isVisble = computed<"block" | "none">(() =>
       :key="index"
       :class="{
         'wh-full relative hidden': true,
-        'bg-[#2a2a2a]': index === 0,
-        'bg-[#a67a42]': index === 1,
+        'bg-[#2a2a2a]':
+          index === useFindProjectsBtnIndex('projects', 'dev.tools'),
+        'bg-[#a67a42]':
+          index === useFindProjectsBtnIndex('projects', 'rickshaw'),
       }"
       :style="{
         width: `${width}px`,

@@ -104,13 +104,13 @@ const projects: QuickLinkType[] = projectsObject.map(
             <span v-html="localIcons.home.logoSB" />
           </NuxtLink>
         </div>
-        <div class="text-base">Sabeer Bikba</div>
-        <div class="font-medium text-base text-neutral-600">
+        <div class="text-base text-neutral-600">Sabeer Bikba</div>
+        <div class="font-medium text-base text-neutral-700">
           Turning Ideas into Reality with Code
         </div>
       </div>
 
-      <div class="grid grid-cols-3 gap-10 items-start mt-10 md:mt-0">
+      <div class="grid grid-cols-3 gap-10 items-start mt-10 md:mt-0 text-neutral-600">
         <div
           v-for="{ title, links } in [
             {

@@ -1,7 +1,8 @@
 # FINAL CHECK
 
+- during development problem that it set `x-robots-tag: noindex, nofollow` in index.html check saame problem in production
 - check every link is correct in page
-- after deployed need to check og:image visible after sharing link 
+- after deployed need to check og:image visible after sharing link
 - cehck accessibility working as expected
 - remove all the consoles
 - DEPLOYED TEST check how link working: https://nuxtseo.com/learn/routes-and-rendering/trailing-slashes

@@ -115,7 +115,7 @@ watchEffect(() => {
   <!-- <button
     type="button" -->
   <!-- TODO: list-noe can be moved to parent element -->
-  <li ref="iconRef" class="desktop-btn-base list-none">
+  <li ref="iconRef" class="desktop-btn-base">
     <NuxtLink
       :to
       :aria-describedby="tooltipId"
@@ -156,7 +156,7 @@ watchEffect(() => {
           }"
           :style="{ width: `${widthIcon}px`, height: `${heightIcon}px` }"
         >
-          <ProjectsNavigationBtnImg :icon="icon" :name="name" />
+          <ProjectsNavigationBtnImg :src="icon" />
         </Motion>
 
         <span

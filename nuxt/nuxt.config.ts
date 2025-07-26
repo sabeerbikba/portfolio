@@ -1,6 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 // Vercel ENV: https://vercel.com/docs/environment-variables/system-environment-variables
 
+// import { iconsName } from "~/content/projects";
+
 const BASE_URL = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : "https://sabeerbikba.vercel.app";
@@ -30,6 +32,12 @@ export default defineNuxtConfig({
     name: "sabeer bikba | portfolio",
   },
 
+  robots: {
+    disallow: ["/images/"],
+    allow: ["/images/og.jpg"],
+    credits: false,
+  },
+
   ogImage: {
     zeroRuntime: true, // OG image code is removed from the final output
     // provider: "satori",
@@ -37,7 +45,6 @@ export default defineNuxtConfig({
     // routes: {
     //   "/og-default": "custom.vue", // now accessible at /og-default.og.png
     // },
-    
   },
 
   runtimeConfig: {
@@ -48,38 +55,55 @@ export default defineNuxtConfig({
     },
   },
 
-  // sitemap: {
-  //   defaults: {
-  //     lastmod: new Date().toISOString(),
-  //   },
+  sitemap: {
+    autoLastmod: true,
+    discoverImages: false,
+    discoverVideos: false,
+    credits: false,
+    // defaults: {
+    //   lastmod: new Date().toISOString(),
+    // },
 
-  //   // excludeAppSources: true,
-  //   urls: async () => {
-  //     const urls = [];
+    // excludeAppSources: true,
+    urls: async () => {
+      const urls = [];
 
-  //     // Static pages
-  //     // urls.push({ loc: "" });
-  //     // urls.push({ loc: "/contact" });
+      // Static pages
+      // urls.push({ loc: "" });
+      // urls.push({ loc: "/contact" });
 
-  //     // Dynamic pages with query parameters
-  //     const projects = ["dev-tools", "rickshaw"];
-  //     const apps = ["website", "about", "github"];
+      // Dynamic pages with query parameters
+      const projects = ["dev-tools", "rickshaw"];
+      const apps = ["website", "about", "github"];
+      // const projectss = projects.map((name, i) => i !== 0 && { return name.name })
 
-  //     // Homepage variations
-  //     urls.push({ loc: "/?project=dev-tools&app=website" });
-  //     urls.push({ loc: "/?app=about" });
-  //     urls.push({ loc: "/?project=dev-tools&app=about" });
-  //     urls.push({ loc: "/?app=github" });
-  //     urls.push({ loc: "/?project=dev-tools&app=github" });
+      // Homepage variations
+      // urls.push({ loc: "/?app=about" });
+      // urls.push({ loc: "/?app=github" });
+      // urls.push({ loc: BASE_URL });
+      // urls.push({ loc: "/?project=dev-tools&app=website" });
+      // urls.push({ loc: "/?project=dev-tools&app=about" });
+      // urls.push({ loc: "/?project=dev-tools&app=github" });
 
-  //     // Rickshaw variations
-  //     for (const app of apps) {
-  //       urls.push({ loc: `/?project=rickshaw&app=${app}` });
-  //     }
+      // Rickshaw variations
 
-  //     return urls;
-  //   },
-  // },
+      // for (const [pi, project] of iconsName.projects.entries()) {
+      for (const [pi, project] of projects.entries()) {
+        // for (const [ai, app] of iconsName.apps.entries()) {
+        for (const [ai, app] of apps.entries()) {
+          if (pi === 0) {
+            if (ai !== 0) {
+              urls.push({ loc: `/?app=${app}` });
+            }
+          } else {
+            urls.push({ loc: `/?project=${project}&app=${app}` });
+          }
+        }
+      }
+
+      return urls;
+    },
+  },
 
   vue: {
     compilerOptions: {

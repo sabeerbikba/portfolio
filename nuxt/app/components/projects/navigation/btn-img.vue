@@ -1,13 +1,8 @@
 <script setup lang="ts">
-defineProps<{ icon: string; name: string }>();
+defineProps<{ src: string }>();
 </script>
 
 <template>
-  <img
-    :src="icon"
-    :alt="`${name} icon`"
-    class="wh-full"
-    loading="eager"
-    decoding="async"
-  />
+  <!-- alt attribute intentionally omitted: this image is a navigation icon and doesn't add SEO or accessibility value -->
+  <img :src loading="eager" decoding="async" />
 </template>

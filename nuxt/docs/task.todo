@@ -15,33 +15,28 @@
   - In dev.tools project need to add this website made for specific size when initially user open in smaller screen
 
 -- project section --
+    - LATER in project section icon need to add fallback image when faile to load image 
     - LATER mobile nav always closed do something that animation stuff the make user focus on that nav 
-    - FIRST LINK is that possbile to naviagte apps from link instead of button with JavaScipt
-        - projects if good need to add dynamic link 
-    - IMPROVEMENT LATER need to add buttons for make bigger screen that match 16:9 aspect ration if it is better specially for website component think for other part of project 
+    - LATER IMPROVEMENT need to add buttons for make bigger screen that match 16:9 aspect ration if it is better specially for website component think for other part of project 
     - LATER FIRST cancel request only when coming from another route not in same route (initiLly page load)
     - LATER Can we animation when screen change in project section like window change with client only if good
         - when animation in progress button need to make unresponsive until animation complete only where animation working (if animation working in desktop only for that)
-    - need to create proper navigation link 
-    - i think better to create and sitemap.xml or or use diffrent lib  
-    - navigation middle line not visible 
-    - check all todos 
 
 -- tools-pack.vue
-    - is underline color is looking good or not 
     - LATER ANIMATION that animation not starting middle it strating from side 
         - i think we can use to show animation: useHydration https://nuxt.com/docs/3.x/api/utils/on-nuxt-ready
 
 -- sitemap --
     - in sitemap don't index images because they don't add values and not need to index
 
-- need to change about section with latest used technologies
-- better to use apps index from 0 instead of 2 
-- apps  need to give dynamically to make it less code to change when new project add 
-- in about section need to mention that dev.tools project is most loved project by other developers that have 30+ stars 
+-- about section --
+    - if good can i change about section with with forDeveloper=true change about paragraph for nomal or developer 
+    - need to change about section with latest used technologies
+
+- in projects about section need to mention that dev.tools project is most loved project by other developers that have 30+ stars 
 - use correct heading level,  single h1 in section  
-- if needed add manullay libraries in auto import if possible
 - need to add sitemap open graph FIRST add dynamic link in projects section: https://nuxtseo.com/docs/sitemap/guides/multi-sitemaps 
+- i think better to create and sitemap.xml or or use diffrent lib or customize everting 
 
 -- API LATER --
     - API after email sent need to send small email about we reach soon 
@@ -52,23 +47,9 @@
     - also create api for logErr
 
 - TASK 
-- seo image
-- dynamic url of project section 
-- if apply after chnaging dynamic link change the apps index start 2 from 0 
 - sitemap.xml 
 
 - - LightHouse imporvments
 - add title and other seo tags 
-- need to creat image for seo meta tags
 - after generating in sever on meta tags working fine // TODO:
 - test in https://search.google.com/test/rich-results after deployhed // TODO:
-
-
-desktop-icon-contain…?t=1753363842006:55 Uncaught TypeError: iconRef.value?.getBoundingClientRect is not a function
-    at desktop-icon-contain…1753363842006:55:39
-    at Set.forEach (<anonymous>)
-
-
-- when both app and project in index 0 links need to be 
-
-

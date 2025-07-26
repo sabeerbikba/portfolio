@@ -53,19 +53,22 @@ onUnmounted(() => {
 <template>
   <ButtonsGroup.define v-slot="{ $slots }">
     <div class="mobile-btn-base" role="group">
-      <component :is="$slots.default" />
+      <ul class="list-none">
+        <component :is="$slots.default" />
+      </ul>
     </div>
   </ButtonsGroup.define>
   <MobileButton.define v-slot="{ name, icon, isSelected, ariaLabelBtn, to }">
-    <NuxtLink :to class="max-w-full block p-2" :aria-label="ariaLabelBtn">
-      <ProjectsNavigationBtnImg
-        :icon
-        :name
-        :class="{
-          'mobile-btn-icon-active': isSelected,
-        }"
-      />
-    </NuxtLink>
+    <li>
+      <NuxtLink :to class="max-w-full block p-2" :aria-label="ariaLabelBtn">
+        <ProjectsNavigationBtnImg
+          :src="icon"
+          :class="{
+            'mobile-btn-icon-active': isSelected,
+          }"
+        />
+      </NuxtLink>
+    </li>
   </MobileButton.define>
   <CloseBtnLine.define>
     <div class="mobile-close-btn" />
@@ -85,7 +88,6 @@ onUnmounted(() => {
 
   <div
     ref="mobileDockRef"
-    role="navigation"
     aria-label="Mobile projects navigation"
     class="md:hidden absolute block top-36 right-3 z-50"
   >
@@ -125,6 +127,7 @@ onUnmounted(() => {
 
     <MotionPresence>
       <Motion
+        as="nav"
         v-show="isOpen"
         :initial="{ opacity: 0, x: 50, scale: 0.95 }"
         :animate="{ opacity: 1, x: 0, scale: 1 }"
