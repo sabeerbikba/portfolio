@@ -1,10 +1,7 @@
 // TODO:
 
-- Need to add SEO image in good aspect ratio in og:image 
 -- github.vue --
-    - use SEO magic in github.vue components
     - LATER we can achive tab achive tab selected code with just css and html instead of javascript
-    - gihtub.vue show bot that this page looks simmilar to github web page 
 
 - PROBLEM: icons have some problem when rendering use another method like used for other icons 
     - LATER FIX is to we can use custom icons as per Nuxt/icons docs download and save the in project as per docs and use it 
@@ -18,7 +15,7 @@
     - LATER in project section icon need to add fallback image when faile to load image 
     - LATER mobile nav always closed do something that animation stuff the make user focus on that nav 
     - LATER IMPROVEMENT need to add buttons for make bigger screen that match 16:9 aspect ration if it is better specially for website component think for other part of project 
-    - LATER FIRST cancel request only when coming from another route not in same route (initiLly page load)
+    - FIRST LATER CRITICAL cancel request only when coming from another route not in same route (initiLly page load)
     - LATER Can we animation when screen change in project section like window change with client only if good
         - when animation in progress button need to make unresponsive until animation complete only where animation working (if animation working in desktop only for that)
 
@@ -26,28 +23,20 @@
     - LATER ANIMATION that animation not starting middle it strating from side 
         - i think we can use to show animation: useHydration https://nuxt.com/docs/3.x/api/utils/on-nuxt-ready
 
--- sitemap --
-    - in sitemap don't index images because they don't add values and not need to index
-
 -- about section --
-    - if good can i change about section with with forDeveloper=true change about paragraph for nomal or developer 
+    - LATER if good can i change about section with with forDeveloper=true change about paragraph for nomal or developer 
     - need to change about section with latest used technologies
 
-- in projects about section need to mention that dev.tools project is most loved project by other developers that have 30+ stars 
 - use correct heading level,  single h1 in section  
-- need to add sitemap open graph FIRST add dynamic link in projects section: https://nuxtseo.com/docs/sitemap/guides/multi-sitemaps 
-- i think better to create and sitemap.xml or or use diffrent lib or customize everting 
+
 
 -- API LATER --
-    - API after email sent need to send small email about we reach soon 
-    - API ~/server/api/cron.ts if possible in server need to rebuild every week and set bot revisit in week: reason fetch latest data in github
+    - after email sent need to send small email about we reach soon 
+    - ~/server/api/cron.ts if possible in server need to rebuild every week and set bot revisit in week: reason fetch latest data in github
        - How to do mentioned in that file 
     - how api work is first send msg to owner if failed send user failed and try diffrent mail option if success reach as soon as possible 
     - after email send and sucess true need to diaable the button 
     - also create api for logErr
-
-- TASK 
-- sitemap.xml 
 
 - - LightHouse imporvments
 - add title and other seo tags 

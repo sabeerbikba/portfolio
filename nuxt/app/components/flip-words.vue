@@ -31,7 +31,6 @@ const startAnimation = (): void => {
   }, 600);
 };
 
-
 const splitWords = computed(() => {
   return currentWord.value.split(" ").map((word) => ({
     word,
@@ -63,14 +62,14 @@ watch(isVisible, (newValue) => {
 </script>
 
 <template>
-  <div class="relative inline-block px-2 text-current">
+  <span class="relative inline-block px-2 text-current">
     <Transition
       enter-active-class="word-enter-active"
       leave-active-class="word-leave-active"
       @after-enter="$emit('animationStart')"
       @after-leave="$emit('animationComplete')"
     >
-      <div
+      <span
         v-show="isVisible"
         :class="
           useCn(
@@ -100,9 +99,9 @@ watch(isVisible, (newValue) => {
             <span class="inline-block">&nbsp;</span>
           </span>
         </template>
-      </div>
+      </span>
     </Transition>
-  </div>
+  </span>
 </template>
 
 <style>

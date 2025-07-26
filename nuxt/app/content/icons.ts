@@ -20,7 +20,7 @@ const localIcons: LocalIconsName = {
         d="M21.4674 7.35839C20.5339 6.84418 19.3977 6.8638 18.4825 7.40994L6.9751 14.2772L6 14.8591V15.9946V31.1028C6 32.2036 6.60288 33.216 7.57073 33.7405L21.0006 41.0178L22.0749 41.5999L23.0832 40.9098L33.6945 33.6466C34.5115 33.0874 35 32.161 35 31.171V15.9946V14.813L33.965 14.2428L21.4674 7.35839ZM12.4356 15.6767L20.0398 11.1387L28.7827 15.9548L21.8544 19.6027L12.4356 15.6767ZM23.9535 23.018L31 19.3079V30.6436L23.9535 35.4668V23.018Z"
         fill="black" />
     </svg>`,
-    arrowRight: `<svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+    arrowRight: `<svg aria-hidden="true" stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
                 <path d="M13.293 7.293c-.391.391-.391 1.023 0 1.414l2.293 2.293h-7.586c-.552 0-1 .448-1 1s.448 1 1 1h7.586l-2.293 2.293c-.391.391-.391 1.023 0 1.414.195.195.451.293.707.293s.512-.098.707-.293l4.707-4.707-4.707-4.707c-.391-.391-1.023-.391-1.414 0z"></path>
               </svg>`,
   },

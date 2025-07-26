@@ -79,16 +79,6 @@ const config: Config = {
         },
       });
     },
-    // ({ addBase, theme }: any) => {
-    //   const allColors = flattenColorPalette(theme("colors"));
-    //   const newVars = Object.fromEntries(
-    //     Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
-    //   );
-
-    //   addBase({
-    //     ":root": newVars,
-    //   });
-    // },
     ({ matchUtilities, theme }: any) => {
       matchUtilities(
         {

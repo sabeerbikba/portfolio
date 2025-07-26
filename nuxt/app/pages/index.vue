@@ -37,14 +37,7 @@ useSeoMeta({
   twitterDescription: seoMetaMap.index.description,
 });
 
-// Can i move this to seo.ts file
 const flipWords = ["functional", "beautiful", "impactful", "responsive"];
-
-const aboutSectionParagraphs: string[] = [
-  "Hi, I’m Sabeer Bikba, a <strong class='font-medium'>full-stack developer</strong> with a passion for creating dynamic <strong class='font-medium'>React front-end applications</strong>. I specialize in building intuitive and responsive user interfaces that provide smooth experiences across devices.",
-  "While my expertise spans both front-end and back-end development, I’m particularly focused on delivering high-quality, interactive React apps. I’m also exploring <strong class='font-medium'>mobile development with React Native</strong> to create seamless cross-platform mobile experiences.",
-  "I’m always eager to take on new challenges and push the boundaries of web and mobile development.",
-];
 
 onMounted(() => {
   const setListeners = (() => {
@@ -105,9 +98,9 @@ onMounted(() => {
       class="flex flex-col items-center justify-end h-[18rem] xs:h-[22rem] sm:h-[27rem] md:h-[32rem] bg-gradient-to-b from-white-400 via-gray-100 to-white-400"
     >
       <SharedHeading id="hero">
-        Let&apos;s Build Something Amazing
+        Let&apos;s build something amazing
       </SharedHeading>
-      <div
+      <p
         class="font-normal text-neutral-600 mx-auto py-4 xs:py-5 sm:py-6 md:py-7 text-[24px] xs:text-[28px] sm:text-[34px] md:text-[40px]"
       >
         Designing
@@ -127,7 +120,7 @@ onMounted(() => {
         </ClientOnly>
         <br />
         solutions for your business
-      </div>
+      </p>
       <div
         role="group"
         aria-label="Call to action button"
@@ -172,11 +165,11 @@ onMounted(() => {
         <SharedHeading id="tools-using"
           >Development Tools & Expertise</SharedHeading
         >
-        <h2
+        <p
           class="font-bold text-xg xs:text-2xl sm:text-3xl md:text-4xl max-xs:px-3 text-black/70"
         >
           Core Skills & Technologies
-        </h2>
+        </p>
       </div>
       <div class="relative">
         <LazyToolsPack
@@ -204,7 +197,11 @@ onMounted(() => {
       <SharedHeading id="about-me">About Me</SharedHeading>
       <div class="max-w-[1200px] mx-auto text-center about-div">
         <p
-          v-for="(paragraph, key) in aboutSectionParagraphs"
+          v-for="(paragraph, key) in [
+            `Hi, I’m Sabeer Bikba, a <strong class='font-medium'>full-stack developer</strong> with a passion for creating dynamic <strong class='font-medium'>React front-end applications</strong>. I specialize in building intuitive and responsive user interfaces that provide smooth experiences across devices.`,
+            `While my expertise spans both front-end and back-end development, I’m particularly focused on delivering high-quality, interactive React apps. I’m also exploring <strong class='font-medium'>mobile development with React Native</strong> to create seamless cross-platform mobile experiences.`,
+            `I’m always eager to take on new challenges and push the boundaries of web and mobile development.`,
+          ]"
           :key
           v-html="paragraph"
         />
@@ -231,7 +228,6 @@ onMounted(() => {
         </p>
         <div
           class="mt-8 transition-transform duration-200 hover:scale-105 active:scale-95"
-          tabindex="-1"
         >
           <SharedNuxtLink
             to="/contact"

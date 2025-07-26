@@ -42,56 +42,6 @@ null = 0 a
  - Used for NuxtLink :to="..." props to ensure clean & shareable URLs.
 
  */
-// import { iconsName } from "~/content/projects";
-
-// export default (store: { state: any }) => {
-//   const getLinkForProject = (projectIndex: number) => {
-//     const isDefaultProject = projectIndex === 0;
-//     const currentAppIndex = store.state.previewApp;
-//     const isDefaultApp = currentAppIndex === 0;
-
-//     if (isDefaultProject && isDefaultApp) return "/";
-
-//     const projectSlug = useSlugify(iconsName.projects[projectIndex]!);
-//     const appSlug =
-//       currentAppIndex >= 0
-//         ? useSlugify(iconsName.apps[currentAppIndex]!)
-//         : null;
-
-//     const query = new URLSearchParams();
-//     if (!isDefaultProject) query.set("project", projectSlug);
-//     if (!isDefaultApp && appSlug) query.set("app", appSlug);
-
-//     const path = query.toString();
-//     return path ? `/?${path}` : "/";
-//   };
-
-//   const getLinkForApp = (appIndex: number) => {
-//     const isDefaultApp = appIndex === 0;
-//     const currentProjectIndex = store.state.previewProject;
-//     const isDefaultProject = currentProjectIndex === 0;
-
-//     if (isDefaultApp && isDefaultProject) return "/";
-
-//     const appSlug = useSlugify(iconsName.apps[appIndex]!);
-//     const projectSlug =
-//       currentProjectIndex >= 0
-//         ? useSlugify(iconsName.projects[currentProjectIndex]!)
-//         : null;
-
-//     const query = new URLSearchParams();
-//     if (!isDefaultProject && projectSlug) query.set("project", projectSlug);
-//     if (!isDefaultApp && appSlug) query.set("app", appSlug);
-
-//     const path = query.toString();
-//     return path ? `/?${path}` : "/";
-//   };
-
-//   return {
-//     getLinkForProject,
-//     getLinkForApp,
-//   };
-// };
 
 import { iconsName } from "~/content/projects";
 import type { ScreenStoreStateType } from "~~/types/store";

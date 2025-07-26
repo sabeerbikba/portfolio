@@ -46,50 +46,25 @@ const [isHeroCotBtn, isProjectsAbout, isProjectsGithub, isProjectsWebsite] =
     "is-projects-website",
   ]);
 
-// const tabAndFocusState = useTabState([
-//   "is-hero-cot-btn",
-//   "is-projects-about",
-//   "is-projects-github",
-//   "is-projects-website",
-// ]);
-
-// console.log(tabAndFocusState);
-
 const clearTimer = () => {
   if (timer) clearTimeout(timer);
   timer = null;
 };
 
 const clearIf = (refVal: TabState) => {
-  if (
-    // something problem here
-    Object.values(refVal.value).every(
-      (v) => v === true || refVal.value.tabClicked
-    )
-  ) {
+  if (refVal.value.focused || refVal.value.tabClicked) {
     refVal.value.focused = false;
     refVal.value.tabClicked = false;
   }
 };
 
 const startDelay = () => {
-  console.log("start dleya");
   clearTimer();
   timer = setTimeout(() => {
     if (!isHovered.value && focusedBtns.value.every((v) => v === false)) {
-      console.log("passe");
-      // isVisible.value = isTouch.value ? true : false;
+      isVisible.value = isTouch.value ? true : false;
       isFocusedOnDesktopNavBtnByClick.value = false;
       clearTimer();
-
-      // tabAndFocusState.forEach((tab) => {
-      //   console.log("tabs");
-      //   if (!tab.value.focused || !tab.value.tabClicked) {
-      //     console.log("tabs pass");
-      //     tab.value.focused = false;
-      //     tab.value.tabClicked = false;
-      //   }
-      // });
 
       clearIf(isHeroCotBtn);
       clearIf(isProjectsAbout);
@@ -144,55 +119,6 @@ startDelayIf(isHeroCotBtn);
 startDelayIf(isProjectsAbout);
 startDelayIf(isProjectsGithub);
 startDelayIf(isProjectsWebsite);
-
-// const startDelayIf = (refVal: Ref<TabState>) => {
-//   watch(
-//     refVal,
-//     (val) => {
-//       if (
-//         val &&
-//         Object.values(val).every((v) => v === true || val.tabClicked) &&
-//         !isMobileNavVisible.value
-//       ) {
-//         isVisible.value = true;
-//         startDelay();
-//       }
-//     },
-//     { deep: true }
-//   );
-// };
-
-// tabAndFocusState.forEach(startDelayIf);
-
-// watch(
-//   tabAndFocusState,
-//   (vals) => {
-//     const allTrueOrClicked = vals.every((val) =>
-//       Object.values(val).every((v) => v === true || val.tabClicked)
-//     );
-
-//     if (allTrueOrClicked && !isMobileNavVisible.value) {
-//       isVisible.value = true;
-//       startDelay();
-//     }
-//   },
-//   { deep: true }
-// );
-
-// watch(
-//   () => tabAndFocusState.map((ref) => ref.value),
-//   (vals) => {
-//     const allTrueOrClicked = vals.every((val) =>
-//       Object.values(val).every((v) => v === true || val.tabClicked)
-//     );
-
-//     if (allTrueOrClicked && !isMobileNavVisible.value) {
-//       isVisible.value = true;
-//       startDelay();
-//     }
-//   },
-//   { deep: true }
-// );
 
 const setIsHovered = (value: boolean) => {
   isHovered.value = value;
