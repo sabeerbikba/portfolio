@@ -1,8 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-// Vercel ENV: https://vercel.com/docs/environment-variables/system-environment-variables
+// Vercel ENV: https://vercel.com/docs/environment-variables/system-environment-variables#VERCEL_PROJECT_PRODUCTION_URL
 
-const BASE_URL = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
+const BASE_URL = process.env.VERCEL_PROJECT_PRODUCTION_URL
+  ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
   : "https://sabeerbikba.vercel.app";
 
 export default defineNuxtConfig({
@@ -17,7 +17,7 @@ export default defineNuxtConfig({
     "motion-v/nuxt",
     "@nuxt/icon",
     "@nuxt/eslint",
-    "@nuxtjs/html-validator",
+    // "@nuxtjs/html-validator",
     "@vueuse/nuxt",
     "@nuxtjs/robots",
     "@nuxtjs/sitemap",
@@ -104,9 +104,9 @@ export default defineNuxtConfig({
     },
   },
 
-  htmlValidator: {
-    usePrettier: true,
-  },
+  // htmlValidator: {
+  //   usePrettier: true,
+  // },
 
   compatibilityDate: "2024-11-01",
   devtools: {
