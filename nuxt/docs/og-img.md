@@ -9,7 +9,7 @@ In this project, I **intentionally avoided dynamic OG image generation per route
 Even after trying:
 
 ```ts
-defineOgImageComponent("Custom"); // in app.vue
+defineOgImageComponent("Og"); // in app.vue
 ```
 
 Nuxt was still generating **multiple images per route**, like:
@@ -44,7 +44,7 @@ useSeoMeta({
 1. Uncomment the line in `./app/app.vue`:
 
    ```ts
-   defineOgImageComponent("Custom");
+   defineOgImageComponent("Og");
    ```
 
 2. Run the build:

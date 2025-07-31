@@ -173,7 +173,7 @@ onMounted(() => {
       </div>
       <div class="relative">
         <LazyToolsPack
-          :hydrate-after="2300"
+          :hydrate-after="3000"
           class="tools-pack-visible"
           @hydrated="onToolPackHydreate"
         />

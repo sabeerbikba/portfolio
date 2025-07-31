@@ -16,7 +16,7 @@ const socialMedia: TypeSocialMedia[] = [
   },
   {
     icon: "mdi:linkedin",
-    href: "https://www.linkedin.com/in/sabeer-bikba-70a574252/",
+    href: "https://www.linkedin.com/in/sabeer-bikba/",
     label: "LinkedIn",
   },
   {

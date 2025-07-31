@@ -10,7 +10,7 @@
 }
 
 a {
-  @apply pointer-events-auto cursor-pointer;
+  @apply cursor-pointer;
 }
 
 /* tools-pack.vue */
@@ -36,11 +36,11 @@ a {
 
 .circle-item:hover .circle-tooltip,
 .circle-item:focus-within .circle-tooltip {
-  @apply opacity-100 pointer-events-auto z-10;
+  @apply opacity-100 !pointer-events-auto z-10;
 }
 
 .circle-image {
-  @apply absolute bg-no-repeat bg-center bg-contain rounded-full pointer-events-none
+  @apply absolute bg-no-repeat bg-center bg-contain rounded-full !pointer-events-none
     w-[95%] h-[95%] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2;
 }
 
@@ -49,7 +49,7 @@ a {
     text-sm bg-gray-800 text-white p-2 max-md:p-1.5 max-sm:p-1 transform
     opacity-0 shadow-xl rounded-lg
     flex flex-col items-center
-    pointer-events-none sm:underline-offset-[1.8px]
+    !pointer-events-none sm:underline-offset-[1.8px]
     z-0 decoration-white/35;
 }
 

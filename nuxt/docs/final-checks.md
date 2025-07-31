@@ -1,6 +1,5 @@
 # FINAL CHECK
 
-- during development problem that it set `x-robots-tag: noindex, nofollow` in index.html check saame problem in production
 - check every link is correct in page
 - after deployed need to check og:image visible after sharing link
 - cehck accessibility working as expected

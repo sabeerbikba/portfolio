@@ -71,7 +71,7 @@ watch(width, recalculate);
     ref="container"
     :class="{
       'max-w-[1000px] aspect-square lg:mx-auto max-xl:mx-10 max-md:mx-8 max-xs:mx-5': true,
-      'py-[400px]': !isMounted,
+      'lg:py-[400px]': !isMounted,
     }"
   >
     <p class="sr-only" aria-hidden="false">

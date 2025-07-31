@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Motion as MotionV, type MotionValue } from "motion-v";
 import { Motion } from "@oku-ui/motion";
+import { apps } from "~/content/projects";
 
 const { name, isSelected, isHovered, mouseX } = defineProps<{
   to: string;
@@ -46,7 +47,7 @@ const showTooltipAnimation = computed(() =>
 );
 
 const viewType = computed(() =>
-  ["Website", "About", "Github"].includes(name) ? "app" : "project"
+  apps.map((app) => app.name).includes(name) ? "app" : "project"
 );
 
 const distance = computed(() => {
@@ -110,11 +111,6 @@ watchEffect(() => {
 </script>
 
 <template>
-  <!-- here shows error `<div> element is not permitted as content under <button>` if not using link remove the div elements instead use span -->
-  <!-- :to -->
-  <!-- <button
-    type="button" -->
-  <!-- TODO: list-noe can be moved to parent element -->
   <li ref="iconRef" class="desktop-btn-base">
     <NuxtLink
       :to
@@ -169,5 +165,4 @@ watchEffect(() => {
       </MotionV>
     </NuxtLink>
   </li>
-  <!-- </button> -->
 </template>

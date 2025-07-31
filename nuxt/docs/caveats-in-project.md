@@ -1,0 +1,1 @@
+- Links won't work as normally because of `pointer-events-none` class

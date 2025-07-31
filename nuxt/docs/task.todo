@@ -12,6 +12,7 @@
   - In dev.tools project need to add this website made for specific size when initially user open in smaller screen
 
 -- project section --
+    - LATER in dektop.vue when hoverd on nav and unhover it close instantly instead of slowly close
     - LATER in project section icon need to add fallback image when faile to load image 
     - LATER mobile nav always closed do something that animation stuff the make user focus on that nav 
     - LATER IMPROVEMENT need to add buttons for make bigger screen that match 16:9 aspect ration if it is better specially for website component think for other part of project 
@@ -26,9 +27,6 @@
 -- about section --
     - LATER if good can i change about section with with forDeveloper=true change about paragraph for nomal or developer 
     - need to change about section with latest used technologies
-
-- use correct heading level,  single h1 in section  
-
 
 -- API LATER --
     - after email sent need to send small email about we reach soon 

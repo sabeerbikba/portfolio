@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Motion } from "@oku-ui/motion";
-import { projects, apps, iconsName } from "~/content/projects";
+import { projects, apps } from "~/content/projects";
 import { useMotionValue } from "motion-v";
 import type { ScreenStoreType } from "~~/types/store";
 
@@ -62,7 +62,7 @@ const startDelay = () => {
   clearTimer();
   timer = setTimeout(() => {
     if (!isHovered.value && focusedBtns.value.every((v) => v === false)) {
-      isVisible.value = isTouch.value ? true : false;
+      isVisible.value = isTouch.value ? true : false; // For testig comment this line
       isFocusedOnDesktopNavBtnByClick.value = false;
       clearTimer();
 

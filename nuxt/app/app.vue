@@ -43,7 +43,7 @@ useSeoMeta({
   twitterImage: ogImg,
 });
 
-// defineOgImageComponent("Custom");
+// defineOgImageComponent("Og");
 
 const convertToTitleCase = (input: string): string =>
   input
@@ -99,7 +99,7 @@ const projects: QuickLinkType[] = projectsObject.map(
           <NuxtLink
             to="/"
             aria-label="Home page"
-            class="flex justify-normal space-x-2 text-2xl font-bold text-center text-neutral-600 selection:bg-emerald-500 mr-10 py-0"
+            class="flex justify-normal space-x-2 text-2xl font-bold text-center text-neutral-600 selection:bg-emerald-500 mr-10 py-0 pointer-events-auto"
           >
             <span v-html="localIcons.home.logoSB" />
           </NuxtLink>
@@ -110,7 +110,9 @@ const projects: QuickLinkType[] = projectsObject.map(
         </div>
       </div>
 
-      <div class="grid grid-cols-3 gap-10 items-start mt-10 md:mt-0 text-neutral-600">
+      <div
+        class="grid grid-cols-3 gap-10 items-start mt-10 md:mt-0 text-neutral-600"
+      >
         <div
           v-for="{ title, links } in [
             {

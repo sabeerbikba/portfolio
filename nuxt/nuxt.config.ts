@@ -25,7 +25,7 @@ export default defineNuxtConfig({
   ],
 
   site: {
-    url: BASE_URL, // Used in og:image and sitemap.xsl
+    url: BASE_URL, // sitemap.xsl
     name: "sabeer bikba | portfolio",
   },
 
