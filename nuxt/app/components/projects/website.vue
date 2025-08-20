@@ -64,7 +64,7 @@ const isVisble = computed<"block" | "none">(() =>
         <iframe
           :src="website"
           :title="`Project showcase: ${name}`"
-          class="wh-full max-md:rounded-2xl absolute z-20 top-0"
+          class="wh-full max-md:rounded-2xl max-md:[zoom:75%] md:[zoom:82%] absolute z-20 top-0"
         />
       </div>
     </div>
