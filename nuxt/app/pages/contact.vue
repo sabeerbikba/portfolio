@@ -54,7 +54,7 @@ const handleSubmit = async (): Promise<void> => {
   status.value = "Sending";
   await new Promise((resolve) => setTimeout(resolve, 4000));
 
-  const success = true;
+  const success = false;
   if (success) {
     status.value = "Sent";
     // name.value = "";
