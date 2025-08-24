@@ -16,7 +16,7 @@
     "analyze": "nuxt analyze --logLevel=verbose",
     "code": "code-server",
     "code-dev": "run-p dev code",
-    "bp": "nuxt generate && nuxt preview",
+    "bp": "nuxt build && nuxt preview",
     "gp": "nuxt generate && nuxt preview",
     "lint": "eslint .",
     "add:module": "nuxt module add"
@@ -35,7 +35,8 @@
     "nuxt": "^4.0.0",
     "tailwind-merge": "^2.6.0",
     "vue": "latest",
-    "vue-router": "latest"
+    "vue-router": "latest",
+    "zod": "^4.1.0"
   },
   "packageManager": "pnpm@10.13.1",
   "devDependencies": {
@@ -47,6 +48,7 @@
     "@nuxtjs/tailwindcss": "6.14.0",
     "@octokit/types": "^13.10.0",
     "@types/d3-hierarchy": "^3.1.7",
+    "@types/nodemailer": "^7.0.1",
     "eslint": "^9.29.0",
     "mini-svg-data-uri": "^1.4.4",
     "npm-run-all": "^4.1.5",

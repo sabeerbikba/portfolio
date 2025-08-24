@@ -1,8 +1,11 @@
 <script setup lang="ts">
+import { z } from "zod";
 import { Motion, MotionPresence } from "@oku-ui/motion";
 import socialMedia from "@/content/social-media";
 import type { NuxtIconName } from "~~/types/icons";
 import seoMetaMap from "~/content/seo";
+
+// TODO: Create better form validation
 
 type ContactInfoType = {
   icon: NuxtIconName;
@@ -11,9 +14,20 @@ type ContactInfoType = {
   ariaLabel: string;
 };
 
+type FormInputsKeys = keyof typeof defaultForm;
+
 const URL = useNormalizeUrl();
+const { gmail, phone } = useRuntimeConfig().public;
 const isHommePageLoading = ref(false);
 const homepageLink = useState("home-page-link", () => "/");
+
+const defaultForm = {
+  name: "",
+  email: "",
+  message: "",
+} as const;
+
+const formInputs = reactive<Record<FormInputsKeys, string>>(defaultForm);
 
 useHead({
   link: [
@@ -48,20 +62,59 @@ const status = ref("Send");
 const sendingFrame = ref(0);
 const sendingFrames = ["Sending", "Sending.", "Sending..", "Sending..."];
 
-const handleSubmit = async (): Promise<void> => {
-  // html message accepting empty spaces need to check before submit
-  // TODO: create api or use same page api link to process the data with post request
-  status.value = "Sending";
-  await new Promise((resolve) => setTimeout(resolve, 4000));
+const contactSchema = z
+  .object({
+    name: z
+      .string()
+      .trim()
+      .min(3, "Name must be at least 3 characters long")
+      .max(70, "Name cannot exceed 70 characters"),
+    email: z.email("Please enter a valid email address"),
+    message: z
+      .string()
+      .trim()
+      .min(20, "Message must be at least 20 characters long")
+      .max(900, "Message cannot exceed 900 characters"),
+  })
+  .strict();
 
-  const success = false;
-  if (success) {
+const inputsValid = computed(() => contactSchema.safeParse(formInputs).success);
+
+watch(inputsValid, (cond) => {
+  console.log("val", cond);
+});
+
+const handleSubmit = async (e: Event) => {
+  formInputs.name = formInputs.name.trim();
+  formInputs.email = formInputs.email.trim();
+  formInputs.message = formInputs.message.trim();
+
+  status.value = "Sending";
+
+  const req = await fetch("/api/contact", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formInputs),
+  });
+  const res = await req.json();
+
+  if (res.statusCode == 200) {
     status.value = "Sent";
-    // name.value = "";
-    // email.value = "";
-    // message.value = "";
+
+    formInputs.name = "";
+    formInputs.email = "";
+    formInputs.message = "";
   } else {
-    status.value = "Retry";
+    status.value = "Failed to send";
+    useTimeoutFn(
+      () => {
+        status.value = "Retry";
+      },
+      3800,
+      { immediate: true }
+    );
   }
 };
 
@@ -125,13 +178,14 @@ onUnmounted(() => {
 
       <div class="mt-10 max-lg:mt-2">
         <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
-          <div>
-            <Motion
-              as="form"
+          <Motion
+            as="div"
+            :initial="{ opacity: 0, x: -50 }"
+            :animate="{ opacity: 1, x: 0 }"
+            :transition="{ duration: 0.8, delay: 0.4 }"
+          >
+            <form
               @submit.prevent="handleSubmit"
-              :initial="{ opacity: 0, x: -50 }"
-              :animate="{ opacity: 1, x: 0 }"
-              :transition="{ duration: 0.8, delay: 0.4 }"
               class="p-5 md:p-6 lg:p-8 rounded-lg shadow-lg grid grid-cols-1 gap-y-6 bg-[#00000008] border border-[#8080804f] max-lg:w-[80%] max-lg:mx-auto max-sm:w-full max-w-2xl ml-auto"
               aria-labelledby="contactFormTitle"
             >
@@ -183,7 +237,7 @@ onUnmounted(() => {
                         elementType: 'textarea',
                         placeholder: 'Your message here...',
                         minlength: 20,
-                        maxlength: 600,
+                        maxlength: 900,
                         ariaDescribedbyId: 'messageDescription',
                         ariaDescribedbyText:
                           'Please enter your message. Minimum 20 characters.',
@@ -201,6 +255,12 @@ onUnmounted(() => {
                       {{ label }}
                     </label>
                     <SharedInput
+                      :value="formInputs[labelId as FormInputsKeys]"
+                      @input="
+                        (event) => (formInputs[labelId as FormInputsKeys] = event.target.value)
+                      "
+                      pattern=".*\S.*"
+                      :name="labelId"
                       :id="labelId"
                       :type
                       :placeholder
@@ -208,7 +268,9 @@ onUnmounted(() => {
                       :maxlength
                       :aria-describedby="ariaDescribedbyId"
                       :autocomplete="
-                        elementType === 'input' ? labelId : undefined
+                        elementType === 'input'
+                          ? labelId
+                          : undefined
                       "
                       :class="{
                         'h-40 resize-none': elementType === 'textarea',
@@ -222,12 +284,15 @@ onUnmounted(() => {
                     </small>
                   </div>
                   <button
-                    class="center text-xl gap-1 bg-gradient-to-br relative group/btn from-black to-neutral-600 block w-full text-white rounded-md h-11 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
+                    class="center text-xl gap-1 bg-gradient-to-br relative group/btn from-black to-neutral-600 disabled:opacity-80 block w-full text-white rounded-md h-11 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
                     type="submit"
-                    :disabled="status === 'Sending'"
+                    :disabled="
+                      status === 'Sending' ||
+                      !inputsValid ||
+                      status.startsWith('Failed')
+                    "
                     :aria-busy="status === 'Sending'"
                     :aria-live="status === 'Sending' ? 'polite' : 'assertive'"
-                    :aria-label="status"
                   >
                     <MotionPresence mode="wait">
                       <Motion
@@ -242,6 +307,7 @@ onUnmounted(() => {
                       </Motion>
                       <Motion
                         v-else
+                        :key="status"
                         as="span"
                         :initial="{ y: 10, opacity: 0 }"
                         :animate="{ y: 0, opacity: 1 }"
@@ -282,8 +348,8 @@ onUnmounted(() => {
                   </button>
                 </div>
               </div>
-            </Motion>
-          </div>
+            </form>
+          </Motion>
 
           <div>
             <Motion
@@ -313,15 +379,14 @@ onUnmounted(() => {
                       v-for="({ href, ariaLabel, icon, text }, index) in [
                         {
                           icon: 'ic:round-email',
-                          text: 'sabeerbikba02@gmail.com',
-                          href: 'mailto:sabeerbikba02@gmail.com',
-                          ariaLabel: 'Email sabeerbikba02@gmail.com',
+                          text: gmail,
+                          href: `mailto:${gmail}`,
+                          ariaLabel: `Email ${gmail}`,
                         },
                         {
                           icon: 'ic:round-phone',
-                          // text: '+91 861 871 8358',
                           text: '+91&nbsp;861&nbsp;871&nbsp;8358',
-                          href: 'tel:+918618718358',
+                          href: `tel:+${phone}`,
                           ariaLabel: 'Call +91 861 871 8358',
                         },
                         {

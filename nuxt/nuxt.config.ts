@@ -9,7 +9,7 @@ export default defineNuxtConfig({
   ssr: true,
 
   nitro: {
-    preset: "static",
+    preset: "vercel",
   },
 
   modules: [
@@ -67,7 +67,12 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
+    clientId: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    refreshToken: process.env.GOOGLE_REFRESH_TOKEN,
     public: {
+      gmail: "sabeerbikba02@gmail.com",
+      phone: "918618718358",
       baseUrl: BASE_URL,
       repoOwner: process.env.VERCEL_GIT_REPO_OWNER || "sabeerbikba",
       githubBaseURL: "https://github.com/",

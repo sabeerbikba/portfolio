@@ -20,6 +20,9 @@
     - LATER Can we animation when screen change in project section like window change with client only if good
         - when animation in progress button need to make unresponsive until animation complete only where animation working (if animation working in desktop only for that)
 
+-- others -
+    - formatNumber function can be reused 
+
 -- tools-pack.vue
     - LATER ANIMATION that animation not starting middle it strating from side 
         - i think we can use to show animation: useHydration https://nuxt.com/docs/3.x/api/utils/on-nuxt-ready
