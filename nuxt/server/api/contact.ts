@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer";
 import { z } from "zod";
 
-// TODO: Need to use diffrenct email service if it is slow 
+// TODO: Need to use diffrenct email service if it is slow
 
 interface ContactFormData {
   name: string;
@@ -211,10 +211,9 @@ const contactSchema = z
   .strict();
 
 export default defineEventHandler(async (event) => {
-  // export default eventHandler(async (event) => {
-
-  // const origin = getRequestHeader(event, "origin");
-  if (event.origin !== baseUrl && !import.meta.dev) {
+  const origin = getRequestHeader(event, "origin") || "unknown";
+  if (origin !== baseUrl && !import.meta.dev) {
+    console.log("origin, baseUrl", origin, baseUrl);
     setResponseStatus(event, 403);
     return {
       error: true,
