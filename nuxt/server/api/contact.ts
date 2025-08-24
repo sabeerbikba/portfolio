@@ -1,7 +1,6 @@
 import nodemailer from "nodemailer";
-import { z } from "zod";
-
-// TODO: Need to use diffrenct email service if it is slow
+import { google } from "googleapis";
+import { success, z } from "zod";
 
 interface ContactFormData {
   name: string;
@@ -9,22 +8,32 @@ interface ContactFormData {
   message: string;
 }
 
-// with optionls is better name
-type ContactFormDataWithSuccess = ContactFormData & {
-  success?: boolean;
-  ip: string | undefined;
+type ContactFormDataWithOptionals = ContactFormData & {
+  ip?: string | undefined;
+  success?: boolean; // confirmation mail
+  success2?: boolean; // notification mail
 };
 
 interface EmailTemplates {
   confirmation: (data: ContactFormData) => string;
-  notification: (data: ContactFormDataWithSuccess) => string;
+  notification: (data: ContactFormDataWithOptionals) => string;
 }
 
 type FallbackType = "user" | "admin";
 
 const { gmail, phone, baseUrl } = useRuntimeConfig().public;
-const { clientId, clientSecret, refreshToken } = useRuntimeConfig();
+const {
+  clientId,
+  clientSecret,
+  refreshToken,
+  client_email,
+  private_key,
+  spreadsheetId,
+} = useRuntimeConfig();
 const from = gmail;
+
+const getTime = () =>
+  new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -37,8 +46,40 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+const auth = new google.auth.GoogleAuth({
+  credentials: {
+    client_email,
+    private_key: private_key?.replace(/\\n/g, "\n"),
+  },
+  scopes: ["https://www.googleapis.com/auth/spreadsheets"],
+});
+
+const sheets = google.sheets({ version: "v4", auth });
+
+async function appendToSheet(data: ContactFormDataWithOptionals) {
+  const { name, email, message, ip, success, success2 } = data;
+  await sheets.spreadsheets.values.append({
+    spreadsheetId,
+    range: "Sheet1!A:G",
+    valueInputOption: "USER_ENTERED",
+    requestBody: {
+      values: [
+        [
+          name,
+          email,
+          message,
+          getTime(),
+          ip || "unknown",
+          success ? "✅ Success" : "❌ Failed",
+          success2 ? "✅ Success" : "❌ Failed",
+        ],
+      ],
+    },
+  });
+}
+
 const generateFallbackText = (
-  data: ContactFormDataWithSuccess,
+  data: ContactFormDataWithOptionals,
   type: FallbackType
 ): string => {
   const { name, email, message, success } = data;
@@ -119,7 +160,7 @@ const emailTemplates: EmailTemplates = {
     </html>
   `,
 
-  notification: (data: ContactFormDataWithSuccess) => `
+  notification: (data: ContactFormDataWithOptionals) => `
     <!DOCTYPE html>
     <html>
     <head>
@@ -159,7 +200,7 @@ const emailTemplates: EmailTemplates = {
           </tr>
           <tr>
             <td style="padding: 12px; background: #f8f9fa; border: 1px solid #e9ecef; font-weight: bold;">Date:</td>
-            <td style="padding: 12px; background: white; border: 1px solid #e9ecef;">${new Date().toLocaleString()}</td>
+            <td style="padding: 12px; background: white; border: 1px solid #e9ecef;">${getTime()}</td>
           </tr>
           <tr>
             <td style="padding: 12px; background: #f8f9fa; border: 1px solid #e9ecef; font-weight: bold;">IP:</td>
@@ -267,7 +308,7 @@ export default defineEventHandler(async (event) => {
       message: stringifiedMessage,
     };
 
-    const mail = await transporter.sendMail({
+    const confirmationMail = await transporter.sendMail({
       from,
       to: email,
       subject: name + ", we received your message!",
@@ -277,19 +318,26 @@ export default defineEventHandler(async (event) => {
 
     const forwarded = event.node.req.headers["x-forwarded-for"];
     const ip =
-      (forwarded ? (forwarded as string).split(",")[0].trim() : null) ||
+      (forwarded ? (forwarded as string).split(",")[0]?.trim() : null) ||
       event.node.req.socket.remoteAddress;
 
-    await transporter.sendMail({
+    const notification = {
+      ...info,
+      ip,
+      success: confirmationMail.rejected.length === 0,
+    };
+
+    const notificationMail = await transporter.sendMail({
       from,
       to: from,
       subject: `Message from ${name} via contact form`,
       text: generateFallbackText(info, "admin"),
-      html: emailTemplates.notification({
-        ...info,
-        success: mail.rejected.length === 0,
-        ip,
-      }),
+      html: emailTemplates.notification(notification),
+    });
+
+    await appendToSheet({
+      ...notification,
+      success2: notificationMail.rejected.length === 0,
     });
 
     setResponseStatus(event, 200);

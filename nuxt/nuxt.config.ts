@@ -70,6 +70,9 @@ export default defineNuxtConfig({
     clientId: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     refreshToken: process.env.GOOGLE_REFRESH_TOKEN,
+    client_email: process.env.GOOGLE_CLIENT_EMAIL,
+    private_key: process.env.GOOGLE_PRIVATE_KEY,
+    spreadsheetId: process.env.SPREADSHEET_ID,
     public: {
       gmail: "sabeerbikba02@gmail.com",
       phone: "918618718358",
