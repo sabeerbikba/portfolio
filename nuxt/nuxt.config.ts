@@ -72,7 +72,10 @@ export default defineNuxtConfig({
     refreshToken: process.env.GOOGLE_REFRESH_TOKEN,
     client_email: process.env.GOOGLE_CLIENT_EMAIL,
     private_key: process.env.GOOGLE_PRIVATE_KEY,
-    spreadsheetId: process.env.SPREADSHEET_ID,
+    spreadsheetIdContacts: process.env.SPREADSHEET_ID_CONTACTS,
+    spreadsheetIdRedeploy: process.env.SPREADSHEET_ID_REDEPLOY,
+    cronSecret: process.env.CRON_SECRET,
+    deployHookUrl: process.env.DEPLOY_HOOK_URL,
     public: {
       gmail: "sabeerbikba02@gmail.com",
       phone: "918618718358",

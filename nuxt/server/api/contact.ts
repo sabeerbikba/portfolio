@@ -1,6 +1,7 @@
 import nodemailer from "nodemailer";
 import { google } from "googleapis";
-import { success, z } from "zod";
+import { z } from "zod";
+import useGetTime from "../utils/use-get-time";
 
 interface ContactFormData {
   name: string;
@@ -28,12 +29,9 @@ const {
   refreshToken,
   client_email,
   private_key,
-  spreadsheetId,
+  spreadsheetIdContacts,
 } = useRuntimeConfig();
 const from = gmail;
-
-const getTime = () =>
-  new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -56,10 +54,16 @@ const auth = new google.auth.GoogleAuth({
 
 const sheets = google.sheets({ version: "v4", auth });
 
-async function appendToSheet(data: ContactFormDataWithOptionals) {
-  const { name, email, message, ip, success, success2 } = data;
+async function appendToSheet({
+  name,
+  email,
+  message,
+  ip,
+  success,
+  success2,
+}: ContactFormDataWithOptionals) {
   await sheets.spreadsheets.values.append({
-    spreadsheetId,
+    spreadsheetId: spreadsheetIdContacts as string,
     range: "Sheet1!A:G",
     valueInputOption: "USER_ENTERED",
     requestBody: {
@@ -68,7 +72,7 @@ async function appendToSheet(data: ContactFormDataWithOptionals) {
           name,
           email,
           message,
-          getTime(),
+          useGetTime(),
           ip || "unknown",
           success ? "✅ Success" : "❌ Failed",
           success2 ? "✅ Success" : "❌ Failed",
@@ -200,7 +204,7 @@ const emailTemplates: EmailTemplates = {
           </tr>
           <tr>
             <td style="padding: 12px; background: #f8f9fa; border: 1px solid #e9ecef; font-weight: bold;">Date:</td>
-            <td style="padding: 12px; background: white; border: 1px solid #e9ecef;">${getTime()}</td>
+            <td style="padding: 12px; background: white; border: 1px solid #e9ecef;">${useGetTime()}</td>
           </tr>
           <tr>
             <td style="padding: 12px; background: #f8f9fa; border: 1px solid #e9ecef; font-weight: bold;">IP:</td>
@@ -253,7 +257,8 @@ const contactSchema = z
 
 export default defineEventHandler(async (event) => {
   const origin = getRequestHeader(event, "origin") || "unknown";
-  if (origin !== baseUrl && !import.meta.dev) {
+  const isDev = import.meta.dev;
+  if (origin !== baseUrl && !isDev) {
     console.log("origin, baseUrl", origin, baseUrl);
     setResponseStatus(event, 403);
     return {

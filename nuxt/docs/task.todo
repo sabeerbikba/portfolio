@@ -33,8 +33,6 @@
 
 -- API LATER --
     - after email sent need to send small email about we reach soon 
-    - ~/server/api/cron.ts if possible in server need to rebuild every week and set bot revisit in week: reason fetch latest data in github
-       - How to do mentioned in that file 
     - how api work is first send msg to owner if failed send user failed and try diffrent mail option if success reach as soon as possible 
     - after email send and sucess true need to diaable the button 
     - also create api for logErr
