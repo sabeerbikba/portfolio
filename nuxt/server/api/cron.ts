@@ -50,7 +50,7 @@ const logDeploymentToSheet = async ({
 };
 
 export default defineEventHandler(async (event) => {
-  if (event.method !== "POST") {
+  if (event.method !== "GET") {
     setResponseStatus(event, 405);
     return {
       error: true,
