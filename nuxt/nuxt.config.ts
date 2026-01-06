@@ -67,13 +67,11 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
-    clientId: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    refreshToken: process.env.GOOGLE_REFRESH_TOKEN,
     client_email: process.env.GOOGLE_CLIENT_EMAIL,
     private_key: process.env.GOOGLE_PRIVATE_KEY,
     spreadsheetIdContacts: process.env.SPREADSHEET_ID_CONTACTS,
     spreadsheetIdRedeploy: process.env.SPREADSHEET_ID_REDEPLOY,
+    discordWebhookUri: process.env.DISCORD_WEBHOOK_URI,
     cronSecret: process.env.CRON_SECRET,
     deployHookUrl: process.env.DEPLOY_HOOK_URL,
     public: {
