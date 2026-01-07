@@ -17,6 +17,8 @@ type ProjectLinkType = {
   description?: string;
 };
 
+const { baseUrl } = useRuntimeConfig().public;
+const absoluteOgImg = baseUrl + ogImg;
 const route = useRoute();
 const isHomePage = computed(() => route.name === "index" || route.path === "/");
 
@@ -39,8 +41,8 @@ useHead({
 });
 
 useSeoMeta({
-  ogImage: ogImg,
-  twitterImage: ogImg,
+  ogImage: absoluteOgImg,
+  twitterImage: absoluteOgImg,
 });
 
 // defineOgImageComponent("Og");

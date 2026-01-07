@@ -1,8 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 // Vercel ENV: https://vercel.com/docs/environment-variables/system-environment-variables#VERCEL_PROJECT_PRODUCTION_URL
 
-const BASE_URL = process.env.VERCEL_PROJECT_PRODUCTION_URL
-  ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+const vercelProjectProductionUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL;
+const BASE_URL = vercelProjectProductionUrl
+  ? `https://${vercelProjectProductionUrl}`
   : "https://sabeerbikba.vercel.app";
 
 export default defineNuxtConfig({
