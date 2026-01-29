@@ -4,11 +4,8 @@ A modern, responsive portfolio website showcasing projects, skills, and experien
 
 ## 🌐 Live Demo
 
+[![Portfolio Screenshot](https://github.com/user-attachments/assets/443d36ea-4ee6-4c33-b197-0182a31f52c3)](https://sabeerbikba.vercel.app/)
 [View Live Site](https://sabeerbikba.vercel.app/)
-
-## 📸 Screenshot
-
-![Portfolio Screenshot](https://github.com/user-attachments/assets/443d36ea-4ee6-4c33-b197-0182a31f52c3)
 
 ## ✨ Features
 
